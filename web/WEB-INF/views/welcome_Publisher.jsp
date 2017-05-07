@@ -289,7 +289,7 @@
                                         <!--<select class="selectpicker" title="Select Your Function" style="display: none;">-->
                                         <select class="selectpicker" 
                                                 title="Select Your Function" 
-                                                name="function" 
+                                                name="task" 
                                                 id="taskDataset" 
                                                 required
                                                 >      

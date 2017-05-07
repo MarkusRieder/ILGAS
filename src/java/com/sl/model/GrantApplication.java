@@ -1,125 +1,55 @@
 package com.sl.model;
 
+import java.util.Date;
+
 public class GrantApplication {
 
-    private boolean APPROVED;
+    private int ApplicationNumber;
+
+    private String company;
+
+    private String publisherID;
+    
+//    Rights Agreement
+
+    private String agreement;//path + filename
+
+    private String contract; //path + filename
+    
+//    Publication Details
+
+    private Date proposedDateOfPublication;
+
+    private Date proposedDateOfPrintRun;
+
+    private int plannedPageExtent;
+    
+//     a copy of the Translator's CV
+
+    private String translatorCV;//path + filename
+
+    private int numberOfPages;
+
+    private double feePerPage;
+
+    private double translatorFee;
+
+    private String Notes;
+    
+//    Original Work & Sample Translation
+
+    private boolean copiesSent;
+
+    private Date dateCopiesWereSent;
+
+    private String copiesTranslationSample ; //path + filename
+    
+//    General
 
     private boolean TC_ACCEPTED;
 
-    private String USERNAME;
+    private boolean APPROVED;
 
-    private String EMAIL;
-
-    private String FIRST_NAME;
-
-    private String LAST_NAME;
-
-    private String EMAIL_VERIFICATION_HASH;
-
-    private int EMAIL_VERIFICATION_ATTEMPTS;
-
-    private String PASSWORD;
-
-    private String FUNCTION;
-
-    private String ROLE;
-
-    private String CREATED_TIME;
-
-    private String STATUS;
-
-    public String getUSERNAME() {
-        return USERNAME;
-    }
-
-    public void setUSERNAME(String USERNAME) {
-        this.USERNAME = USERNAME;
-    }
-
-    public String getEMAIL() {
-        return EMAIL;
-    }
-
-    public void setEMAIL(String EMAIL) {
-        this.EMAIL = EMAIL;
-    }
-
-    public String getFIRST_NAME() {
-        return FIRST_NAME;
-    }
-
-    public void setFIRST_NAME(String FIRST_NAME) {
-        this.FIRST_NAME = FIRST_NAME;
-    }
-
-    public String getLAST_NAME() {
-        return LAST_NAME;
-    }
-
-    public void setLAST_NAME(String LAST_NAME) {
-        this.LAST_NAME = LAST_NAME;
-    }
-
-    public String getEMAIL_VERIFICATION_HASH() {
-        return EMAIL_VERIFICATION_HASH;
-    }
-
-    public void setEMAIL_VERIFICATION_HASH(String EMAIL_VERIFICATION_HASH) {
-        this.EMAIL_VERIFICATION_HASH = EMAIL_VERIFICATION_HASH;
-    }
-
-    public int getEMAIL_VERIFICATION_ATTEMPTS() {
-        return EMAIL_VERIFICATION_ATTEMPTS;
-    }
-
-    public void setEMAIL_VERIFICATION_ATTEMPTS(int EMAIL_VERIFICATION_ATTEMPTS) {
-        this.EMAIL_VERIFICATION_ATTEMPTS = EMAIL_VERIFICATION_ATTEMPTS;
-    }
-
-    public String getPASSWORD() {
-        return PASSWORD;
-    }
-
-    public void setPASSWORD(String PASSWORD) {
-        this.PASSWORD = PASSWORD;
-    }
-
-    public String getFUNCTION() {
-        return FUNCTION;
-    }
-
-    public void setFUNCTION(String FUNCTION) {
-        this.FUNCTION = FUNCTION;
-    }
-
-    public String getROLE() {
-        return ROLE;
-    }
-
-    public void setROLE(String ROLE) {
-        this.ROLE = ROLE;
-    }
-
-    public String getSTATUS() {
-        return STATUS;
-    }
-
-    public void setSTATUS(String STATUS) {
-        this.STATUS = STATUS;
-    }
-
-    public String getCREATED_TIME() {
-        return CREATED_TIME;
-    }
-
-    public void setCREATED_TIME(String CREATED_TIME) {
-        this.CREATED_TIME = CREATED_TIME;
-    }
-
-    @Override
-    public String toString() {
-        return "ClassPojo [USERNAME = " + getUSERNAME() + ", EMAIL = " + getEMAIL() + ", FIRST_NAME = " + getFIRST_NAME() + ", LAST_NAME = " + getLAST_NAME() + ", EMAIL_VERIFICATION_HASH = " + getEMAIL_VERIFICATION_HASH() + ", EMAIL_VERIFICATION_ATTEMPTS = " + getEMAIL_VERIFICATION_ATTEMPTS() + ", PASSWORD = " + getPASSWORD() + ", STATUS = " + getSTATUS() + ", CREATED_TIME = " + getCREATED_TIME() + "]";
-    }
 
     /**
      * @return the APPROVED
@@ -147,5 +77,237 @@ public class GrantApplication {
      */
     public void setTC_ACCEPTED(boolean TC_ACCEPTED) {
         this.TC_ACCEPTED = TC_ACCEPTED;
+    }
+
+    /**
+     * @return the ApplicationNumber
+     */
+    public int getApplicationNumber() {
+        return ApplicationNumber;
+    }
+
+    /**
+     * @param ApplicationNumber the ApplicationNumber to set
+     */
+    public void setApplicationNumber(int ApplicationNumber) {
+        this.ApplicationNumber = ApplicationNumber;
+    }
+
+    /**
+     * @return the company
+     */
+    public String getCompany() {
+        return company;
+    }
+
+    /**
+     * @param company the company to set
+     */
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    /**
+     * @return the publisherID
+     */
+    public String getPublisherID() {
+        return publisherID;
+    }
+
+    /**
+     * @param publisherID the publisherID to set
+     */
+    public void setPublisherID(String publisherID) {
+        this.publisherID = publisherID;
+    }
+
+    /**
+     * @return the agreement
+     */
+    public String getAgreement() {
+        return agreement;
+    }
+
+    /**
+     * @param agreement the agreement to set
+     */
+    public void setAgreement(String agreement) {
+        this.agreement = agreement;
+    }
+
+    /**
+     * @return the contract
+     */
+    public String getContract() {
+        return contract;
+    }
+
+    /**
+     * @param contract the contract to set
+     */
+    public void setContract(String contract) {
+        this.contract = contract;
+    }
+
+    /**
+     * @return the proposedDateOfPublication
+     */
+    public Date getProposedDateOfPublication() {
+        return proposedDateOfPublication;
+    }
+
+    /**
+     * @param proposedDateOfPublication the proposedDateOfPublication to set
+     */
+    public void setProposedDateOfPublication(Date proposedDateOfPublication) {
+        this.proposedDateOfPublication = proposedDateOfPublication;
+    }
+
+    /**
+     * @return the proposedDateOfPrintRun
+     */
+    public Date getProposedDateOfPrintRun() {
+        return proposedDateOfPrintRun;
+    }
+
+    /**
+     * @param proposedDateOfPrintRun the proposedDateOfPrintRun to set
+     */
+    public void setProposedDateOfPrintRun(Date proposedDateOfPrintRun) {
+        this.proposedDateOfPrintRun = proposedDateOfPrintRun;
+    }
+
+    /**
+     * @return the plannedPageExtent
+     */
+    public int getPlannedPageExtent() {
+        return plannedPageExtent;
+    }
+
+    /**
+     * @param plannedPageExtent the plannedPageExtent to set
+     */
+    public void setPlannedPageExtent(int plannedPageExtent) {
+        this.plannedPageExtent = plannedPageExtent;
+    }
+
+    /**
+     * @return the translatorCV
+     */
+    public String getTranslatorCV() {
+        return translatorCV;
+    }
+
+    /**
+     * @param translatorCV the translatorCV to set
+     */
+    public void setTranslatorCV(String translatorCV) {
+        this.translatorCV = translatorCV;
+    }
+
+    /**
+     * @return the numberOfPages
+     */
+    public int getNumberOfPages() {
+        return numberOfPages;
+    }
+
+    /**
+     * @param numberOfPages the numberOfPages to set
+     */
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
+    /**
+     * @return the feePerPage
+     */
+    public double getFeePerPage() {
+        return feePerPage;
+    }
+
+    /**
+     * @param feePerPage the feePerPage to set
+     */
+    public void setFeePerPage(double feePerPage) {
+        this.feePerPage = feePerPage;
+    }
+
+    /**
+     * @return the translatorFee
+     */
+    public double getTranslatorFee() {
+        return translatorFee;
+    }
+
+    /**
+     * @param translatorFee the translatorFee to set
+     */
+    public void setTranslatorFee(double translatorFee) {
+        this.translatorFee = translatorFee;
+    }
+
+    /**
+     * @return the Notes
+     */
+    public String getNotes() {
+        return Notes;
+    }
+
+    /**
+     * @param Notes the Notes to set
+     */
+    public void setNotes(String Notes) {
+        this.Notes = Notes;
+    }
+
+    /**
+     * @return the copiesSent
+     */
+    public boolean isCopiesSent() {
+        return copiesSent;
+    }
+
+    /**
+     * @param copiesSent the copiesSent to set
+     */
+    public void setCopiesSent(boolean copiesSent) {
+        this.copiesSent = copiesSent;
+    }
+
+    /**
+     * @return the dateCopiesWereSent
+     */
+    public Date getDateCopiesWereSent() {
+        return dateCopiesWereSent;
+    }
+
+    /**
+     * @param dateCopiesWereSent the dateCopiesWereSent to set
+     */
+    public void setDateCopiesWereSent(Date dateCopiesWereSent) {
+        this.dateCopiesWereSent = dateCopiesWereSent;
+    }
+
+    /**
+     * @return the copiesTranslationSample
+     */
+    public String getCopiesTranslationSample() {
+        return copiesTranslationSample;
+    }
+
+    /**
+     * @param copiesTranslationSample the copiesTranslationSample to set
+     */
+    public void setCopiesTranslationSample(String copiesTranslationSample) {
+        this.copiesTranslationSample = copiesTranslationSample;
+    }
+    
+    
+    
+
+    @Override
+    public String toString() {
+        return "ClassPojo [ApplicationNumber = " + getApplicationNumber() + ", company = " + getCompany() + ", publisherID = " + getPublisherID() + ", agreement = " + getAgreement() + ", contract = " + getContract() + ", proposedDateOfPublication = " + getProposedDateOfPublication() + ", proposedDateOfPrintRun = " + getProposedDateOfPrintRun() + ", plannedPageExtent = " + getPlannedPageExtent() + ", translatorCV = " + getTranslatorCV() + ", numberOfPages = " + getNumberOfPages() + ", feePerPage = " + getFeePerPage() + ", translatorFee = " + getTranslatorFee() + ", Notes = " + getNotes() + ", copiesSent = " + isCopiesSent() + ", dateCopiesWereSent = " + getDateCopiesWereSent() + ", copiesTranslationSample = " + getCopiesTranslationSample() + ", TC_ACCEPTED = " + isTC_ACCEPTED() + ", APPROVED = " + isAPPROVED() + "]";
     }
 }

@@ -6,7 +6,7 @@
 package com.sl.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,31 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Application", urlPatterns = {"/Application"})
 public class ApplicationServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Application</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Application at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -57,8 +32,7 @@ public class ApplicationServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {   
     }
 
     /**
@@ -72,34 +46,53 @@ public class ApplicationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
         
-         String action = request.getServletPath();
- 
-        try {
-            switch (action) {
-            case "/new":
-                showNewForm(request, response);
+            String task = request.getParameter("task");
+            System.out.println("task:  " + task);
+
+            switch (task) {
+            case "New Application":
+          //      showNewForm(request, response);
+                       System.out.println("/New Application:  " );
+                  request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
                 break;
-            case "/insert":
-                insertBook(request, response);
+            case "Pending Applications":
+       //         insertBook(request, response);
                 break;
-            case "/delete":
-                deleteBook(request, response);
-                break;
-            case "/edit":
-                showEditForm(request, response);
-                break;
-            case "/update":
-                updateBook(request, response);
+            case "Closed Applications":
+      //          deleteBook(request, response);
                 break;
             default:
-                listBook(request, response);
+      //          listBook(request, response);
                 break;
             }
-        } catch (SQLException ex) {
-            throw new ServletException(ex);
-        }
+            
+//         String action = request.getServletPath();
+// System.out.println("action2:  " + action);
+//        try {
+//            switch (action) {
+//            case "/new":
+//                showNewForm(request, response);
+//                break;
+//            case "/insert":
+//                insertBook(request, response);
+//                break;
+//            case "/delete":
+//                deleteBook(request, response);
+//                break;
+//            case "/edit":
+//                showEditForm(request, response);
+//                break;
+//            case "/update":
+//                updateBook(request, response);
+//                break;
+//            default:
+//                listBook(request, response);
+//                break;
+//            }
+//        } catch (SQLException ex) {
+//            throw new ServletException(ex);
+//        }
     }
 
     /**

@@ -35,15 +35,38 @@ public class MailUtil {
             String link = Setup.MAIL_REGISTRATION_SITE_LINK + "?scope=activation&userId=" + uname + "&hash=" + hash;
 
             StringBuilder bodyText = new StringBuilder();
+//            bodyText.append("<div>")
+//                    .append("  Dear User " + uname + "<br/><br/>")
+//                    .append("  Thank you for registration. Your mail (" + email + ") is under verification<br/>")
+//                    .append("  Please click <a href=\"" + link + "\">here</a> or open below link in browser<br/>")
+//                    .append("  <a href=\"" + link + "\">" + link + "</a>")
+//                    .append("  <br/><br/>")
+//                    .append("  Thanks,<br/>")
+//                    .append("  Irish Literature")
+//                    .append("</div>");
             bodyText.append("<div>")
-                    .append("  Dear User " + uname + "<br/><br/>")
-                    .append("  Thank you for registration. Your mail (" + email + ") is under verification<br/>")
-                    .append("  Please click <a href=\"" + link + "\">here</a> or open below link in browser<br/>")
+                    .append("  Dear Irish Literature User,<br/><br/>")
+                    .append("  ")
+                    .append("  This email is sent to validate the email address that you have")
+                    .append("  provided for your Irish Literature login.")
+                    .append("   <br/><br/>")
+                    .append("  To ensure the security of the account information associated with your")
+                    .append("  Irish Literature login, please take a moment to click through the link below")
+                    .append("  and verify that we have the correct email address. If you do not")
+                    .append("  confirm your email address, your Irish Literature login will eventually be")
+                    .append("  disabled.")
+                    .append("   <br/><br/>")
+                    .append("  To confirm your email address, please visit the following URL:")
+                    .append("   <br/><br/>")
                     .append("  <a href=\"" + link + "\">" + link + "</a>")
-                    .append("  <br/><br/>")
-                    .append("  Thanks,<br/>")
-                    .append("  Irish Literature")
+                    .append("   <br/><br/>")
+                    .append("  Thank you for being part of Irish Literature.")
+                    .append("   <br/><br/>")
+                    .append("  Account Information:<br/><br/>")
+                    .append("    Your login:         " + uname + "<br/>")
+                    .append("    Your email address: " + email)
                     .append("</div>");
+
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(Setup.MAIL_USERNAME));
             message.setRecipients(Message.RecipientType.TO,

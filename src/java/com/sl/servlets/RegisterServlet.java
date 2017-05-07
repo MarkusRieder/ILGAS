@@ -91,7 +91,7 @@ public class RegisterServlet extends HttpServlet {
 
         request.setAttribute("newPublisher", request.getParameter("newPublisher"));
 
-        // if newPublisher checkbos is checked
+        // if newPublisher checkbox is checked
         if (request.getParameter("cbnewPublisher") != null) {
             try {
                 System.out.println("cbnewPublisher  IS here");
