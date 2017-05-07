@@ -1,0 +1,117 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07-Mar-2017, 17:24:03
+    Author     : markus
+*/
+
+/* = Homepage Highlight Box styles
+------------------------------------------------------------------*/
+#highlightboxes {
+    display: block;
+    clear: both;
+    height: 119px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 10px;
+}
+.highlightbox {
+    display: block;
+    float: left;
+    width: 194px;
+    text-align: center;
+    margin: 0px 8px 0px 0px;
+    padding: 0px;
+    background-color:#FFFFFF;
+    border-top-width: 14px;
+    border-top-style: solid;
+    border-top-color: #0f9039;
+}
+
+
+
+.highlight-title { 	
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 22px; 
+    line-height: 26px;
+    font-weight: normal;
+}
+.highlight-title a { color: #3b3b3b; text-decoration: none; display: block; padding: 18px 0px 22px 0px; }
+.highlight-title a:hover { color: #0f9039; text-decoration: none; }
+
+
+
+/* = HOME CONTENT AREA
+------------------------------------------------------------------*/
+#homecontent {
+    display: block;
+    float: left;
+    width: 593px;
+    text-align: left;
+    margin: 0px 0px 40px 0px;
+    padding: 0px;
+    background-color: #FFFFFF;
+    border-left-width: 14px;
+    border-left-style: solid;
+    border-left-color: #0f9039;
+    background-image: url(../images/homecontentbg.gif);
+    background-repeat: repeat-y;
+    background-position: left top;
+}
+#homecontent .textpadding {
+    float: left;
+    width: 295px;
+    margin: 20px 0px 32px 23px;
+}
+
+
+
+
+/* = HOME CONTENT AREA
+------------------------------------------------------------------*/
+
+#homerightside {
+    display: block;
+    width: 222px;
+    float: right;
+    margin: 20px 8px 10px 0px;
+    padding: 0px;
+}
+
+#homerightside .heading {
+    display: block;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 18px;
+    line-height: 19px;
+    text-transform: uppercase;
+    color: #0f9039;
+    padding: 0px 0px 12px 0px;
+    margin: 0px 0px 15px 0px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #c3c3c3;
+}
+
+#homerightside a {
+    color: #3b3b3b;
+    text-decoration: none;
+}
+#homerightside a:hover {
+    color: #0f9039;
+    text-decoration: underline;
+}
+
+#homerightside ul {
+    padding: 0px;
+    margin: 0px 0px 30px 0px;
+}
+
+#homerightside li {
+    padding: 0px 0px 8px 15px;
+    list-style-type: none;
+    background-image: url(../images/bullet.gif);
+    background-repeat: no-repeat;
+    background-position: left 3px;
+}

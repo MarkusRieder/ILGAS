@@ -1,0 +1,416 @@
+/* General re-sets first
+------------------------------------------------------------------*/
+.hidden-desktop {
+    display: inherit !important;
+  }
+  .visible-desktop {
+    display: none !important;
+  }
+  .visible-phone {
+    display: inherit !important;
+  }
+  .hidden-phone {
+    display: none !important;
+  }
+
+body {
+	background-color: #fff;
+	margin: 0px;
+	padding: 0px;
+	}
+
+img {
+	max-width: 100% !important;
+}
+/* =Main Container
+------------------------------------------------------------------*/
+#shadowholder {
+	text-align: left;
+	padding: 0px;
+	background-image: none;
+}
+#shadowholder .shadowtop {
+	display: none;
+}
+#shadowholder .shadowbase {
+	display: none;
+}
+
+
+#container {
+	width: 100%;
+	background-color: #fff;
+	display: block;
+	margin: 0;
+	padding: 0px;
+	border: none;
+}
+#topbar {
+	background-size: 95%;
+	height: 90px;
+	}
+#topbar a.logo {
+	float: none;
+	width: 100%;
+	margin: 5px 0px 0px 0px;
+	height: 90px;
+	}
+
+
+
+#topspacer {
+	display: none;
+}
+.flashdiv {
+	display: none;
+}
+.animateddiv {
+	display: none;
+}
+
+/* =PAGE HEADINGS
+------------------------------------------------------------------*/
+h1 { 
+	font-size: 25px;
+	line-height: 32px;
+}
+#heading {
+	display: block;
+	float: none;
+	width: 100%;
+	border: none;
+}
+.headingpadding {
+	margin: 15px 15px 15px 20px;
+}
+
+/* = MAIN CONTENT AREA
+------------------------------------------------------------------*/
+#contentarea {
+	float: none;
+	width: 100%;
+	border: none;
+}
+
+
+/* = HOMEPAGE STUFF
+------------------------------------------------------------------*/
+
+
+#homecontent {
+	float: none;
+	width: 100%;
+	margin: -20px 0px 10px 0px;
+	border: none;
+	background: none;
+}
+#homecontent .textpadding {
+	width: auto;
+	display: block;
+	padding-right: 17px;
+	margin: 20px 0px 20px 20px;
+}
+#homerightside {
+	width: auto;
+	display: block;
+	float: none;
+	padding-right: 17px;
+	margin: 20px 0px 10px 20px;
+}
+#highlightboxes {
+	height: auto;
+	overflow: visible;
+	margin: 0px 0px 0px -8px;
+}
+.highlightbox {
+	float: left;
+	width: 45%;
+	border-top-width: 8px;
+	background-color: #efefef;
+	margin: 0px 0px 20px 10px;
+	padding: 20px 5px 20px 5px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.highlight-title { 	
+font-size: 20px; 
+line-height: 26px;
+}
+
+		
+	
+/* =NAVIGATION
+------------------------------------------------------------------*/
+#navdiv {
+	display: none;
+}
+.nav {
+	display: none;
+	}
+
+
+/* =SUB-NAVIGATION
+------------------------------------------------------------------*/
+.subnavbox {
+	display: none;
+}
+
+
+/* = Thumbnail Galleries
+------------------------------------------------------------------*/
+
+.thumbnail {
+	border: none;
+	margin: 0px 0px 10px 0px; 
+	padding: 0px;
+	width: 130px; 
+}
+#thumbnailgallery .odd {
+	margin-right: 10px; 
+}
+#thumbnailgallery .cropbox { width: 130px; height: 80px; }
+.thumbnail img { width: 130px; }
+
+
+
+/* = Translation dropdown
+------------------------------------------------------------------*/
+.CollapsiblePanel {
+	width: 96% !important;
+}
+
+.CollapsiblePanelTab {
+
+}
+
+.database select {
+	float: none;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 8px;
+	font-size: 17px;
+	background-color: #ffffff;
+	-webkit-appearance: none;
+}
+
+.database .text {
+	width: 200px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	margin: 0;
+	border: none;
+	border-top: 6px solid #ededed;
+	border-bottom: 7px solid #ededed;
+	border-left: 7px solid #ededed;
+	border-right: 6px solid #ededed;
+	height: 45px;
+	font-weight: normal;
+	-webkit-appearance: none;
+}
+.database .gobutton {
+	width: 75px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	margin: 0;
+	border: none;
+	border-top: 7px solid #ededed;
+	border-bottom: 7px solid #ededed;
+	border-right: 7px solid #ededed;
+	height: 45px;
+	overflow: hidden;
+}
+.database .gobutton img {
+	height: 45px;
+	width: 75px;
+}
+.database .resultdivider {
+	width: 100%;
+}
+
+
+
+/* =BASE
+------------------------------------------------------------------*/
+
+#base {
+	margin: 10px 0px 0px 0px;
+	border-top: 10px solid #efefef;
+	height: auto;
+	overflow: visible;
+	background: none;
+}
+.basetext {
+	float: none;
+	width: auto;
+	margin: 15px 0px 0px 20px;
+}
+.mobile-baselogos {
+	width: 90%;
+	float: none;
+	height: 46px;
+	margin: 14px auto 0px auto;
+	background-image: url(../images/base-logos.gif);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+.mobile-baselogos a {
+	width: 30%;
+	float: left;
+	height: 45px;
+}
+ 
+#credit {
+	display: none;
+}
+
+
+
+/* Phone Menu Stuff
+------------------------------------------------ */
+.menu-trigger { 
+	display: block;
+	width: 100%;
+	margin: 0px 0px 20px 0px;
+	padding: 12px 0px 12px 50px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-decoration: none;
+	text-transform: uppercase;
+	background-color: #efefef;
+	background-image: url("../images/icons/phonemenusymbol.png");
+  	background-position: 24px 14px;
+  	background-repeat: no-repeat;
+  	box-sizing: border-box;
+  	-moz-box-sizing: border-box;
+  	-webkit-box-sizing: border-box;
+ }
+ .menu-trigger a { 
+	color:#555;
+	text-decoration: none;
+	display: block;
+	width: 100%;
+ }
+
+ 
+ 
+
+.phonenav {
+	display: block;
+	margin: 10px 0px 10px 10px;
+}
+.phonenav .level1 a {
+	display: block;
+	margin: 0px 0px 6px 0px;
+	padding: 12px 0px 10px 11px;
+	vertical-align: top;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-decoration: none;
+	color:#555;
+	text-transform: uppercase;
+	background-color: #efefef;
+  	background-position: 200px 8px;
+  	background-repeat: no-repeat;
+}
+.phonenav .level1 a:hover { text-decoration: none; background-color: #dedede; }
+.phonenav .level1 a.current, .phonenav .level1  a.section { text-decoration: none; font-weight: bold; background-color: #dedede; background-image: url("../images/icons/phonenavicon1.png"); }
+
+.phonenav .level2 a {
+	display: block;
+	padding: 9px 0px 6px 8px;
+	margin: 0px;
+	vertical-align: top;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-decoration: none;
+	color:#555;
+	background-color: #efefef;
+  	background-position: 201px 8px;
+  	background-repeat: no-repeat;
+	background-color: #fff;
+	text-transform: none;
+}
+.phonenav .level2 a:hover { text-decoration: none; }
+.phonenav .level2 a.current, .phonenav .level2  a.section { text-decoration: none; font-weight: bold; background-image: url("../images/icons/phonenavicon2.png"); }
+.phonenav .level2 a.last {
+	margin-bottom: 15px;
+	}
+
+
+
+
+#build-menu-page {
+  left: 0;
+  position: relative;
+}
+
+#build-menu {
+	visibility: visible;
+	z-index: 0;
+	opacity: 1;
+	-webkit-transform: none;
+	-moz-transform: none;
+	-o-transform: none;
+	-ms-transform: none;
+	transform: none;
+	display: none;
+	width: 220px;
+  padding: 0;
+  position: static;
+  z-index: 0;
+  top: 0;
+  height: 100%;
+  overflow-y: auto;
+  left: 0;
+}
+
+.build-menu-animating #build-menu-page {
+	position: fixed;
+	overflow: hidden;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+}
+
+.build-menu-animating.build-menu-close #build-menu-page,
+.build-menu-animating.build-menu-open #build-menu-page {
+	-webkit-transition: -webkit-transform 250ms;
+	-moz-transition: -moz-transform 250ms;
+	-o-transition: -o-transform 250ms;
+	-ms-transition: -ms-transform 250ms;
+	transition: transform 250ms;
+}
+
+.build-menu-animating.build-menu-open #build-menu-page {
+	-webkit-transform: translate3d(0, 0, 0);
+	-moz-transform: translate3d(0, 0, 0);
+	-o-transform: translate3d(0, 0, 0);
+	-ms-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
+
+.build-menu-animating #build-menu { display: block }
+
+.build-menu-open #build-menu {
+	display: block;
+	-webkit-transition-delay: 0ms, 0ms, 0ms;
+	-moz-transition-delay: 0ms, 0ms, 0ms;
+	-o-transition-delay: 0ms, 0ms, 0ms;
+	-ms-transition-delay: 0ms, 0ms, 0ms;
+	transition-delay: 0ms, 0ms, 0ms;
+}
+ 
+.build-menu-open #build-menu,
+.build-menu-close #build-menu {
+	-webkit-transition: -webkit-transform 250ms, opacity 250ms, visibility 0ms 250ms;
+	-moz-transition: -moz-transform 250ms, opacity 250ms, visibility 0ms 250ms;
+	-o-transition: -o-transform 250ms, opacity 250ms, visibility 0ms 250ms;
+	-ms-transition: -ms-transform 250ms, opacity 250ms, visibility 0ms 250ms;
+	transition: transform 250ms, opacity 250ms, visibility 0ms 250ms;
+}
+
+
+

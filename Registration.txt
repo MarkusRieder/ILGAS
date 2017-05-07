@@ -1,0 +1,15 @@
+Registration
+
+Register user
+
+now if user = publisherUser 
+			
+			check if Publisher exists
+
+		   NO					YES
+		   |					 |
+		register new				add user to 
+		Publisher				PublisherUser
+		   |
+		add user to 
+		PublisherUser
