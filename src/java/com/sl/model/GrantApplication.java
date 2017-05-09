@@ -36,6 +36,8 @@ public class GrantApplication {
 
     private String Notes;
     
+    private String Status;
+    
 //    Original Work & Sample Translation
 
     private boolean copiesSent;
@@ -309,5 +311,19 @@ public class GrantApplication {
     @Override
     public String toString() {
         return "ClassPojo [ApplicationNumber = " + getApplicationNumber() + ", company = " + getCompany() + ", publisherID = " + getPublisherID() + ", agreement = " + getAgreement() + ", contract = " + getContract() + ", proposedDateOfPublication = " + getProposedDateOfPublication() + ", proposedDateOfPrintRun = " + getProposedDateOfPrintRun() + ", plannedPageExtent = " + getPlannedPageExtent() + ", translatorCV = " + getTranslatorCV() + ", numberOfPages = " + getNumberOfPages() + ", feePerPage = " + getFeePerPage() + ", translatorFee = " + getTranslatorFee() + ", Notes = " + getNotes() + ", copiesSent = " + isCopiesSent() + ", dateCopiesWereSent = " + getDateCopiesWereSent() + ", copiesTranslationSample = " + getCopiesTranslationSample() + ", TC_ACCEPTED = " + isTC_ACCEPTED() + ", APPROVED = " + isAPPROVED() + "]";
+    }
+
+    /**
+     * @return the Status
+     */
+    public String getStatus() {
+        return Status;
+    }
+
+    /**
+     * @param Status the Status to set
+     */
+    public void setStatus(String Status) {
+        this.Status = Status;
     }
 }

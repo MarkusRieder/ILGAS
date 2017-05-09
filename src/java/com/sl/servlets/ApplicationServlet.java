@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Application", urlPatterns = {"/Application"})
 public class ApplicationServlet extends HttpServlet {
 
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -32,7 +31,7 @@ public class ApplicationServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {   
+            throws ServletException, IOException {
     }
 
     /**
@@ -46,27 +45,32 @@ public class ApplicationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-            String task = request.getParameter("task");
-            System.out.println("task:  " + task);
 
-            switch (task) {
+        String task = request.getParameter("task");
+        System.out.println("task:  " + task);
+
+        switch (task) {
             case "New Application":
-          //      showNewForm(request, response);
-                       System.out.println("/New Application:  " );
-                  request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
+                //      showNewForm(request, response);
+                //  System.out.println("/New Application:  ");
+
+               
+
+                request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
                 break;
             case "Pending Applications":
-       //         insertBook(request, response);
+                //         insertBook(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/pendingApplications.jsp").forward(request, response);
                 break;
             case "Closed Applications":
-      //          deleteBook(request, response);
+                //          deleteBook(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
                 break;
             default:
-      //          listBook(request, response);
+                //          listBook(request, response);
                 break;
-            }
-            
+        }
+
 //         String action = request.getServletPath();
 // System.out.println("action2:  " + action);
 //        try {

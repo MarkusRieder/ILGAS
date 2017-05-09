@@ -305,16 +305,31 @@
                     display: block;
                 }
             </style>
-
+            <style>
+                .panel {
+                    background-color: #d9d1d1 ;
+                    margin-top: 50px;
+                    box-shadow: 0 0 30px  #b6a6a6;
+                    padding:0 15px 0 15px;
+                }
+            </style>
         </head>
 
         <body style="height: 100%">
+                <sql:query var="applicationQuery" dataSource="jdbc/ILGAS">
+                    SELECT * FROM GrantApplication
+                    WHERE GrantApplication.ApplicationNumber = ? AND GrantApplication.Status = 'new'
+                    <sql:param value="${ApplicationNumber}"/>
+                </sql:query>
+                <c:set var="applicationDetails" value="${applicationQuery.rows[0]}"/>
+
                 <sql:query var="companyQuery" dataSource="jdbc/ILGAS">
                     SELECT * FROM international_publishers
                     WHERE international_publishers.Company_Number = ?
                     <sql:param value="${publisherID}"/>
                 </sql:query>
                 <c:set var="companyDetails" value="${companyQuery.rows[0]}"/>
+
                 <div id="shadowholder">
                     <div class="shadowtop"> </div>
                     <div id="container">
@@ -327,7 +342,7 @@
                             <!--container for welcome/logout-->
                             <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                                 <div class="pull-right">
-                                    <h6> <small>Welcome ${name} - not ${name}? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                                    <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
                                 </div>
                             </div> <!--container for welcome/logout-->
 
@@ -441,8 +456,10 @@
                                     </div>
                                     <!-- Contact details -->
                                     <div class="tab-pane" id="Contact">
-                                        <h1 style="margin-bottom: 40px">Contact details</h1>
+                                        <h1 style="margin-bottom: 40px">Update Contact details</h1>
                                         <div class="container-fluid">
+
+                                            <!--Form Contactdetails-->
                                             <form id="Contactdetails" class="form-horizontal" action="${pageContext.request.contextPath}/login.do" 
                                                   method="POST"  role="form" >
                                                 <div class="col-md-9" >
@@ -496,11 +513,16 @@
                                                         <input id="Telephone" type="text" class="form-control" name="Telephone" value="${companyDetails.Telephone}" placeholder="Telephone number ">                                        
                                                     </div>
 
-                                                    <div class="form-footer">
-                                                        <button type="submit" class="btn btn-info">
-                                                            <span class="glyphicon glyphicon-log-in"></span> Sign Me Up !
-                                                        </button>
-                                                    </div>      
+                                                   
+                                                      <div class="input-group input-group-lg" style="margin-top: 40px; margin-bottom: 40px;">
+
+                                                            <button type="submit"  name="save_UpdatedDetails" id="save_UpdatedDetails" 
+                                                                    data-toggle="tooltip" title="Click to save!"
+                                                                    >
+                                                                Save Updated Details
+                                                                <span class="glyphicon glyphicon-import"></span>
+                                                            </button>
+                                                        </div>
                                                 </div>
                                             </form>
                                         </div> <!-- container-fluid -->
@@ -576,47 +598,62 @@
                                             margin-right: auto;
                                             margin-left: auto;">
                                             <div class="col-xs-12 content">
+                                                <form id="publicationDetailsForm" 
+                                                      class="form-horizontal" 
+                                                      action="${pageContext.request.contextPath}/Application" 
+                                                      method="POST"  
+                                                      role="form" 
+                                                      >
+                                                    <div class='col-sm-8'  style="margin-bottom: 40px; margin-top: 20px">
+                                                            <strong> The proposed date of publication:</strong>
+                                                            <div class="input-group"  style="margin-bottom: 40px;">
+                                                            <input type="text" id="proposed-date-of-publication" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                            <label class="input-group-addon" for="proposed-date-of-publication">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </label>
+                                                        </div>
 
-                                                <div class='col-sm-8'  style="margin-bottom: 40px; margin-top: 20px">
-                                                        <strong> The proposed date of publication:</strong>
+                                                        <strong>   The date of proposed print run:</strong> 
                                                         <div class="input-group"  style="margin-bottom: 40px;">
-                                                        <input type="text" id="proposed-date-of-publication" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                        <label class="input-group-addon" for="proposed-date-of-publication">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </label>
-                                                    </div>
+                                                            <input type="text" id="proposed-print-run" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                            <label class="input-group-addon" for="proposed-print-run">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </label>
+                                                        </div>
 
-                                                    <strong>   The date of proposed print run:</strong> 
-                                                    <div class="input-group"  style="margin-bottom: 40px;">
-                                                        <input type="text" id="proposed-print-run" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                        <label class="input-group-addon" for="proposed-print-run">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </label>
-                                                    </div>
+                                                        <strong  style="margin-bottom: 40px;">The planned page extent of the published translation:</strong>
+                                                        <div class="input-group input-group-lg">
+                                                            <span class="input-group-addon" id="sizing-addon1">  <span class="glyphicon glyphicon-book"></span></span>
+                                                            <input type="text" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">
+                                                        </div>
+                                                        <!--</div>-->
+                                                        <div class="input-group input-group-lg" style="margin-top: 40px;">
 
-                                                    <strong  style="margin-bottom: 40px;">The planned page extent of the published translation:</strong>
-                                                    <div class="input-group input-group-lg">
-                                                        <span class="input-group-addon" id="sizing-addon1">  <span class="glyphicon glyphicon-book"></span></span>
-                                                        <input type="text" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">
+                                                            <button type="submit"  name="save_PublicationDetails" id="save_PublicationDetails" 
+                                                                    data-toggle="tooltip" title="Click to save!"
+                                                                    >
+                                                                Save
+                                                                <span class="glyphicon glyphicon-import"></span>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                <script>
-                                                    $("#proposed-date-of-publication").datepicker({
-                                                        format: "D dd/mm/yyyy",
-                                                        showWeekDays: true,
-                                                        todayHighlight: true,
-                                                        autoclose: true
-                                                    });
-                                                </script>
-                                                <script>
-                                                    $("#proposed-print-run").datepicker({
-                                                        format: "D dd/mm/yyyy",
-                                                        showWeekDays: true,
-                                                        todayHighlight: true,
-                                                        autoclose: true
-                                                    });
-                                                </script>
+                                                    <script>
+                                                        $("#proposed-date-of-publication").datepicker({
+                                                            format: "D dd/mm/yyyy",
+                                                            showWeekDays: true,
+                                                            todayHighlight: true,
+                                                            autoclose: true
+                                                        });
+                                                    </script>
+                                                    <script>
+                                                        $("#proposed-print-run").datepicker({
+                                                            format: "D dd/mm/yyyy",
+                                                            showWeekDays: true,
+                                                            todayHighlight: true,
+                                                            autoclose: true
+                                                        });
+                                                    </script>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -658,24 +695,34 @@
                                                     <input type="text"  name="feePerPage"  id="feePerPage"   style="margin-bottom: 30px"/>
                                                     <button type="submit" class="btn btn-default"  id='submit' onclick="getTotal()" style="margin-bottom: 10px">Calculate fee</button>
                                                 </form>
-                                            </div>
 
+                                                <form  method="POST" id="feeForm" action="${pageContext.request.contextPath}/Application" >
+                                                    <!--<div class="col-md-4" style="margin-bottom: 60px">-->
+                                                    <strong>Translator fee:</strong>                                                                        
+                                                    <div class="input-group" style="margin-bottom: 40px">
+                                                        <label class="input-group-addon" for="fee">
+                                                            <span class="glyphicon glyphicon-euro"></span>                                     
+                                                        </label>
+                                                        <input type="text" class="form-control" id="fee" placeholder="fee">    
+                                                    </div>
 
-                                            <div class="col-md-4" style="margin-bottom: 60px">
-                                                <strong>Translator fee:</strong>                                                                        
-                                                <div class="input-group" style="margin-bottom: 40px">
-                                                    <label class="input-group-addon" for="fee">
-                                                        <span class="glyphicon glyphicon-euro"></span>                                     
-                                                    </label>
-                                                    <input type="text" class="form-control" id="fee" placeholder="fee">    
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" placeholder="Notes" 
+                                                                  style="width: 280px; height: 196px;"></textarea>
                                                 </div>
+                                                <!--</div>-->
+                                            </form>                               
 
-                                                <div class="form-group">
-                                                    <textarea class="form-control" placeholder="Notes" 
-                                                              style="width: 280px; height: 196px;"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            <div class="input-group input-group-lg" style="margin-top: 40px;">
+                                                <button type="submit"  name="save_feeForm" id="save_feeForm" 
+                                                        data-toggle="tooltip" title="Click to save!"
+                                                        >
+                                                    Save
+                                                    <span class="glyphicon glyphicon-import"></span>
+                                                </button>
+                                            </div>                                       
+                                        </div> 
+                                    </div>              
                                 </div>
 
                                 <!-- Original Work & Sample Translation -->
@@ -683,67 +730,101 @@
                                     <h1>Original Work & Sample Translation</h1>
                                     <div class="container-fluid">
                                         <div class="row" >
-                                        <div class="col-md-9"   style="margin-bottom: 40px; margin-top: 40px">
-                                                <div class="checkbox">
-                                                    <!--<strong class="pull-left">Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong>-->
-                                                    <label for="copies" class=" pull-left"><strong> Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong></label>
-                                                    <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
-                                                        <input type="checkbox" name="copies" value="">
-                                                        <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3"   style="margin-bottom: 40px; margin-top: 30px">
-                                                <strong>Date copies were sent:</strong> 
-                                                <div class="input-group">
-                                                    <input type="text" id="mail-sent" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                    <label class="input-group-addon" for="mail-sent">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                    </label>
-                                                </div> 
-                                            </div>
-                                              </div>
-                                            <script>
-                                                $("#mail-sent").datepicker({
-                                                    format: "D dd/mm/yyyy",
-                                                    showWeekDays: true,
-                                                    todayHighlight: true,
-                                                    autoclose: true
-                                                });
-                                            </script>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
 
-                                            <div class="col-md-12" style="margin-bottom: 40px">
-                                                <form method="POST" action="upload" enctype="multipart/form-data" >
-                                                    <strong style="margin-bottom: 20px" class="pull-left">Two copies of a translation sample<sup>**</sup> consisting of 10–12 pages of prose or six poems</strong>
-                                                    <div class="margin-bottom: 60px"></div>   
-                                                    <br/>
-                                                    <div class="input-group agreement translationSample"  style="margin-bottom: 40px;">                                      
-                                                    <label class="btn btn-default btn-file pull-left">
-                                                        Select file <input type="file"  name="file" id="translationSample" >
-                                                        <span class="glyphicon glyphicon-folder-open"></span>
-                                                    </label>
-                                                    <input id="label_translationSample" class="pull-left"/>
-                                                    <br/>
-                                                    <br/>  
+                                                    <!--copies of the original work-->
+                                                    <div class="col-md-9"   style="margin-bottom: 40px; margin-top: 40px">
+                                                            <div class="checkbox">
+                                                                <!--<strong class="pull-left">Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong>-->
+                                                                <label for="copies" class=" pull-left"><strong>Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong></label>
+                                                                <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
+                                                                <input type="checkbox" name="copies" id="copies" value=""  class="form-control">
+                                                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                            </label>
+                                                        </div>
+                                                    </div> <!-- col-md-9 -->
 
-                                                    <!--<input type="file" name="file" id="sample" style="margin-top: 20px" /> <br/>-->
-                                                    Destination:
-                                                    <input type="text" value="/home/markus/test" name="destination"/>
-                                                    <button type="submit"  name="upload_translationSample" id="upload_translationSample" 
-                                                            data-toggle="tooltip" title="Click to UPLOAD!">
-                                                        Upload
-                                                        <span class="glyphicon glyphicon-import"></span>
-                                                    </button>
-                                            </form> 
-                                        </div>
+                                                    <!--Date copies were sent:-->
+                                                    <div class="col-md-3"   style="margin-top: 30px">
+                                                            <strong>Date copies were sent:</strong> 
+                                                            <div class="input-group">
+                                                                <input type="text" id="mail-sent" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                <label class="input-group-addon" for="mail-sent">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                </label>
+                                                            </div>  <!-- input-group -->
+                                                        </div> <!--col-md-3-->
+
+                                                        <!--datepicker  mail-sent-->
+                                                        <script>
+                                                            $("#mail-sent").datepicker({
+                                                                format: "D dd/mm/yyyy",
+                                                                showWeekDays: true,
+                                                                todayHighlight: true,
+                                                                autoclose: true
+                                                            });
+                                                        </script>
+                                                        
+                                                        
+                                                        <div class="col-md-9"   style="margin-bottom: 40px;">
+                                                        <div class="input-group input-group-lg">
+                                                            <button type="submit"  
+                                                                    name="save_originalwork" 
+                                                                    id="save_originalwork" 
+                                                                    data-toggle="tooltip" 
+                                                                    title="Click to save!"
+                                                                    >
+                                                                Save
+                                                                <span class="glyphicon glyphicon-import"></span>
+                                                            </button>
+                                                        </div><!-- input-group -->
+                                                    </div>  <!-- col-md-12 -->
+                                                </div> <!--panel--body-->
+                                            </div> <!--panel-default-->
+                                        </div> <!-- row -->
+
+                                        <div class="row" >
+                                            <div class="panel panel-default">        
+                                                <div class="panel-body">
+                                                    <div class="col-md-12" style="margin-bottom: 40px; margin-top: 60px">
+                                                            <form method="POST" id="translationSampleForm" name="translationSampleForm" action="upload" enctype="multipart/form-data" >
+                                                                <strong style="margin-bottom: 20px" class="pull-left">Two copies of a translation sample<sup>**</sup> consisting of 10–12 pages of prose or six poems</strong>
+                                                                <div class="margin-bottom: 60px"></div>   
+                                                                <br/>
+                                                                <div class="input-group agreement translationSample"  style="margin-bottom: 40px;">                                      
+                                                                <label class="btn btn-default btn-file pull-left">
+                                                                    Select file <input type="file"  name="file" id="translationSample" >
+                                                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                                                </label>
+                                                                <input id="label_translationSample" class="pull-left"/>
+                                                                <br/>
+                                                                <br/>  
+                                                                Destination:
+                                                                <input type="text" value="/home/markus/test" name="destination"/>
+                                                                <button type="submit"  name="upload_translationSample" id="upload_translationSample" 
+                                                                        data-toggle="tooltip" title="Click to UPLOAD!">
+                                                                    Upload
+                                                                    <span class="glyphicon glyphicon-import"></span>
+                                                                </button>
+                                                            </div>
+                                                        </form> <!-- translationSampleForm -->                                                                                                              
+                                                    </div>  <!-- col-md-12 -->
+                                                </div>  <!--panel--body-->
+                                            </div> <!--panel-default-->
+                                        </div> <!-- row -->
                                         <hr/>
                                         <div class="col-md-10">
                                             <i class="pull-left"><strong>*</strong> Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
                                                 <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- /.container-fluid -->
+                                        </div>    
+                                    </div>  <!-- container-fluid -->
+                                </div> <!-- tab-pane Original -->
+
+                                <!--  ========================================================================================== -->
+
+                            </div> <!-- tab-content -->
+                        </div> <!-- /.container-fluid -->
                     </nav>
 
                     <!--footer start-->

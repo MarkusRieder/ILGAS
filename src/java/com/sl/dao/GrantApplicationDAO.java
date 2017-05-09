@@ -1,42 +1,73 @@
 package com.sl.dao;
 
+import static com.sl.dao.ACpublisherDAO_test.disconnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.apache.log4j.Logger;
 
+import com.sl.model.GrantApplication;
 import com.sl.db.DBConn;
 import com.sl.db.DBException;
-import com.sl.model.User;
-import com.sl.util.GlobalConstants;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GrantApplicationDAO {
 
     private static final Logger LOGGER = Logger.getLogger(GrantApplicationDAO.class.getName());
 
-    public static User selectUSER(String uname) throws DBException {
+//    selectApplication
+    public static GrantApplication selectApplication(String ApplicationNumber) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
-        User pojo = null;
+        GrantApplication application = null;
         try {
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("select uname, EMAIL, FIRST_NAME, LAST_NAME, EMAIL_VERIFICATION_HASH, EMAIL_VERIFICATION_ATTEMPTS, STATUS, CREATED_TIME from users where uname = ?");
-            ps.setString(1, uname);
+            ps = conn.prepareStatement("select ApplicationNumber"
+                    + "company,\n"
+                    + "publisherID,\n"
+                    + "agreement,\n"
+                    + "contract,\n"
+                    + "proposedDateOfPublication,\n"
+                    + "proposedDateOfPrintRun,\n"
+                    + "plannedPageExtent,\n"
+                    + "translatorCV,\n"
+                    + "numberOfPages,\n"
+                    + "feePerPage,\n"
+                    + "translatorFee,\n"
+                    + "Notes,\n"
+                    + "copiesSent,\n"
+                    + "dateCopiesWereSent,\n"
+                    + "copiesTranslationSample,\n"
+                    + "TC_ACCEPTED,\n"
+                    + "APPROVED,\n"
+                    + "Status from GrantApplication where ApplicationNumber = ?");
+            ps.setString(1, ApplicationNumber);
             res = ps.executeQuery();
             if (res != null) {
                 while (res.next()) {
-                    pojo = new User();
-                    pojo.setUSERNAME(res.getString(1));
-                    pojo.setEMAIL(res.getString(2));
-                    pojo.setFIRST_NAME(res.getString(3));
-                    pojo.setLAST_NAME(res.getString(4));
-                    pojo.setEMAIL_VERIFICATION_HASH(res.getString(5));
-                    pojo.setEMAIL_VERIFICATION_ATTEMPTS(res.getInt(6));
-                    pojo.setSTATUS(res.getString(7));
-                    pojo.setCREATED_TIME(res.getString(8));
+                    application = new GrantApplication();
+                    application.setApplicationNumber(res.getInt(1));
+                    application.setCompany(res.getString(2));
+                    application.setPublisherID(res.getString(3));
+                    application.setAgreement(res.getString(4));
+                    application.setContract(res.getString(5));
+                    application.setProposedDateOfPublication(res.getDate(6));
+                    application.setProposedDateOfPrintRun(res.getDate(7));
+                    application.setPlannedPageExtent(res.getInt(8));
+                    application.setTranslatorCV(res.getString(9));
+                    application.setNumberOfPages(res.getInt(10));
+                    application.setFeePerPage(res.getDouble(11));
+                    application.setTranslatorFee(res.getDouble(12));
+                    application.setNotes(res.getString(13));
+                    application.setCopiesSent(res.getBoolean(14));
+                    application.setDateCopiesWereSent(res.getDate(15));
+                    application.setCopiesTranslationSample(res.getString(16));
+                    application.setTC_ACCEPTED(res.getBoolean(17));
+                    application.setAPPROVED(res.getBoolean(18));
+                    application.setStatus(res.getString(19));
                 }
             }
             DBConn.close(conn, ps, res);
@@ -46,44 +77,19 @@ public class GrantApplicationDAO {
             e.printStackTrace();
             throw new DBException("1 Excepion while accessing database");
         }
-        return pojo;
+        return application;
     }
 
-    public static boolean verifyEmailHash(String uname, String hash) throws DBException {
+//    isApplicationNumberExists
+    public static boolean isApplicationNumberExists(int ApplicationNumber) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean verified = false;
         ResultSet res = null;
         try {
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("select 1 from users where uname = ? and EMAIL_VERIFICATION_HASH = ?");
-            ps.setString(1, uname);
-            System.out.println("username dao verifyEmailHash: " + uname);
-            ps.setString(2, hash);
-            res = ps.executeQuery();
-            if (res != null) {
-                while (res.next()) {
-                    verified = true;
-                }
-            }
-            DBConn.close(conn, ps, res);
-        } catch (ClassNotFoundException | SQLException e) {
-            DBConn.close(conn, ps, res);
-            LOGGER.debug(e.getMessage());
-            throw new DBException("2 Excepion while accessing database");
-        }
-        return verified;
-    }
-
-    public static boolean isEmailExists(String uname) throws DBException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        boolean verified = false;
-        ResultSet res = null;
-        try {
-            conn = DBConn.getConnection();
-            ps = conn.prepareStatement("select 1 from users where uname = ?");
-            ps.setString(1, uname);
+            ps = conn.prepareStatement("select 1 from GrantApplication where ApplicationNumber = ?");
+            ps.setInt(1, ApplicationNumber);
             res = ps.executeQuery();
             if (res != null) {
                 while (res.next()) {
@@ -99,35 +105,54 @@ public class GrantApplicationDAO {
         return verified;
     }
 
-    public static int insertRow(User pojo) throws DBException {
+//    insertRow
+    public static int insertRow(GrantApplication application) throws DBException {
         Connection conn = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
         int id = 0;
         ResultSet res = null;
-System.out.println("insertRow:: ");
+        System.out.println("insertRow:: ");
         try {
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
-            ps1 = conn.prepareStatement("insert into users (uname,FIRST_NAME,LAST_NAME,PASSWORD,EMAIL,FUNCTION,ROLE,EMAIL_VERIFICATION_HASH) values (?,?,?,?,?,?,?,?)");
-            ps1.setString(1, pojo.getUSERNAME());
-            ps1.setString(2, pojo.getFIRST_NAME());
-            ps1.setString(3, pojo.getLAST_NAME());
-            ps1.setString(4, pojo.getPASSWORD());
-            ps1.setString(5, pojo.getEMAIL());
-            ps1.setString(6, pojo.getFUNCTION());
-            ps1.setString(7, pojo.getROLE());
-            ps1.setString(8, pojo.getEMAIL_VERIFICATION_HASH());
-
-            String uname = pojo.getUSERNAME();
-            System.out.println("uname dao insertRow: " + uname);
-
-            String strF = pojo.getFUNCTION();
-            System.out.println("strF: " + strF);
-
-            String em = pojo.getEMAIL();
-            System.out.println("em: " + em);
-            System.out.println("isEmailExists Not: create new one: ");
+            ps1 = conn.prepareStatement("INSERT INTO  GrantApplication"
+                    + "(company,\n"
+                    + "publisherID,\n"
+                    + "agreement,\n"
+                    + "contract,\n"
+                    + "proposedDateOfPublication,\n"
+                    + "proposedDateOfPrintRun,\n"
+                    + "plannedPageExtent,\n"
+                    + "translatorCV,\n"
+                    + "numberOfPages,\n"
+                    + "feePerPage,\n"
+                    + "translatorFee,\n"
+                    + "Notes,\n"
+                    + "copiesSent,\n"
+                    + "dateCopiesWereSent,\n"
+                    + "copiesTranslationSample,\n"
+                    + "TC_ACCEPTED,\n"
+                    + "APPROVED,\n"
+                    + "Status)  values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps1.setString(1, application.getCompany());
+            ps1.setString(2, application.getPublisherID());
+            ps1.setString(3, application.getAgreement());
+            ps1.setString(4, application.getContract());
+            ps1.setDate(5, sqlDate(application.getProposedDateOfPublication()));
+            ps1.setDate(6, sqlDate(application.getProposedDateOfPrintRun()));
+            ps1.setInt(7, application.getPlannedPageExtent());
+            ps1.setString(8, application.getTranslatorCV());
+            ps1.setInt(9, application.getNumberOfPages());
+            ps1.setDouble(10, application.getFeePerPage());
+            ps1.setDouble(11, application.getTranslatorFee());
+            ps1.setString(12, application.getNotes());
+            ps1.setBoolean(13, application.isCopiesSent());
+            ps1.setDate(14, sqlDate(application.getDateCopiesWereSent()));
+            ps1.setString(15, application.getCopiesTranslationSample());
+            ps1.setBoolean(16, application.isTC_ACCEPTED());
+            ps1.setBoolean(17, application.isAPPROVED());
+            ps1.setString(18, application.getStatus());
 
             ps1.executeUpdate();
 
@@ -148,18 +173,100 @@ System.out.println("insertRow:: ");
             DBConn.close(conn, ps1, ps2, res);
             throw new DBException("4 Excepion while accessing database");
         }
-        
+
         System.out.println("userID::insertRow:: " + id);
         return id;
     }
 
-    public static void deleteRow(User pojo) {
+    //updateApplication
+    public static boolean updateApplication(GrantApplication application, int ApplicationNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        boolean id;
+        int committed;
+        ResultSet res = null;
+        int applicationNumber = ApplicationNumber;
+
+        System.out.println("doing updateApplication::  ");
+        try {
+            conn = DBConn.getConnection();
+            //conn.setAutoCommit(false);
+
+            //    String sql = "UPDATE international_publishers SET (Company,Company_Number,Address1,Address2,Address3,Address4,postCode,City,Country,CountryCode,Telephone,Fax,WWW,DoNotMail,Bursaries,Founded,NumberOfTitles,DateModified,Notes ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            //    sql += " WHERE ApplicationNumber = " + applicationNumber;
+            ps1 = conn.prepareStatement("UPDATE GrantApplication SET"
+                    + "(company,\n"
+                    + "publisherID,\n"
+                    + "agreement,\n"
+                    + "contract,\n"
+                    + "proposedDateOfPublication,\n"
+                    + "proposedDateOfPrintRun,\n"
+                    + "plannedPageExtent,\n"
+                    + "translatorCV,\n"
+                    + "numberOfPages,\n"
+                    + "feePerPage,\n"
+                    + "translatorFee,\n"
+                    + "Notes,\n"
+                    + "copiesSent,\n"
+                    + "dateCopiesWereSent,\n"
+                    + "copiesTranslationSample,\n"
+                    + "TC_ACCEPTED,\n"
+                    + "APPROVED,\n"
+                    + "Status)  values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                    + "WHERE ApplicationNumber = " + applicationNumber);
+
+//            System.out.println("sql::  " + sql);
+//            System.out.println("applicationNumber::  " + applicationNumber);
+//
+//            ps1 = conn.prepareStatement(sql);
+            ps1.setString(1, application.getCompany());
+            ps1.setString(2, application.getPublisherID());
+            ps1.setString(3, application.getAgreement());
+            ps1.setString(4, application.getContract());
+            ps1.setDate(5, sqlDate(application.getProposedDateOfPublication()));
+            ps1.setDate(6, sqlDate(application.getProposedDateOfPrintRun()));
+            ps1.setInt(7, application.getPlannedPageExtent());
+            ps1.setString(8, application.getTranslatorCV());
+            ps1.setInt(9, application.getNumberOfPages());
+            ps1.setDouble(10, application.getFeePerPage());
+            ps1.setDouble(11, application.getTranslatorFee());
+            ps1.setString(12, application.getNotes());
+            ps1.setBoolean(13, application.isCopiesSent());
+            ps1.setDate(14, sqlDate(application.getDateCopiesWereSent()));
+            ps1.setString(15, application.getCopiesTranslationSample());
+            ps1.setBoolean(16, application.isTC_ACCEPTED());
+            ps1.setBoolean(17, application.isAPPROVED());
+            ps1.setString(18, application.getStatus());
+
+            committed = ps1.executeUpdate();
+
+            conn.commit();
+
+            if (committed > 0) {
+                id = true;
+            } else {
+                id = false;
+            }
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+        System.out.println("return id::  " + id);
+        return id;
+    }
+
+//    deleteRow
+    public static void deleteRow(GrantApplication application) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("delete from users where uname = ?");
-            ps.setString(1, pojo.getUSERNAME());
+            ps = conn.prepareStatement("delete from GrantApplication where ApplicationNumber = ?");
+            ps.setInt(1, application.getApplicationNumber());
             ps.executeUpdate();
             ps.close();
             DBConn.close(conn, ps);
@@ -169,15 +276,16 @@ System.out.println("insertRow:: ");
         }
     }
 
-    public static void updateStaus(String uname, String status) throws DBException {
+//    updateStatus
+    public static void updateStatus(int ApplicationNumber, String status) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
 
         try {
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("update users set STATUS = ? where uname = ?");
+            ps = conn.prepareStatement("UPDATE GrantApplication set STATUS = ? where ApplicationNumber = ?");
             ps.setString(1, status);
-            ps.setString(2, uname);
+            ps.setInt(2, ApplicationNumber);
             ps.executeUpdate();
             DBConn.close(conn, ps);
 
@@ -188,187 +296,66 @@ System.out.println("insertRow:: ");
         }
     }
 
-    public static void updateEmailVerificationHash(String uname, String hash) throws DBException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = DBConn.getConnection();
-            ps = conn.prepareStatement("update users set EMAIL_VERIFICATION_HASH = ?, EMAIL_VERIFICATION_ATTEMPTS = ? where uname = ?");
-            ps.setString(1, hash);
-            ps.setInt(2, 0);
-            ps.setString(3, uname);
-            ps.executeUpdate();
-            DBConn.close(conn, ps);
-        } catch (ClassNotFoundException | SQLException e) {
-            LOGGER.debug(e.getMessage());
-            DBConn.close(conn, ps);
-            throw new DBException(" 6 Excepion while accessing database");
-        }
-    }
+    //listAllApplications
+    public static List<GrantApplication> listAllApplications() throws DBException {
+        List<GrantApplication> listApplications = new ArrayList<>();
 
-    public static int incrementVerificationAttempts(String uname) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
-        PreparedStatement ps2 = null;
         ResultSet res = null;
-        int attempts = 0;
+
         try {
+
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("update users set EMAIL_VERIFICATION_ATTEMPTS = EMAIL_VERIFICATION_ATTEMPTS + 1 where uname = ?");
-            ps.setString(1, uname);
-            ps.executeUpdate();
 
-            ps2 = conn.prepareStatement("SELECT EMAIL_VERIFICATION_ATTEMPTS from users");
-            res = ps2.executeQuery();
-
-            if (res != null) {
-                while (res.next()) {
-                    attempts = res.getInt(1);
-                }
-            }
-            DBConn.close(conn, ps, ps2, res);
-        } catch (ClassNotFoundException | SQLException e) {
-            LOGGER.debug(e.getMessage());
-            DBConn.close(conn, ps, ps2, res);
-            throw new DBException("7 Excepion while accessing database");
-        }
-        return attempts;
-    }
-
-    public static User verifyLogin(String inputUsername, String inputPassword) throws DBException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        User pojo = null;
-        ResultSet res = null;
-        System.out.println("uname before : " + inputUsername);
-        try {
-            conn = DBConn.getConnection();
-            ps = conn.prepareStatement("select uname, EMAIL, FIRST_NAME, LAST_NAME, STATUS, CREATED_TIME, ROLE, FUNCTION from users where uname = ? and PASSWORD = ?");
-            ps.setString(1, inputUsername);
-            ps.setString(2, inputPassword);
-            System.out.println("Userdao 1 verifyLogin");
-            System.out.println("uname after: " + inputUsername);
-            System.out.println("ps: " + ps);
-
+            ps = conn.prepareStatement("SELECT * FROM GrantApplication");
             res = ps.executeQuery();
-            if (res != null) {
-                while (res.next()) {
-                    pojo = new User();
 
-                    System.out.println("Userdao 2 verifyLogin");
+            while (res.next()) {
+                GrantApplication application = new GrantApplication();
 
-                    pojo.setUSERNAME(res.getString(1));
-                    pojo.setEMAIL(res.getString(2));
-                    pojo.setFIRST_NAME(res.getString(3));
-                    pojo.setLAST_NAME(res.getString(4));
-                    pojo.setSTATUS(res.getString(5));
-                    pojo.setCREATED_TIME(res.getString(6));
-                    pojo.setROLE(res.getString(7));
-                    pojo.setFUNCTION(res.getString(8));
-                }
+                application.setApplicationNumber(res.getInt(1));
+                application.setCompany(res.getString(2));
+                application.setPublisherID(res.getString(3));
+                application.setAgreement(res.getString(4));
+                application.setContract(res.getString(5));
+                application.setProposedDateOfPublication(res.getDate(6));
+                application.setProposedDateOfPrintRun(res.getDate(7));
+                application.setPlannedPageExtent(res.getInt(8));
+                application.setTranslatorCV(res.getString(9));
+                application.setNumberOfPages(res.getInt(10));
+                application.setFeePerPage(res.getDouble(11));
+                application.setTranslatorFee(res.getDouble(12));
+                application.setNotes(res.getString(13));
+                application.setCopiesSent(res.getBoolean(14));
+                application.setDateCopiesWereSent(res.getDate(15));
+                application.setCopiesTranslationSample(res.getString(16));
+                application.setTC_ACCEPTED(res.getBoolean(17));
+                application.setAPPROVED(res.getBoolean(18));
+                application.setStatus(res.getString(19));
+
+                listApplications.add(application);
             }
+
+            conn.commit();
             DBConn.close(conn, ps, res);
+
+            disconnect();
+
         } catch (ClassNotFoundException | SQLException e) {
-            LOGGER.debug(e.getMessage());
             DBConn.close(conn, ps, res);
-            throw new DBException("8 Excepion while accessing database");
+            throw new DBException("4 Excepion while accessing database");
         }
-        return pojo;
+
+        return listApplications;
     }
 
-    public static boolean verifyUserIdAndPassword(String uname,
-            String inputCurrentPassword) throws DBException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        boolean verified = false;
-        ResultSet res = null;
-        try {
-            conn = DBConn.getConnection();
-            ps = conn.prepareStatement("select 1 from users where uname = ? and PASSWORD = ?");
-            ps.setString(1, uname);
-            ps.setString(2, inputCurrentPassword);
-            res = ps.executeQuery();
-            if (res != null) {
-                while (res.next()) {
-                    verified = true;
-                }
-            }
-            DBConn.close(conn, ps, res);
-        } catch (ClassNotFoundException | SQLException e) {
-            LOGGER.debug(e.getMessage());
-            DBConn.close(conn, ps, res);
-            throw new DBException("9 Excepion while accessing database");
-        }
-        return verified;
-    }
+//  convert Java Date to SQL Date
+    public static java.sql.Date sqlDate(java.util.Date javaDate) {
 
-    public static void updatePassword(String uname, String inputPassword) throws DBException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = DBConn.getConnection();
-            ps = conn.prepareStatement("update users set PASSWORD = ? where uname = ?");
-            ps.setString(1, inputPassword);
-            ps.setString(2, uname);
-            ps.executeUpdate();
-            DBConn.close(conn, ps);
-        } catch (ClassNotFoundException | SQLException e) {
-            LOGGER.debug(e.getMessage());
-            DBConn.close(conn, ps);
-            throw new DBException("10 Excepion while accessing database");
-        }
-    }
+        java.util.Date utilStartDate = javaDate;
+        java.sql.Date convertSqlDate = new java.sql.Date(utilStartDate.getTime());
 
-    public static void updateEmailVerificationHashForResetPassword(String inputEmail,
-            String hash) throws DBException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = DBConn.getConnection();
-            ps = conn.prepareStatement("update users set EMAIL_VERIFICATION_HASH = ?, EMAIL_VERIFICATION_ATTEMPTS = ?, STATUS = ? where EMAIL = ?");
-            ps.setString(1, hash);
-            ps.setInt(2, 0);
-            ps.setString(3, GlobalConstants.IN_RESET_PASSWORD);
-            ps.setString(4, inputEmail);
-            ps.executeUpdate();
-            DBConn.close(conn, ps);
-        } catch (ClassNotFoundException | SQLException e) {
-            LOGGER.debug(e.getMessage());
-            DBConn.close(conn, ps);
-            throw new DBException("11 Excepion while accessing database");
-        }
+        return convertSqlDate;
     }
-
-    public static User selectUSERbyEmail(String inputEmail) throws DBException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet res = null;
-        User pojo = null;
-        try {
-            conn = DBConn.getConnection();
-            ps = conn.prepareStatement("select uname, EMAIL, FIRST_NAME, LAST_NAME, EMAIL_VERIFICATION_HASH, EMAIL_VERIFICATION_ATTEMPTS, STATUS, CREATED_TIME from users where EMAIL = ?");
-            ps.setString(1, inputEmail);
-            res = ps.executeQuery();
-            if (res != null) {
-                while (res.next()) {
-                    pojo = new User();
-                    pojo.setUSERNAME(res.getString(1));
-                    pojo.setEMAIL(res.getString(2));
-                    pojo.setFIRST_NAME(res.getString(3));
-                    pojo.setLAST_NAME(res.getString(4));
-                    pojo.setEMAIL_VERIFICATION_HASH(res.getString(5));
-                    pojo.setEMAIL_VERIFICATION_ATTEMPTS(res.getInt(6));
-                    pojo.setSTATUS(res.getString(7));
-                    pojo.setCREATED_TIME(res.getString(8));
-                }
-            }
-            DBConn.close(conn, ps, res);
-        } catch (ClassNotFoundException | SQLException e) {
-            LOGGER.debug(e.getMessage());
-            DBConn.close(conn, ps, res);
-            throw new DBException("12 Excepion while accessing database");
-        }
-        return pojo;
-    }
-
 }
