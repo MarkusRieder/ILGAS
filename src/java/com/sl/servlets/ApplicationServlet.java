@@ -68,6 +68,7 @@ public class ApplicationServlet extends HttpServlet {
                 break;
             default:
                 //          listBook(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
                 break;
         }
 

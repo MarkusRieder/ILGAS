@@ -358,4 +358,37 @@ public class GrantApplicationDAO {
 
         return convertSqlDate;
     }
+
+    public static int getLastRecordID() throws DBException {
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+
+        int id = 0;
+        ResultSet res = null;
+        System.out.println("getLastRecordID:: ");
+        try {
+            conn = DBConn.getConnection();
+           // conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("SELECT max(ApplicationNumber) FROM GrantApplication");
+            res = ps1.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+                    id = res.getInt(1);
+                }
+            }
+
+           // conn.commit();
+
+            DBConn.close(conn, ps1, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, res);
+            throw new DBException("getLastRecordID :: Exception while accessing database");
+        }
+
+        System.out.println("getLastRecordID:: " + id);
+        return id;
+    }
 }

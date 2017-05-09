@@ -12,6 +12,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.sl.dao.GrantApplicationDAO;
+import com.sl.db.DBException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,7 +43,7 @@ public class GrantApplicationServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GrantApplicationServlet</title>");            
+            out.println("<title>Servlet GrantApplicationServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet GrantApplicationServlet at " + request.getContextPath() + "</h1>");
@@ -72,30 +78,56 @@ public class GrantApplicationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
-         String test = request.getParameter("agreement_upload");
-                System.out.println("agreement_upload:  " + test);
+
+        HttpSession session = request.getSession(false);
+
+        int newApplicationNumber = 0;
                 
-                //collect all data input
-                String ApplicationNumber = request.getParameter("ApplicationNumber");
-                String company = request.getParameter("company");
-                String publisherID = request.getParameter("publisherID");
-                String agreement = request.getParameter("agreement");
-                String contract = request.getParameter("contract");
-                String proposedDateOfPublication = request.getParameter("proposedDateOfPublication");
-                String proposedDateOfPrintRun = request.getParameter("proposedDateOfPrintRun");
-                String plannedPageExtent = request.getParameter("plannedPageExtent");
-                String translatorCV = request.getParameter("translatorCV");
-                String numberOfPages = request.getParameter("numberOfPages");
-                String feePerPage = request.getParameter("feePerPage");
-                String translatorFee = request.getParameter("translatorFee");
-                String Notes = request.getParameter("Notes");
-                String copiesSent = request.getParameter("copiesSent");
-                String dateCopiesWereSent = request.getParameter("dateCopiesWereSent");
-                String copiesTranslationSample = request.getParameter("copiesTranslationSample");
-                String TC_ACCEPTED = request.getParameter("TC_ACCEPTED");
-                String APPROVED = request.getParameter("APPROVED");
-                String Status = request.getParameter("Status");
+        try {
+            newApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
+        } catch (DBException ex) {
+            Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+         System.out.println("newApplicationNumber:: " + newApplicationNumber);
+//        String task = request.getParameter("task");
+        String task = "New Application";
+
+        System.out.println("task:  " + task);
+
+        request.setAttribute("task", task);
+
+        //collect all data input
+//        String ApplicationNumber = request.getParameter("ApplicationNumber");
+//        String company = request.getParameter("company");
+//        String publisherID = request.getParameter("publisherID");
+//        String userID = request.getParameter("userID");
+//        String agreement = request.getParameter("agreement");
+//        String contract = request.getParameter("contract");
+//        String proposedDateOfPublication = request.getParameter("proposedDateOfPublication");
+//        String proposedDateOfPrintRun = request.getParameter("proposedDateOfPrintRun");
+//        String plannedPageExtent = request.getParameter("plannedPageExtent");
+//        String translatorCV = request.getParameter("translatorCV");
+//        String numberOfPages = request.getParameter("numberOfPages");
+//        String feePerPage = request.getParameter("feePerPage");
+//        String translatorFee = request.getParameter("translatorFee");
+//        String Notes = request.getParameter("Notes");
+//        String copiesSent = request.getParameter("copiesSent");
+//        String dateCopiesWereSent = request.getParameter("dateCopiesWereSent");
+//
+//        String copiesTranslationSample = request.getParameter("copiesTranslationSample");
+//        String TC_ACCEPTED = request.getParameter("TC_ACCEPTED");
+//        String APPROVED = request.getParameter("APPROVED");
+//        String Status = request.getParameter("Status");
+//
+//        System.out.println("company:  " + company);
+//        System.out.println("publisherID:  " + publisherID);
+//        System.out.println("GrantApplicationServlet :: userID:  " + userID);
+//        System.out.println("proposedDateOfPublication:  " + proposedDateOfPublication);
+//        System.out.println("Notes:  " + Notes);
+//        System.out.println("copiesTranslationSample:  " + copiesTranslationSample);
+//        System.out.println("APPROVED:  " + APPROVED);
+//        System.out.println("Status:  " + Status);
     }
 
     /**

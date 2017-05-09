@@ -256,7 +256,6 @@
                                                value="" 
                                                placeholder="username"
                                                >   
-
                                     </div>
 
                                     <div style="margin-bottom: 25px" class="input-group">
@@ -269,7 +268,6 @@
                                                data-placement="after" 
                                                placeholder="password"
                                                >
-
                                         <div class="help-block with-errors"></div>
                                     </div>
 
@@ -323,7 +321,6 @@
                                           method="POST" 
                                           name="regF"
                                           >
-
                                         <div id="signupalert" style="display:none" class="alert alert-danger">
                                             <p>Error:</p>
                                             <span></span>
@@ -351,7 +348,6 @@
                                                            data-error="Username should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
                                                            required
                                                            >     
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group uname-->  
@@ -368,7 +364,6 @@
                                                            data-error="First name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
                                                            required
                                                            >              
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group firstname-->     
@@ -385,7 +380,6 @@
                                                            data-error="Last name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
                                                            required
                                                            >    
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group lastname-->      
@@ -402,7 +396,6 @@
                                                            data-error="Enter valid Email"
                                                            required
                                                            >                                            
-
                                                     <span class="help-block" id="error"></span>      
                                                 </div>
                                             </div> <!--form-group email-->
@@ -420,7 +413,6 @@
                                                            Use only A-Z, a-z, 0-9, @ # $ % ! ^ & * charecters" 
                                                            required                                                                                     
                                                            >                                           
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group password-->
@@ -437,7 +429,6 @@
                                                            data-match="#password"                                                                      
                                                            required
                                                            >                               
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group cpassword-->

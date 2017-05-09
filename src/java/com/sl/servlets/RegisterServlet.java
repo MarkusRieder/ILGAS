@@ -60,7 +60,7 @@ public class RegisterServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         // collect all input values
-        PrintWriter out = response.getWriter();
+      //  PrintWriter out = response.getWriter();
 
         // values for user table
         String username = request.getParameter("uname");

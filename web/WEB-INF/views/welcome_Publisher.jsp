@@ -264,7 +264,7 @@
                             <!--container for welcome/logout-->
                             <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                                 <div class="pull-right">
-                                     <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                                    <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
                                 </div>
                             </div> <!--container for welcome/logout-->
 
@@ -299,12 +299,15 @@
                                         <span class="help-block" id="error"></span> 
                                     </div>
                                 </div> <!--form-group selectpicker-->
-                                                                    <div style="margin-top:10px" class="form-group">
-                                        <!-- Button -->
-                                        <div class="col-sm-12 controls">
-                                            <input type="submit" class="btn btn-success btn-send" value="Submit">
-                                        </div> <!-- col-md-12 control -->
-                                    </div> <!-- form-group -->
+                                <input type="hidden" name="firstname" value ="${firstname}">
+                                <input type="hidden" name="lastname" value ="${lastname}">
+                                <input type="hidden" name="userID" value ="${userID}">
+                                <div style="margin-top:10px" class="form-group">
+                                    <!-- Button -->
+                                    <div class="col-sm-12 controls">
+                                        <input type="submit" class="btn btn-success btn-send" value="Submit">
+                                    </div> <!-- col-md-12 control -->
+                                </div> <!-- form-group -->
                             </form>
                         </div> <!-- container-fluid -->                   
 

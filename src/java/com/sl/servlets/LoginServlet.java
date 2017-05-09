@@ -1,6 +1,5 @@
 package com.sl.servlets;
 
-
 import com.sl.db.DBConn;
 import com.sl.db.DBException;
 import com.sl.service.LoginService;
@@ -73,6 +72,7 @@ public class LoginServlet extends HttpServlet {
         request.setAttribute("firstname", firstname);
         request.setAttribute("lastname", lastname);
         request.setAttribute("email", email);
+        request.setAttribute("userID", userID);
 
         System.out.println("reply " + Arrays.toString(replied));
 
@@ -89,6 +89,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("firstname", firstname);
             session.setAttribute("lastname", lastname);
             session.setAttribute("email", email);
+            session.setAttribute("userID", userID);
 
             System.out.println("firstname: " + firstname);
             System.out.println("lastname: " + lastname);
@@ -114,7 +115,6 @@ public class LoginServlet extends HttpServlet {
                         session.setAttribute("publisherID", publisherID);
                         session.setAttribute("publisherName", publisherName);
 
-                        
                         request.getSession().setAttribute(publisherName, publisherName);
                         request.setAttribute("publisherName", publisherName);
 
@@ -122,7 +122,7 @@ public class LoginServlet extends HttpServlet {
                         // so user can fill in Publishers details 
                         boolean isNew = false;
                         isNew = ACpublisherDAO_test.isNewPublisher(publisherID);
- System.out.println("Publisher isNew:1: " + isNew);
+                        System.out.println("Publisher isNew:1: " + isNew);
                         if (isNew == true) {
 
                             System.out.println("Publisher isNew:2: " + isNew);
@@ -132,10 +132,10 @@ public class LoginServlet extends HttpServlet {
                             request.getRequestDispatcher("/WEB-INF/views/publisherRegistration.jsp").forward(request, response);
 
                         } else {
-System.out.println("Im here :1: ");
+                            System.out.println("Im here :1: ");
                             request.getRequestDispatcher("/WEB-INF/views/welcome_Publisher.jsp").forward(request, response);
                         }
-                        
+
                     } catch (DBException ex) {
                         java.util.logging.Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }

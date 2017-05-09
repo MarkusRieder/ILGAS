@@ -28,12 +28,12 @@ import javax.servlet.http.Part;
 /**
  * File upload servlet example
  */
-@WebServlet(name = "FileUploadServlet2", urlPatterns = {"/upload"})
+@WebServlet(name = "FileUploadServlet", urlPatterns = {"/upload"})
 @MultipartConfig
-public class FileUploadServlet2 extends HttpServlet {
+public class FileUploadServlet extends HttpServlet {
 
     private final static Logger LOGGER
-            = Logger.getLogger(FileUploadServlet2.class.getCanonicalName());
+            = Logger.getLogger(FileUploadServlet.class.getCanonicalName());
     private static final long serialVersionUID = 7908187011456392847L;
 
     /**

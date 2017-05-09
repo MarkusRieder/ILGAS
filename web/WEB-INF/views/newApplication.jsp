@@ -316,12 +316,7 @@
         </head>
 
         <body style="height: 100%">
-                <sql:query var="applicationQuery" dataSource="jdbc/ILGAS">
-                    SELECT * FROM GrantApplication
-                    WHERE GrantApplication.ApplicationNumber = ? AND GrantApplication.Status = 'new'
-                    <sql:param value="${ApplicationNumber}"/>
-                </sql:query>
-                <c:set var="applicationDetails" value="${applicationQuery.rows[0]}"/>
+
 
                 <sql:query var="companyQuery" dataSource="jdbc/ILGAS">
                     SELECT * FROM international_publishers
@@ -329,6 +324,7 @@
                     <sql:param value="${publisherID}"/>
                 </sql:query>
                 <c:set var="companyDetails" value="${companyQuery.rows[0]}"/>
+              
 
                 <div id="shadowholder">
                     <div class="shadowtop"> </div>
@@ -377,7 +373,7 @@
                                     <div class="tab-pane active" id="info">       
                                         <br/>
                                         <br/>
-                                        <img style="margin:0px auto;display:block" src="images/favicon.jpg" alt="favicon"/>
+                                        <img style="margin:0px auto;display:block" src="images/favicon.png" alt="favicon" width="50" height="50"/>
                                         <h1 align="center" style="margin-bottom: 40px; margin-top: 60px"> <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span> 
                                             Information - Please read!
                                             <span class="glyphicon glyphicon-exclamation-sign  icon-exclamation"></span> 
@@ -460,22 +456,22 @@
                                         <div class="container-fluid">
 
                                             <!--Form Contactdetails-->
-                                            <form id="Contactdetails" class="form-horizontal" action="${pageContext.request.contextPath}/login.do" 
+                                            <form id="Contactdetails" class="form-horizontal" action="${pageContext.request.contextPath}/GrantApplicationServlet" 
                                                   method="POST"  role="form" >
                                                 <div class="col-md-9" >
                                                     <div style="margin-bottom: 25px" class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                                         <input id="Company" type="text" class="form-control" name="company" value="${companyDetails.Company}" placeholder="Publishing Company Name">                                        
                                                     </div>
-
+                                                        <input type="hidden" name="userID" value ="${userID}">
                                                     <div style="margin-bottom: 25px" class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                        <input id="firstname" type="text" class="form-control" name="firstname" value="${companyDetails.firstname}" placeholder="${firstname}">                                        
+                                                        <input id="firstname" type="text" class="form-control" name="firstname" value="${firstname}" placeholder="First Name">                                        
                                                     </div>
 
                                                     <div style="margin-bottom: 25px" class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                        <input id="lastname" type="text" class="form-control" name="lastname" value="${companyDetails.lastname}" placeholder="${lastname}">                                        
+                                                        <input id="lastname" type="text" class="form-control" name="lastname" value="${lastname}" placeholder="Last Name">                                        
                                                     </div>
 
                                                     <div style="margin-bottom: 25px" class="input-group">
@@ -513,24 +509,24 @@
                                                         <input id="Telephone" type="text" class="form-control" name="Telephone" value="${companyDetails.Telephone}" placeholder="Telephone number ">                                        
                                                     </div>
 
-                                                   
-                                                      <div class="input-group input-group-lg" style="margin-top: 40px; margin-bottom: 40px;">
 
-                                                            <button type="submit"  name="save_UpdatedDetails" id="save_UpdatedDetails" 
-                                                                    data-toggle="tooltip" title="Click to save!"
-                                                                    >
-                                                                Save Updated Details
-                                                                <span class="glyphicon glyphicon-import"></span>
-                                                            </button>
-                                                        </div>
+                                                    <div class="input-group input-group-lg" style="margin-top: 40px; margin-bottom: 40px;">
+
+                                                    <button type="submit"  name="save_UpdatedDetails" id="save_UpdatedDetails" 
+                                                            data-toggle="tooltip" title="Click to save!"
+                                                            >
+                                                        Save Updated Details
+                                                        <span class="glyphicon glyphicon-import"></span>
+                                                    </button>
                                                 </div>
-                                            </form>
-                                        </div> <!-- container-fluid -->
-                                    </div> <!-- class="tab-pane" id="red" -->
+                                            </div>
+                                        </form>
+                                    </div> <!-- container-fluid -->
+                                </div> <!-- class="tab-pane" id="red" -->
 
-                                    <!-- Rights Agreement -->
-                                    <div class="tab-pane" id="Rights">
-                                        <h1 style="margin-bottom: 40px">Rights Agreement</h1>
+                                <!-- Rights Agreement -->
+                                <div class="tab-pane" id="Rights">
+                                    <h1 style="margin-bottom: 40px">Rights Agreement</h1>
                                         <div class="container-fluid">
                                             <div class="row"  style="display: block;
                                             margin-right: auto;
@@ -551,7 +547,7 @@
                                                         <br/>
                                                         <br/>  
                                                         <label>Destination:</label>                                              
-                                                        <input type="text" value="/home/markus/test/" name="destination" id="agreement_upload"/>
+                                                        <input type="text" value="/home/markus/test" name="destination" id="agreement_upload"/>
                                                         <button type="submit"  name="upload_agreement" id="upload_agreement" 
                                                                 data-toggle="tooltip" title="Click to UPLOAD!">
                                                             Upload
@@ -576,7 +572,7 @@
                                                         <br/>
                                                         <br/> 
                                                         <label>Destination:</label>
-                                                        <input type="text" value="/home/markus/test/" name="destination" id="contract_upload"/>
+                                                        <input type="text" value="/home/markus/test" name="destination" id="contract_upload"/>
                                                         <button type="submit"  name="contract_upload" id="upload_contract" 
                                                                 data-toggle="tooltip" title="Click to UPLOAD!">
                                                             Upload
@@ -639,7 +635,7 @@
                                                     </div>
                                                     <script>
                                                         $("#proposed-date-of-publication").datepicker({
-                                                            format: "D dd/mm/yyyy",
+                                                            format: "dd/mm/yyyy",
                                                             showWeekDays: true,
                                                             todayHighlight: true,
                                                             autoclose: true
@@ -647,7 +643,7 @@
                                                     </script>
                                                     <script>
                                                         $("#proposed-print-run").datepicker({
-                                                            format: "D dd/mm/yyyy",
+                                                            format: "dd/mm/yyyy",
                                                             showWeekDays: true,
                                                             todayHighlight: true,
                                                             autoclose: true
@@ -678,7 +674,7 @@
                                                     <br/>
                                                     <br/>                                               
                                                     Destination:
-                                                    <input type="text" id="translator_cv_upload" value="/home/markus/test/" name="destination" />                                          
+                                                    <input type="text" id="translator_cv_upload" value="/home/markus/test" name="destination" />                                          
                                                     <button type="submit"  name="upload_translator_cv" id="upload_translator_cv" 
                                                             data-toggle="tooltip" title="Click to UPLOAD!">
                                                         Upload
@@ -759,14 +755,14 @@
                                                         <!--datepicker  mail-sent-->
                                                         <script>
                                                             $("#mail-sent").datepicker({
-                                                                format: "D dd/mm/yyyy",
+                                                                format: "dd/mm/yyyy",
                                                                 showWeekDays: true,
                                                                 todayHighlight: true,
                                                                 autoclose: true
                                                             });
                                                         </script>
-                                                        
-                                                        
+
+
                                                         <div class="col-md-9"   style="margin-bottom: 40px;">
                                                         <div class="input-group input-group-lg">
                                                             <button type="submit"  
