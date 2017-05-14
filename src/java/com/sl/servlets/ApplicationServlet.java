@@ -5,8 +5,12 @@
  */
 package com.sl.servlets;
 
+import com.sl.dao.GrantApplicationDAO;
+import com.sl.db.DBException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,10 +55,20 @@ public class ApplicationServlet extends HttpServlet {
 
         switch (task) {
             case "New Application":
+        {
+            try {
                 //      showNewForm(request, response);
                 //  System.out.println("/New Application:  ");
-
-               
+                
+                int ApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
+                 System.out.println("/Application::ApplicationNumber:  " + ApplicationNumber);
+                 
+                 request.setAttribute("ApplicationNumber", ApplicationNumber);
+                
+            } catch (DBException ex) {
+                Logger.getLogger(ApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
                 request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
                 break;
@@ -68,7 +82,7 @@ public class ApplicationServlet extends HttpServlet {
                 break;
             default:
                 //          listBook(request, response);
-                request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
                 break;
         }
 

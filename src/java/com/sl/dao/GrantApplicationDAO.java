@@ -62,11 +62,11 @@ public class GrantApplicationDAO {
                     application.setFeePerPage(res.getDouble(11));
                     application.setTranslatorFee(res.getDouble(12));
                     application.setNotes(res.getString(13));
-                    application.setCopiesSent(res.getBoolean(14));
+                    application.setCopiesSent(res.getInt(14));
                     application.setDateCopiesWereSent(res.getDate(15));
                     application.setCopiesTranslationSample(res.getString(16));
-                    application.setTC_ACCEPTED(res.getBoolean(17));
-                    application.setAPPROVED(res.getBoolean(18));
+                    application.setTC_ACCEPTED(res.getInt(17));
+                    application.setAPPROVED(res.getInt(18));
                     application.setStatus(res.getString(19));
                 }
             }
@@ -135,6 +135,7 @@ public class GrantApplicationDAO {
                     + "TC_ACCEPTED,\n"
                     + "APPROVED,\n"
                     + "Status)  values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            
             ps1.setString(1, application.getCompany());
             ps1.setString(2, application.getPublisherID());
             ps1.setString(3, application.getAgreement());
@@ -147,11 +148,11 @@ public class GrantApplicationDAO {
             ps1.setDouble(10, application.getFeePerPage());
             ps1.setDouble(11, application.getTranslatorFee());
             ps1.setString(12, application.getNotes());
-            ps1.setBoolean(13, application.isCopiesSent());
+            ps1.setInt(13, application.getCopiesSent());
             ps1.setDate(14, sqlDate(application.getDateCopiesWereSent()));
             ps1.setString(15, application.getCopiesTranslationSample());
-            ps1.setBoolean(16, application.isTC_ACCEPTED());
-            ps1.setBoolean(17, application.isAPPROVED());
+            ps1.setInt(16, application.getTC_ACCEPTED());
+            ps1.setInt(17, application.getAPPROVED());
             ps1.setString(18, application.getStatus());
 
             ps1.executeUpdate();
@@ -174,7 +175,8 @@ public class GrantApplicationDAO {
             throw new DBException("4 Excepion while accessing database");
         }
 
-        System.out.println("userID::insertRow:: " + id);
+        System.out.println("isCopiesSent: " + application.getCopiesSent());
+        System.out.println("GrantApplicationDAO::insertRow:: " + id);
         return id;
     }
 
@@ -232,11 +234,11 @@ public class GrantApplicationDAO {
             ps1.setDouble(10, application.getFeePerPage());
             ps1.setDouble(11, application.getTranslatorFee());
             ps1.setString(12, application.getNotes());
-            ps1.setBoolean(13, application.isCopiesSent());
+            ps1.setInt(13, application.getCopiesSent());
             ps1.setDate(14, sqlDate(application.getDateCopiesWereSent()));
             ps1.setString(15, application.getCopiesTranslationSample());
-            ps1.setBoolean(16, application.isTC_ACCEPTED());
-            ps1.setBoolean(17, application.isAPPROVED());
+            ps1.setInt(16, application.getTC_ACCEPTED());
+            ps1.setInt(17, application.getAPPROVED());
             ps1.setString(18, application.getStatus());
 
             committed = ps1.executeUpdate();
@@ -327,11 +329,11 @@ public class GrantApplicationDAO {
                 application.setFeePerPage(res.getDouble(11));
                 application.setTranslatorFee(res.getDouble(12));
                 application.setNotes(res.getString(13));
-                application.setCopiesSent(res.getBoolean(14));
+                application.setCopiesSent(res.getInt(14));
                 application.setDateCopiesWereSent(res.getDate(15));
                 application.setCopiesTranslationSample(res.getString(16));
-                application.setTC_ACCEPTED(res.getBoolean(17));
-                application.setAPPROVED(res.getBoolean(18));
+                application.setTC_ACCEPTED(res.getInt(17));
+                application.setAPPROVED(res.getInt(18));
                 application.setStatus(res.getString(19));
 
                 listApplications.add(application);
@@ -368,7 +370,7 @@ public class GrantApplicationDAO {
         System.out.println("getLastRecordID:: ");
         try {
             conn = DBConn.getConnection();
-           // conn.setAutoCommit(false);
+            // conn.setAutoCommit(false);
 
             ps1 = conn.prepareStatement("SELECT max(ApplicationNumber) FROM GrantApplication");
             res = ps1.executeQuery();
@@ -379,8 +381,7 @@ public class GrantApplicationDAO {
                 }
             }
 
-           // conn.commit();
-
+            // conn.commit();
             DBConn.close(conn, ps1, res);
         } catch (ClassNotFoundException | SQLException e) {
             LOGGER.debug(e.getMessage());

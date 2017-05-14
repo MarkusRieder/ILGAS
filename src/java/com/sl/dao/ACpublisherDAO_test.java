@@ -244,7 +244,7 @@ public class ACpublisherDAO_test {
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
                                                         
-            ps1 = conn.prepareStatement("insert into international_publishers (Company,Address1,Address2,Address3,Address4,postCode,City,Country,CountryCode,Telephone,Fax,WWW,DoNotMail,Bursaries,Founded,NumberOfTitles,DateModified,Notes,Status) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps1 = conn.prepareStatement("INSERT INTO international_publishers (Company,Address1,Address2,Address3,Address4,postCode,City,Country,CountryCode,Telephone,Fax,WWW,DoNotMail,Bursaries,Founded,NumberOfTitles,DateModified,Notes,Status) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             ps1.setString(1, pojo.getCompany());
             ps1.setString(2, pojo.getAddress1());

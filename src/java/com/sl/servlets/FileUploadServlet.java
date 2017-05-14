@@ -1,11 +1,10 @@
 package com.sl.servlets;
 
-
 /**
  * Copyright (c) 2014 Oracle and/or its affiliates. All rights reserved.
  *
  * You may not modify, use, reproduce, or distribute this software except in
- * compliance with  the terms of the License at:
+ * compliance with the terms of the License at:
  * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
  */
 import java.io.File;
@@ -15,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -50,13 +50,100 @@ public class FileUploadServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+    }
+
+    private String getFileName(final Part part) {
+        final String partHeader = part.getHeader("content-disposition");
+        LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
+        for (String content : part.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(
+                        content.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+//        String userID = request.getParameter("userID");
+//        String ApplicationNumber = request.getParameter("ApplicationNumber");
+//        String Company = request.getParameter("Company");
+//        String PublisherID = request.getParameter("publisherID");
+//        String agreement = request.getParameter("agreement");
+//        String contract = request.getParameter("contract");
+//        String translatorCV = request.getParameter("translatorCV");
+//        String copiesTranslationSample = request.getParameter("copiesTranslationSample");
+//        String NewApplicationID = request.getParameter("newApplicationID");
+        System.out.println(" ---------------------doPost------------------------------  ");
+
+//        String[] fileNames = request.getParameterValues("file");
+//
+//        String agreement = fileNames[0];
+//        String contract = fileNames[1];
+//        String translatorCV = fileNames[2];
+//        String copiesTranslationSample = fileNames[3];
+        System.out.println("userID  " + request.getParameter("userID"));
+        System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
+        System.out.println("Company " + request.getParameter("Company"));
+        System.out.println("PublisherID  " + request.getParameter("publisherID"));
+//        System.out.println("Agreement  " + agreement);
+//        System.out.println("Contract  " + contract);
+//        System.out.println("TranslatorCV " + translatorCV);
+//        System.out.println("CopiesTranslationSample  " + copiesTranslationSample);
+        System.out.println("NewApplicationID  " + request.getParameter("newApplicationID"));
+
+        System.out.println(" ----------------------processRequest-----------------------------  ");
+
+        System.out.println("userID  " + request.getParameter("userID"));
+        System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
+        System.out.println("Company " + request.getParameter("Company"));
+        System.out.println("PublisherID  " + request.getParameter("publisherID"));
+        System.out.println("Agreement  " + request.getParameter("agreement"));
+        System.out.println("Contract  " + request.getParameter("contract"));
+        System.out.println("TranslatorCV " + request.getParameter("translatorCV"));
+        System.out.println("CopiesTranslationSample  " + request.getParameter("copiesTranslationSample"));
+        System.out.println("NewApplicationID  " + request.getParameter("newApplicationID"));
+
+        String userID = request.getParameter("userID");
+        String ApplicationNumber = request.getParameter("ApplicationNumber");
+        String Company = request.getParameter("Company");
+        String PublisherID = request.getParameter("publisherID");
+
+        System.out.println("userID= " + userID + " ApplicationNumber= " + ApplicationNumber + " Company= " + Company + " PublisherID= " + PublisherID);
+        Calendar now = Calendar.getInstance();
+        int year = now.get(Calendar.YEAR);
+        String yearInString = String.valueOf(year);
+
+        // String[] destination = {"Agreement", "Contract", "TranslatorCV", "TranslationSamples"};
         // Create path components to save the file
-        final String path = request.getParameter("destination");
+        // path = path + File.separator + yearInString + File.separator + Company + File.separator + Type + ApplicationNumber;
+        String rootPath = "/home/markus/test";
+
+//        int i = 0;
+//        for (String fileName : fileNames) {
+//            String dest = destination[i];
+        final String path = rootPath + File.separator + yearInString + File.separator + Company + File.separator + ApplicationNumber + File.separator + request.getParameter("destination");
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
+//            i++;
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
 
-        System.out.println("Upload File Directory = " + path + File.separator
-                + fileName);
+        System.out.println("Upload File Directory = " + path);
 
         OutputStream out = null;
         InputStream filecontent = null;
@@ -75,8 +162,12 @@ public class FileUploadServlet extends HttpServlet {
 
             }
 
+
+            String test = (String)request.getParameter("GetData");
+            System.out.println("anchor = " + test);
+
             request.setAttribute("message", " '" + fileName + "' -  File uploaded successfully!");
-            request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
 
         } catch (FileNotFoundException fne) {
 
@@ -100,47 +191,8 @@ public class FileUploadServlet extends HttpServlet {
                 writer.close();
             }
         }
-    }
-
-    private String getFileName(final Part part) {
-        final String partHeader = part.getHeader("content-disposition");
-        LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
-        for (String content : part.getHeader("content-disposition").split(";")) {
-            if (content.trim().startsWith("filename")) {
-                return content.substring(
-                        content.indexOf('=') + 1).trim().replace("\"", "");
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+        System.out.println("xxfileNames:  " + fileName);
+//        }
     }
 
     /**
@@ -152,4 +204,5 @@ public class FileUploadServlet extends HttpServlet {
     public String getServletInfo() {
         return "Servlet that uploads files to a user-defined destination";
     }
+
 }

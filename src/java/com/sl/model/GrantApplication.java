@@ -40,7 +40,7 @@ public class GrantApplication {
     
 //    Original Work & Sample Translation
 
-    private boolean copiesSent;
+    private int copiesSent;
 
     private Date dateCopiesWereSent;
 
@@ -48,38 +48,9 @@ public class GrantApplication {
     
 //    General
 
-    private boolean TC_ACCEPTED;
+    private int TC_ACCEPTED;
 
-    private boolean APPROVED;
-
-
-    /**
-     * @return the APPROVED
-     */
-    public boolean isAPPROVED() {
-        return APPROVED;
-    }
-
-    /**
-     * @param APPROVED the APPROVED to set
-     */
-    public void setAPPROVED(boolean APPROVED) {
-        this.APPROVED = APPROVED;
-    }
-
-    /**
-     * @return the TC_ACCEPTED
-     */
-    public boolean isTC_ACCEPTED() {
-        return TC_ACCEPTED;
-    }
-
-    /**
-     * @param TC_ACCEPTED the TC_ACCEPTED to set
-     */
-    public void setTC_ACCEPTED(boolean TC_ACCEPTED) {
-        this.TC_ACCEPTED = TC_ACCEPTED;
-    }
+    private int APPROVED;
 
     /**
      * @return the ApplicationNumber
@@ -264,16 +235,30 @@ public class GrantApplication {
     }
 
     /**
+     * @return the Status
+     */
+    public String getStatus() {
+        return Status;
+    }
+
+    /**
+     * @param Status the Status to set
+     */
+    public void setStatus(String Status) {
+        this.Status = Status;
+    }
+
+    /**
      * @return the copiesSent
      */
-    public boolean isCopiesSent() {
+    public int getCopiesSent() {
         return copiesSent;
     }
 
     /**
      * @param copiesSent the copiesSent to set
      */
-    public void setCopiesSent(boolean copiesSent) {
+    public void setCopiesSent(int copiesSent) {
         this.copiesSent = copiesSent;
     }
 
@@ -304,26 +289,37 @@ public class GrantApplication {
     public void setCopiesTranslationSample(String copiesTranslationSample) {
         this.copiesTranslationSample = copiesTranslationSample;
     }
-    
-    
-    
 
+    /**
+     * @return the TC_ACCEPTED
+     */
+    public int getTC_ACCEPTED() {
+        return TC_ACCEPTED;
+    }
+
+    /**
+     * @param TC_ACCEPTED the TC_ACCEPTED to set
+     */
+    public void setTC_ACCEPTED(int TC_ACCEPTED) {
+        this.TC_ACCEPTED = TC_ACCEPTED;
+    }
+
+    /**
+     * @return the APPROVED
+     */
+    public int getAPPROVED() {
+        return APPROVED;
+    }
+
+    /**
+     * @param APPROVED the APPROVED to set
+     */
+    public void setAPPROVED(int APPROVED) {
+        this.APPROVED = APPROVED;
+    }
+    
     @Override
     public String toString() {
-        return "ClassPojo [ApplicationNumber = " + getApplicationNumber() + ", company = " + getCompany() + ", publisherID = " + getPublisherID() + ", agreement = " + getAgreement() + ", contract = " + getContract() + ", proposedDateOfPublication = " + getProposedDateOfPublication() + ", proposedDateOfPrintRun = " + getProposedDateOfPrintRun() + ", plannedPageExtent = " + getPlannedPageExtent() + ", translatorCV = " + getTranslatorCV() + ", numberOfPages = " + getNumberOfPages() + ", feePerPage = " + getFeePerPage() + ", translatorFee = " + getTranslatorFee() + ", Notes = " + getNotes() + ", copiesSent = " + isCopiesSent() + ", dateCopiesWereSent = " + getDateCopiesWereSent() + ", copiesTranslationSample = " + getCopiesTranslationSample() + ", TC_ACCEPTED = " + isTC_ACCEPTED() + ", APPROVED = " + isAPPROVED() + "]";
-    }
-
-    /**
-     * @return the Status
-     */
-    public String getStatus() {
-        return Status;
-    }
-
-    /**
-     * @param Status the Status to set
-     */
-    public void setStatus(String Status) {
-        this.Status = Status;
+        return "ClassPojo [ApplicationNumber = " + getApplicationNumber() + ", company = " + getCompany() + ", publisherID = " + getPublisherID() + ", agreement = " + getAgreement() + ", contract = " + getContract() + ", proposedDateOfPublication = " + getProposedDateOfPublication() + ", proposedDateOfPrintRun = " + getProposedDateOfPrintRun() + ", plannedPageExtent = " + getPlannedPageExtent() + ", translatorCV = " + getTranslatorCV() + ", numberOfPages = " + getNumberOfPages() + ", feePerPage = " + getFeePerPage() + ", translatorFee = " + getTranslatorFee() + ", Notes = " + getNotes() + ", copiesSent = " + getCopiesSent() + ", dateCopiesWereSent = " + getDateCopiesWereSent() + ", copiesTranslationSample = " + getCopiesTranslationSample() + ", TC_ACCEPTED = " + getTC_ACCEPTED() + ", APPROVED = " + getAPPROVED() + "]";
     }
 }

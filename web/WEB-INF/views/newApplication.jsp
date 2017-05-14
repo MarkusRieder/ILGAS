@@ -25,10 +25,15 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <!--<link rel="stylesheet" type="text/css" href="css/font-awesome.css">-->
+
+        <!--<script src="js/jquery-1.11.3.min"></script>-->
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="js/moment.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
         <script src="js/bootstrap-datepicker.js"></script>
 
         <script>
@@ -218,6 +223,24 @@
 
             </style>
 
+            <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    if (location.hash) {
+                        $("a[href='" + location.hash + "']").tab("show");
+                    }
+                    $(document.body).on("click", "a[data-toggle]", function (event) {
+                        location.hash = this.getAttribute("href");
+                    });
+                });
+                $(window).on("popstate", function () {
+                    var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+                    localStorage.setItem("GetData", anchor);
+                    $("a[href='" + anchor + "']").tab("show");
+                });
+            </script>
+
+
             <script type="text/javascript">
                 $(function () {
                     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -239,11 +262,6 @@
                                 label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                         input.trigger('fileselect', [numFiles, label]);
                         document.getElementById("label_agreement").value = label;
-
-//                        var ttt = $('#agreement_upload').val();
-//                        console.log("ttt::  " + ttt);
-//                        alert(ttt);
-//                        document.getElementById("agreement_upload").value = $('#agreement_upload').val() + label;
                     });
                 });
 
@@ -278,10 +296,6 @@
                         document.getElementById("label_translationSample").value = label;
                     });
                 });
-
-
-
-
             </script>
 
             <style>
@@ -324,7 +338,7 @@
                     <sql:param value="${publisherID}"/>
                 </sql:query>
                 <c:set var="companyDetails" value="${companyQuery.rows[0]}"/>
-              
+
 
                 <div id="shadowholder">
                     <div class="shadowtop"> </div>
@@ -457,13 +471,13 @@
 
                                             <!--Form Contactdetails-->
                                             <form id="Contactdetails" class="form-horizontal" action="${pageContext.request.contextPath}/GrantApplicationServlet" 
-                                                  method="POST"  role="form" >
+                                                  method="POST"  role="form" enctype="multipart/form-data">
                                                 <div class="col-md-9" >
                                                     <div style="margin-bottom: 25px" class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                                         <input id="Company" type="text" class="form-control" name="company" value="${companyDetails.Company}" placeholder="Publishing Company Name">                                        
                                                     </div>
-                                                        <input type="hidden" name="userID" value ="${userID}">
+
                                                     <div style="margin-bottom: 25px" class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                                         <input id="firstname" type="text" class="form-control" name="firstname" value="${firstname}" placeholder="First Name">                                        
@@ -477,7 +491,7 @@
                                                     <div style="margin-bottom: 25px" class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                                                         <input id="Address1" type="text" class="form-control" name="Address1" value="${companyDetails.Address1}" placeholder="Address1">                                        
-                                                    </div>
+                                                    </div> 
                                                     <div style="margin-bottom: 25px" class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                                                         <input id="Address2" type="text" class="form-control" name="Address2" value="${companyDetails.Address2}" placeholder="Address2">                                        
@@ -520,7 +534,7 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </form> 
                                     </div> <!-- container-fluid -->
                                 </div> <!-- class="tab-pane" id="red" -->
 
@@ -531,9 +545,8 @@
                                             <div class="row"  style="display: block;
                                             margin-right: auto;
                                             margin-left: auto;">
-
                                             <!--Upload form for agreement-->
-                                            <form method="POST" action="upload" enctype="multipart/form-data">
+                                            <form method="POST" action="upload" enctype="multipart/form-data"> 
                                                 <div class="col-md-12"   style="margin-bottom: 60px">                                                
                                                         <strong class="pull-left">Upload a copy of the agreement with the translation rights holder</strong> <br/>(where applicable)
                                                         <div class="margin-bottom: 60px"></div>   
@@ -543,11 +556,15 @@
                                                             Select file <input type="file"  name="file" id="agreement" >
                                                             <span class="glyphicon glyphicon-folder-open"></span>
                                                         </label>
+                                                        <input type="hidden" name="ApplicationNumber" value="${ApplicationNumber}">
+                                                        <input type="hidden" name="userID" value="${userID}">
+                                                        <input type="hidden" name="publisherID" value="${publisherID}">
+                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                         <input id="label_agreement" class="pull-left"/>
                                                         <br/>
                                                         <br/>  
                                                         <label>Destination:</label>                                              
-                                                        <input type="text" value="/home/markus/test" name="destination" id="agreement_upload"/>
+                                                        <input type="text" value="Agreement" name="destination" id="agreement_upload"/>
                                                         <button type="submit"  name="upload_agreement" id="upload_agreement" 
                                                                 data-toggle="tooltip" title="Click to UPLOAD!">
                                                             Upload
@@ -555,39 +572,45 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </form> 
+                                            </form>  
 
                                             <!--Upload form for contract-->
-                                            <form method="POST" action="upload" enctype="multipart/form-data" >
+                                            <form method="POST" action="upload" enctype="multipart/form-data" >   
                                                 <div class="col-md-12"   style="margin-bottom: 60px">                          
                                                         <strong class="pull-left">Upload a copy of the contract with the translator</strong> <br/>
                                                         <div class="margin-bottom: 60px"></div>
                                                         <br/>
                                                         <div class="input-group contract"  style="margin-bottom: 40px;">
                                                         <label class="btn btn-default btn-file pull-left">
-                                                            Select file <input type="file" style="display: none;" name="file" id="contract">
+                                                            Select file <input type="file"  name="file" id="contract">
                                                             <span class="glyphicon glyphicon-folder-open"></span>
                                                         </label>
-                                                        <input id="label_contract" class="pull-left"/>
-                                                        <br/>
-                                                        <br/> 
-                                                        <label>Destination:</label>
-                                                        <input type="text" value="/home/markus/test" name="destination" id="contract_upload"/>
-                                                        <button type="submit"  name="contract_upload" id="upload_contract" 
-                                                                data-toggle="tooltip" title="Click to UPLOAD!">
-                                                            Upload
-                                                            <span class="glyphicon glyphicon-import"></span>
-                                                        </button>
+                                                      
+                                                            <input type="hidden" name="ApplicationNumber" value="${ApplicationNumber}">
+                                                            <input type="hidden" name="userID" value="${userID}">
+                                                            <input type="hidden" name="publisherID" value="${publisherID}">
+                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                            <input id="label_contract" class="pull-left"/>
+                                                            <br/>
+                                                            <br/> 
+                                                            <!--<label>Destination:</label>-->
+                                                            <input type="hidden" value="Contract" name="destination" id="contract_upload"/>
+                                                            <button type="submit"  name="contract_upload" id="upload_contract" 
+                                                                    data-toggle="tooltip" title="Click to UPLOAD!">
+                                                                Upload
+                                                                <span class="glyphicon glyphicon-import"></span>
+                                                            </button>
+                                                              ${requestScope.message}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </form>  
-                                        </div> <!-- row -->
-                                    </div> <!-- container-fluid  -->
-                                </div> <!-- class="tab-pane" id="orange" -->
+                                                </form>   
+                                            </div> <!-- row -->
+                                        </div> <!-- container-fluid  -->
+                                    </div> <!-- class="tab-pane" id="orange" -->
 
-                                <!-- Publication Details -->
-                                <div class="tab-pane" id="Publication">
-                                    <h1 style="margin-bottom: 60px">Publication Details</h1>
+                                    <!-- Publication Details -->
+                                    <div class="tab-pane" id="Publication">
+                                        <h1 style="margin-bottom: 60px">Publication Details</h1>
 
                                         <div class="container-fluid">
                                             <div class="row"  style="display: block;
@@ -599,11 +622,11 @@
                                                       action="${pageContext.request.contextPath}/Application" 
                                                       method="POST"  
                                                       role="form" 
-                                                      >
+                                                      >   
                                                     <div class='col-sm-8'  style="margin-bottom: 40px; margin-top: 20px">
                                                             <strong> The proposed date of publication:</strong>
                                                             <div class="input-group"  style="margin-bottom: 40px;">
-                                                            <input type="text" id="proposed-date-of-publication" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                            <input type="text" name="proposedDateOfPublication" id="proposed-date-of-publication" class="form-control" placeholder="DD/MM/YYYY" />    
                                                             <label class="input-group-addon" for="proposed-date-of-publication">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </label>
@@ -611,7 +634,7 @@
 
                                                         <strong>   The date of proposed print run:</strong> 
                                                         <div class="input-group"  style="margin-bottom: 40px;">
-                                                            <input type="text" id="proposed-print-run" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                            <input type="text" name="proposedDateOfPrintRun" id="proposed-print-run" class="form-control" placeholder="DD/MM/YYYY" />    
                                                             <label class="input-group-addon" for="proposed-print-run">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </label>
@@ -620,7 +643,7 @@
                                                         <strong  style="margin-bottom: 40px;">The planned page extent of the published translation:</strong>
                                                         <div class="input-group input-group-lg">
                                                             <span class="input-group-addon" id="sizing-addon1">  <span class="glyphicon glyphicon-book"></span></span>
-                                                            <input type="text" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">
+                                                            <input type="text" name="plannedPageExtent" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">
                                                         </div>
                                                         <!--</div>-->
                                                         <div class="input-group input-group-lg" style="margin-top: 40px;">
@@ -649,7 +672,7 @@
                                                             autoclose: true
                                                         });
                                                     </script>
-                                                </form>
+                                                </form> 
                                             </div>
                                         </div>
                                     </div>
@@ -667,47 +690,51 @@
                                                     <!--<input type="file" name="file" id="translator_cv" /> <br/>-->
                                                     <div class="input-group translator_cv"  style="margin-bottom: 40px;">
                                                     <label class="btn btn-default btn-file pull-left">
-                                                        Select file <input type="file" style="display: none;" name="file" id="translator" >
+                                                        Select file <input type="file"  name="file" id="translator" >
                                                         <span class="glyphicon glyphicon-folder-open"></span>
                                                     </label>
                                                     <input id="label_translator" class="pull-left"/>
                                                     <br/>
-                                                    <br/>                                               
+                                                    <br/>          
+                                                    <input type="hidden" name="ApplicationNumber" value="${ApplicationNumber}">
+                                                    <input type="hidden" name="userID" value="${userID}">
+                                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                     Destination:
-                                                    <input type="text" id="translator_cv_upload" value="/home/markus/test" name="destination" />                                          
+                                                    <input type="text" id="translator_cv_upload" value="Translator_CV" name="destination" />                                          
                                                     <button type="submit"  name="upload_translator_cv" id="upload_translator_cv" 
                                                             data-toggle="tooltip" title="Click to UPLOAD!">
                                                         Upload
                                                         <span class="glyphicon glyphicon-import"></span>
                                                     </button>
                                                 </div>
-                                            </form> 
+                                            </form>  
                                         </div>
 
                                         <div class="col-md-4" style="margin-bottom: 20px ;margin-top: 50px;">
-                                            <form action="" id="feeCalculationForm"  onsubmit="return false;">
-                                                Number of pages:<input type="text"  name="numberPages" id="numberPages"  style="margin-bottom: 30px"/><br/>
+                                            <form action="" id="feeCalculationForm"  onsubmit="return false;">  
+                                                Number of pages:<input type="text"  name="numberOfPages" id="numberOfPages"  style="margin-bottom: 30px"/><br/>
                                                     Fee per page: 
                                                     <input type="text"  name="feePerPage"  id="feePerPage"   style="margin-bottom: 30px"/>
                                                     <button type="submit" class="btn btn-default"  id='submit' onclick="getTotal()" style="margin-bottom: 10px">Calculate fee</button>
-                                                </form>
+                                                </form> 
 
-                                                <form  method="POST" id="feeForm" action="${pageContext.request.contextPath}/Application" >
+                                                <form  method="POST" id="feeForm" action="${pageContext.request.contextPath}/Application" >   
                                                     <!--<div class="col-md-4" style="margin-bottom: 60px">-->
                                                     <strong>Translator fee:</strong>                                                                        
                                                     <div class="input-group" style="margin-bottom: 40px">
-                                                        <label class="input-group-addon" for="fee">
+                                                        <label class="input-group-addon" for="translatorFee">
                                                             <span class="glyphicon glyphicon-euro"></span>                                     
                                                         </label>
-                                                        <input type="text" class="form-control" id="fee" placeholder="fee">    
+                                                        <input type="text" class="form-control" name="translatorFee" id="translatorFee" placeholder="fee">    
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <textarea class="form-control" placeholder="Notes" 
+                                                        <textarea class="form-control" placeholder="Notes" name="Notes"
                                                                   style="width: 280px; height: 196px;"></textarea>
                                                 </div>
                                                 <!--</div>-->
-                                            </form>                               
+                                            </form>                                
 
                                             <div class="input-group input-group-lg" style="margin-top: 40px;">
                                                 <button type="submit"  name="save_feeForm" id="save_feeForm" 
@@ -728,54 +755,62 @@
                                         <div class="row" >
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-
-                                                    <!--copies of the original work-->
-                                                    <div class="col-md-9"   style="margin-bottom: 40px; margin-top: 40px">
-                                                            <div class="checkbox">
-                                                                <!--<strong class="pull-left">Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong>-->
-                                                                <label for="copies" class=" pull-left"><strong>Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong></label>
-                                                                <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
-                                                                <input type="checkbox" name="copies" id="copies" value=""  class="form-control">
-                                                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                                            </label>
-                                                        </div>
-                                                    </div> <!-- col-md-9 -->
-
-                                                    <!--Date copies were sent:-->
-                                                    <div class="col-md-3"   style="margin-top: 30px">
-                                                            <strong>Date copies were sent:</strong> 
-                                                            <div class="input-group">
-                                                                <input type="text" id="mail-sent" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                <label class="input-group-addon" for="mail-sent">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                    <form  method="POST" id="originalWorkForm" name="originalWorkForm" action="${pageContext.request.contextPath}/GrantApplicationServlet" >   
+                                                        <!--copies of the original work-->
+                                                        <div class="col-md-9"   style="margin-bottom: 40px; margin-top: 40px">
+                                                                <div class="checkbox">                                                             
+                                                                    <label for="copies" class=" pull-left"><strong>Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong></label>
+                                                                    <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
+                                                                    <input type="checkbox" 
+                                                                           name="copiesSent" 
+                                                                           id="copiesSent" 
+                                                                           value="ticked" 
+                                                                           class="form-control">
+                                                                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                                                 </label>
-                                                            </div>  <!-- input-group -->
-                                                        </div> <!--col-md-3-->
+                                                                <input type="hidden" name="ApplicationNumber" value="${ApplicationNumber}">
+                                                                <input type="hidden" name="userID" value="${userID}">
+                                                                <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                            </div>
+                                                        </div> <!-- col-md-9 -->
 
-                                                        <!--datepicker  mail-sent-->
-                                                        <script>
-                                                            $("#mail-sent").datepicker({
-                                                                format: "dd/mm/yyyy",
-                                                                showWeekDays: true,
-                                                                todayHighlight: true,
-                                                                autoclose: true
-                                                            });
-                                                        </script>
+                                                        <!--Date copies were sent:-->
+                                                        <div class="col-md-3"   style="margin-top: 30px">
+                                                                <strong>Date copies were sent:</strong> 
+                                                                <div class="input-group">
+                                                                    <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateCopiesWereSent">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>  <!-- input-group -->
+                                                            </div> <!--col-md-3-->
+
+                                                            <!--datepicker  mail-sent-->
+                                                            <script>
+                                                                $("#dateCopiesWereSent").datepicker({
+                                                                    format: "dd/mm/yyyy",
+                                                                    showWeekDays: true,
+                                                                    todayHighlight: true,
+                                                                    autoclose: true
+                                                                });
+                                                            </script>
 
 
-                                                        <div class="col-md-9"   style="margin-bottom: 40px;">
-                                                        <div class="input-group input-group-lg">
-                                                            <button type="submit"  
-                                                                    name="save_originalwork" 
-                                                                    id="save_originalwork" 
-                                                                    data-toggle="tooltip" 
-                                                                    title="Click to save!"
-                                                                    >
-                                                                Save
-                                                                <span class="glyphicon glyphicon-import"></span>
-                                                            </button>
-                                                        </div><!-- input-group -->
-                                                    </div>  <!-- col-md-12 -->
+                                                            <div class="col-md-9"   style="margin-bottom: 40px;">
+                                                            <div class="input-group input-group-lg">
+                                                                <button type="submit"  
+                                                                        name="save_originalwork" 
+                                                                        id="save_originalwork" 
+                                                                        data-toggle="tooltip" 
+                                                                        title="Click to save!"
+                                                                        >
+                                                                    Save
+                                                                    <span class="glyphicon glyphicon-import"></span>
+                                                                </button>
+                                                            </div><!-- input-group -->
+                                                        </div>  <!-- col-md-12 -->
+                                                    </form> 
                                                 </div> <!--panel--body-->
                                             </div> <!--panel-default-->
                                         </div> <!-- row -->
@@ -784,6 +819,18 @@
                                             <div class="panel panel-default">        
                                                 <div class="panel-body">
                                                     <div class="col-md-12" style="margin-bottom: 40px; margin-top: 60px">
+
+                                                            <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
+                                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                                <span class="sr-only">Error:</span>
+                                                                <span class="message"></span>
+                                                            </div>
+                                                            <div class="alert alert-success" role="alert" id="successField" style="display:none">
+                                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                                <span class="sr-only">Success:</span>
+                                                                <span class="message"></span>
+                                                            </div>
+
                                                             <form method="POST" id="translationSampleForm" name="translationSampleForm" action="upload" enctype="multipart/form-data" >
                                                                 <strong style="margin-bottom: 20px" class="pull-left">Two copies of a translation sample<sup>**</sup> consisting of 10–12 pages of prose or six poems</strong>
                                                                 <div class="margin-bottom: 60px"></div>   
@@ -796,8 +843,12 @@
                                                                 <input id="label_translationSample" class="pull-left"/>
                                                                 <br/>
                                                                 <br/>  
+                                                                <input type="hidden" name="ApplicationNumber" value="${ApplicationNumber}">
+                                                                <input type="hidden" name="userID" value="${userID}">
+                                                                <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                                 Destination:
-                                                                <input type="text" value="/home/markus/test" name="destination"/>
+                                                                <input type="text" value="TranslationSample" name="destination"/>
                                                                 <button type="submit"  name="upload_translationSample" id="upload_translationSample" 
                                                                         data-toggle="tooltip" title="Click to UPLOAD!">
                                                                     Upload
