@@ -95,7 +95,7 @@ public class FileUploadServlet extends HttpServlet {
 //        String translatorCV = fileNames[2];
 //        String copiesTranslationSample = fileNames[3];
         System.out.println("userID  " + request.getParameter("userID"));
-        System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
+       // System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
         System.out.println("Company " + request.getParameter("Company"));
         System.out.println("PublisherID  " + request.getParameter("publisherID"));
 //        System.out.println("Agreement  " + agreement);
@@ -107,7 +107,7 @@ public class FileUploadServlet extends HttpServlet {
         System.out.println(" ----------------------processRequest-----------------------------  ");
 
         System.out.println("userID  " + request.getParameter("userID"));
-        System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
+     //   System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
         System.out.println("Company " + request.getParameter("Company"));
         System.out.println("PublisherID  " + request.getParameter("publisherID"));
         System.out.println("Agreement  " + request.getParameter("agreement"));
@@ -117,33 +117,33 @@ public class FileUploadServlet extends HttpServlet {
         System.out.println("NewApplicationID  " + request.getParameter("newApplicationID"));
 
         String userID = request.getParameter("userID");
-        String ApplicationNumber = request.getParameter("ApplicationNumber");
+     //   String ApplicationNumber = request.getParameter("ApplicationNumber");
         String Company = request.getParameter("Company");
         String PublisherID = request.getParameter("publisherID");
 
-        System.out.println("userID= " + userID + " ApplicationNumber= " + ApplicationNumber + " Company= " + Company + " PublisherID= " + PublisherID);
+    //    System.out.println("userID= " + userID + " ApplicationNumber= " + ApplicationNumber + " Company= " + Company + " PublisherID= " + PublisherID);
         Calendar now = Calendar.getInstance();
         int year = now.get(Calendar.YEAR);
         String yearInString = String.valueOf(year);
 
-        // String[] destination = {"Agreement", "Contract", "TranslatorCV", "TranslationSamples"};
         // Create path components to save the file
         // path = path + File.separator + yearInString + File.separator + Company + File.separator + Type + ApplicationNumber;
         String rootPath = "/home/markus/test";
-
-//        int i = 0;
-//        for (String fileName : fileNames) {
-//            String dest = destination[i];
-        final String path = rootPath + File.separator + yearInString + File.separator + Company + File.separator + ApplicationNumber + File.separator + request.getParameter("destination");
+//ApplicationNumber
+        final String path = rootPath + File.separator + yearInString + File.separator + Company + File.separator  + File.separator + request.getParameter("destination");
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
-//            i++;
+
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
         }
 
         System.out.println("Upload File Directory = " + path);
+        
+        String[] fileNames ;
+  
+        
 
         OutputStream out = null;
         InputStream filecontent = null;
@@ -163,11 +163,11 @@ public class FileUploadServlet extends HttpServlet {
             }
 
 
-            String test = (String)request.getParameter("GetData");
+            String test = (String)request.getParameter("anchor");
             System.out.println("anchor = " + test);
 
             request.setAttribute("message", " '" + fileName + "' -  File uploaded successfully!");
-            request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
 
         } catch (FileNotFoundException fne) {
 

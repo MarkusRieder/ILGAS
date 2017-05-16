@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -178,7 +177,7 @@ public class ACpublisherDAO_test {
             DBConn.close(conn, ps, res);
             throw new DBException("3 Excepion while accessing database");
         }
-        System.out.println("isPublisherExists verified:  " + verified);
+
         return verified;
     }
     
@@ -198,8 +197,6 @@ public class ACpublisherDAO_test {
                     + "WHERE Company_Number = ?");
             
             ps.setInt(1, Company_Number);
-            
-            System.out.println("isPublisherNew company: try:: " + ps);
             
             res = ps.executeQuery();
             if (res != null) {
@@ -346,7 +343,6 @@ public class ACpublisherDAO_test {
             e.printStackTrace();
             throw new DBException("4 Excepion while accessing database");
         }
-        System.out.println("New Publisher id: " + id);
 
         return id;
     }
@@ -490,7 +486,7 @@ public class ACpublisherDAO_test {
             conn = DBConn.getConnection();
             //conn.setAutoCommit(false);
 
-            String sql = "UPDATE international_publishers SET (Company,Company_Number,Address1,Address2,Address3,Address4,postCode,City,Country,CountryCode,Telephone,Fax,WWW,DoNotMail,Bursaries,Founded,NumberOfTitles,DateModified,Notes ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "UPDATE international_publishers SET Company = ?, Company_Number = ? ,Address1 = ? ,Address2 = ? ,Address3 = ? ,Address4 = ? ,postCode = ? ,City = ? ,Country = ? ,CountryCode = ? ,Telephone = ? ,Fax = ? ,WWW = ? ,DoNotMail = ? ,Bursaries = ?,Founded = ? ,NumberOfTitles = ? ,DateModified = ? ,Notes = ?";
             sql += " WHERE Company_Number = " + CompanyNumber;
 
             System.out.println("sql::  " + sql);
@@ -534,7 +530,7 @@ public class ACpublisherDAO_test {
             DBConn.close(conn, ps1, res);
             throw new DBException("4 Excepion while accessing database");
         }
-        System.out.println("return id::  " + id);
+
         return id;
     }
 }

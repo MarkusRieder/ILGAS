@@ -1,5 +1,6 @@
 package com.sl.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class GrantApplication {
@@ -9,45 +10,42 @@ public class GrantApplication {
     private String company;
 
     private String publisherID;
-    
-//    Rights Agreement
 
+    private String userID;
+
+//    Rights Agreement
     private String agreement;//path + filename
 
     private String contract; //path + filename
-    
-//    Publication Details
 
+//    Publication Details
     private Date proposedDateOfPublication;
 
     private Date proposedDateOfPrintRun;
 
     private int plannedPageExtent;
-    
-//     a copy of the Translator's CV
 
+//     a copy of the Translator's CV
     private String translatorCV;//path + filename
 
     private int numberOfPages;
 
-    private double feePerPage;
+    private BigDecimal feePerPage;
 
-    private double translatorFee;
+    private BigDecimal translatorFee;
 
     private String Notes;
-    
-    private String Status;
-    
-//    Original Work & Sample Translation
 
+    private String Status;
+
+//    Original Work & Sample Translation
     private int copiesSent;
 
     private Date dateCopiesWereSent;
 
-    private String copiesTranslationSample ; //path + filename
-    
-//    General
+    private String copiesTranslationSample; //path + filename
 
+//    General
     private int TC_ACCEPTED;
 
     private int APPROVED;
@@ -195,28 +193,28 @@ public class GrantApplication {
     /**
      * @return the feePerPage
      */
-    public double getFeePerPage() {
+    public BigDecimal getFeePerPage() {
         return feePerPage;
     }
 
     /**
      * @param feePerPage the feePerPage to set
      */
-    public void setFeePerPage(double feePerPage) {
+    public void setFeePerPage(BigDecimal feePerPage) {
         this.feePerPage = feePerPage;
     }
 
     /**
      * @return the translatorFee
      */
-    public double getTranslatorFee() {
+    public BigDecimal getTranslatorFee() {
         return translatorFee;
     }
 
     /**
      * @param translatorFee the translatorFee to set
      */
-    public void setTranslatorFee(double translatorFee) {
+    public void setTranslatorFee(BigDecimal translatorFee) {
         this.translatorFee = translatorFee;
     }
 
@@ -317,9 +315,23 @@ public class GrantApplication {
     public void setAPPROVED(int APPROVED) {
         this.APPROVED = APPROVED;
     }
-    
+
     @Override
     public String toString() {
         return "ClassPojo [ApplicationNumber = " + getApplicationNumber() + ", company = " + getCompany() + ", publisherID = " + getPublisherID() + ", agreement = " + getAgreement() + ", contract = " + getContract() + ", proposedDateOfPublication = " + getProposedDateOfPublication() + ", proposedDateOfPrintRun = " + getProposedDateOfPrintRun() + ", plannedPageExtent = " + getPlannedPageExtent() + ", translatorCV = " + getTranslatorCV() + ", numberOfPages = " + getNumberOfPages() + ", feePerPage = " + getFeePerPage() + ", translatorFee = " + getTranslatorFee() + ", Notes = " + getNotes() + ", copiesSent = " + getCopiesSent() + ", dateCopiesWereSent = " + getDateCopiesWereSent() + ", copiesTranslationSample = " + getCopiesTranslationSample() + ", TC_ACCEPTED = " + getTC_ACCEPTED() + ", APPROVED = " + getAPPROVED() + "]";
+    }
+
+    /**
+     * @return the userID
+     */
+    public String getUserID() {
+        return userID;
+    }
+
+    /**
+     * @param userID the userID to set
+     */
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }
