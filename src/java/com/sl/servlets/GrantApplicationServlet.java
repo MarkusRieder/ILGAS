@@ -1,361 +1,456 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sl.servlets;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.sl.dao.GrantApplicationDAO;
+import static com.sl.dao.GrantApplicationDAO.listAllApplications;
+import com.sl.db.DBException;
+import com.sl.model.GrantApplication;
+import com.sl.model.Publisher;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.sl.dao.GrantApplicationDAO;
-import static com.sl.dao.GrantApplicationDAO.sqlDate;
-import com.sl.db.DBException;
-import com.sl.model.GrantApplication;
-import static com.sun.xml.ws.spi.db.BindingContextFactory.LOGGER;
-import java.io.File;
-import java.math.BigDecimal;
+import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.Part;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-/**
- *
- * @author markus
- */
-@MultipartConfig
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 @WebServlet(name = "GrantApplicationServlet", urlPatterns = {"/GrantApplicationServlet"})
 public class GrantApplicationServlet extends HttpServlet {
 
+    private final static Logger LOGGER
+            = Logger.getLogger(GrantApplicationServlet.class.getCanonicalName());
+    private static final long serialVersionUID = 7908187011456392847L;
+
     private boolean isMultipart;
-    String agreement = "";
-    String contract = "";
-    String translatorCV = "";
-    String copiesTranslationSample = "";
+    private String filePath;
+    private String rootPath;
+    private final int maxFileSize = 50 * 1024;
+    private final int maxMemSize = 4 * 1024;
+    private File file;
+    private int newApplicationID = 0;
+    private String company;
+    private String publisherID;
+    private String userID;
+    private String agreement;
+    private String contract;
+    private String proposedDateOfPublication;
+    private String proposedDateOfPrintRun;
+    private String plannedPageExtent;
+    private String translatorCV;
+    private String numberOfPages;
+    private String feePerPage;
+    private String translatorFee;
+    private String Notes;
+    private String copySent;
+    private String dateCopiesWereSent;
+    private String copiesTranslationSample;
+    private String TCACCEPTED;
+    private String ieAPPROVED;
+    private String Status;
+    private String Type;
+    private String firstname;
+    private String lastname;
+    private String Address1;
+    private String Address2;
+    private String Address3;
+    private String Address4;
+    private String City;
+    private String postCode;
+    private String Email;
+    private String Telephone;
+    private String Fax;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet GrantApplicationServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet GrantApplicationServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+    private int copiesSent = 0;
+    private int TC_ACCEPTED = 0;
+    private int APPROVED = 0;
+
+    private String tempPath = "";
+
+    public void init() {
+
+        // Get the file location where it would be stored.
+        tempPath = "/home/markus/test/tempDir";
+        rootPath = "/home/markus/test";
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        isMultipart = ServletFileUpload.isMultipartContent(request);
-        String company = "";
-        int newApplicationID = 0;
+        String task = request.getParameter("task");
+        switch (task) {
+            case "Open New Application":
+                Status = "New";
 
-        String lulu1 = request.getParameter("contract");
-        System.out.println("lulu1:  " + lulu1);
-//        String[] fileNames = request.getParameterValues("file");
-//
-//        System.out.println("fileNames:  " + fileNames.length);
-//
-//        for (String fileItems : fileNames) {
-//            System.out.println(":: " + fileItems);
-//        }
-        HttpSession session = request.getSession(false);
+                Calendar now = Calendar.getInstance();
+                int year = now.get(Calendar.YEAR);
+                String yearInString = String.valueOf(year);
 
-        int newApplicationNumber = 0;
+                String[] fileNames = new String[4];
+                String[] justFiles = new String[4];
+                String[] tpe = {"Agreement", "Contract", "Translator_CV", "TranslationSample"};
+                String message = "";
 
-        try {
-            newApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
-        } catch (DBException ex) {
-            Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //    System.out.println("newApplicationNumber:123: " + newApplicationNumber);
-//        String task = request.getParameter("task");
-        String task = "New Application";
-
-        System.out.println("task:  " + task);
-
-        request.setAttribute("task", task);
-
-        // use hidden input to define the form
-        //        switch (hiddenParam) {
-        //            case "value1":
-        //                //form 1 was posted
-        //                break;
-        //            case "value2":
-        //                //form 2 was posted
-        //                break;
-        //        }
-        response.setContentType("text/html");
-        if (!isMultipart) {
-            String lulu = request.getParameter("contract");
-            System.out.println("lulu:  " + lulu);
-            try {
-                //collect all data input
-                String ApplicationNumber = request.getParameter("ApplicationNumber");
-                company = request.getParameter("company");
-                String publisherID = request.getParameter("publisherID");
-                String userID = request.getParameter("userID");
-                agreement = request.getParameter("agreement");
-                contract = request.getParameter("contract");
-                String proposedDateOfPublication = request.getParameter("proposedDateOfPublication");
-                String proposedDateOfPrintRun = request.getParameter("proposedDateOfPrintRun");
-                String plannedPageExtent = request.getParameter("plannedPageExtent");
-                translatorCV = request.getParameter("translatorCV");
-                System.out.println("GrantApplicationServlet :: translatorCV:  " + translatorCV);
-                String numberOfPages = request.getParameter("numberOfPages");
-                String feePerPage = request.getParameter("feePerPage");
-                String translatorFee = request.getParameter("translatorFee");
-                String Notes = request.getParameter("Notes");
-                String copySent = request.getParameter("copiesSent");
-                String dateCopiesWereSent = request.getParameter("dateCopiesWereSent");
-                copiesTranslationSample = request.getParameter("copiesTranslationSample");
-                String TCACCEPTED = request.getParameter("TC_ACCEPTED");
-                String ieAPPROVED = request.getParameter("APPROVED");
-                String Status = request.getParameter("Status");
-
-                int copiesSent;
-                int TC_ACCEPTED;
-                int APPROVED;
-
-                if ("ticked".equals(copySent)) {
-
-                    copiesSent = 1;
-
-                } else {
-
-                    copiesSent = 0;
-
-                }
-
-                if ("ticked".equals(TCACCEPTED)) {
-
-                    TC_ACCEPTED = 1;
-
-                } else {
-
-                    TC_ACCEPTED = 0;
-
-                }
-
-                if ("ticked".equals(ieAPPROVED)) {
-
-                    APPROVED = 1;
-
-                } else {
-
-                    APPROVED = 0;
-
-                }
-
-                switch (task) {
-                    case "New Application":
-                        Status = "New";
-                        break;
-                    case "value2":
-                        //form 2 was posted
-                        break;
-                }
-
-                System.out.println("------------------------------ GrantApplicationServlet ------------------------------ ");
-                System.out.println("ApplicationNumber:  " + ApplicationNumber);
-                System.out.println("company:  " + company);
-                System.out.println("publisherID:  " + publisherID);
-                System.out.println("userID:  " + userID);
-//        System.out.println("GrantApplicationServlet :: agreement  " + agreement);
-//        System.out.println("GrantApplicationServlet :: contract:  " + contract);
-                System.out.println("proposedDateOfPublication:  " + proposedDateOfPublication);
-                System.out.println("proposedDateOfPrintRun:  " + proposedDateOfPrintRun);
-                System.out.println("plannedPageExtent:  " + plannedPageExtent);
-//        System.out.println("translatorCV:  " + translatorCV);
-                System.out.println("numberOfPages:  " + numberOfPages);
-                System.out.println("feePerPage:  " + feePerPage);
-                System.out.println("translatorFee:  " + translatorFee);
-                System.out.println("Notes:  " + Notes);
-                System.out.println("copiesSent:  " + copiesSent);
-                System.out.println("dateCopiesWereSent:  " + dateCopiesWereSent);
-//        System.out.println("copiesTranslationSample:  " + copiesTranslationSample);
-                System.out.println("TC_ACCEPTED:  " + TC_ACCEPTED);
-                System.out.println("APPROVED:  " + APPROVED);
-                System.out.println("Status:  " + Status);
-
-                GrantApplication application = new GrantApplication();
-                application.setCompany(request.getParameter("company"));
-                application.setPublisherID(request.getParameter("publisherID"));
-//        application.setAgreement(fileNames[0]);
-//        application.setContract(fileNames[1]);
-                application.setProposedDateOfPublication(convertDate(request.getParameter("proposedDateOfPublication")));
-                application.setProposedDateOfPrintRun(sqlDate(convertDate(request.getParameter("proposedDateOfPrintRun"))));
-                application.setPlannedPageExtent(Integer.parseInt(request.getParameter("plannedPageExtent")));
-//        application.setTranslatorCV(fileNames[2]);
-                application.setNumberOfPages(Integer.parseInt(request.getParameter("numberOfPages")));
-
-                BigDecimal fpp = new BigDecimal(request.getParameter("feePerPage").replaceAll(",", ""));
-                application.setFeePerPage(fpp);
-
-                BigDecimal tf = new BigDecimal(request.getParameter("translatorFee").replaceAll(",", ""));
-                application.setTranslatorFee(tf);
-                
-                application.setNotes(request.getParameter("Notes"));
-                application.setCopiesSent(copiesSent);
-                application.setDateCopiesWereSent(sqlDate(convertDate(request.getParameter("dateCopiesWereSent"))));
-//        application.setCopiesTranslationSample(fileNames[3]);
-                application.setTC_ACCEPTED(TC_ACCEPTED);
-                application.setAPPROVED(APPROVED);
-                application.setStatus(Status);
+                int z = 0;
 
                 try {
-                    newApplicationID = GrantApplicationDAO.insertRow(application);
+
+                    // Check that we have a file upload request
+                    isMultipart = ServletFileUpload.isMultipartContent(request);
+
+//            response.setContentType("text/html;charset=UTF-8");
+//
+//            PrintWriter out = response.getWriter();
+//
+//            if (!isMultipart) {
+//                out.println("<html>");
+//                out.println("<head>");
+//                out.println("<title>Servlet upload</title>");
+//                out.println("</head>");
+//                out.println("<body>");
+//                out.println("<p>No file uploaded</p>");
+//                out.println("</body>");
+//                out.println("</html>");
+//
+//                return;
+//            }
+                    DiskFileItemFactory factory = new DiskFileItemFactory();
+                    // maximum size that will be stored in memory
+                    factory.setSizeThreshold(maxMemSize);
+                    // Location to save data that is larger than maxMemSize.
+                    factory.setRepository(new File(tempPath));
+
+                    // Create a new file upload handler
+                    ServletFileUpload upload = new ServletFileUpload(factory);
+                    // maximum file size to be uploaded.
+                    upload.setSizeMax(maxFileSize);
+
+                    // Parse the request to get file items.
+                    List<FileItem> items = null;
+                    try {
+                        items = upload.parseRequest(request);
+                    } catch (FileUploadException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    for (FileItem item : items) {
+                        if (item.isFormField()) {
+
+                            // Process regular form field (input type="text|radio|checkbox|etc", select, etc).
+                            //collect all data input from input fileds
+                            String fieldname = item.getFieldName();
+                            String fieldvalue = item.getString();
+
+                            switch (fieldname) {
+                                case "company":
+                                    company = fieldvalue;
+                                    break;
+                                case "firstname":
+                                    firstname = fieldvalue;
+                                    break;
+                                case "lastname":
+                                    lastname = fieldvalue;
+                                    break;
+                                case "Address1":
+                                    Address1 = fieldvalue;
+                                    break;
+                                case "Address2":
+                                    Address2 = fieldvalue;
+                                    break;
+                                case "Address3":
+                                    Address3 = fieldvalue;
+                                    break;
+                                case "Address4":
+                                    Address4 = fieldvalue;
+                                    break;
+                                case "City":
+                                    City = fieldvalue;
+                                    break;
+                                case "postCode":
+                                    postCode = fieldvalue;
+                                    break;
+                                case "Email":
+                                    Email = fieldvalue;
+                                    break;
+                                case "Telephone":
+                                    Telephone = fieldvalue;
+                                    break;
+                                case "Fax":
+                                    Fax = fieldvalue;
+                                    break;
+                                case "destination":
+                                    Type = fieldvalue;
+                                    break;
+                                case "userID":
+                                    userID = fieldvalue;
+                                    break;
+                                case "publisherID":
+                                    publisherID = fieldvalue;
+                                    break;
+                                case "proposedDateOfPublication":
+                                    proposedDateOfPublication = fieldvalue;
+                                    break;
+                                case "proposedDateOfPrintRun":
+                                    proposedDateOfPrintRun = fieldvalue;
+                                    break;
+                                case "plannedPageExtent":
+                                    plannedPageExtent = fieldvalue;
+                                    break;
+                                case "numberOfPages":
+                                    numberOfPages = fieldvalue;
+                                    break;
+                                case "feePerPage":
+                                    feePerPage = fieldvalue;
+                                    break;
+                                case "translatorFee":
+                                    translatorFee = fieldvalue;
+                                    break;
+                                case "Notes":
+                                    Notes = fieldvalue;
+                                    break;
+                                case "copiesSent":
+                                    copySent = fieldvalue;
+                                    if ("ticked".equals(copySent)) {
+                                        copiesSent = 1;
+                                    } else {
+                                        copiesSent = 0;
+                                    }
+                                    break;
+                                case "dateCopiesWereSent":
+                                    dateCopiesWereSent = fieldvalue;
+                                    break;
+                                case "TCACCEPTED":
+                                    TCACCEPTED = fieldvalue;
+                                    if ("ticked".equals(TCACCEPTED)) {
+                                        TC_ACCEPTED = 1;
+                                    } else {
+                                        TC_ACCEPTED = 0;
+                                    }
+                                    break;
+                                case "APPROVED":
+                                    ieAPPROVED = fieldvalue;
+                                    if ("ticked".equals(ieAPPROVED)) {
+                                        APPROVED = 1;
+                                    } else {
+                                        APPROVED = 0;
+                                    }
+                                    break;
+                            } // end switch
+
+                        } else {
+
+                            // Process form file field (input type="file").
+                            String fieldname = item.getFieldName();
+                            String filename = FilenameUtils.getName(item.getName());
+
+                            // Create path components to save the file
+                            // temporary Directory = rootPath + Year + Publisher
+                            filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator + tpe[z] + File.separator;
+
+                            justFiles[z] = filename;
+                            fileNames[z] = filePath + filename;
+
+                            z++;
+
+                            // create temporary Directory if it does not exist
+                            File file = new File(filePath);
+                            if (!file.exists()) {
+                                file.mkdirs();
+                            }
+
+                            OutputStream outS = null;
+                            InputStream filecontent = null;
+
+                            //      final PrintWriter writer = response.getWriter();
+                            try {
+                                outS = new FileOutputStream(new File(filePath + filename));
+                                filecontent = item.getInputStream();
+
+                                message = message + " '" + filename + "' has been uploaded <br/>";
+
+                                int read;
+                                final byte[] bytes = new byte[1024];
+
+                                while ((read = filecontent.read(bytes)) != -1) {
+                                    outS.write(bytes, 0, read);
+
+                                }
+
+                            } catch (FileNotFoundException fne) {
+
+                                String errMsg = "<br/><br/>You either did not specify a file to upload or are "
+                                        + "trying to upload a file to a protected or nonexistent "
+                                        + "location.<br/> <br/><strong> ERROR:<strong> '" + fne.getMessage() + "' ";
+
+                                request.setAttribute("message", " '<strong>" + filename + "</strong>" + errMsg);
+                                request.getRequestDispatcher("/WEB-INF/views/uploadErrorResponse.jsp").forward(request, response);
+                                LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}",
+                                        new Object[]{fne.getMessage()});
+
+                            } finally {
+
+                                if (outS != null) {
+                                    outS.close();
+                                }
+
+                                if (filecontent != null) {
+                                    filecontent.close();
+                                }
+
+//                        if (writer != null) {
+//                            writer.close();
+//                        }
+                            }
+
+                            filecontent.close();
+
+                        } // else
+
+                    }  // for (FileItem item : items)
+
+                    System.out.println("message:  " + message);
+
+                    // INSERT new application
+                    GrantApplication application = new GrantApplication();
+
+                    application.setCompany(company);
+                    application.setPublisherID(publisherID);
+                    application.setUserID(userID);
+                    application.setProposedDateOfPublication(convertDate(proposedDateOfPublication));
+                    application.setProposedDateOfPrintRun(convertDate(proposedDateOfPrintRun));
+                    application.setPlannedPageExtent(Integer.parseInt(plannedPageExtent));
+                    application.setNumberOfPages(Integer.parseInt(numberOfPages));
+                    BigDecimal fpp = new BigDecimal(feePerPage.replaceAll(",", ""));
+                    application.setFeePerPage(fpp);
+                    BigDecimal tf = new BigDecimal(translatorFee.replaceAll(",", ""));
+                    application.setTranslatorFee(tf);
+                    application.setNotes(Notes);
+                    application.setCopiesSent(copiesSent);
+                    application.setDateCopiesWereSent(convertDate(dateCopiesWereSent));
+                    application.setTC_ACCEPTED(TC_ACCEPTED);
+                    application.setAPPROVED(APPROVED);
+                    application.setStatus(Status);
+
+                    try {
+
+                        newApplicationID = GrantApplicationDAO.insertRow(application);
+
+                    } catch (DBException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } catch (ParseException ex) {
+                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                // Update new publisher
+                Publisher publisher = new Publisher();
+
+//        updatePublisher(Publisher publisher, int Company_Number) 
+//        publisher.setFIRST_NAME(firstname);
+//        publisher.setLAST_NAME(firstname);
+                publisher.setAddress1(Address1);
+                publisher.setAddress2(Address2);
+                publisher.setAddress3(Address3);
+                publisher.setAddress4(Address4);
+                publisher.setCity(City);
+                publisher.setPostCode(postCode);
+//        publisher.s(Email);
+                publisher.setTelephone(Telephone);
+                publisher.setFax(Fax);
+//    private String postCode;
+//    private String Email;
+//    private String Telephone;
+//    private String Fax;
+
+                // path = path + File.separator + yearInString + File.separator + Company + File.separator + Type + ApplicationNumber;
+                // upload to temp dir then move to final directory
+                for (int i = 0; i < 4; i++) {
+                    final String destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator + newApplicationID + File.separator + tpe[i] + File.separator;
+
+                    // create final directory if it does not exist
+                    File file = new File(destinationDirectory);
+                    if (!file.exists()) {
+                        file.mkdirs();
+                    }
+
+                    File sourceFile = new File(fileNames[i]);
+
+                    File destinationDir = new File(destinationDirectory);
+
+                    FileUtils.moveFileToDirectory(sourceFile, destinationDir, true);
+
+                    fileNames[i] = destinationDirectory + justFiles[i];
+                }
+
+                //Update  GrantApplication to contain the filePaths
+                GrantApplication application = new GrantApplication();
+
+                application.setAgreement(fileNames[0]);
+                application.setContract(fileNames[1]);
+                application.setTranslatorCV(fileNames[2]);
+                application.setCopiesTranslationSample(fileNames[3]);
+
+                try {
+
+                    GrantApplicationDAO.updateDocuments(application, newApplicationID);
+
                 } catch (DBException ex) {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                System.out.println("newApplicationID  >>>> " + newApplicationID);
-            } catch (ParseException ex) {
-                Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
-        } //if (!isMultipart)
-        else {
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
 
-//            String[] fileNames = request.getParameterValues("file");
-//
-//            System.out.println("fileNames:  " + fileNames.length);
-//
-//            for (String fileItems : fileNames) {
-//                System.out.println(":: " + fileItems);
-//            }
-            Calendar now = Calendar.getInstance();
-            int year = now.get(Calendar.YEAR);
-            String yearInString = String.valueOf(year);
+                break;
 
-            // Create path components to save the file
-            // path = path + File.separator + yearInString + File.separator + Company + File.separator + Type + ApplicationNumber;
-            String rootPath = "/home/markus/test";
+            case "New Applications":
+                request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
+                break;
+                
+            case "Pending Applications":
+                request.getRequestDispatcher("/WEB-INF/views/pendingApplications.jsp").forward(request, response);
+//                try {
+//                    List<GrantApplication> rows = listAllApplications();
+//                    //request.getSession().setAttribute("rows", rows);
+//                    request.setAttribute("rows", rows);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                } finally {
+//                    System.out.print("servlet");
+//                }
+//                request.getRequestDispatcher("pendingApplications.jsp").forward(request, response);
+                break;
 
-            final String path = rootPath + File.separator + yearInString + File.separator + company + File.separator + newApplicationID;
-//             + request.getParameter("destination");
+            case "Closed Applications":
+                request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
+                break;
+        }
+    }
 
-            System.out.println("final String path:  " + path);
+    public void doGet(HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, java.io.IOException {
 
-            String agreement1 = path + File.separator + "Agreement" + File.separator + agreement;
-            String contract1 = path + File.separator + "Contract" + File.separator + contract;
-            String translatorCV1 = path + File.separator + "TranslatorCV" + File.separator + translatorCV;
-            String copiesTranslationSample1 = path + File.separator + "TranslationSample" + File.separator + copiesTranslationSample;
-
-            List<String> uploads = Arrays.asList(agreement1, contract1, translatorCV1, copiesTranslationSample1);
-
-            // Process the uploaded file items
-            Iterator i = uploads.iterator();
-
-            while (i.hasNext()) {
-                FileItem fi = (FileItem) i.next();
-                if (!fi.isFormField()) {
-                    // Get the uploaded file parameters
-                    System.out.println("fi = " + fi);
-
-//                        final Part filePart = request.getPart("file");
-//                        final String fileName = getFileName(filePart);
-//
-//                        File file = new File(path);
-//                        if (!file.exists()) {
-//                            file.mkdirs();
-//                        }
-//
-//                        System.out.println("Upload File Directory = " + path);
-//
-//                        //    String[] fileNames ;
-//                        OutputStream out = null;
-//                        InputStream filecontent = null;
-//                        final PrintWriter writer = response.getWriter();
-//
-//                        out = new FileOutputStream(new File(path + File.separator
-//                                + fileName));
-//                        filecontent = filePart.getInputStream();
-//
-//                        int read;
-//                        final byte[] bytes = new byte[1024];
-//
-//                        while ((read = filecontent.read(bytes)) != -1) {
-//                            out.write(bytes, 0, read);
-//
-//                        }
-//
-//                        String test = (String) request.getParameter("anchor");
-//                        System.out.println("anchor = " + test);
-//
-//                        request.setAttribute("message", " '" + fileName + "' -  File uploaded successfully!");
-//                        request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
-                }
-            }
-        } //else
-    } // doPost
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+        throw new ServletException("GET method used with "
+                + getClass().getName() + ": POST method required.");
+    }
 
     public Date convertDate(String datum) throws ParseException {
 
@@ -364,18 +459,5 @@ public class GrantApplicationServlet extends HttpServlet {
 
         return date;
 
-    }
-
-    private String getFileName(final Part part) {
-        final String partHeader = part.getHeader("content-disposition");
-        LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
-        for (String content : part.getHeader("content-disposition").split(";")) {
-            if (content.trim().startsWith("filename")) {
-                return content.substring(
-                        content.indexOf('=') + 1).trim().replace("\"", "");
-            }
-        }
-
-        return null;
     }
 }

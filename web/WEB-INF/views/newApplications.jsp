@@ -1,9 +1,8 @@
 <%-- 
-    Document   : closedApplications
-    Created on : 07-May-2017, 23:27:58
+    Document   : newApplications
+    Created on : 07-Ma7-2017, 23:27:58
     Author     : markus
 --%>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -19,6 +18,7 @@
         <title>Grant Application System</title>
 
         <!-- Bootstrap -->
+
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
@@ -39,7 +39,7 @@
         <!--script for DataTable-->
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#closed').DataTable({
+                $('#new').DataTable({
                     columnDefs: [{
                             targets: [0],
                             orderData: [0, 1]
@@ -64,7 +64,7 @@
     <body style="height: 100%">
         <sql:query var="applicationQuery" dataSource="jdbc/ILGAS">
             SELECT * FROM GrantApplication
-            WHERE GrantApplication.Status = 'closed' 
+            WHERE GrantApplication.Status = 'New' 
         </sql:query>
         <c:set var="applicationDetails" value="${applicationQuery.rows[0]}"/>
         <div id="shadowholder">
@@ -87,16 +87,16 @@
 
                 <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
 
-                <div class="container-fluid" style="margin-top: 40px; margin-bottom: 40px">
+                <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
+                    <h3 align="center" style="align-content: center">Display new applications</h3>
 
-                    <h3 align="center" style="align-content: center">Display closed applications</h3>
 
                     <c:forEach items="${applicationQuery.rows}" var="row">
                         <c:out value="${row.name}" />
                     </c:forEach>
 
                     <div class="table-responsive">
-                        <table id="closed" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                        <table id="new" class="table table-striped table-bordered" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Application Number</th>
@@ -107,7 +107,7 @@
                                     <th>Proposed Date Of Publication</th>
                                     <th>Proposed Date Of Print Run</th>
                                     <th>Translator CV</th>
-                                    <th>Notes</th>
+                                    <!--<th>Notes</th>-->
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -122,7 +122,7 @@
                                     <th>Proposed Date Of Publication</th>
                                     <th>Proposed Date Of Print Run</th>
                                     <th>Translator CV</th>
-                                    <th>Notes</th>
+                                    <!--<th>Notes</th>-->
                                     <th>Status</th>
                                 </tr>
                             </tfoot>

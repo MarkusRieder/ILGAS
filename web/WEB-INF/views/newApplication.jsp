@@ -383,7 +383,7 @@
                                     </ul>
                                 </div><!-- /.navbar-collapse -->
 
-                                <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/uploads" enctype="multipart/form-data">
+                                <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/GrantApplicationServlet" enctype="multipart/form-data">
 
                                     <div id="my-tab-content" class="tab-content"  style="background-color: #E8F6FF">
                                         <!-- Info -->
