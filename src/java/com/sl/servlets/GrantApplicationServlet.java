@@ -86,17 +86,19 @@ public class GrantApplicationServlet extends HttpServlet {
 
         // Get the file location where it would be stored.
         tempPath = "/home/markus/test/tempDir";
-        rootPath = "/home/markus/test";
+        rootPath = "/home/markus/public_html/test";
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String task = "Open New Application";
+        // task = request.getParameter("task");
 
-        String task = request.getParameter("task");
+        System.out.println("task:: " + task);
         switch (task) {
             case "Open New Application":
-                Status = "New";
+                Status = "new";
 
                 Calendar now = Calendar.getInstance();
                 int year = now.get(Calendar.YEAR);
@@ -113,8 +115,8 @@ public class GrantApplicationServlet extends HttpServlet {
 
                     // Check that we have a file upload request
                     isMultipart = ServletFileUpload.isMultipartContent(request);
-
-//            response.setContentType("text/html;charset=UTF-8");
+                    System.out.println("isMultipart:: " + isMultipart);
+                    response.setContentType("text/html;charset=UTF-8");
 //
 //            PrintWriter out = response.getWriter();
 //
@@ -402,10 +404,27 @@ public class GrantApplicationServlet extends HttpServlet {
                 //Update  GrantApplication to contain the filePaths
                 GrantApplication application = new GrantApplication();
 
-                application.setAgreement(fileNames[0]);
-                application.setContract(fileNames[1]);
-                application.setTranslatorCV(fileNames[2]);
-                application.setCopiesTranslationSample(fileNames[3]);
+                String fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                System.out.println(fn);
+                application.setAgreement(fn);
+                System.out.println("fileNames[0]:: " + fileNames[0]);
+                application.setAgreementDocName(justFiles[0]);
+                System.out.println("justFiles[0]:: " + justFiles[0]);
+                fn = fileNames[1].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                application.setContract(fn);
+                System.out.println("fileNames[1]:: " + fileNames[1]);
+                application.setContractDocName(justFiles[1]);
+                System.out.println("justFiles[1]:: " + justFiles[1]);
+                fn = fileNames[2].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                application.setTranslatorCV(fn);
+                System.out.println("fileNames[2]:: " + fileNames[2]);
+                application.setTranslatorCVDocName(justFiles[2]);
+                System.out.println("justFiles[2]:: " + justFiles[2]);
+                fn = fileNames[3].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                application.setCopiesTranslationSample(fn);
+                System.out.println("fileNames[3]:: " + fileNames[3]);
+                application.setCopiesTranslationSampleDocName(justFiles[3]);
+                System.out.println("justFiles[3]:: " + justFiles[3]);
 
                 try {
 
@@ -423,7 +442,7 @@ public class GrantApplicationServlet extends HttpServlet {
             case "New Applications":
                 request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
                 break;
-                
+
             case "Pending Applications":
                 request.getRequestDispatcher("/WEB-INF/views/pendingApplications.jsp").forward(request, response);
 //                try {

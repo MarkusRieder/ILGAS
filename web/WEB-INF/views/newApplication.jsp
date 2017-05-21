@@ -42,7 +42,7 @@
                 //Assume form with id="theform"
                 var theForm = document.forms["feeCalculationForm"];
                 //Get a reference to the TextBox
-                var numberPages = theForm.elements["numberPages"];
+                var numberPages = document.getElementById("numberOfPages");
                 var noPages = 0;
                 //If the textbox is not blank
                 if (numberPages.value !== "")
@@ -57,7 +57,7 @@
                 //Assume form with id="theform"
                 var theForm = document.forms["feeCalculationForm"];
                 //Get a reference to the TextBox
-                var feePerPage = theForm.elements["feePerPage"];
+                var numberPages = document.getElementById("feePerPage");
                 var amountPage = 10;
                 //If the textbox is not blank
                 if (feePerPage.value !== "")
@@ -70,7 +70,7 @@
             function getTotal()
             {
                 var feeTotal = getNumberPages() * getFeePerPage();
-                document.getElementById("fee").value = feeTotal.toFixed(2).replace(/./g, function (c, i, a) {
+                document.getElementById("translatorFee").value = feeTotal.toFixed(2).replace(/./g, function (c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });
             }
@@ -186,7 +186,6 @@
                 margin: 5px;
                 background: #d9d1d1
             }
-
             /* Tab Navigation */
             .nav-tabs {
                 margin: 0;
@@ -330,14 +329,12 @@
 
         <body style="height: 100%">
 
-
                 <sql:query var="companyQuery" dataSource="jdbc/ILGAS">
                     SELECT * FROM international_publishers
                     WHERE international_publishers.Company_Number = ?
                     <sql:param value="${publisherID}"/>
                 </sql:query>
                 <c:set var="companyDetails" value="${companyQuery.rows[0]}"/>
-
 
                 <div id="shadowholder">
                     <div class="shadowtop"> </div>
@@ -348,13 +345,12 @@
                                 <a href="/the-translation-grant-programme"><img src="images/flashtext-animated2.gif" height="80" alt="Promoting Irish Literature Abroad" /></a>
                             </div>
                             <a href="/" class="logo"><span class="hidden">Literature Ireland</span></a>
-                            <!--container for welcome/logout-->
+
                             <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                                 <div class="pull-right">
                                     <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
                                 </div>
                             </div> <!--container for welcome/logout-->
-
                         </div> <!--  End of topbar div -->
 
                         <nav class="navbar navbar-default" >
@@ -375,7 +371,6 @@
                                     <ul class="nav navbar-nav nav-tabs two-lines">
                                         <li class="active"><a href="#info" data-toggle="tab">Info</a></li>
                                         <li><a href="#Contact" data-toggle="tab">Contact details</a></li>
-                                        <li><a href="#Contact1" data-toggle="tab">Contact details 1</a></li>
                                         <li><a href="#Rights" data-toggle="tab">Rights Agreement</a></li>
                                         <li><a href="#Publication" data-toggle="tab">Publication Details</a></li>
                                         <li><a href="#Translator" data-toggle="tab">Translator’s Details</a></li>
@@ -467,90 +462,17 @@
                                                 <li>Applicants are informed of the <strong>outcome of the application</strong> within 10 days of the board meeting. Successful applicants will be issued with formal contracts and a letter of award within six weeks of grant approval.   </li> 
                                             </ol>
                                         </div>
+
+
                                         <!-- Contact details -->
+
                                         <div class="tab-pane" id="Contact">
-                                            <h1 style="margin-bottom: 40px">Update Contact details</h1>
-                                            <div class="container-fluid">
+                                            <div class="container">
 
-                                                <!--Form Contactdetails-->
+                                                <!--first row-->
 
-                                                <div class="col-md-9" >
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                        <input id="Company" type="text" class="form-control" name="company" value="${companyDetails.Company}" placeholder="Publishing Company Name">                                        
-                                                    </div>
-
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                        <input id="firstname" type="text" class="form-control" name="firstname" value="${firstname}" placeholder="First Name">                                        
-                                                    </div>
-
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                        <input id="lastname" type="text" class="form-control" name="lastname" value="${lastname}" placeholder="Last Name">                                        
-                                                    </div>
-
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                        <input id="Address1" type="text" class="form-control" name="Address1" value="${companyDetails.Address1}" placeholder="Address1">                                        
-                                                    </div> 
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                        <input id="Address2" type="text" class="form-control" name="Address2" value="${companyDetails.Address2}" placeholder="Address2">                                        
-                                                    </div>
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                        <input id="Address3" type="text" class="form-control" name="Address3" value="${companyDetails.Address3}" placeholder="Address3">                                        
-                                                    </div>
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                        <input id="Address4" type="text" class="form-control" name="Address4" value="${companyDetails.Address4}" placeholder="Address4">                                        
-                                                    </div>
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                        <input id="City" type="text" class="form-control" name="City" value="${companyDetails.City}" placeholder="City/Town">                                        
-                                                    </div>
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                        <input id="postCode" type="text" class="form-control" name="postCode" value="${companyDetails.postCode}" placeholder="Post Code">                                        
-                                                    </div>
-
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                                        <input id="Email" type="text" class="form-control" name="Email" value="${companyDetails.Email}" placeholder="Email address">                                        
-                                                    </div>
-
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-                                                        <input id="Telephone" type="text" class="form-control" name="Telephone" value="${companyDetails.Telephone}" placeholder="Telephone number ">                                        
-                                                    </div>
-
-                                                    <div style="margin-bottom: 25px" class="input-group">
-                                                        <span class="input-group-addon"><i class="fa fa-fax"></i></span>
-                                                        <input id="Fax" type="text" class="form-control" name="Fax" value="${companyDetails.Fax}" placeholder="Fax number ">                                        
-                                                    </div>
-
-                                                    <div class="input-group input-group-lg" style="margin-top: 40px; margin-bottom: 40px;">
-
-                                                    <button type="submit"  name="save_UpdatedDetails" id="save_UpdatedDetails" 
-                                                            data-toggle="tooltip" title="Click to save!"
-                                                            >
-                                                        Save Updated Details
-                                                        <span class="glyphicon glyphicon-import"></span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div> <!-- container-fluid -->
-                                    </div> <!-- class="tab-pane" id="red" -->
-
-                                    <!-- Rights Agreement -->
-                                    <div class="tab-pane" id="Contact1">
-                                        <div class="container">
-
-                                            <!--first row-->
-
-                                            <!--get Company and Company_Number via autocomplete-->
-                                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                <!--get Company and Company_Number via autocomplete-->
+                                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                     <div class="col-sm-6">
                                                         <input  id="company" 
                                                                 name="Company" 
@@ -812,6 +734,7 @@
                                                 <div class="row"  style="display: block;
                                                 margin-right: auto;
                                                 margin-left: auto;">
+
                                                 <!--Upload form for agreement-->
 
                                                 <div class="col-md-12"   style="margin-bottom: 60px">                                                
@@ -823,20 +746,14 @@
                                                             Select file <input type="file"  name="file" id="agreement" >
                                                             <span class="glyphicon glyphicon-folder-open"></span>
                                                         </label>
-                                                        <!--<input type="hidden" name="ApplicationNumber" value="${ApplicationNumber}">-->
+
                                                         <input type="hidden" name="userID" value="${userID}">
                                                         <input type="hidden" name="publisherID" value="${publisherID}">
                                                         <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                         <input id="label_agreement" class="pull-left"/>
                                                         <br/>
-                                                        <br/>  
-                                                        <label>Destination:</label>                                              
-                                                        <input type="text" value="Agreement" name="destination" id="agreement_upload"/>
-                                                        <button type="submit"  name="upload_agreement" id="upload_agreement" 
-                                                                data-toggle="tooltip" title="Click to UPLOAD!">
-                                                            Upload
-                                                            <span class="glyphicon glyphicon-import"></span>
-                                                        </button>
+                                                        <br/>                                              -->
+                                                        <input type="hidden" value="Agreement" name="destination" id="agreement_upload"/>
                                                     </div>
                                                 </div>
 
@@ -853,7 +770,6 @@
                                                             <span class="glyphicon glyphicon-folder-open"></span>
                                                         </label>
 
-      <!--<input type="text" name="ApplicationNumber" value="${ApplicationNumber}">-->
                                                         <input type="hidden" name="userID" value="${userID}">
                                                         <input type="hidden" name="publisherID" value="${publisherID}">
                                                         <input type="hidden" name="Company" value="${companyDetails.Company}">
@@ -862,11 +778,7 @@
                                                         <br/> 
                                                         <!--<label>Destination:</label>-->
                                                         <input type="hidden" value="Contract" name="destination" id="contract_upload"/>
-                                                        <button type="submit"  name="contract_upload" id="upload_contract" 
-                                                                data-toggle="tooltip" title="Click to UPLOAD!">
-                                                            Upload
-                                                            <span class="glyphicon glyphicon-import"></span>
-                                                        </button>
+
                                                         ${requestScope.message}
                                                     </div>
                                                 </div>
@@ -907,16 +819,6 @@
                                                             <span class="input-group-addon" id="sizing-addon1">  <span class="glyphicon glyphicon-book"></span></span>
                                                             <input type="text" name="plannedPageExtent" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">
                                                         </div>
-                                                        <!--</div>-->
-                                                        <div class="input-group input-group-lg" style="margin-top: 40px;">
-
-                                                            <button type="submit"  name="save_PublicationDetails" id="save_PublicationDetails" 
-                                                                    data-toggle="tooltip" title="Click to save!"
-                                                                    >
-                                                                Save
-                                                                <span class="glyphicon glyphicon-import"></span>
-                                                            </button>
-                                                        </div>
                                                     </div>
                                                     <script>
                                                         $("#proposed-date-of-publication").datepicker({
@@ -947,9 +849,7 @@
                                             <div class="col-md-8"   style="margin-bottom: 60px">
                                                     <h1 style="margin-top: 50px; margin-bottom: 20px">Upload a copy of the Translator's CV:<br/>
                                                         <small>this should include a list of previous published literary translations</small></h1>                                    
-
                                                     <br/>
-                                                    <!--<input type="file" name="file" id="translator_cv" /> <br/>-->
                                                     <div class="input-group translator_cv"  style="margin-bottom: 40px;">
                                                     <label class="btn btn-default btn-file pull-left">
                                                         Select file <input type="file"  name="file" id="translator" >
@@ -958,17 +858,12 @@
                                                     <input id="label_translator" class="pull-left"/>
                                                     <br/>
                                                     <br/>          
-                                                    <!--<input type="text" name="ApplicationNumber" value="${ApplicationNumber}">-->
                                                     <input type="hidden" name="userID" value="${userID}">
                                                     <input type="hidden" name="publisherID" value="${publisherID}">
                                                     <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                    Destination:
-                                                    <input type="text" id="translator_cv_upload" value="Translator_CV" name="destination" />                                          
-                                                    <button type="submit"  name="upload_translator_cv" id="upload_translator_cv" 
-                                                            data-toggle="tooltip" title="Click to UPLOAD!">
-                                                        Upload
-                                                        <span class="glyphicon glyphicon-import"></span>
-                                                    </button>
+                                                    <!--                                                    Destination:-->
+                                                    <input type="hidden" id="translator_cv_upload" value="Translator_CV" name="destination" />                                          
+
                                                 </div>
 
                                             </div>
@@ -978,10 +873,8 @@
                                                 Number of pages:<input type="text"  name="numberOfPages" id="numberOfPages"  style="margin-bottom: 30px"/><br/>
                                                     Fee per page: 
                                                     <input type="text"  name="feePerPage"  id="feePerPage"   style="margin-bottom: 30px"/>
-                                                    <button type="submit" class="btn btn-default"  id='submit' onclick="getTotal()" style="margin-bottom: 10px">Calculate fee</button>
+                                                    <button type="button" class="btn btn-default"  id='submit' onclick="getTotal()" style="margin-bottom: 10px">Calculate fee</button>
 
-
-                                                    <!--<div class="col-md-4" style="margin-bottom: 60px">-->
                                                     <strong>Translator fee:</strong>                                                                        
                                                     <div class="input-group" style="margin-bottom: 40px">
                                                         <label class="input-group-addon" for="translatorFee">
@@ -994,17 +887,6 @@
                                                         <textarea class="form-control" placeholder="Notes" name="Notes"
                                                                   style="width: 280px; height: 196px;"></textarea>
                                                 </div>
-                                                <!--</div>-->
-
-
-                                                <div class="input-group input-group-lg" style="margin-top: 40px;">
-                                                    <button type="submit"  name="save_feeForm" id="save_feeForm" 
-                                                            data-toggle="tooltip" title="Click to save!"
-                                                            >
-                                                        Save
-                                                        <span class="glyphicon glyphicon-import"></span>
-                                                    </button>
-                                                </div>                                       
                                             </div> 
                                         </div>              
                                     </div>
@@ -1057,27 +939,14 @@
                                                                 });
                                                             </script>
 
+                                                        </div> <!--panel--body-->
+                                                    </div> <!--panel-default-->
+                                                </div> <!-- row -->
 
-                                                            <div class="col-md-9"   style="margin-bottom: 40px;">
-                                                            <div class="input-group input-group-lg">
-                                                                <button type="submit"                                                                          
-                                                                        data-toggle="tooltip" 
-                                                                        title="Click to save!"
-                                                                        >
-                                                                    Save
-                                                                    <span class="glyphicon glyphicon-import"></span>
-                                                                </button>
-                                                            </div><!-- input-group -->
-                                                        </div>  <!-- col-md-12 -->
-
-                                                    </div> <!--panel--body-->
-                                                </div> <!--panel-default-->
-                                            </div> <!-- row -->
-
-                                            <div class="row" >
-                                                <div class="panel panel-default">        
-                                                    <div class="panel-body">
-                                                        <div class="col-md-12" style="margin-bottom: 40px; margin-top: 60px">
+                                                <div class="row" >
+                                                    <div class="panel panel-default">        
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12" style="margin-bottom: 40px; margin-top: 60px">
 
                                                                 <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
                                                                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -1090,79 +959,115 @@
                                                                     <span class="message"></span>
                                                                 </div>
 
-
-                                                                <strong style="margin-bottom: 20px" class="pull-left">Two copies of a translation sample<sup>**</sup> consisting of 10–12 pages of prose or six poems</strong>
-                                                                <div class="margin-bottom: 60px"></div>   
+                                                                <strong style="margin-bottom: 20px" class="pull-left">Two copies of a translation sample<sup>**</sup> consisting of 10–12 pages of prose or six poems</strong> 
                                                                 <br/>
-                                                                <div class="input-group agreement translationSample"  style="margin-bottom: 40px;">                                      
-                                                                <label class="btn btn-default btn-file pull-left">
-                                                                    Select file <input type="file"  name="file" id="translationSample" >
-                                                                    <span class="glyphicon glyphicon-folder-open"></span>
-                                                                </label>
-                                                                <input id="label_translationSample" class="pull-left"/>
-                                                                <br/>
-                                                                <br/>  
-                                                                <!--<input type="hidden" name="ApplicationNumber" value="${ApplicationNumber}">-->
-                                                                <input type="hidden" name="userID" value="${userID}">
-                                                                <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                Destination:
-                                                                <input type="text" value="TranslationSample" name="destination"/>
-                                                                <button type="submit"  name="upload_translationSample" id="upload_translationSample" 
-                                                                        data-toggle="tooltip" title="Click to UPLOAD!">
-                                                                    Upload
-                                                                    <span class="glyphicon glyphicon-import"></span>
-                                                                </button>
-                                                            </div>
-                                                            <!-- translationSampleForm -->                                                                                                              
-                                                        </div>  <!-- col-md-12 -->
-                                                    </div>  <!--panel--body-->
-                                                </div> <!--panel-default-->
-                                            </div> <!-- row -->
-                                            <hr/>
-                                            <div class="col-md-10">
-                                                <i class="pull-left"><strong>*</strong> Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
-                                                    <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
-                                            </div>    
-                                        </div>  <!-- container-fluid -->
-                                    </div> <!-- tab-pane Original -->
+                                                                <div class="input-group agreement translationSample" >                                      
+                                                                    <label class="btn btn-default btn-file pull-left">
+                                                                        Select file <input type="file"  name="file" id="translationSample" >
+                                                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    </label>
+                                                                    <input id="label_translationSample" class="pull-left"/>
+                                                                    <br/>
+                                                                    <br/>       
+                                                                    <input type="hidden" name="userID" value="${userID}">
+                                                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                    <input type="hidden" value="TranslationSample" name="destination"/>
+                                                                </div>
+                                                                <!-- translationSampleForm -->                                                                                                              
+                                                            </div>  <!-- col-md-12 -->
+                                                        </div>  <!--panel--body-->
+                                                    </div> <!--panel-default-->
+                                                </div> <!-- row -->
+                                                <div class="row" >
+                                                    <div class="panel panel-default">        
+                                                        <div class="panel-body">
+                                                            <!--<div class="col-md-12" style="margin-bottom: 40px; margin-top: 60px">-->
 
-                                    <!--  ========================================================================================== -->
+                                                            <div class="col-md-9"   style="margin-bottom: 10px; margin-top: 10px;">
+                                                            <div class="input-group input-group-lg">Finally <br/>
+                                                                <button type="submit"                                                                          
+                                                                        data-toggle="tooltip" 
+                                                                        class="btn btn-success"
+                                                                        title="Click to save!"
+                                                                        style="margin-bottom: 10px"
+                                                                            >
+                                                                            Make the application
+                                                                            <span class="glyphicon glyphicon-import"></span>
+                                                                        </button>
+                                                                </div><!-- input-group -->
+                                                            </div>  <!-- col-md-9 -->
+                                                        </div>  <!-- panel--body -->
+                                                    </div>  <!--panel--default-->                                                
+                                                </div> <!-- row -->
+                                                <hr/>
+                                                <div class="col-md-10">
+                                                    <i class="pull-left"><strong>*</strong> Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
+                                                        &nbsp;  <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
+                                                </div>    
+                                            </div>  <!-- container-fluid -->
+                                        </div> <!-- tab-pane Original --> 
+                                    </div> <!-- my-tab-content -->
+                                </form> 
+                            </div><!-- container-fluid -->
+                        </nav>
 
-                                </div> <!-- tab-content -->
-                            </form> 
-                        </div> <!-- /.container-fluid -->
-                    </nav>
+                        <form class="form-horizontal" 
+                              role="form"  
+                              autocomplete="on"  
+                              action="${pageContext.request.contextPath}/Application" 
+                              method="POST" 
+                              name="regF"
+                              >
 
-                    <!--footer start-->
+                            <div class="container col-sm-12" style="margin-bottom: 40px">
+                                <button type="submit" class = "btn btn-default btn-sm active" name="New Application">
+                                    New Application
+                                </button>
 
-                    <div id="base">  
+                                <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
+                                    List New Applications
+                                </button>
 
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
-                        </div><!-- end of BaseText div -->
+                                <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
+                                    List Pending Applications
+                                </button>
 
-                        <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
-                        <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                        <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
-
-                        <div class="mobile-baselogos visible-phone"> 
-                            <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
-                            <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                            <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
-                        </div>
-
-                    </div><!-- end of Base div -->
-
-                </div><!-- end of container div -->
-                <div class="shadowbase"> </div>
-            </div><!-- end of Shadowholder container div -->
+                                <button type = "submit" class = "btn btn-default btn-sm"  name="List Closed Applications">
+                                    List Closed Applications
+                                </button>
+                            </div>
+                        </form>
 
 
-            <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                &copy; 2017 mgr Software
-            </div>
+                        <!--footer start-->
 
-        </body>
-    </html>
+                        <div id="base">  
+
+                            <div class="basetext">  
+                                <h2>Literature Ireland</h2>
+                                <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
+                            </div><!-- end of BaseText div -->
+
+                            <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
+                            <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
+                            <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
+
+                            <div class="mobile-baselogos visible-phone"> 
+                                <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
+                                <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
+                                <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                            </div>
+
+                        </div><!-- end of Base div -->
+
+                    </div><!-- end of container div -->
+                    <div class="shadowbase"> </div>
+                </div><!-- end of Shadowholder container div -->
+
+                <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                    &copy; 2017 mgr Software
+                </div>
+
+            </body>
+        </html>

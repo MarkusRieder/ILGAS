@@ -15,8 +15,12 @@ public class GrantApplication {
 
 //    Rights Agreement
     private String agreement;//path + filename
+    
+     private String agreementDocName; //filename
 
     private String contract; //path + filename
+    
+    private String contractDocName;  //filename
 
 //    Publication Details
     private Date proposedDateOfPublication;
@@ -27,6 +31,8 @@ public class GrantApplication {
 
 //     a copy of the Translator's CV
     private String translatorCV;//path + filename
+    
+     private String translatorCVDocName; //filename
 
     private int numberOfPages;
 
@@ -43,7 +49,9 @@ public class GrantApplication {
 
     private Date dateCopiesWereSent;
 
-    private String copiesTranslationSample; //path + filename
+    private String copiesTranslationSample;  //filename
+    
+     private String copiesTranslationSampleDocName; //filename
 
 //    General
     private int TC_ACCEPTED;
@@ -333,5 +341,61 @@ public class GrantApplication {
      */
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    /**
+     * @return the agreementDocName
+     */
+    public String getAgreementDocName() {
+        return agreementDocName;
+    }
+
+    /**
+     * @param agreementDocName the agreementDocName to set
+     */
+    public void setAgreementDocName(String agreementDocName) {
+        this.agreementDocName = agreementDocName;
+    }
+
+    /**
+     * @return the contractDocName
+     */
+    public String getContractDocName() {
+        return contractDocName;
+    }
+
+    /**
+     * @param contractDocName the contractDocName to set
+     */
+    public void setContractDocName(String contractDocName) {
+        this.contractDocName = contractDocName;
+    }
+
+    /**
+     * @return the translatorCVDocName
+     */
+    public String getTranslatorCVDocName() {
+        return translatorCVDocName;
+    }
+
+    /**
+     * @param translatorCVDocName the translatorCVDocName to set
+     */
+    public void setTranslatorCVDocName(String translatorCVDocName) {
+        this.translatorCVDocName = translatorCVDocName;
+    }
+
+    /**
+     * @return the copiesTranslationSampleDocName
+     */
+    public String getCopiesTranslationSampleDocName() {
+        return copiesTranslationSampleDocName;
+    }
+
+    /**
+     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName to set
+     */
+    public void setCopiesTranslationSampleDocName(String copiesTranslationSampleDocName) {
+        this.copiesTranslationSampleDocName = copiesTranslationSampleDocName;
     }
 }

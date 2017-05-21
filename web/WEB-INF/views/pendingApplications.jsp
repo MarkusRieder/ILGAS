@@ -3,6 +3,9 @@
     Created on : 07-Ma7-2017, 23:27:58
     Author     : markus
 --%>
+
+<%@ page import="java.io.*,java.io.*,org.apache.poi.hwpf.HWPFDocument,org.apache.poi.hwpf.extractor.WordExtractor" %>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -20,13 +23,14 @@
         <!-- Bootstrap -->
 
 
-       <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="css/responsive.dataTables.min.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
@@ -35,30 +39,56 @@
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/jquery.dataTables.js"></script>
         <script src="js/dataTables.bootstrap.js"></script>
+        <script src="js/dataTables.responsive.min.js"></script>
+        <script src="js/dataTables.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
+
 
         <!--script for DataTable-->
         <script type="text/javascript">
             $(document).ready(function () {
+                $('.DataTable').DataTable({iDisplayLength: 50});
                 $('#pending').DataTable({
-                    columnDefs: [{
-                            targets: [0],
-                            orderData: [0, 1]
-                        }, {
-                            targets: [1],
-                            orderData: [1, 0]
-                        }, {
-                            targets: [4],
-                            orderData: [4, 0]
-                        }]
+
+                    responsive: {
+                        details: {
+                            display: $.fn.dataTable.Responsive.display.modal({
+                                header: function (row) {
+                                    var data = row.data();
+                                    return 'Details for Application Number: ' + data[0] + ' - Publisher: ' + data[1];
+                                }
+                            }),
+                            renderer: function (api, rowIdx, columns) {
+                                var data = $.map(columns, function (col, i) {
+                                    return '<tr>' +
+                                            '<td>' + col.title + ':' + '</td> ' +
+                                            '<td>' + col.data + '</td>' +
+                                            '</tr>';
+                                }).join('');
+
+                                return $('<table/>').append(data);
+                            }
+                        }
+                    }
                 });
             });
         </script>
+
         <!--increase size of show entries-->
         <style>
             select.input-sm {
                 height: 33px;
             }
         </style>
+
+        <!--script to enable click on document link--> 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#pending tbody').on('click', 'td', function () {
+                    var table = $('#newA').DataTable();
+                });
+            });
+        </script>
     </head>
 
     <body style="height: 100%">
@@ -87,43 +117,43 @@
 
                 <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
 
-                <div class="container-fluid" style="margin-top: 40px; margin-bottom: 40px">
-
+                <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
                     <h3 align="center" style="align-content: center">Display pending applications</h3>
+
 
                     <c:forEach items="${applicationQuery.rows}" var="row">
                         <c:out value="${row.name}" />
                     </c:forEach>
 
                     <div class="table-responsive">
-                        <table id="pending" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                        <table id="pending" class="table table-striped table-bordered  dt-responsive nowrap" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Application Number</th>
-                                    <th>Company</th>
-                                    <th>Agreement</th>
-                                    <th>Contract</th>
-                                    <th>Number Of Pages</th>
-                                    <th>Proposed Date Of Publication</th>
-                                    <th>Proposed Date Of Print Run</th>
-                                    <th>Translator CV</th>
-                                    <!--<th>Notes</th>-->
-                                    <th>Status</th>
+                                    <th class="all">Application<br/>  Nr</th>
+                                    <th class="all">Company</th>
+                                    <th class="all">Agreement</th>
+                                    <th class="all">Contract</th>
+                                    <th class="all">Number<br/> Pages</th>
+                                    <th class="all">Proposed<br/> Date of <br/> Publication</th>
+                                    <th class="all">Proposed<br/> Date of <br/> Print Run</th>
+                                    <th class="all">Translator<br/> CV</th>
+                                    <th>Notes</th>
+                                    <th class="all">Status</th>
                                 </tr>
                             </thead>
 
                             <tfoot>
                                 <tr>
-                                    <th>Application Number</th>
-                                    <th>Company</th>
-                                    <th>Agreement</th>
-                                    <th>Contract</th>
-                                    <th>Number Of Pages</th>
-                                    <th>Proposed Date Of Publication</th>
-                                    <th>Proposed Date Of Print Run</th>
-                                    <th>Translator CV</th>
-                                    <!--<th>Notes</th>-->
-                                    <th>Status</th>
+                                    <th class="all">Application<br/>  Nr</th>
+                                    <th class="all">Company</th>
+                                    <th class="all">Agreement</th>
+                                    <th class="all">Contract</th>
+                                    <th class="all">Number<br/> Pages</th>
+                                    <th class="all">Proposed<br/> Date of <br/> Publication</th>
+                                    <th class="all">Proposed<br/> Date of <br/> Print Run</th>
+                                    <th class="all">Translator<br/> CV</th>
+                                    <th>Notes</th>
+                                    <th class="all">Status</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -131,26 +161,49 @@
                                     <tr>
                                         <td><c:out value = "${row.ApplicationNumber} " /></td>
                                         <td><c:out value = "${row.company}" /></td>
-                                        <td><c:out value = "${row.agreement}"/></td>
-                                        <td><c:out value = "${row.contract} " /></td>
+                                        <td><a href="http://localhost${row.agreement}" target="_blank" title="Open Document">${row.agreementDocName}</a></td>                                    
+                                        <td><a href="http://localhost${row.contract}" target="_blank" title="Open Document">${row.contractDocName}</a></td>                                        
                                         <td><c:out value = "${row.numberOfPages}"/></td>
                                         <fmt:formatDate value = "${row.proposedDateOfPublication}" pattern="dd/MM/yyyy" var="proposedDateOfPublication"/>
                                         <td><c:out value="${proposedDateOfPublication}" />
                                             <fmt:formatDate value = "${row.proposedDateOfPrintRun}" pattern="dd/MM/yyyy" var="proposedDateOfPrintRun"/>
                                         <td><c:out value = "${proposedDateOfPrintRun}"/></td>
-                                        <td><c:out value = "${row.translatorCV}"/></td>
-<!--                                        <td><c:out value = "${row.Notes}"/></td>-->
+                                        <td><a href="http://localhost${row.translatorCV}" target="_blank" title="Open Document">${row.translatorCVDocName}</a></td>                                        
+                                        <td><c:out value = "${row.Notes}"/></td>
                                         <td><c:out value = "${row.Status}"/></td>
                                     </tr>   
                                 </c:forEach>
                             </tbody>
                         </table>
+                    </div>             
+                    <c:if test="${not empty error}">Error: ${error}</c:if>
+                    </div> <!-- /container-fluid -->
+                    <form class="form-horizontal" 
+                          role="form"  
+                          autocomplete="on"  
+                          action="${pageContext.request.contextPath}/Application" 
+                    method="POST" 
+                    name="regF"
+                    >
+                  <div class="container col-sm-12" style="margin-bottom: 40px">
+                        <button type="submit" class = "btn btn-default btn-sm" name="New Application">
+                            New Application
+                        </button>
+
+                        <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
+                            List New Applications
+                        </button>
+
+                        <button type = "submit" class = "btn btn-default btn-sm active" name="List Pending Applications">
+                            List Pending Applications
+                        </button>
+
+                        <button type = "submit" class = "btn btn-default btn-sm"  name="List Closed Applications">
+                            List Closed Applications
+                        </button>
                     </div>
 
-
-                    <c:if test="${not empty error}">Error: ${error}</c:if>
-                </div> <!-- /container-fluid -->
-
+                </form>
                 <!--footer start-->
 
                 <div id="base">  
@@ -180,6 +233,5 @@
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2017 mgr Software
         </div>
-
     </body>
 </html>

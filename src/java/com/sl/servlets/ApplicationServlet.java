@@ -8,7 +8,6 @@ package com.sl.servlets;
 import com.sl.dao.GrantApplicationDAO;
 import com.sl.db.DBException;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -51,38 +50,53 @@ public class ApplicationServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String task = request.getParameter("task");
+
+        if (request.getParameter("New Application") != null) {
+            task = "Open New Application";
+        } else if (request.getParameter("List New Applications") != null) {
+            task = "List New Applications";
+        } else if (request.getParameter("List Pending Applications") != null) {
+            task = "List Pending Applications";
+        } else if (request.getParameter("List Closed Applications") != null) {
+            task = "List Closed Applications";
+        } else {
+            task = task;
+        }
+
         System.out.println("task:  " + task);
 
         switch (task) {
-            case "New Application":
-        {
-            try {
-                //      showNewForm(request, response);
-                //  System.out.println("/New Application:  ");
-                
-                int ApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
-                 System.out.println("/Application::ApplicationNumber:  " + ApplicationNumber);
-                 
-                 request.setAttribute("ApplicationNumber", ApplicationNumber);
-                
-            } catch (DBException ex) {
-                Logger.getLogger(ApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
 
-                request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
+            case "List New Applications":
+                request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
                 break;
-            case "Pending Applications":
+
+            case "Open New Application": {
+                try {
+
+                    int ApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
+                    System.out.println("/Application::ApplicationNumber:  " + ApplicationNumber);
+
+                    request.setAttribute("ApplicationNumber", ApplicationNumber);
+
+                } catch (DBException ex) {
+                    Logger.getLogger(ApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
+            break;
+            case "List Pending Applications":
                 //         insertBook(request, response);
                 request.getRequestDispatcher("/WEB-INF/views/pendingApplications.jsp").forward(request, response);
                 break;
-            case "Closed Applications":
+            case "List Closed Applications":
                 //          deleteBook(request, response);
                 request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
                 break;
             default:
                 //          listBook(request, response);
-                request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
                 break;
         }
 

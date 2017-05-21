@@ -17,7 +17,7 @@
 <!--container for welcome/logout-->
 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
     <div class="pull-right">
-         <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
     </div>
 </div> <!--container for welcome/logout-->
 
