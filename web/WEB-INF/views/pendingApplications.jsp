@@ -112,7 +112,6 @@
                             <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
                         </div>
                     </div> <!--container for welcome/logout-->
-
                 </div> <!--  End of topbar div -->
 
                 <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>

@@ -100,7 +100,8 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("name", name);
 
             if ("Literature Ireland Staff".equals(function)) {
-                request.getRequestDispatcher("/WEB-INF/views/welcome_Staff.jsp").forward(request, response);
+                   request.getRequestDispatcher("/WEB-INF/views/welcome_Staff.jsp").forward(request, response);
+//                request.getRequestDispatcher("/WEB-INF/views/newjsp.jsp").forward(request, response);
             } else {
 
                 // user belongs to Publisher
