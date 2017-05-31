@@ -44,7 +44,7 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                var table = $('#library').DataTable({
+                var table = $('#user').DataTable({
 
                     dom: 'Bfrtip',
                     buttons: [
@@ -61,7 +61,7 @@
                     ]
                 });
 
-                $('#library tbody').on('click', 'tr td.details-control', function () {
+                $('#user tbody').on('click', 'tr td.details-control', function () {
                     $("#myModal").modal("show");
                     $("#txtfname0").val($(this).closest('tr').children()[1].textContent); // ID
                     $("#txtlname1").val($(this).closest('tr').children()[2].textContent); // uname
@@ -79,7 +79,7 @@
 
             $(document).ready(function () {
 
-                var table = $("#jqueryDataTable").DataTable({
+                var table = $("#books").DataTable({
                     dom: 'Bfrtip',
                     buttons: [
                         {
@@ -109,7 +109,7 @@
                     ],
                     "bProcessing": false,
                     "bServerSide": false,
-                    "sAjaxSource": "./PopulateTableDevice",
+                    "sAjaxSource": "./LibraryDataServlet",
                     "columns": [{
                             "targets": -1,
                             "class": "details-control",
@@ -148,7 +148,7 @@
                     ]
 
                 });
-                $('#jqueryDataTable tbody').on('click', 'tr td.details-control', function () {
+                $('#books tbody').on('click', 'tr td.details-control', function () {
 
                     $("#jqdtModal").modal("show");
                     $("#referenceNumber").val($(this).closest('tr').children()[2].textContent); // ID
@@ -307,7 +307,7 @@
 
 
                         <div class="table-responsive">
-                            <table id="jqueryDataTable" class="display jqueryDataTable table table-striped table-bordered  dt-responsive nowrap" width="100%" cellspacing="0">
+                            <table id="books" class="display jqueryDataTable table table-striped table-bordered  dt-responsive nowrap" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th class="details-control"></th>
@@ -395,6 +395,9 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
+                    
+                    </div>
+                    
                     <div id="base">  
 
                         <div class="basetext">  

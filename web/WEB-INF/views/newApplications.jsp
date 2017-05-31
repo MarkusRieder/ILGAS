@@ -126,7 +126,7 @@
                 </div> <!--  End of topbar div -->
 
                 <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
-
+   <h1 style="background-color: red">Make sure they can only see their own applications</h1>
                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
                     <h3 align="center" style="align-content: center">Display new applications</h3>
 
