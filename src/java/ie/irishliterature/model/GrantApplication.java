@@ -6,6 +6,8 @@ import java.util.Date;
 public class GrantApplication {
 
     private int ApplicationNumber;
+    
+    private String ReferenceNumber;
 
     private String company;
 
@@ -324,11 +326,6 @@ public class GrantApplication {
         this.APPROVED = APPROVED;
     }
 
-    @Override
-    public String toString() {
-        return "ClassPojo [ApplicationNumber = " + getApplicationNumber() + ", company = " + getCompany() + ", publisherID = " + getPublisherID() + ", agreement = " + getAgreement() + ", contract = " + getContract() + ", proposedDateOfPublication = " + getProposedDateOfPublication() + ", proposedDateOfPrintRun = " + getProposedDateOfPrintRun() + ", plannedPageExtent = " + getPlannedPageExtent() + ", translatorCV = " + getTranslatorCV() + ", numberOfPages = " + getNumberOfPages() + ", feePerPage = " + getFeePerPage() + ", translatorFee = " + getTranslatorFee() + ", Notes = " + getNotes() + ", copiesSent = " + getCopiesSent() + ", dateCopiesWereSent = " + getDateCopiesWereSent() + ", copiesTranslationSample = " + getCopiesTranslationSample() + ", TC_ACCEPTED = " + getTC_ACCEPTED() + ", APPROVED = " + getAPPROVED() + "]";
-    }
-
     /**
      * @return the userID
      */
@@ -397,5 +394,26 @@ public class GrantApplication {
      */
     public void setCopiesTranslationSampleDocName(String copiesTranslationSampleDocName) {
         this.copiesTranslationSampleDocName = copiesTranslationSampleDocName;
+    }
+
+
+    /**
+     * @return the ReferenceNumber
+     */
+    public String getReferenceNumber() {
+        return ReferenceNumber;
+    }
+
+    /**
+     * @param ReferenceNumber the ReferenceNumber to set
+     */
+    public void setReferenceNumber(String ReferenceNumber) {
+        this.ReferenceNumber = ReferenceNumber;
+    }
+    
+    
+    @Override
+    public String toString() {
+        return "ClassPojo [ApplicationNumber = " + getApplicationNumber() + ", company = " + getCompany() + ", publisherID = " + getPublisherID() + ", agreement = " + getAgreement() + ", contract = " + getContract() + ", proposedDateOfPublication = " + getProposedDateOfPublication() + ", proposedDateOfPrintRun = " + getProposedDateOfPrintRun() + ", plannedPageExtent = " + getPlannedPageExtent() + ", translatorCV = " + getTranslatorCV() + ", numberOfPages = " + getNumberOfPages() + ", feePerPage = " + getFeePerPage() + ", translatorFee = " + getTranslatorFee() + ", Notes = " + getNotes() + ", copiesSent = " + getCopiesSent() + ", dateCopiesWereSent = " + getDateCopiesWereSent() + ", copiesTranslationSample = " + getCopiesTranslationSample() + ", TC_ACCEPTED = " + getTC_ACCEPTED() + ", APPROVED = " + getAPPROVED() + "]";
     }
 }

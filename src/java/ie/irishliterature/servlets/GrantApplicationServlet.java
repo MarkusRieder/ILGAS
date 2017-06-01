@@ -44,6 +44,7 @@ public class GrantApplicationServlet extends HttpServlet {
     private final int maxMemSize = 4 * 1024;
     private File file;
     private int newApplicationID = 0;
+    private String ReferenceNumber;
     private String company;
     private String publisherID;
     private String userID;
@@ -352,6 +353,8 @@ public class GrantApplicationServlet extends HttpServlet {
                     try {
 
                         newApplicationID = GrantApplicationDAO.insertRow(application);
+                        
+                        ReferenceNumber = yearInString + "/" + newApplicationID;
 
                     } catch (DBException ex) {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -403,6 +406,8 @@ public class GrantApplicationServlet extends HttpServlet {
 
                 //Update  GrantApplication to contain the filePaths
                 GrantApplication application = new GrantApplication();
+                
+                application.setReferenceNumber(ReferenceNumber);
 
                 String fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 System.out.println(fn);

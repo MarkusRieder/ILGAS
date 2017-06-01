@@ -389,8 +389,6 @@ public class ApplicationDAO {
 
             ps = conn.prepareStatement(searchQuery);
 
-            System.out.println("ApplicationDAO: listApplications::  " + conn);
-
             res = ps.executeQuery(searchQuery);
 
             if (res != null) {
@@ -398,6 +396,10 @@ public class ApplicationDAO {
                     GrantApplication application = new GrantApplication();
 
                     application.setApplicationNumber(res.getInt("ApplicationNumber"));
+                    application.setReferenceNumber(res.getString("ReferenceNumber"));
+                    
+                    System.out.println("ReferenceNumber: " + res.getString("ReferenceNumber"));
+                    
                     application.setCompany(res.getString("company"));
                     application.setPublisherID(res.getString("publisherID"));
                     application.setUserID(res.getString("userID"));
@@ -421,7 +423,7 @@ public class ApplicationDAO {
                     application.setTC_ACCEPTED(res.getInt("TC_ACCEPTED"));
                     application.setAPPROVED(res.getInt("APPROVED"));
                     application.setStatus(res.getString("Status"));
-  System.out.println("ApplicationDAO: Status::  " + res.getString("Status"));
+
                     listApplications.add(application);
                 }
             }
