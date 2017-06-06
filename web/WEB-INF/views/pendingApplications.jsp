@@ -95,8 +95,11 @@
         <sql:query var="applicationQuery" dataSource="jdbc/ILGAS">
             SELECT * FROM GrantApplication
             WHERE GrantApplication.Status = 'pending' 
+            AND publisherID = ?;
+            <sql:param value="${publisherID}"/>
         </sql:query>
         <c:set var="applicationDetails" value="${applicationQuery.rows[0]}"/>
+
         <div id="shadowholder">
             <div class="shadowtop"> </div>
             <div id="container">
@@ -115,6 +118,9 @@
                 </div> <!--  End of topbar div -->
 
                 <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
+
+                <div class="container-fluid" style="margin-bottom: 20px"></div>
+
                 <h1 style="background-color: red">Make sure they can only see their own applications</h1>
                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
                     <h3 align="center" style="align-content: center">Display pending applications</h3>
@@ -184,7 +190,7 @@
                     method="POST" 
                     name="regF"
                     >
-                  <div class="container col-sm-12" style="margin-bottom: 40px">
+                    <div class="container col-sm-12" style="margin-bottom: 40px">
                         <button type="submit" class = "btn btn-default btn-sm" name="New Application">
                             New Application
                         </button>

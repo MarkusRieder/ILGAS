@@ -396,10 +396,8 @@ public class ApplicationDAO {
                     GrantApplication application = new GrantApplication();
 
                     application.setApplicationNumber(res.getInt("ApplicationNumber"));
+                    application.setApplicationYear(res.getString("ApplicationYear"));
                     application.setReferenceNumber(res.getString("ReferenceNumber"));
-                    
-                    System.out.println("ReferenceNumber: " + res.getString("ReferenceNumber"));
-                    
                     application.setCompany(res.getString("company"));
                     application.setPublisherID(res.getString("publisherID"));
                     application.setUserID(res.getString("userID"));

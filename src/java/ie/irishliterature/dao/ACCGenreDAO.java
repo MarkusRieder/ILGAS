@@ -5,13 +5,14 @@
  */
 package ie.irishliterature.dao;
 
-import ie.irishliterature.model.ACcountry;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import ie.irishliterature.model.ACgenre;
 /**
  *
  * @author markus
@@ -20,28 +21,32 @@ import java.util.ArrayList;
  *
  */
 @SuppressWarnings("unchecked")
-public class ACCountryDAO {
+public class ACCGenreDAO {
 
-    public ArrayList getCountry(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+    public ArrayList getGenre(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
-        ArrayList publisherList = new ArrayList();
+        ArrayList genreList = new ArrayList();
         Database db = new Database();
         Connection connection = db.getConnection();
 
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT nicename, iso  from country WHERE nicename  like ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * from genres WHERE genres  like ?");
             ps.setString(1, "%" + s + "%");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                ACcountry country = new ACcountry();
-                country.setId(rs.getString("iso"));
-                country.setValue(rs.getString("nicename"));
-                publisherList.add(country);
+                ACgenre genre = new ACgenre();
+                genre.setId(rs.getString("idgenres"));
+                genre.setValue(rs.getString("genres"));
+
+                System.out.println("genre.setId : " + rs.getString("idgenres"));
+                System.out.println("genre.setValue : " + rs.getString("genres"));
+
+                genreList.add(genre);
             }
         } catch (SQLException e) {
         }
-        return publisherList;
+        return genreList;
     }
 
 }

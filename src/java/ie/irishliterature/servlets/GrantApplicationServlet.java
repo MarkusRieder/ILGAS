@@ -1,9 +1,9 @@
 package ie.irishliterature.servlets;
 
 import ie.irishliterature.dao.GrantApplicationDAO;
-import static ie.irishliterature.dao.GrantApplicationDAO.listAllApplications;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.GrantApplication;
+import ie.irishliterature.model.Library;
 import ie.irishliterature.model.Publisher;
 
 import java.io.*;
@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import static javax.xml.bind.DatatypeConverter.parseInteger;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -43,7 +43,7 @@ public class GrantApplicationServlet extends HttpServlet {
     private final int maxFileSize = 50 * 1024;
     private final int maxMemSize = 4 * 1024;
     private File file;
-    private int newApplicationID = 0;
+    private int ApplicationNumber = 0;
     private String ReferenceNumber;
     private String company;
     private String publisherID;
@@ -80,6 +80,42 @@ public class GrantApplicationServlet extends HttpServlet {
     private int copiesSent = 0;
     private int TC_ACCEPTED = 0;
     private int APPROVED = 0;
+
+    private int bookID;
+
+    private String referenceNumber;
+
+    private String Author;
+
+    private String Title;
+
+    private String Publisher;
+
+    private String Publisheryear;
+
+    private String Genre;
+
+    private String translationTitle;
+
+    private String translationPublisher;
+
+    private String translationPublisherYear;
+
+    private String Translator;
+
+    private String Language;
+
+    private String physicalDescription;
+
+    private int Duplicates;
+
+    private String Copies;
+
+    private String NotesLibrary;
+
+    private String ISBN;
+
+    private String ISSN;
 
     private String tempPath = "";
 
@@ -161,8 +197,9 @@ public class GrantApplicationServlet extends HttpServlet {
                             String fieldvalue = item.getString();
 
                             switch (fieldname) {
-                                case "company":
+                                case "Company":
                                     company = fieldvalue;
+                                    System.out.println("fieldname Company:: " + company);
                                     break;
                                 case "firstname":
                                     firstname = fieldvalue;
@@ -332,6 +369,7 @@ public class GrantApplicationServlet extends HttpServlet {
                     // INSERT new application
                     GrantApplication application = new GrantApplication();
 
+                    application.setApplicationYear(yearInString);
                     application.setCompany(company);
                     application.setPublisherID(publisherID);
                     application.setUserID(userID);
@@ -352,9 +390,18 @@ public class GrantApplicationServlet extends HttpServlet {
 
                     try {
 
-                        newApplicationID = GrantApplicationDAO.insertRow(application);
-                        
-                        ReferenceNumber = yearInString + "/" + newApplicationID;
+                        ReferenceNumber = GrantApplicationDAO.insertRow(application);
+
+                        int iend = ReferenceNumber.indexOf("/"); //this finds the first occurrence of "/" 
+
+                        if (iend != -1) {
+                            ApplicationNumber = Integer.parseInt(ReferenceNumber.substring(0, iend));
+                        }
+
+                        System.out.println("GrantApplicationServlet:402:: ApplicationNumber:  " + ApplicationNumber);
+
+//                        ReferenceNumber = ApplicationNumber + "/" + yearInString;
+                        System.out.println("GrantApplicationServlet: 406:: ReferenceNumber:  " + ReferenceNumber);
 
                     } catch (DBException ex) {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -383,11 +430,15 @@ public class GrantApplicationServlet extends HttpServlet {
 //    private String Email;
 //    private String Telephone;
 //    private String Fax;
+                //    private String DateModified;
+
+                // Update library
+                Library library = new Library();
 
                 // path = path + File.separator + yearInString + File.separator + Company + File.separator + Type + ApplicationNumber;
                 // upload to temp dir then move to final directory
                 for (int i = 0; i < 4; i++) {
-                    final String destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator + newApplicationID + File.separator + tpe[i] + File.separator;
+                    final String destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator + ApplicationNumber + File.separator + tpe[i] + File.separator;
 
                     // create final directory if it does not exist
                     File file = new File(destinationDirectory);
@@ -406,8 +457,6 @@ public class GrantApplicationServlet extends HttpServlet {
 
                 //Update  GrantApplication to contain the filePaths
                 GrantApplication application = new GrantApplication();
-                
-                application.setReferenceNumber(ReferenceNumber);
 
                 String fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 System.out.println(fn);
@@ -431,9 +480,12 @@ public class GrantApplicationServlet extends HttpServlet {
                 application.setCopiesTranslationSampleDocName(justFiles[3]);
                 System.out.println("justFiles[3]:: " + justFiles[3]);
 
+                application.setApplicationNumber(ApplicationNumber);
+                application.setReferenceNumber(ReferenceNumber);
+
                 try {
 
-                    GrantApplicationDAO.updateDocuments(application, newApplicationID);
+                    GrantApplicationDAO.updateDocuments(application, ReferenceNumber);
 
                 } catch (DBException ex) {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);

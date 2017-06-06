@@ -192,6 +192,9 @@
             input {
                 vertical-align: -2px;
             }
+            input[type="text"]:focus + .glyphicon-search{
+                color: #FF8C00;
+            }
         </style>
 
     </head>
@@ -446,7 +449,7 @@
                                                             onchange="changeFunc();"
                                                             required
                                                             >
-                                                         <option value="">Select Your Function</option>
+                                                        <option value="">Select Your Function</option>
                                                         <option>Literature Ireland Staff</option>
                                                         <option>Publisher</option>
                                                         <option>Expert Reader</option>
@@ -460,7 +463,7 @@
 
                                                 <!--get Company and Company_Number via autocomplete-->
                                                 <div class="row" style="margin-bottom: 40px;margin-top: 30px">
-                                                    <div class="form-group">
+                                                    <div class="form-group has-feedback has-feedback-left">
                                                         <div class="col-sm-10">
                                                             <input  id="company" 
                                                                     name="company" 
@@ -472,6 +475,7 @@
                                                                     onblur="CheckboxValue();"
                                                                     placeholder="Company Name"
                                                                     >
+                                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                                         </div>
                                                     </div> <!--form-group-->
 

@@ -52,8 +52,20 @@
                             <input type="submit" value="Upload" name="upload_agreement" id="upload_report" style="margin-top: 10px"/>
                         </form> 
                     </div>
-
+                    <div class="col-md-4">            
+                        <form method="POST" action="upload" enctype="multipart/form-data" >
+                            <h3 style="background-color: red">to todo</h3>
+                            <h1>Upload your invoice</h1>
+                            <br/>
+                            <input type="file" name="file" id="invoice" /> <br/>
+                            Destination:
+                            <input type="text" value="/home/markus/test/invoice" name="destination"/>
+                            <br/>
+                            <input type="submit" value="Upload" name="upload_invoice" id="upload_invoice" style="margin-top: 10px"/>
+                        </form> 
+                    </div>
                 </div>
+
                 <div class="row">  
                     <div class="col-md-12" style="margin-top: 50px;">
                         <div class="form-group">

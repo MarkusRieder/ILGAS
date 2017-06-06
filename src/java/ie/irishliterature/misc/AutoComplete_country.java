@@ -1,19 +1,18 @@
 package ie.irishliterature.misc;
 
 import com.google.gson.Gson;
-import ie.irishliterature.dao.ACCountryDAO;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ie.irishliterature.model.ACcountry;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+
+import ie.irishliterature.model.ACcountry;
+import ie.irishliterature.dao.ACCountryDAO;
 
 /**
  * Servlet implementation class AutoComplete_international_publishers

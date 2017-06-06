@@ -6,7 +6,9 @@ import java.util.Date;
 public class GrantApplication {
 
     private int ApplicationNumber;
-    
+
+    private String ApplicationYear;
+
     private String ReferenceNumber;
 
     private String company;
@@ -17,11 +19,11 @@ public class GrantApplication {
 
 //    Rights Agreement
     private String agreement;//path + filename
-    
-     private String agreementDocName; //filename
+
+    private String agreementDocName; //filename
 
     private String contract; //path + filename
-    
+
     private String contractDocName;  //filename
 
 //    Publication Details
@@ -33,8 +35,8 @@ public class GrantApplication {
 
 //     a copy of the Translator's CV
     private String translatorCV;//path + filename
-    
-     private String translatorCVDocName; //filename
+
+    private String translatorCVDocName; //filename
 
     private int numberOfPages;
 
@@ -52,13 +54,15 @@ public class GrantApplication {
     private Date dateCopiesWereSent;
 
     private String copiesTranslationSample;  //filename
-    
-     private String copiesTranslationSampleDocName; //filename
+
+    private String copiesTranslationSampleDocName; //filename
 
 //    General
     private int TC_ACCEPTED;
 
     private int APPROVED;
+
+    private java.sql.Timestamp LASTUPDATED;
 
     /**
      * @return the ApplicationNumber
@@ -390,12 +394,26 @@ public class GrantApplication {
     }
 
     /**
-     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName to set
+     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName
+     * to set
      */
     public void setCopiesTranslationSampleDocName(String copiesTranslationSampleDocName) {
         this.copiesTranslationSampleDocName = copiesTranslationSampleDocName;
     }
 
+    /**
+     * @return the ApplicationYear
+     */
+    public String getApplicationYear() {
+        return ApplicationYear;
+    }
+
+    /**
+     * @param ApplicationYear the ApplicationYear to set
+     */
+    public void setApplicationYear(String ApplicationYear) {
+        this.ApplicationYear = ApplicationYear;
+    }
 
     /**
      * @return the ReferenceNumber
@@ -410,9 +428,22 @@ public class GrantApplication {
     public void setReferenceNumber(String ReferenceNumber) {
         this.ReferenceNumber = ReferenceNumber;
     }
+
+    /**
+     * @return the LASTUPDATED
+     */
+    public java.sql.Timestamp getLASTUPDATED() {
+        return LASTUPDATED;
+    }
+
+    /**
+     * @param LASTUPDATED the LASTUPDATED to set
+     */
+    public void setLASTUPDATED(java.sql.Timestamp LASTUPDATED) {
+        this.LASTUPDATED = LASTUPDATED;
+    }
     
-    
-    @Override
+        @Override
     public String toString() {
         return "ClassPojo [ApplicationNumber = " + getApplicationNumber() + ", company = " + getCompany() + ", publisherID = " + getPublisherID() + ", agreement = " + getAgreement() + ", contract = " + getContract() + ", proposedDateOfPublication = " + getProposedDateOfPublication() + ", proposedDateOfPrintRun = " + getProposedDateOfPrintRun() + ", plannedPageExtent = " + getPlannedPageExtent() + ", translatorCV = " + getTranslatorCV() + ", numberOfPages = " + getNumberOfPages() + ", feePerPage = " + getFeePerPage() + ", translatorFee = " + getTranslatorFee() + ", Notes = " + getNotes() + ", copiesSent = " + getCopiesSent() + ", dateCopiesWereSent = " + getDateCopiesWereSent() + ", copiesTranslationSample = " + getCopiesTranslationSample() + ", TC_ACCEPTED = " + getTC_ACCEPTED() + ", APPROVED = " + getAPPROVED() + "]";
     }

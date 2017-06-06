@@ -11,14 +11,19 @@ import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class GrantApplicationDAO {
 
     private static final Logger LOGGER = Logger.getLogger(GrantApplicationDAO.class.getName());
 
+    static Calendar now = Calendar.getInstance();
+    static int year = now.get(Calendar.YEAR);
+    static String yearInString = String.valueOf(year);
+
     // selectApplication
-    public static GrantApplication selectApplication(String ApplicationNumber) throws DBException {
+    public static GrantApplication selectApplication(String ReferenceNumber) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
@@ -27,7 +32,9 @@ public class GrantApplicationDAO {
         try {
 
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("select ApplicationNumber"
+            ps = conn.prepareStatement("select ReferenceNumber"
+                    + "ApplicationYear,\n"
+                    + "ApplicationNumber,\n"
                     + "company,\n"
                     + "publisherID,\n"
                     + "userID,\n"
@@ -50,37 +57,42 @@ public class GrantApplicationDAO {
                     + "copiesTranslationSampleDocName,\n"
                     + "TC_ACCEPTED,\n"
                     + "APPROVED,\n"
-                    + "Status from GrantApplication where ApplicationNumber = ?");
-            
-            ps.setString(1, ApplicationNumber);
+                    + "Status,\n"
+                    + "lastUpdated from GrantApplication where ReferenceNumber = ?");
+
+            ps.setString(1, ReferenceNumber);
             res = ps.executeQuery();
             if (res != null) {
                 while (res.next()) {
                     application = new GrantApplication();
-                    application.setApplicationNumber(res.getInt(1));
-                    application.setCompany(res.getString(2));
-                    application.setPublisherID(res.getString(3));
-                    application.setUserID(res.getString(4));
-                    application.setAgreement(res.getString(5));
-                    application.setAgreementDocName(res.getString(6));
-                    application.setContract(res.getString(7));
-                    application.setContractDocName(res.getString(8));
-                    application.setProposedDateOfPublication(res.getDate(9));
-                    application.setProposedDateOfPrintRun(res.getDate(10));
-                    application.setPlannedPageExtent(res.getInt(11));
-                    application.setTranslatorCV(res.getString(12));
-                    application.setTranslatorCVDocName(res.getString(13));
-                    application.setNumberOfPages(res.getInt(14));
-                    application.setFeePerPage(res.getBigDecimal(15));
-                    application.setTranslatorFee(res.getBigDecimal(16));
-                    application.setNotes(res.getString(17));
-                    application.setCopiesSent(res.getInt(18));
-                    application.setDateCopiesWereSent(res.getDate(19));
-                    application.setCopiesTranslationSample(res.getString(20));
-                    application.setCopiesTranslationSampleDocName(res.getString(21));
-                    application.setTC_ACCEPTED(res.getInt(22));
-                    application.setAPPROVED(res.getInt(23));
-                    application.setStatus(res.getString(24));
+
+                    application.setReferenceNumber(res.getString(1));
+                    application.setApplicationYear(res.getString(2));
+                    application.setApplicationNumber(res.getInt(3));
+                    application.setCompany(res.getString(4));
+                    application.setPublisherID(res.getString(5));
+                    application.setUserID(res.getString(6));
+                    application.setAgreement(res.getString(7));
+                    application.setAgreementDocName(res.getString(8));
+                    application.setContract(res.getString(9));
+                    application.setContractDocName(res.getString(10));
+                    application.setProposedDateOfPublication(res.getDate(11));
+                    application.setProposedDateOfPrintRun(res.getDate(12));
+                    application.setPlannedPageExtent(res.getInt(13));
+                    application.setTranslatorCV(res.getString(14));
+                    application.setTranslatorCVDocName(res.getString(15));
+                    application.setNumberOfPages(res.getInt(16));
+                    application.setFeePerPage(res.getBigDecimal(17));
+                    application.setTranslatorFee(res.getBigDecimal(18));
+                    application.setNotes(res.getString(19));
+                    application.setCopiesSent(res.getInt(20));
+                    application.setDateCopiesWereSent(res.getDate(21));
+                    application.setCopiesTranslationSample(res.getString(22));
+                    application.setCopiesTranslationSampleDocName(res.getString(23));
+                    application.setTC_ACCEPTED(res.getInt(24));
+                    application.setAPPROVED(res.getInt(25));
+                    application.setStatus(res.getString(26));
+                    application.setLASTUPDATED(res.getTimestamp(27));
                 }
             }
             DBConn.close(conn, ps, res);
@@ -95,7 +107,7 @@ public class GrantApplicationDAO {
     }
 
     // isApplicationNumberExists
-    public static boolean isApplicationNumberExists(int ApplicationNumber) throws DBException {
+    public static boolean isReferenceNumberExists(int ReferenceNumber) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean verified = false;
@@ -104,8 +116,8 @@ public class GrantApplicationDAO {
         try {
 
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("select 1 from GrantApplication where ApplicationNumber = ?");
-            ps.setInt(1, ApplicationNumber);
+            ps = conn.prepareStatement("select 1 from GrantApplication where ReferenceNumber = ?");
+            ps.setInt(1, ReferenceNumber);
             res = ps.executeQuery();
             if (res != null) {
                 while (res.next()) {
@@ -123,19 +135,32 @@ public class GrantApplicationDAO {
     }
 
     // insertRow
-    public static int insertRow(GrantApplication application) throws DBException {
+    public static String insertRow(GrantApplication application) throws DBException {
         Connection conn = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
         int id = 0;
         ResultSet res = null;
 
+        java.sql.Timestamp timestamp = getcurrentTimeStamp();
+
+        int ApplicationNumber = getNextApplicationNumber();
+
+        System.out.println(" DAO  ApplicationNumber: " + ApplicationNumber);
+
+        String ReferenceNumber = ApplicationNumber + "/" + yearInString;
+
+        System.out.println(" DAO  ReferenceNumber: " + ReferenceNumber);
+
         try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
             ps1 = conn.prepareStatement("INSERT INTO  GrantApplication"
-                    + "(company,\n"
+                    + "(ReferenceNumber,\n"
+                    + "ApplicationYear,\n"
+                    + "ApplicationNumber,\n"
+                    + "company,\n"
                     + "publisherID,\n"
                     + "userID,\n"
                     + "agreement,\n"
@@ -153,36 +178,43 @@ public class GrantApplicationDAO {
                     + "copiesTranslationSample,\n"
                     + "TC_ACCEPTED,\n"
                     + "APPROVED,\n"
-                    + "Status)  values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    + "Status,\n"
+                    + "lastUpdated)  values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            ps1.setString(1, application.getCompany());
-            ps1.setString(2, application.getPublisherID());
-            ps1.setString(3, application.getUserID());
-            ps1.setString(4, application.getAgreement());
-            ps1.setString(5, application.getContract());
-            ps1.setDate(6, sqlDate(application.getProposedDateOfPublication()));
-            ps1.setDate(7, sqlDate(application.getProposedDateOfPrintRun()));
-            ps1.setInt(8, application.getPlannedPageExtent());
-            ps1.setString(9, application.getTranslatorCV());
-            ps1.setInt(10, application.getNumberOfPages());
-            ps1.setBigDecimal(11, application.getFeePerPage());
-            ps1.setBigDecimal(12, application.getTranslatorFee());
-            ps1.setString(13, application.getNotes());
-            ps1.setInt(14, application.getCopiesSent());
-            ps1.setDate(15, sqlDate(application.getDateCopiesWereSent()));
-            ps1.setString(16, application.getCopiesTranslationSample());
-            ps1.setInt(17, application.getTC_ACCEPTED());
-            ps1.setInt(18, application.getAPPROVED());
-            ps1.setString(19, application.getStatus());
+            ps1.setString(1, ReferenceNumber);
+            ps1.setString(2, yearInString);
+            ps1.setInt(3, ApplicationNumber);
+            ps1.setString(4, application.getCompany());
+            ps1.setString(5, application.getPublisherID());
+            ps1.setString(6, application.getUserID());
+            ps1.setString(7, application.getAgreement());
+            ps1.setString(8, application.getContract());
+            ps1.setDate(9, sqlDate(application.getProposedDateOfPublication()));
+            ps1.setDate(10, sqlDate(application.getProposedDateOfPrintRun()));
+            ps1.setInt(11, application.getPlannedPageExtent());
+            ps1.setString(12, application.getTranslatorCV());
+            ps1.setInt(13, application.getNumberOfPages());
+            ps1.setBigDecimal(14, application.getFeePerPage());
+            ps1.setBigDecimal(15, application.getTranslatorFee());
+            ps1.setString(16, application.getNotes());
+            ps1.setInt(17, application.getCopiesSent());
+            ps1.setDate(18, sqlDate(application.getDateCopiesWereSent()));
+            ps1.setString(19, application.getCopiesTranslationSample());
+            ps1.setInt(20, application.getTC_ACCEPTED());
+            ps1.setInt(21, application.getAPPROVED());
+            ps1.setString(22, application.getStatus());
+            ps1.setTimestamp(23, application.getLASTUPDATED());
 
             ps1.executeUpdate();
 
             ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
-            res = ps2.executeQuery();;
+            res = ps2.executeQuery();
 
             if (res != null) {
                 while (res.next()) {
+
                     id = res.getInt(1);
+                    System.out.println("GrantApplicationDAO id::   " + id);
                 }
             }
 
@@ -195,18 +227,19 @@ public class GrantApplicationDAO {
             throw new DBException("4 Excepion while accessing database");
         }
 
-        return id;
+        System.out.println("GrantApplicationDAO ApplicationNumber:1:   " + ApplicationNumber);
+        return ReferenceNumber;
     }
 
     //updateApplication
-    public static boolean updateApplication(GrantApplication application, int ApplicationNumber) throws DBException {
+    public static boolean updateApplication(GrantApplication application, int ReferenceNumber) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
         boolean id;
         int committed;
         ResultSet res = null;
-        int applicationNumber = ApplicationNumber;
+        int applicationNumber = ReferenceNumber;
 
         try {
 
@@ -214,6 +247,9 @@ public class GrantApplicationDAO {
             conn.setAutoCommit(false);
 
             ps1 = conn.prepareStatement("UPDATE GrantApplication SET"
+                    + "(ReferenceNumber,\n"
+                    + "ApplicationYear,\n"
+                    + "ApplicationNumber,\n"
                     + "company,\n"
                     + "publisherID,\n"
                     + "userID,\n"
@@ -236,21 +272,22 @@ public class GrantApplicationDAO {
                     + "copiesTranslationSampleDocName,\n"
                     + "TC_ACCEPTED,\n"
                     + "APPROVED,\n"
-                    + "Status)  values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-                    + "WHERE ApplicationNumber = " + applicationNumber);
+                    + "Status,\n"
+                    + "lastUpdated)  values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                    + "WHERE ApplicationNumber = " + ReferenceNumber);
 
-            ps1.setString(1, application.getCompany());
-            ps1.setString(2, application.getPublisherID());
-            ps1.setString(3, application.getUserID());
-            ps1.setString(4, application.getAgreement());
-            ps1.setString(5, application.getAgreementDocName());
-            ps1.setString(6, application.getContract());
-            ps1.setString(7, application.getContractDocName());
-            ps1.setDate(8, sqlDate(application.getProposedDateOfPublication()));
-            ps1.setDate(9, sqlDate(application.getProposedDateOfPrintRun()));
-            ps1.setInt(10, application.getPlannedPageExtent());
-            ps1.setString(11, application.getTranslatorCV());
-            ps1.setString(12, application.getTranslatorCVDocName());
+            ps1.setString(1, application.getReferenceNumber());
+            ps1.setString(2, application.getApplicationYear());
+            ps1.setInt(3, application.getApplicationNumber());
+            ps1.setString(4, application.getCompany());
+            ps1.setString(5, application.getPublisherID());
+            ps1.setString(6, application.getUserID());
+            ps1.setString(7, application.getAgreement());
+            ps1.setString(8, application.getContract());
+            ps1.setDate(9, sqlDate(application.getProposedDateOfPublication()));
+            ps1.setDate(10, sqlDate(application.getProposedDateOfPrintRun()));
+            ps1.setInt(11, application.getPlannedPageExtent());
+            ps1.setString(12, application.getTranslatorCV());
             ps1.setInt(13, application.getNumberOfPages());
             ps1.setBigDecimal(14, application.getFeePerPage());
             ps1.setBigDecimal(15, application.getTranslatorFee());
@@ -258,10 +295,10 @@ public class GrantApplicationDAO {
             ps1.setInt(17, application.getCopiesSent());
             ps1.setDate(18, sqlDate(application.getDateCopiesWereSent()));
             ps1.setString(19, application.getCopiesTranslationSample());
-            ps1.setString(20, application.getCopiesTranslationSampleDocName());
-            ps1.setInt(21, application.getTC_ACCEPTED());
-            ps1.setInt(22, application.getAPPROVED());
-            ps1.setString(23, application.getStatus());
+            ps1.setInt(20, application.getTC_ACCEPTED());
+            ps1.setInt(21, application.getAPPROVED());
+            ps1.setString(22, application.getStatus());
+            ps1.setTimestamp(23, application.getLASTUPDATED());
 
             committed = ps1.executeUpdate();
 
@@ -284,15 +321,19 @@ public class GrantApplicationDAO {
     }
 
     //updateDocuments
-    public static boolean updateDocuments(GrantApplication application, int ApplicationNumber) throws DBException {
+    public static boolean updateDocuments(GrantApplication application, String ReferenceNumber) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
         boolean id;
         int committed;
         ResultSet res = null;
-        int applicationNumber = ApplicationNumber;
-        System.out.println("ApplicationNumber:  " + applicationNumber);
+
+        //  String applicationNumber = ReferenceNumber;
+        java.sql.Timestamp timestamp = getcurrentTimeStamp();
+
+        System.out.println("updateDocuments ReferenceNumber:  " + ReferenceNumber);
+
         try {
 
             conn = DBConn.getConnection();
@@ -306,8 +347,9 @@ public class GrantApplicationDAO {
                     + "translatorCV = ?,\n"
                     + "translatorCVDocName = ?,\n"
                     + "copiesTranslationSample = ?,\n"
-                    + "copiesTranslationSampleDocName = ?"
-                    + " WHERE ApplicationNumber = " + applicationNumber);
+                    + "copiesTranslationSampleDocName = ?,\n"
+                    + "lastUpdated =  ?"
+                    + " WHERE ReferenceNumber = '" + ReferenceNumber + "'");
 
             ps1.setString(1, application.getAgreement());
             ps1.setString(2, application.getAgreementDocName());
@@ -317,9 +359,10 @@ public class GrantApplicationDAO {
             ps1.setString(6, application.getTranslatorCVDocName());
             ps1.setString(7, application.getCopiesTranslationSample());
             ps1.setString(8, application.getCopiesTranslationSampleDocName());
+            ps1.setTimestamp(9, timestamp);
 
-               System.out.println("ps1:: " + ps1);
-               
+            System.out.println("ps1:: " + ps1);
+
             committed = ps1.executeUpdate();
 
             conn.commit();
@@ -348,8 +391,8 @@ public class GrantApplicationDAO {
         try {
 
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("delete from GrantApplication where ApplicationNumber = ?");
-            ps.setInt(1, application.getApplicationNumber());
+            ps = conn.prepareStatement("delete from GrantApplication where ReferenceNumber = ?");
+            ps.setString(1, application.getReferenceNumber());
             ps.executeUpdate();
             ps.close();
             DBConn.close(conn, ps);
@@ -361,16 +404,16 @@ public class GrantApplicationDAO {
     }
 
     // updateStatus
-    public static void updateStatus(int ApplicationNumber, String status) throws DBException {
+    public static void updateStatus(int ReferenceNumber, String status) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
 
         try {
 
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("UPDATE GrantApplication set STATUS = ? where ApplicationNumber = ?");
+            ps = conn.prepareStatement("UPDATE GrantApplication set STATUS = ? where ReferenceNumber = ?");
             ps.setString(1, status);
-            ps.setInt(2, ApplicationNumber);
+            ps.setInt(2, ReferenceNumber);
             ps.executeUpdate();
             DBConn.close(conn, ps);
 
@@ -399,30 +442,37 @@ public class GrantApplicationDAO {
             while (res.next()) {
                 GrantApplication application = new GrantApplication();
 
-                application.setApplicationNumber(res.getInt(1));
-                application.setCompany(res.getString(2));
-                application.setPublisherID(res.getString(3));
-                application.setUserID(res.getString(4));
-                application.setAgreement(res.getString(5));
-                application.setAgreementDocName(res.getString(6));
-                application.setContract(res.getString(7));
-                application.setContractDocName(res.getString(8));
-                application.setProposedDateOfPublication(res.getDate(9));
-                application.setProposedDateOfPrintRun(res.getDate(10));
-                application.setPlannedPageExtent(res.getInt(11));
-                application.setTranslatorCV(res.getString(12));
-                application.setTranslatorCVDocName(res.getString(13));
-                application.setNumberOfPages(res.getInt(14));
-                application.setFeePerPage(res.getBigDecimal(15));
-                application.setTranslatorFee(res.getBigDecimal(16));
-                application.setNotes(res.getString(17));
-                application.setCopiesSent(res.getInt(18));
-                application.setDateCopiesWereSent(res.getDate(19));
-                application.setCopiesTranslationSample(res.getString(20));
-                application.setCopiesTranslationSampleDocName(res.getString(21));
-                application.setTC_ACCEPTED(res.getInt(22));
-                application.setAPPROVED(res.getInt(23));
-                application.setStatus(res.getString(24));
+                application.setApplicationNumber(res.getInt(1)); 
+                System.out.println("GrantApplicationDAO :: getAllApplications   ApplicationNumber:  " + res.getInt(1));
+                application.setApplicationYear(res.getString(2));
+                System.out.println("GrantApplicationDAO :: getAllApplications   ApplicationYear:  " + res.getString(2));
+                application.setReferenceNumber(res.getString(3));  
+                System.out.println("GrantApplicationDAO :: getAllApplications   ReferenceNumber:  " + res.getString(3));
+                application.setCompany(res.getString(4));
+                application.setPublisherID(res.getString(5));
+                application.setUserID(res.getString(6));
+                application.setAgreement(res.getString(7));
+                application.setAgreementDocName(res.getString(8));
+                application.setContract(res.getString(9));
+                application.setContractDocName(res.getString(10));
+                application.setProposedDateOfPublication(res.getDate(11));
+                application.setProposedDateOfPrintRun(res.getDate(12));
+                application.setPlannedPageExtent(res.getInt(13));
+                application.setTranslatorCV(res.getString(14));
+                application.setTranslatorCVDocName(res.getString(15));
+                application.setNumberOfPages(res.getInt(16));
+                application.setFeePerPage(res.getBigDecimal(17));
+                application.setTranslatorFee(res.getBigDecimal(18));
+                application.setNotes(res.getString(19));
+                application.setCopiesSent(res.getInt(20));
+                application.setDateCopiesWereSent(res.getDate(21));
+                application.setCopiesTranslationSample(res.getString(22));
+                application.setCopiesTranslationSampleDocName(res.getString(23));
+                application.setTC_ACCEPTED(res.getInt(24));
+                application.setAPPROVED(res.getInt(25));
+                application.setStatus(res.getString(26));
+                application.setApplicationYear(res.getString(27));
+                application.setLASTUPDATED(res.getTimestamp(28));
 
                 listApplications.add(application);
             }
@@ -480,5 +530,50 @@ public class GrantApplicationDAO {
         }
 
         return id;
+    }
+
+    public static java.sql.Timestamp getcurrentTimeStamp() {
+
+        Calendar calendar = Calendar.getInstance();
+        java.util.Date now = calendar.getTime();
+        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+
+        return currentTimestamp;
+
+    }
+
+    public static int getNextApplicationNumber() throws DBException {
+
+        int nextApplicationNumber = 0;
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        ResultSet res = null;
+
+        try {
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("SELECT * FROM GrantApplication where ApplicationYear = '" + yearInString + "' ORDER BY ApplicationNumber DESC");
+            res = ps1.executeQuery();
+
+            if (res != null) {
+                if (res.next()) {
+                    nextApplicationNumber = res.getInt(1) + 1;
+                }
+            }
+
+            conn.commit();
+            DBConn.close(conn, ps1, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            e.printStackTrace();
+            DBConn.close(conn, ps1, res);
+            throw new DBException("getNextApplicationNumber :: Exception while accessing database");
+        }
+
+        System.out.println("getNextApplicationNumber::  " + nextApplicationNumber);
+        return nextApplicationNumber;
     }
 }

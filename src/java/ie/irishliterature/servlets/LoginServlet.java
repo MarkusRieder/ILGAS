@@ -100,10 +100,10 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("name", name);
 
             if ("Literature Ireland Staff".equals(function)) {
-                
+
                 System.out.println("calling /WEB-INF/views/welcome_Staff.jsp .... ");
-                
-                   request.getRequestDispatcher("/WEB-INF/views/welcome_Staff.jsp").forward(request, response);
+
+                request.getRequestDispatcher("/WEB-INF/views/welcome_Staff.jsp").forward(request, response);
 //                request.getRequestDispatcher("/WEB-INF/views/newjsp.jsp").forward(request, response);
             } else {
 
@@ -111,12 +111,16 @@ public class LoginServlet extends HttpServlet {
                 if ("Publisher".equals(function)) {
                     try {
                         System.out.println("Publisher here: ");
+                        System.out.println("Publisher here:userID::  " + userID);
 
                         // get publisherID for userID
                         int publisherID = findpublisherID(userID);
                         String publisherName = findPublisherName(publisherID);
 
+                        System.out.println("Publisher publisherName: " + publisherName);
+
                         session.setAttribute("publisherID", publisherID);
+                        session.setAttribute("Company_Number", publisherID);
                         session.setAttribute("publisherName", publisherName);
 
                         request.getSession().setAttribute(publisherName, publisherName);
@@ -170,10 +174,13 @@ public class LoginServlet extends HttpServlet {
 
         try {
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("SELECT userID, Company_Number FROM PublisherUserJoined WHERE PublisherUserJoined.userID = userID");
+            ps = conn.prepareStatement("SELECT userID, Company_Number FROM PublisherUserJoined WHERE PublisherUserJoined.userID = ?");
+            ps.setInt(1, userID);
             res = ps.executeQuery();
             if (res != null) {
-                while (res.next()) {
+
+                if (res.next()) {
+                    System.out.println("findpublisherID::publisherID " + res.getInt("Company_Number"));
                     publisherID = res.getInt("Company_Number");
                 }
             }
@@ -184,6 +191,7 @@ public class LoginServlet extends HttpServlet {
             throw new DBException("2 Excepion while accessing database");
         }
 
+        System.out.println("findpublisherID::userID " + userID);
         System.out.println("findpublisherID::publisherID " + publisherID);
 
         return publisherID;
@@ -194,16 +202,21 @@ public class LoginServlet extends HttpServlet {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
+        int publisherID = Company_Number;
         String publisherName = "";
+
+        System.out.println("findPublisherName: " + Company_Number);
 
         try {
 
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("SELECT Company FROM international_publishers WHERE international_publishers.Company_Number = Company_Number");
+            ps = conn.prepareStatement("SELECT Company FROM international_publishers WHERE international_publishers.Company_Number = ?");
+            ps.setInt(1, publisherID);
             res = ps.executeQuery();
             if (res != null) {
-                while (res.next()) {
+                if (res.next()) {
                     publisherName = res.getString("Company");
+                    System.out.println("findPublisherName: res: " + publisherName);
                 }
             }
             DBConn.close(conn, ps, res);

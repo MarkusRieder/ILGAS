@@ -73,7 +73,7 @@
                 });
             });
         </script>
-        
+
         <!--increase size of show entries-->
         <style>
             select.input-sm {
@@ -96,8 +96,11 @@
         <sql:query var="applicationQuery" dataSource="jdbc/ILGAS">
             SELECT * FROM GrantApplication
             WHERE GrantApplication.Status = 'closed' 
+            AND publisherID = ?;
+            <sql:param value="${publisherID}"/>
         </sql:query>
         <c:set var="applicationDetails" value="${applicationQuery.rows[0]}"/>
+
         <div id="shadowholder">
             <div class="shadowtop"> </div>
             <div id="container">
@@ -117,7 +120,12 @@
                 </div> <!--  End of topbar div -->
 
                 <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
-   <h1 style="background-color: red">Make sure they can only see their own applications</h1>
+
+                <div class="container-fluid" style="margin-bottom: 20px">
+
+                </div>
+
+                <h1 style="background-color: red">Make sure they can only see their own applications</h1>
                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
                     <h3 align="center" style="align-content: center">Display closed applications</h3>
 
@@ -178,20 +186,20 @@
                         </table>
                     </div>             
                     <c:if test="${not empty error}">Error: ${error}</c:if>
-                </div> <!-- /container-fluid -->
-   <form class="form-horizontal" 
+                    </div> <!-- /container-fluid -->
+                    <form class="form-horizontal" 
                           role="form"  
                           autocomplete="on"  
                           action="${pageContext.request.contextPath}/Application" 
                     method="POST" 
                     name="regF"
                     >
-                 <div class="container col-sm-12" style="margin-bottom: 40px">
+                    <div class="container col-sm-12" style="margin-bottom: 40px">
                         <button type="submit" class = "btn btn-default btn-sm" name="New Application">
                             New Application
                         </button>
 
-                          <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
+                        <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
                             List New Applications
                         </button>
 

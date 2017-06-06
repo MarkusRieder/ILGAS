@@ -53,6 +53,9 @@
             body {
                 background: #d9d1d1;
             }
+            input[type="text"]:focus + .glyphicon-search{
+                color: #FF8C00;
+            }
         </style>  
 
 
@@ -192,7 +195,6 @@
 
                             <!--first row-->
 
-                            <!--get Company and Company_Number via autocomplete-->
                             <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                 <div class="col-sm-6">
                                     <input  id="company" 
@@ -203,10 +205,9 @@
                                             title="Please Enter your Company's Name - if it does not show up please fill in the form"
                                             class="form-control"     
                                             onblur="CheckboxValue();"
-
                                             placeholder="Company Name"
+                                            readonly
                                             >
-                                    <!--refreshdoNotMailCheckboxValue();refreshCheckboxValue();"-->
                                 </div>
 
                                 <div class="col-sm-4">        
@@ -216,7 +217,7 @@
                                            name="Company_Number"                                
                                            value="${publisherID}"                                   
                                            placeholder="internal Company Number"
-                                         
+                                           readonly
                                            >
                                 </div>
                             </div> <!--row-->
@@ -266,14 +267,18 @@
                                            >
                                 </div>
 
+                                <!--get Country via autocomplete set Country Code automatically -->
                                 <div class="col-sm-5">
-                                    <input id="country"                                
-                                           type="text"                                
-                                           class="form-control"                                
-                                           name="Country"                                
-                                           value=""                                
-                                           placeholder="Country"
-                                           >
+                                    <div class="form-group has-feedback">
+                                        <input id="country"                                
+                                               type="text"                                
+                                               class="form-control"                                
+                                               name="Country"                                
+                                               value=""                                
+                                               placeholder="Country"
+                                               >
+                                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                    </div>
                                 </div>
                             </div> <!--row-->
 
@@ -439,8 +444,8 @@
                                       class="form-control" 
                                       style="width: 883px; height: 343px;" 
                                       name="Notes" 
-                                placeholder="enter optional notes"
-                                >                                          
+                                      placeholder="enter optional notes"
+                                      >                                          
                             </textarea>
                         </div> <!--container-->
 

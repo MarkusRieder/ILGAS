@@ -31,6 +31,7 @@ public class LoginService {
             System.out.println("ResultSet: loginCheck  " + rs);
 
             login = rs.first();
+            System.out.println("ResultSet: loginCheck login " + login);
 
             //    String strLogin = 
             System.out.println("userID: " + rs.getString("userID"));
