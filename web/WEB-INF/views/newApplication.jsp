@@ -22,8 +22,9 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 
@@ -176,10 +177,9 @@
                     text-indent: -5px;
                 }
             }
-        </style>
 
-        <!--Checkboxes with tick mark-->
-        <style>
+            /*        <!--Checkboxes with tick mark-->*/
+
             .checkbox label:after, 
             .radio label:after {
                 content: '';
@@ -248,9 +248,7 @@
             .checkbox-inline.no_indent:last-child {
                 margin-right: 0;
             }
-        </style>
 
-        <style>
             ​body {
                 margin: 5px;
                 background: #d9d1d1
@@ -292,6 +290,20 @@
             input[type="text"]:focus + .glyphicon-search{
                 color: #FF8C00;
             }
+
+            /*            .datepicker table tr td.active:active, 
+            .datepicker table tr td.active.highlighted:active, 
+            .datepicker table tr td.active.active, 
+            .datepicker table tr td.active.highlighted.active {
+               background-color: green;*/
+
+            .ui-state-highlight, 
+            .ui-widget-content .ui-state-highlight, 
+            .ui-widget-header .ui-state-highlight {
+                border: 1px solid #003399;
+                background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
+            }
+
         </style>
 
         <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh -->
@@ -518,8 +530,33 @@
                                         </i> </p>
 
 
-                                    <h1> PLEASE COMPLETE AND PRINT THIS FORM FOR INCLUSION WITH YOUR APPLICATION</h1>
+                                    <!--in Panel-->
+                                    <div class = "panel panel-default">
+                                        <div class = "panel-body">
+
+                                            <input type="checkbox" name="checkbox" value="check" id="agree" /> I have read and agree to the Terms and Conditions and Privacy Policy
+                                            <input type="submit" name="submit" value="submit" />
+
+                                            <h1>Terms and Conditions</h1><br/>
+
+
+                                            <div class="checkbox">                                                             
+                                                <label style="margin-bottom: 30px" for="TC_ACCEPTED">By clicking on the "<i>I accept</i>" button, you are confirming that you have <strong>read</strong> and <strong>accepted</strong> <br/>the terms and conditions of use of this website (including disclaimer).</label>
+                                                <br/>
+                                                <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
+                                                    <input type="checkbox" 
+                                                           name="TC_ACCEPTED" 
+                                                           id="TC_ACCEPTED" 
+                                                           value="ticked" 
+                                                           class="form-control">
+                                                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                </label>                                                          
+                                            </div>
+                                            <a href="${pageContext.request.contextPath}/termsConditions.jsp">read Terms and Conditions</a>
+                                        </div>  <!-- panel-body-->     
+                                    </div>  <!-- panel --> 
                                     <br/>
+
 
                                     All queries in relation to the Translation Grant Programme should be addressed to Deputy Director Rita McCann at rita[at]literatureireland[dot]com or Administrator Orla King at orla[at]literatureireland[dot]com.
                                     <br/>
@@ -1163,9 +1200,7 @@
                                                         format: "dd/mm/yyyy",
                                                         showWeekDays: true,
                                                         todayHighlight: true,
-                                                        autoclose: true,
-                                                        leftArrow: '&laquo;',
-                                                        rightArrow: '&raquo;'
+                                                        autoclose: true
                                                     });
                                                 </script>
                                                 <script>
@@ -1173,9 +1208,7 @@
                                                         format: "dd/mm/yyyy",
                                                         showWeekDays: true,
                                                         todayHighlight: true,
-                                                        autoclose: true,
-                                                        leftArrow: '<i class="fa fa-long-arrow-left"></i>',
-                                                        rightArrow: '<i class="fa fa-long-arrow-right"></i>'
+                                                        autoclose: true
                                                     });
                                                 </script>
 

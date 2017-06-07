@@ -18,6 +18,7 @@ public class GrantApplication {
     private String userID;
 
 //    Rights Agreement
+    
     private String agreement;//path + filename
 
     private String agreementDocName; //filename
@@ -27,6 +28,7 @@ public class GrantApplication {
     private String contractDocName;  //filename
 
 //    Publication Details
+    
     private Date proposedDateOfPublication;
 
     private Date proposedDateOfPrintRun;
@@ -34,6 +36,7 @@ public class GrantApplication {
     private int plannedPageExtent;
 
 //     a copy of the Translator's CV
+    
     private String translatorCV;//path + filename
 
     private String translatorCVDocName; //filename
@@ -49,6 +52,7 @@ public class GrantApplication {
     private String Status;
 
 //    Original Work & Sample Translation
+    
     private int copiesSent;
 
     private Date dateCopiesWereSent;
@@ -58,6 +62,7 @@ public class GrantApplication {
     private String copiesTranslationSampleDocName; //filename
 
 //    General
+    
     private int TC_ACCEPTED;
 
     private int APPROVED;

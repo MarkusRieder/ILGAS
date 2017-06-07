@@ -51,8 +51,9 @@
         <!--script for DataTable Modal popup-->
         <script type="text/javascript">
             $(document).ready(function () {
-                var mail;
+
                 var table = $("#user").DataTable({
+
                     dom: 'Bfrtip',
                     buttons: [
                         {
@@ -97,8 +98,8 @@
                         {"data": "LAST_NAME"},
                         {"data": "EMAIL",
                             "render": function (data, type, row) {
-                                $mail = 'mailto: ' + data + '';
-                                console.log($mail);
+//                                $mail = 'mailto: ' + data + '';
+//                                console.log($mail);
                                 return '<a href="mailto:' + data + '"><i class="fa fa-envelope" style="font-size:24px;color:blue"></i></a>';
                             }},
                         {"data": "FUNCTION"},
@@ -116,17 +117,32 @@
                 });
 
                 $('#user tbody').on('click', 'tr td.details-control', function () {
+
+
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+                    var rowdata = (table.row(tr).data());
+
+//                    console.log("rowdata  "  + rowdata.value);
+
+                    $('#usr_name').html("User Details for: " + rowdata.FIRST_NAME + " " + rowdata.LAST_NAME);
+
+
+                    var mail = 'mailto: ' + rowdata.EMAIL;
+                    $('#msg_val').html("Send email to: " + rowdata.FIRST_NAME + " " + rowdata.LAST_NAME);
+                    document.getElementById("mails").href = mail;
+
                     $("#userModal").modal("show");
                     $("#userUname").val($(this).closest('tr').children()[1].textContent); // uname
                     $("#userFirstName").val($(this).closest('tr').children()[2].textContent); // First
                     $("#userLastName").val($(this).closest('tr').children()[3].textContent); // Last
                     $("#userEmail").val($(this).closest('tr').children()[4].textContent); // EMAIL     
-                    var m = $mail;
-                    alert(m);
-                    $("#userEmail").val(m);
+//                    var m = $mail;
+//                    alert(m);
+//                    $("#userEmail").val(m);
                     $("#userFunction").val($(this).closest('tr').children()[5].textContent); // Function
                     $("#userRole").val($(this).closest('tr').children()[6].textContent); // Role
-                    //    console.log(table.row(this).data());
+                    console.log(table.row(this).data());
                 });
 //                console.log(table);
 
@@ -311,10 +327,10 @@
 
 
         <script type="text/javascript">
-            var agreemnt;
-            var contr;
-            var transSamp;
-            var trans;
+//            var agreemnt;
+//            var contr;
+//            var transSamp;
+//            var trans;
             $(document).ready(function () {
 
 
@@ -379,7 +395,18 @@
                             extend: 'pdfHtml5',
                             text: '<i class="fa fa-file-pdf-o"></i>',
                             titleAttr: 'PDF',
-                            title: 'Irish Literature Library'
+                            title: 'Irish Literature Library',
+                             customize: function ( doc ) {
+            content: [ {
+                alignment: 'justify',
+                columns: [
+                        { width: 'auto' },
+                        { width: '*' },
+                        { width: '*' }
+                ],
+                table: { widths: [ 'auto', '*', '*' ] }
+            } ]                    
+        }                   
                         }
                     ],
                     "bProcessing": '<i class="icon-spinner icon-spin"></i> Loading...',
@@ -401,14 +428,14 @@
                             "render": function (data, type, row) {
 
 //
-                                $agreemnt = 'http://localhost' + data + '';
+//                                $agreemnt = 'http://localhost' + data + '';
 //                                alert("$agreemnt  " + $agreemnt);
 //                                console.log($agreemnt);
                                 return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
                         {"data": "contract",
                             "render": function (data, type, row) {
-                                $contr = 'http://localhost' + data + '';
+//                                $contr = 'http://localhost' + data + '';
                                 //          console.log(contr);
                                 return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
@@ -429,7 +456,7 @@
                         {"data": "plannedPageExtent"},
                         {"data": "translatorCV",
                             "render": function (data, type, row) {
-                                $trans = 'http://localhost' + data + '';
+//                                $trans = 'http://localhost' + data + '';
                                 //        console.log($trans);
                                 return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
@@ -457,7 +484,7 @@
                         },
                         {"data": "copiesTranslationSample",
                             "render": function (data, type, row) {
-                                $transSamp = 'http://localhost' + data + '';
+//                                $transSamp = 'http://localhost' + data + '';
                                 //        console.log($transSamp);
                                 return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
@@ -511,34 +538,91 @@
 
                 $('#applications tbody').on('click', 'tr td.details-control', function () {
 
+                    var agreemnt = "";
+                    var contr = "";
+                    var transSamp = "";
+                    var trans = "";
+
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+                    var rowdata = (table.row(tr).data());
+
+                    var statii = rowdata.Status;
+
+                    console.log("rowdata.Status   " + statii);
+
+                    if (statii === 'new') {
+
+                        document.getElementById("appStatus").style.backgroundColor = '#aefca1';
+                        document.getElementById("agreement").value = 'new';
+
+                    } else if (statii === 'pending') {
+
+                        document.getElementById("appStatus").style.backgroundColor = '#a1fcef';
+                        document.getElementById("agreement").value = 'pending';
+
+                    } else {
+
+                        document.getElementById("appStatus").style.backgroundColor = '#efa1fc';
+                        document.getElementById("agreement").value = 'closed';
+                    }
+                    ;
+
+                    var agreemnt = 'http://localhost' + rowdata.agreement + '';
+                    $("#appAgreement").val(agreemnt);
+                    console.log("rowdata.agreemnt   " + agreemnt);
+
+                    document.getElementById("agreement").href = agreemnt;
+
+
+                    var contr = 'http://localhost' + rowdata.contract + '';
+                    console.log("rowdata.contract   " + contr);
+
+                    document.getElementById("contract").href = contr;
+
+
+                    var trans = 'http://localhost' + rowdata.translatorCV + '';
+                    console.log("rowdata.translatorCV   " + trans);
+
+                    document.getElementById("translatorCV").href = trans;
+
+
+                    var transSamp = 'http://localhost' + rowdata.copiesTranslationSample + '';
+                    console.log("rowdata.transSamp   " + transSamp);
+
+                    document.getElementById("copiesTranslationSample").href = transSamp;
+
                     $("#applicationsModal").modal("show");
 
                     $("#appApplicationNumber").val($(this).closest('tr').children()[1].textContent);
                     $("#appApplicationYear").val($(this).closest('tr').children()[2].textContent);
                     $("#appReferenceNumber").val($(this).closest('tr').children()[3].textContent);
                     $("#appCompany").val($(this).closest('tr').children()[4].textContent);
-                    $("#appAgreement").val($(this).closest('tr').children()[5].textContent);
+//                    $("#appAgreement").val($(this).closest('tr').children()[5].textContent);
 
-                    var a = $agreemnt;
+//                    var a = $agreemnt;
 //                    alert("$agreemnt 2:: " + $agreemnt);
-                    $("#appAgreement").val(a);
+//                    $("#appAgreement").val(a);
+// var agreemnt = 'http://localhost' + rowdata.agreement + '';
 
 
-                    $("#appcontract").val($(this).closest('tr').children()[6].textContent);
+                    console.log("rowdata.agreemnt   " + agreement);
 
-                    var c = $contr;
+//                    $("#appcontract").val($(this).closest('tr').children()[6].textContent);
+
+//                    var c = $contr;
 //                    alert("$contr 2:: " + $contr);
-                    $("#appcontract").val(c);
+                    $("#appcontract").val(contr);
 
                     $("#appproposedDateOfPublication").val($(this).closest('tr').children()[7].textContent);
                     $("#appproposedDateOfPrintRun").val($(this).closest('tr').children()[8].textContent);
                     $("#appplannedPageExtent").val($(this).closest('tr').children()[9].textContent);
-                    $("#apptranslatorCV").val($(this).closest('tr').children()[10].textContent);
+//                    $("#apptranslatorCV").val($(this).closest('tr').children()[10].textContent);
 
-                    var cv = $trans;
+//                    var cv = $trans;
 //                    alert("$trans 2:: " + $trans);
-                    $("#apptranslatorCV").val(cv);
-
+//                    $("#apptranslatorCV").val(trans);
+                    console.log(rowdata.copiesTranslationSample);
 
                     $("#appnumberOfPages").val($(this).closest('tr').children()[11].textContent);
                     $("#appfeePerPage").val($(this).closest('tr').children()[12].textContent);
@@ -547,11 +631,11 @@
                     $("#appStatus").val($(this).closest('tr').children()[15].textContent);
                     $("#appcopiesSent").val($(this).closest('tr').children()[16].textContent);
                     $("#appdateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
-                    $("#appcopiesTranslationSample").val($(this).closest('tr').children()[18].textContent);
+//                    $("#appcopiesTranslationSample").val($(this).closest('tr').children()[18].textContent);
 
-                    var ts = $transSamp;
+//                    var ts = $transSamp;
 //                    alert("$transSamp 2:: " + $transSamp);
-                    $("#appcopiesTranslationSample").val(ts);
+//                    $("#appcopiesTranslationSample").val(transSamp);
 
 
                     $("#appTC_ACCEPTED").val($(this).closest('tr').children()[19].textContent);
@@ -847,13 +931,14 @@
                                                         <a class="btn btn-info" role="button" id="agreement" >
                                                             <span class="glyphicon glyphicon-file"></span>
                                                             Open Agreement</a>
-                                                        <script>
-                                                            var appAgreement_element = document.getElementById('appAgreement');
-                                                            var appagreement = appAgreement_element.value;
-//                                                            alert("appAgreement:    " + appAgreement);
-                                                            console.log(appagreement);
-                                                            document.getElementById("agreement").href = appagreement;
-                                                        </script>
+                                                        <!--                                                        <script>
+                                                                                                                    var appAgreement_element = "";
+                                                                                                                    appAgreement_element = document.getElementById('appAgreement').value;
+                                                                                                                    console.log("appAgreement_element " + appAgreement_element);
+                                                                                                                    var appagreement = appAgreement_element.value;
+                                                                                                                    console.log("appagreement " + appagreement);
+                                                                                                                    document.getElementById("agreement").href = appAgreement_element;
+                                                                                                                </script>-->
                                                     </div>
                                                 </div>
 
@@ -869,12 +954,11 @@
                                                         <a class="btn btn-info" role="button" id="contract" >
                                                             <span class="glyphicon glyphicon-file"></span>
                                                             Open Contract</a>
-                                                        <script>
-                                                            var contract_element = document.getElementById('appcontract');
-                                                            var contrct = contract_element.value;
-                                                            console.log(contrct);
-                                                            document.getElementById("contract").href = contrct;
-                                                        </script>
+                                                        <!--                                                        <script>
+                                                                                                                    var contract_element = document.getElementById('appcontract');
+                                                                                                                    var contrct = contract_element.value;
+                                                                                                                    document.getElementById("contract").href = contrct;
+                                                                                                                </script>-->
                                                     </div>
                                                 </div>
 
@@ -889,12 +973,11 @@
                                                         <a class="btn btn-info" role="button" id="translatorCV" >
                                                             <span class="glyphicon glyphicon-file"></span>
                                                             Open Translator CV</a>
-                                                        <script>
-                                                            var translatorCV_element = document.getElementById('apptranslatorCV');
-                                                            var trCV = translatorCV_element.value;
-                                                            console.log(trCV);
-                                                            document.getElementById("translatorCV").href = trCV;
-                                                        </script>
+                                                        <!--                                                        <script>
+                                                                                                                    var translatorCV_element = document.getElementById('apptranslatorCV');
+                                                                                                                    var trCV = translatorCV_element.value;
+                                                                                                                    document.getElementById("translatorCV").href = trCV;
+                                                                                                                </script>-->
                                                     </div>
                                                 </div>
 
@@ -1010,12 +1093,11 @@
                                                         <a class="btn btn-info" role="button" id="copiesTranslationSample" >
                                                             <span class="glyphicon glyphicon-file"></span>
                                                             Open Translation Sample</a>
-                                                        <script>
-                                                            var copiesTS_element = document.getElementById('appcopiesTranslationSample');
-                                                            var copiesTS = copiesTS_element.value;
-                                                            console.log(copiesTS);
-                                                            document.getElementById("copiesTranslationSample").href = copiesTS;
-                                                        </script>
+                                                        <!--                                                        <script>
+                                                                                                                    var copiesTS_element = document.getElementById('appcopiesTranslationSample');
+                                                                                                                    var copiesTS = copiesTS_element.value;
+                                                                                                                    document.getElementById("copiesTranslationSample").href = copiesTS;
+                                                                                                                </script>-->
                                                     </div>
                                                 </div> <!--row-->
 
@@ -1109,46 +1191,83 @@
                                     <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
+
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="userModalLabel">Display Users</h4>
+                                                    <h4 class="modal-title" id="userModalLabel"><span id="usr_name">_</span></h4>
+                                                    <hr/>
                                                 </div>
+
                                                 <div class="modal-body">
-                                                    <label> Uname: </label>
-                                                    <p><input type="text" class="input-sm" id="userUname"/></p>
-                                                    <label> First Name: </label>
-                                                    <p><input type="text" class="input-sm" id="userFirstName"/></p>
-                                                    <script>
-                                                        var FN = document.getElementById('userFirstName');
-                                                        var uFN = FN.value;
-                                                        var label = "Send email to " + uFN;
-                                                        console.log(label);
-//                                                        document.getElementById("msg").innerHTML = label;
-                                                    </script>
-                                                    <label> Last Name: </label>
-                                                    <p><input type="text" class="input-sm" id="userLastName"/></p>
 
-                                                    <div class="row">
-                                                        <input id="userEmail"
-                                                               type="hidden"                                   
-                                                               name="userEmail"               
-                                                               >                                                    
-                                                        <a class="btn btn-info" role="button" id="mails" >
-                                                            <span class="glyphicon glyphicon-envelope"></span>
-                                                            <p id="msg">Send Email</p> </a>
-                                                        <script>
-                                                            var mail_element = document.getElementById('userEmail');
-                                                            var mail = mail_element.value;
-                                                            console.log(mail);
-                                                            document.getElementById("mails").href = mail;
-                                                        </script>
-                                                    </div>
+                                                    <div class="row" style="margin-bottom: 5px;margin-top: 5px">
+                                                        <div class="col-sm-4">
+                                                            <label for="userUname" class="control-label pull-left">Username:</label>
+                                                            <input  id="userUname" 
+                                                                    type="text"                                                  
+                                                                    class="form-control"    
+                                                                    name="userUname"    
+                                                                    >
+                                                        </div>
+                                                    </div> <!--row-->
 
-                                                    <label> Function: </label>
-                                                    <p><input type="text" class="input-sm" id="userFunction"/></p>
-                                                    <label> Role: </label>
-                                                    <p><input type="text" class="input-sm" id="userRole"/></p>
-                                                </div>
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        <div class="col-sm-4">
+                                                            <label for="userFirstName" class="control-label pull-left">First Name:</label>
+                                                            <input id="userFirstName"                                
+                                                                   type="text"                                
+                                                                   class="form-control"                                
+                                                                   name="userFirstName"                                
+                                                                   >
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <label for="userLastName" class="control-label pull-left">Last Name:</label>
+                                                            <input id="userLastName"                                
+                                                                   type="text"                                
+                                                                   class="form-control"                                
+                                                                   name="userLastName"                                
+                                                                   >
+                                                        </div>
+                                                    </div> <!--row-->
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+                                                        <div class="col-sm-4">
+                                                            <label for="userFunction" class="control-label pull-left">Function: </label>
+                                                            <input id="userFunction"                                
+                                                                   type="text"                                
+                                                                   class="form-control"                                
+                                                                   name="userFunction"                                
+                                                                   >
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <label for="userRole" class="control-label pull-left">Role:</label>
+                                                            <input id="userRole"                                
+                                                                   type="text"                                
+                                                                   class="form-control"                                
+                                                                   name="userRole"                                
+                                                                   >
+                                                        </div>
+                                                    </div> <!--row-->
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        
+                                                         <div class="col-sm-4">
+                                                            <input id="userEmail"
+                                                                   type="hidden"                                   
+                                                                   name="userEmail"               
+                                                                   >                                                    
+                                                            <a class="btn btn-info btn-sm" role="button" id="mails" >
+                                                                <span class="glyphicon glyphicon-envelope"></span>
+                                                                <p id="msg"><span id="msg_val">_</span></p> </a>
+                                                        </div>
+                                                    </div> <!--row-->
+
+
+                                                </div><!-- /.modal body -->
+
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                     <button type="button" class="btn btn-primary">Save changes</button>
