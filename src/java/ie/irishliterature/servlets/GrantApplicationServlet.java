@@ -37,12 +37,24 @@ public class GrantApplicationServlet extends HttpServlet {
             = Logger.getLogger(GrantApplicationServlet.class.getCanonicalName());
     private static final long serialVersionUID = 7908187011456392847L;
 
+    ////////////////////////////////////////////////////////////////////////////
+    ///
+    ///  For file upload
+    ///
+    ////////////////////////////////////////////////////////////////////////////
     private boolean isMultipart;
     private String filePath;
     private String rootPath;
     private final int maxFileSize = 50 * 1024;
     private final int maxMemSize = 4 * 1024;
     private File file;
+    private String tempPath = "";
+
+    ////////////////////////////////////////////////////////////////////////////
+    ///
+    ///  For Application
+    ///
+    ////////////////////////////////////////////////////////////////////////////
     private int ApplicationNumber = 0;
     private String ReferenceNumber;
     private String company;
@@ -64,7 +76,16 @@ public class GrantApplicationServlet extends HttpServlet {
     private String TCACCEPTED;
     private String ieAPPROVED;
     private String Status;
+    private int copiesSent = 0;
+    private int TC_ACCEPTED = 0;
+    private int APPROVED = 0;
     private String Type;
+
+    ////////////////////////////////////////////////////////////////////////////
+    ///
+    ///  For Publisher Contact details Update
+    ///
+    ////////////////////////////////////////////////////////////////////////////
     private String firstname;
     private String lastname;
     private String Address1;
@@ -77,15 +98,18 @@ public class GrantApplicationServlet extends HttpServlet {
     private String Telephone;
     private String Fax;
 
-    private int copiesSent = 0;
-    private int TC_ACCEPTED = 0;
-    private int APPROVED = 0;
-
+    ////////////////////////////////////////////////////////////////////////////
+    ///
+    ///  For Book details
+    ///
+    ////////////////////////////////////////////////////////////////////////////
     private int bookID;
 
     private String referenceNumber;
 
     private String Author;
+
+    private String writerType;  // options Author, Editor, Translator
 
     private String Title;
 
@@ -117,7 +141,41 @@ public class GrantApplicationServlet extends HttpServlet {
 
     private String ISSN;
 
-    private String tempPath = "";
+    private String Series;
+
+    ////////////////////////////////////////////////////////////////////////////
+    ///
+    ///  For Irish Literature Staff
+    ///
+    ////////////////////////////////////////////////////////////////////////////
+    private String TranslatorTrackRecord;  //Array of Autho/Title
+    private String Cover;
+    private String Sample_Sent_out; //  Date
+    private String Sample_Returned; //  Date
+    private String Reader_Report;
+    private String Date_Reader_Paid; //  Date
+    private String Cheque_Number;
+    private String Cheque_Cleared; //  Date
+    private String Date_Contract_Sent_to_Publisher; //  Date
+    private String Date_ILE_Acknowledgement_Received; //  Date
+    private String Date_ILE_Acknowlegement_Approved; //  Date
+    private String Date_Published_Books_Received; //  Date
+    private String Date_Details_of_Payment_to_Translator_Received; //  Date
+    private String Date_Payment_Made_to_Publisher; //  Date
+    private String Publisher_Cheque_Number;
+    private String Publisher_Cheque_Cleared; //   boolean
+    private String Comments_re_Application;
+    private String Board_Meeting;
+    private String Date_publisher_informed_of_meeting; //  Date 
+    private String Award; //    boolean
+    private String Amount_Requested;
+    private String Amount_Approved;
+    private String Comments_about_Meeting;
+    private String Proposed_Publication_Date; //  Date
+    private String Previous_Grant_Aid; // Array of Author/Title
+    private String Press_cuttings;  //  boolean
+    private String Sales_figures;
+    private String Anthology; //Array of Author/Title
 
     public void init() {
 

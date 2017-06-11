@@ -10,7 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>Grant Application System</title>
+
+
+        <title>Translation Grant Application System</title>
 
         <!-- Bootstrap -->
 
@@ -396,17 +398,17 @@
                             text: '<i class="fa fa-file-pdf-o"></i>',
                             titleAttr: 'PDF',
                             title: 'Irish Literature Library',
-                             customize: function ( doc ) {
-            content: [ {
-                alignment: 'justify',
-                columns: [
-                        { width: 'auto' },
-                        { width: '*' },
-                        { width: '*' }
-                ],
-                table: { widths: [ 'auto', '*', '*' ] }
-            } ]                    
-        }                   
+                            customize: function (doc) {
+                                content: [{
+                                        alignment: 'justify',
+                                        columns: [
+                                            {width: 'auto'},
+                                            {width: '*'},
+                                            {width: '*'}
+                                        ],
+                                        table: {widths: ['auto', '*', '*']}
+                                    }]
+                            }
                         }
                     ],
                     "bProcessing": '<i class="icon-spinner icon-spin"></i> Loading...',
@@ -881,257 +883,583 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="applicationsModalLabel">Display Applications</h4>
+                                                <h4 class="modal-title" id="applicationsModalLabel">Applications</h4>
                                             </div>
                                             <div class="modal-body">
 
+                                                <ul class="nav nav-tabs" id="tabContent">
+                                                    <li class="active"><a href="#page1" data-toggle="tab">Application</a></li>
+                                                    <li><a href="#page2" data-toggle="tab">Page 2</a></li>
+                                                    <li><a href="#page3" data-toggle="tab">Page 3</a></li>
+                                                    <li><a href="#page4" data-toggle="tab">Page 4</a></li>
+                                                    <li><a href="#page5" data-toggle="tab">Page 5</a></li>
+                                                </ul>
 
-                                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                    <div class="col-sm-4">
-                                                        <label for="appReferenceNumber" class="control-label pull-left">Reference Number</label>
-                                                        <input  id="appReferenceNumber" 
-                                                                type="text"                                                  
-                                                                class="form-control"    
-                                                                name="appReferenceNumber"    
-                                                                >
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <label for="appStatus" class="control-label pull-left">Status</label>
-                                                        <input id="appStatus"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="appStatus"                                
-                                                               >
-                                                    </div>
-                                                </div> <!--row-->
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="page1">
 
-                                                <!--second row-->
 
-                                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                    <div class="col-sm-8">        
-                                                        <label for="appCompany" class="control-label pull-left">Publisher</label>
-                                                        <input id="appCompany"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="appCompany"                                
-                                                               >
-                                                    </div>
-                                                </div>
 
-                                                <div class="row">
-                                                    <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">
-                                                        <div class="col-sm-6">                                                        
-                                                            <input id="appAgreement"
-                                                                   type="hidden"        
-                                                                   class="form-control"  
-                                                                   name="appAgreement"         
-                                                                   >
-                                                        </div> 
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px">
+                                                            <div class="col-sm-4">
+                                                                <label for="appReferenceNumber" class="control-label pull-left">Reference Number</label>
+                                                                <input  id="appReferenceNumber" 
+                                                                        type="text"                                                  
+                                                                        class="form-control"    
+                                                                        name="appReferenceNumber"    
+                                                                        >
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label for="appStatus" class="control-label pull-left">Status</label>
+                                                                <input id="appStatus"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="appStatus"                                
+                                                                       >
+                                                            </div>
+                                                        </div> <!--row-->
 
-                                                        <a class="btn btn-info" role="button" id="agreement" >
-                                                            <span class="glyphicon glyphicon-file"></span>
-                                                            Open Agreement</a>
-                                                        <!--                                                        <script>
-                                                                                                                    var appAgreement_element = "";
-                                                                                                                    appAgreement_element = document.getElementById('appAgreement').value;
-                                                                                                                    console.log("appAgreement_element " + appAgreement_element);
-                                                                                                                    var appagreement = appAgreement_element.value;
-                                                                                                                    console.log("appagreement " + appagreement);
-                                                                                                                    document.getElementById("agreement").href = appAgreement_element;
-                                                                                                                </script>-->
-                                                    </div>
-                                                </div>
+                                                        <!--second row-->
 
-                                                <div class="row">
-                                                    <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-6">
-                                                            <input id="appcontract" 
-                                                                   type="hidden"     
-                                                                   name="appcontract"  
-                                                                   >
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-8">        
+                                                                <label for="appCompany" class="control-label pull-left">Publisher</label>
+                                                                <input id="appCompany"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="appCompany"                                
+                                                                       >
+                                                            </div>
                                                         </div>
 
-                                                        <a class="btn btn-info" role="button" id="contract" >
-                                                            <span class="glyphicon glyphicon-file"></span>
-                                                            Open Contract</a>
-                                                        <!--                                                        <script>
-                                                                                                                    var contract_element = document.getElementById('appcontract');
-                                                                                                                    var contrct = contract_element.value;
-                                                                                                                    document.getElementById("contract").href = contrct;
-                                                                                                                </script>-->
-                                                    </div>
-                                                </div>
+                                                        <div class="row">
+                                                            <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">
+                                                                <div class="col-sm-6">                                                        
+                                                                    <input id="appAgreement"
+                                                                           type="hidden"        
+                                                                           class="form-control"  
+                                                                           name="appAgreement"         
+                                                                           >
+                                                                </div> 
 
-                                                <div class="row">
-                                                    <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-6">
-                                                            <input id="apptranslatorCV"
-                                                                   type="hidden"                                                             
-                                                                   name="apptranslatorCV"                                
-                                                                   >
+                                                                <a class="btn btn-info" role="button" id="agreement" >
+                                                                    <span class="glyphicon glyphicon-file"></span>
+                                                                    Open Agreement</a>
+                                                            </div>
+                                                            <!--</div>-->
+
+                                                            <!--<div class="row">-->
+                                                            <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px">
+                                                                <div class="col-sm-6">
+                                                                    <input id="appcontract" 
+                                                                           type="hidden"     
+                                                                           name="appcontract"  
+                                                                           >
+                                                                </div>
+
+                                                                <a class="btn btn-info" role="button" id="contract" >
+                                                                    <span class="glyphicon glyphicon-file"></span>
+                                                                    Open Contract</a>
+                                                            </div>
+                                                            <!--</div>-->
+
+                                                            <!--<div class="row">-->
+                                                            <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px">
+                                                                <div class="col-sm-6">
+                                                                    <input id="apptranslatorCV"
+                                                                           type="hidden"                                                             
+                                                                           name="apptranslatorCV"                                
+                                                                           >
+                                                                </div>
+                                                                <a class="btn btn-info" role="button" id="translatorCV" >
+                                                                    <span class="glyphicon glyphicon-file"></span>
+                                                                    Open Translator <br/> CV</a>
+                                                            </div>
                                                         </div>
-                                                        <a class="btn btn-info" role="button" id="translatorCV" >
-                                                            <span class="glyphicon glyphicon-file"></span>
-                                                            Open Translator CV</a>
-                                                        <!--                                                        <script>
-                                                                                                                    var translatorCV_element = document.getElementById('apptranslatorCV');
-                                                                                                                    var trCV = translatorCV_element.value;
-                                                                                                                    document.getElementById("translatorCV").href = trCV;
-                                                                                                                </script>-->
-                                                    </div>
-                                                </div>
 
-                                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                    <div class="col-sm-3">
-                                                        <label for="appproposedDateOfPublication" class="control-label pull-left">Proposed Date of Publication</label>
-                                                        <input id="appproposedDateOfPublication"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="appproposedDateOfPublication"                                
-                                                               >
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <label for="appproposedDateOfPrintRun" class="control-label pull-left">Proposed Date of Print Run</label>
-                                                        <input  id="appproposedDateOfPrintRun" 
-                                                                name="appproposedDateOfPrintRun" 
-                                                                type="text"                                                                
-                                                                class="form-control"     
-                                                                >
-                                                    </div>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-3">
+                                                                <label for="appproposedDateOfPublication" class="control-label pull-left">Proposed Date of Publication</label>
+                                                                <input id="appproposedDateOfPublication"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="appproposedDateOfPublication"                                
+                                                                       >
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label for="appproposedDateOfPrintRun" class="control-label pull-left">Proposed Date of Print Run</label>
+                                                                <input  id="appproposedDateOfPrintRun" 
+                                                                        name="appproposedDateOfPrintRun" 
+                                                                        type="text"                                                                
+                                                                        class="form-control"     
+                                                                        >
+                                                            </div>
 
-                                                    <div class="col-sm-4">        
-                                                        <label for="appplannedPageExtent" class="control-label pull-left">Planned Page<br/> Extend</label>
-                                                        <input id="appplannedPageExtent"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="appplannedPageExtent"                                
-                                                               >
-                                                    </div>
-                                                </div> <!--row-->
+                                                            <div class="col-sm-4">        
+                                                                <label for="appplannedPageExtent" class="control-label pull-left">Planned Page<br/> Extend</label>
+                                                                <input id="appplannedPageExtent"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="appplannedPageExtent"                                
+                                                                       >
+                                                            </div>
+                                                        </div> <!--row-->
 
-                                                <!--second row-->
+                                                        <!--second row-->
 
-                                                <div class="row">
-                                                    <div class="col-sm-4">                                               
-                                                        <label for="appnumberOfPages" class="control-label pull-left">Number of Pages</label>
-                                                        <div class="input-group" style="margin-bottom: 40px">
-                                                            <label class="input-group-addon" for="appnumberOfPages">
-                                                                <span class="glyphicon glyphicon-duplicate"></span>
-                                                            </label>
-                                                            <input id="appnumberOfPages"                                
-                                                                   type="text"                                
-                                                                   class="form-control"                                
-                                                                   >
-                                                        </div>
-                                                    </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-4">                                               
+                                                                <label for="appnumberOfPages" class="control-label pull-left">Number of Pages</label>
+                                                                <div class="input-group" style="margin-bottom: 40px">
+                                                                    <label class="input-group-addon" for="appnumberOfPages">
+                                                                        <span class="glyphicon glyphicon-duplicate"></span>
+                                                                    </label>
+                                                                    <input id="appnumberOfPages"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           >
+                                                                </div>
+                                                            </div>
 
-                                                    <div class="col-sm-3">
-                                                        <label for="appfeePerPage" class="control-label pull-left">Fee per Page</label>
-                                                        <div class="input-group" style="margin-bottom: 40px">
-                                                            <!--<label for="appReferenceNumber" class="control-label pull-left">Fee per Page</label>-->
+                                                            <div class="col-sm-3">
+                                                                <label for="appfeePerPage" class="control-label pull-left">Fee per Page</label>
+                                                                <div class="input-group" style="margin-bottom: 40px">
+                                                                    <!--<label for="appReferenceNumber" class="control-label pull-left">Fee per Page</label>-->
 
-                                                            <label class="input-group-addon" for="appfeePerPage">
+                                                                    <label class="input-group-addon" for="appfeePerPage">
 
-                                                                <span class="glyphicon glyphicon-euro"></span>                                     
-                                                            </label>
-                                                            <input type="text" class="form-control" name="appfeePerPage" id="appfeePerPage" placeholder="fee">    
-                                                        </div>
-                                                    </div>
+                                                                        <span class="glyphicon glyphicon-euro"></span>                                     
+                                                                    </label>
+                                                                    <input type="text" class="form-control" name="appfeePerPage" id="appfeePerPage" placeholder="fee">    
+                                                                </div>
+                                                            </div>
 
-                                                    <div class="col-sm-3">
-                                                        <label for="apptranslatorFee" class="control-label pull-left">Fee per Page</label>
-                                                        <div class="input-group" style="margin-bottom: 40px">                                                               
-                                                            <label class="input-group-addon" for="apptranslatorFee">                                                           
-                                                                <span class="glyphicon glyphicon-euro"></span>                                     
-                                                            </label>
-                                                            <input type="text" class="form-control" name="apptranslatorFee" id="apptranslatorFee" placeholder="fee">    
-                                                        </div>
-                                                    </div>
-                                                </div> <!--row-->
+                                                            <div class="col-sm-3">
+                                                                <label for="apptranslatorFee" class="control-label pull-left">Fee per Page</label>
+                                                                <div class="input-group" style="margin-bottom: 40px">                                                               
+                                                                    <label class="input-group-addon" for="apptranslatorFee">                                                           
+                                                                        <span class="glyphicon glyphicon-euro"></span>                                     
+                                                                    </label>
+                                                                    <input type="text" class="form-control" name="apptranslatorFee" id="apptranslatorFee" placeholder="fee">    
+                                                                </div>
+                                                            </div>
+                                                        </div> <!--row-->
 
-                                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                    <div class="col-sm-12">
-                                                        <label for="appNotes" class="control-label pull-left">Notes</label>
-                                                        <textarea id="appNotes" 
-                                                                  class="form-control"                                               
-                                                                  name="Notes"    
-                                                                  style="height: 183px"
-                                                                  >                 
-                                                        </textarea>
-                                                    </div>
-                                                </div> <!--row-->
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-12">
+                                                                <label for="appNotes" class="control-label pull-left">Notes</label>
+                                                                <textarea id="appNotes" 
+                                                                          class="form-control"                                               
+                                                                          name="Notes"    
+                                                                          style="height: 183px"
+                                                                          >                 
+                                                                </textarea>
+                                                            </div>
+                                                        </div> <!--row-->
 
-                                                <!--second row-->
+                                                        <!--second row-->
 
-                                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                    <div class="col-sm-3">
-                                                        <label for="appcopiesSent" class="control-label pull-left">Have copies been sent?</label>
-                                                        <input id="appcopiesSent"
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="appcopiesSent"                                
-                                                               >
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <label for="appdateCopiesWereSent" class="control-label pull-left">Date copies were sent</label>
-                                                        <input id="appdateCopiesWereSent"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="appdateCopiesWereSent"                                
-                                                               >
-                                                    </div>
-                                                </div> <!--row-->
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-3">
+                                                                <label for="appcopiesSent" class="control-label pull-left">Have copies been sent?</label>
+                                                                <input id="appcopiesSent"
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="appcopiesSent"                                
+                                                                       >
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label for="appdateCopiesWereSent" class="control-label pull-left">Date copies were sent</label>
+                                                                <input id="appdateCopiesWereSent"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="appdateCopiesWereSent"                                
+                                                                       >
+                                                            </div>
+                                                        </div> <!--row-->
 
-                                                <div class="row">
-                                                    <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
-                                                        <div class="col-sm-6">
-                                                            <input id="appcopiesTranslationSample"                                
-                                                                   type="hidden"                                                            
-                                                                   name="appcopiesTranslationSample"                                
-                                                                   >
-                                                        </div>
-                                                        <a class="btn btn-info" role="button" id="copiesTranslationSample" >
-                                                            <span class="glyphicon glyphicon-file"></span>
-                                                            Open Translation Sample</a>
-                                                        <!--                                                        <script>
-                                                                                                                    var copiesTS_element = document.getElementById('appcopiesTranslationSample');
-                                                                                                                    var copiesTS = copiesTS_element.value;
-                                                                                                                    document.getElementById("copiesTranslationSample").href = copiesTS;
-                                                                                                                </script>-->
-                                                    </div>
-                                                </div> <!--row-->
+                                                        <div class="row">
+                                                            <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
+                                                                <div class="col-sm-6">
+                                                                    <input id="appcopiesTranslationSample"                                
+                                                                           type="hidden"                                                            
+                                                                           name="appcopiesTranslationSample"                                
+                                                                           >
+                                                                </div>
+                                                                <a class="btn btn-info" role="button" id="copiesTranslationSample" >
+                                                                    <span class="glyphicon glyphicon-file"></span>
+                                                                    Open Translation Sample</a>
+                                                            </div>
+                                                        </div> <!--row-->
 
-                                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                    <div class="col-sm-3">
-                                                        <label for="appTC_ACCEPTED" class="control-label pull-left">T&C accepted</label>
-                                                        <input id="appTC_ACCEPTED"
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="appTC_ACCEPTED"                                
-                                                               >
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <label for="appAPPROVED" class="control-label pull-left">Application Approved</label>
-                                                        <input id="appAPPROVED"
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="appAPPROVED"                                
-                                                               >
-                                                    </div>
-
-
-                                                    <div class="col-sm-2">
-                                                        <label for="approve" style="margin-top: 7px" class="control-label pull-left"> &nbsp;</label>
-                                                        <button id="approve" type="button" class="btn btn-success">Approve</button>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-3">
+                                                                <label for="appTC_ACCEPTED" class="control-label pull-left">T&C accepted</label>
+                                                                <input id="appTC_ACCEPTED"
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="appTC_ACCEPTED"                                
+                                                                       >
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <label for="appAPPROVED" class="control-label pull-left">Application Approved</label>
+                                                                <input id="appAPPROVED"
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="appAPPROVED"                                
+                                                                       >
+                                                            </div>
+                                                        </div> <!--row-->
 
                                                     </div>
 
-                                                    <div class="col-sm-2">
-                                                        <label for="reject" style="margin-top: 7px" class="control-label pull-left"> &nbsp;</label>
-                                                        <button  id="reject" type="button" class="btn btn-danger">Reject</button>
-                                                    </div>
-                                                </div> <!--row-->
+                                                    <div class="tab-pane" id="page2">
 
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px">
+
+                                                            TranslatorTrackRecord;  //Array of Autho/Title
+                                                            <!--                                                    <div class="col-sm-12">
+                                                                                                                    <div>
+        
+                                                    </div>-->
+                                                        </div> <!--row-->
+
+
+                                                        <div class="row" style="margin-top: 30px;margin-bottom: 10px">
+                                                            <div class='col-sm-4'>
+                                                                <strong class=" pull-left"> Sample sent out</strong>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="sampleSentOut">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class='col-sm-4'>
+                                                                <strong class=" pull-left"> Sample returned</strong>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="sampleReturned">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;">
+
+                                                            <div class="col-sm-10">
+                                                                <label for="readerReport" class="control-label pull-left"> Reader Report</label>
+                                                                <textarea id="readerReport" 
+                                                                          class="form-control"                                               
+                                                                          name="readerReport"    
+                                                                          style="height: 98px"
+                                                                          >                 
+                                                                </textarea>
+                                                            </div>
+                                                        </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+
+                                                            <div class='col-sm-4'>
+                                                                <strong class=" pull-left"> Date Reader Paid</strong>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="dateReaderPaid" id="dateReaderPaid" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateReaderPaid">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-4">
+                                                                <strong class=" pull-left"> Cheque Number</strong>
+                                                                <input id="chequeNumber"
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="chequeNumber"                                
+                                                                       >
+                                                            </div>
+
+
+                                                            <div class='col-sm-4'>
+                                                                <strong class=" pull-left"> Date Cheque Cleared</strong>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="dateChequeCleared" id="dateChequeCleared" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateChequeCleared">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                        </div> <!--row-->
+
+
+                                                    </div> 
+                                                    <div class="tab-pane" id="page3">
+
+
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
+
+
+                                                            <div class='col-sm-6'>
+                                                                <strong class=" pull-left">Contract Sent to Publisher</strong>
+                                                                <div class="input-group pull-left">
+                                                                    <input type="text" name="dateContractSenttoPublisher" id="dateContractSenttoPublisher" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateContractSenttoPublisher">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class='col-sm-6'>
+                                                                <strong class=" pull-left">ILE Acknowledgement Received</strong>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="dateILEAcknowledgementReceived" id="dateILEAcknowledgementReceived" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateILEAcknowledgementReceived">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>    
+                                                            </div>
+
+                                                        </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px"> 
+
+                                                            <div class='col-sm-6'>
+                                                                <strong class=" pull-left">ILE Acknowledgement Approved</strong>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="dateILEAcknowledgementApproved" id="dateILEAcknowledgementApproved" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateILEAcknowledgementApproved">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div> 
+                                                            </div>
+
+                                                            <div class='col-sm-6'>
+                                                                <strong class=" pull-left"> Date Published Books Received</strong>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="datePublishedBooksReceived" id="datePublishedBooksReceived" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateILEAcknowledgementApproved">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>   
+                                                            </div>
+
+                                                        </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px"> 
+
+                                                            <div class='col-sm-6'>
+                                                                <strong class=" pull-left"> Date Details of Payment to Translator Received</strong>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="dateDetailsOfPaymentToTranslatorReceived" id="dateDetailsOfPaymentToTranslatorReceived" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateDetailsOfPaymentToTranslatorReceived">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>   
+                                                            </div>
+
+                                                            <div class='col-sm-6'>
+                                                                <strong class=" pull-left"> Date Payment Made to Publisher &nbsp; &nbsp; &nbsp; </strong>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="datePaymentMadeToPublisher" id="datePaymentMadeToPublisher" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="datePaymentMadeToPublisher">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>   
+                                                            </div>
+
+
+                                                        </div> <!--row-->
+
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px"> 
+
+
+                                                            <div class="col-sm-6">
+                                                                <label for="publisherChequeNumber" class="control-label pull-left">Publisher Cheque Number</label>
+                                                                <input id="publisherChequeNumber"
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="publisherChequeNumber"                                
+                                                                       >
+                                                            </div>
+
+                                                            <div class="col-sm-4">
+                                                                <label for="publisherChequeCleared" class="control-label pull-left"> Publisher Cheque Cleared</label>
+                                                                <input id="publisherChequeCleared"
+                                                                       type="checkbox"                                
+                                                                       class="form-control"                                
+                                                                       name="publisherChequeCleared"                                
+                                                                       >
+                                                            </div>
+
+                                                        </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
+
+                                                            <div class="col-sm-8">
+                                                                <label for="commentsReApplication" class="control-label pull-left">Comments regarding Application</label>
+                                                                <textarea id="commentsReApplication" 
+                                                                          class="form-control"                                               
+                                                                          name="commentsReApplication"    
+                                                                          style="height: 98px"
+                                                                          >                 
+                                                                </textarea>
+                                                            </div>
+
+                                                        </div> <!--row-->
+                                                    </div> 
+
+                                                    <div class="tab-pane" id="page4">
+
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px">   
+
+                                                            <div class='col-sm-4'>
+                                                                <strong class="pull-left">Board meeting</strong>
+                                                                <div class="input-group" >
+                                                                    <input type="text" name="dateOfBoardMeeting" id="dateOfBoardMeeting" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateOfBoardMeeting">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div> 
+                                                            </div>
+
+                                                            <div class='col-sm-6'>
+                                                                <strong class="pull-left">Publisher informed of meeting</strong>
+                                                                <div class="input-group" >
+                                                                    <input type="text" name="datePublisherInformedOfMeeting" id="datePublisherInformedOfMeeting" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="datePublisherInformedOfMeeting">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div> 
+                                                            </div>
+
+                                                        </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
+
+
+                                                            <div class="col-sm-4">
+                                                                <label for="award" class="control-label">Award &nbsp; &nbsp; &nbsp;</label>
+                                                                <input id="award"
+                                                                       type="checkbox"                                
+                                                                       class="form-control"                                
+                                                                       name="award"                                
+                                                                       >
+                                                            </div>
+
+                                                        </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">  
+                                                            <div class="col-sm-6">
+                                                                <strong class="pull-left">Amount Requested</strong> 
+                                                                <div class="input-group pull-left">
+                                                                    <label class="input-group-addon" for="amountRequested">
+                                                                        <span class="glyphicon glyphicon-euro"></span>                                     
+                                                                    </label>
+                                                                    <input type="text" class="form-control" name="amountRequested" id="amountRequested" placeholder="Amount Requested">    
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <strong class="pull-left">Amount Approved</strong> 
+                                                                <div class="input-group pull-left">
+                                                                    <label class="input-group-addon" for="amountApproved">
+                                                                        <span class="glyphicon glyphicon-euro"></span>                                     
+                                                                    </label>
+                                                                    <input type="text" class="form-control" name="amountApproved" id="amountApproved" placeholder="Amount Approved">    
+                                                                </div>
+                                                            </div>
+
+                                                        </div> <!--row-->
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
+
+                                                            <div class="col-sm-12">
+                                                                <label for="commentsAboutMeeting" class="control-label pull-left">Comments about Meeting</label>
+                                                                <textarea id="commentsAboutMeeting" 
+                                                                          class="form-control"                                               
+                                                                          name="commentsAboutMeeting"    
+                                                                          style="height: 98px"
+                                                                          >                 
+                                                                </textarea>
+                                                            </div>
+
+                                                        </div> <!--row-->
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
+
+                                                            <div class='col-sm-6'>
+                                                                <strong class="pull-left">Proposed  Publication Date &nbsp;&nbsp;&nbsp; </strong>
+                                                                <div class="input-group" >
+                                                                    <input type="text" name="proposedPublicationDate" id="proposedPublicationDate" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateOfBoardMeeting">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div> 
+                                                            </div>
+
+                                                        </div> <!--row-->
+                                                    </div> 
+
+                                                    <div class="tab-pane" id="page5">
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
+
+
+                                                            <div class="col-sm-12">
+                                                                <label for="previousGrantAid" class="control-label pull-left"> Previous Grant Aid</label>
+                                                                <textarea id="previousGrantAid" class="form-control" name="previousGrantAid" style="height: 183px" placeholder="Previous_Grant_Aid; // Array of Author/Title" ></textarea>
+                                                            </div>
+
+                                                        </div> <!--row-->
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
+
+                                                            <div class="col-sm-4">
+                                                                <label for="pressCuttings" class="control-label">Press Cuttings</label>
+                                                                <input id="pressCuttings"
+                                                                       type="checkbox"                                
+                                                                       class="form-control"                                
+                                                                       name="pressCuttings"                                
+                                                                       >
+                                                            </div>
+
+                                                            <div class="col-sm-4">
+                                                                <label for="salesFigures" class="control-label">Sales Figures</label>
+                                                                <input id="salesFigures"
+                                                                       type="checkbox"                                
+                                                                       class="form-control"                                
+                                                                       name="salesFigures"                                
+                                                                       >
+                                                            </div>
+
+
+                                                        </div> <!--row-->
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
+
+
+                                                            <div class="col-sm-12">
+                                                                <label for="appNotes" class="control-label pull-left">Anthology</label>
+                                                                <textarea id="appNotes" class="form-control" name="Notes" style="height: 183px" placeholder="Anthology; //Array of Author/Title"></textarea>
+                                                            </div>
+
+                                                            <div class="col-sm-2">
+                                                                <label for="approve" style="margin-top: 7px" class="control-label pull-left"> &nbsp;</label>
+                                                                <button id="approve" type="button" class="btn btn-success">Approve</button>
+
+                                                            </div>
+
+                                                            <div class="col-sm-2">
+                                                                <label for="reject" style="margin-top: 7px" class="control-label pull-left"> &nbsp;</label>
+                                                                <button  id="reject" type="button" class="btn btn-danger">Reject</button>
+                                                            </div>
+                                                        </div> <!--row-->
+                                                    </div> <!--page 5-->
+                                                </div> <!--tab content-->
                                             </div><!--modal body-->
 
                                             <div class="modal-footer">
@@ -1253,8 +1581,8 @@
                                                     </div> <!--row-->
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        
-                                                         <div class="col-sm-4">
+
+                                                        <div class="col-sm-4">
                                                             <input id="userEmail"
                                                                    type="hidden"                                   
                                                                    name="userEmail"               

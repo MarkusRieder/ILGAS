@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>Grant Application System</title>
+        <title>Translation Grant Application System</title>
 
         <!-- Bootstrap -->
 
@@ -584,6 +584,11 @@
                                     </ol>
                                 </div>
 
+                                <!--////////////////////////////////////////////////////////////////////////////
+                                    ///
+                                    ///  For Publisher Contact details Update
+                                    ///
+                                    ////////////////////////////////////////////////////////////////////////////-->
 
                                 <!-- Contact details -->
 
@@ -848,6 +853,12 @@
                                     </div> <!--container-->
                                 </div>
 
+                                <!--////////////////////////////////////////////////////////////////////////////
+                                    ///
+                                    ///  For Book details
+                                    ///
+                                    ////////////////////////////////////////////////////////////////////////////-->
+
                                 <!-- Book Details -->
                                 <div class="tab-pane" id="books">
                                     <h1 style="margin-bottom: 40px">Book Details</h1>
@@ -976,6 +987,17 @@
                                                                    name="translationTitle"                                
                                                                    value=""    
                                                                    placeholder="Translation Title"
+                                                                   >
+                                                        </div>
+
+                                                        <div class="col-sm-4">    
+                                                            <label for="translatorN" class="pull-left">Translator</label>
+                                                            <input id="translatorN"                                
+                                                                   type="text"                                
+                                                                   class="form-control"                                
+                                                                   name="translator"                                
+                                                                   value=""    
+                                                                   placeholder="Translator"
                                                                    >
                                                         </div>
                                                     </div> <!--row-->

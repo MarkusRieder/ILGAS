@@ -7,7 +7,7 @@
 
 
 
-                <h1 align="center">Grant Application System for Literature Ireland</h1>
+                <h1 align="center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid">
 

@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>Grant Application System - File Upload</title>
+         <title>Translation Grant Application System - File Upload</title>
 
         <!-- Bootstrap -->
 
