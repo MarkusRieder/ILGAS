@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -70,7 +71,7 @@ public class GrantApplicationDAO {
                     application.setApplicationYear(res.getString(2));
                     application.setApplicationNumber(res.getInt(3));
                     application.setCompany(res.getString(4));
-                    application.setPublisherID(res.getString(5));
+                    application.setPublisherID(res.getInt(5));
                     application.setUserID(res.getString(6));
                     application.setAgreement(res.getString(7));
                     application.setAgreementDocName(res.getString(8));
@@ -185,7 +186,7 @@ public class GrantApplicationDAO {
             ps1.setString(2, yearInString);
             ps1.setInt(3, ApplicationNumber);
             ps1.setString(4, application.getCompany());
-            ps1.setString(5, application.getPublisherID());
+            ps1.setInt(5, application.getPublisherID());
             ps1.setString(6, application.getUserID());
             ps1.setString(7, application.getAgreement());
             ps1.setString(8, application.getContract());
@@ -229,6 +230,66 @@ public class GrantApplicationDAO {
 
         System.out.println("GrantApplicationDAO ApplicationNumber:1:   " + ApplicationNumber);
         return ReferenceNumber;
+    }
+
+    public static int insertAuthors(String ReferenceNumber, String Name, String FirstName, String LastName) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        int id = 0;
+        int idAuthor = 0;
+        ResultSet res = null;
+
+        try {
+
+            //check if Author exists
+            idAuthor = ifAuthorexist(Name);
+
+            //if not insert the new Author
+            if (idAuthor == 0) {
+                // ID, Name, FirstName, Space, LastName, DateOfBirth, Biography
+                idAuthor = insertNewAuthor(Name, FirstName, LastName);
+
+                System.out.println(">>>>>>>>>>>>. Author: " + Name + " idAuthor: " + idAuthor);
+
+            }
+            // then:
+            //got idAuthor now insert into Application_Author         
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("INSERT INTO  Application_Author"
+                    + "(ReferenceNumber,\n"
+                    + "idAuthor) values (?,?)");
+
+            ps1.setString(1, ReferenceNumber);
+            ps1.setInt(2, idAuthor);
+
+            ps1.executeUpdate();
+
+            ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+            res = ps2.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    id = res.getInt(1);
+                    System.out.println("GrantApplicationDAO id::   " + id);
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, ps2, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, ps2, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
     }
 
     //updateApplication
@@ -280,7 +341,7 @@ public class GrantApplicationDAO {
             ps1.setString(2, application.getApplicationYear());
             ps1.setInt(3, application.getApplicationNumber());
             ps1.setString(4, application.getCompany());
-            ps1.setString(5, application.getPublisherID());
+            ps1.setInt(5, application.getPublisherID());
             ps1.setString(6, application.getUserID());
             ps1.setString(7, application.getAgreement());
             ps1.setString(8, application.getContract());
@@ -442,14 +503,14 @@ public class GrantApplicationDAO {
             while (res.next()) {
                 GrantApplication application = new GrantApplication();
 
-                application.setApplicationNumber(res.getInt(1)); 
+                application.setApplicationNumber(res.getInt(1));
                 System.out.println("GrantApplicationDAO :: getAllApplications   ApplicationNumber:  " + res.getInt(1));
                 application.setApplicationYear(res.getString(2));
                 System.out.println("GrantApplicationDAO :: getAllApplications   ApplicationYear:  " + res.getString(2));
-                application.setReferenceNumber(res.getString(3));  
+                application.setReferenceNumber(res.getString(3));
                 System.out.println("GrantApplicationDAO :: getAllApplications   ReferenceNumber:  " + res.getString(3));
                 application.setCompany(res.getString(4));
-                application.setPublisherID(res.getString(5));
+                application.setPublisherID(res.getInt(5));
                 application.setUserID(res.getString(6));
                 application.setAgreement(res.getString(7));
                 application.setAgreementDocName(res.getString(8));
@@ -575,5 +636,83 @@ public class GrantApplicationDAO {
 
         System.out.println("getNextApplicationNumber::  " + nextApplicationNumber);
         return nextApplicationNumber;
+    }
+
+    public static int ifAuthorexist(String AuthorName) throws DBException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        int authorId = 0;
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement("SELECT ID FROM A_Author WHERE Name = ?");
+            ps.setString(1, AuthorName);
+            res = ps.executeQuery();
+            if (res != null) {
+                while (res.next()) {
+                    authorId = res.getInt(1);
+                }
+            }
+            DBConn.close(conn, ps, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("3 Excepion while accessing database");
+        }
+
+        return authorId;
+    }
+
+    public static int insertNewAuthor(String FullName, String FirstName, String LastName) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+
+        ResultSet res = null;
+
+        int authorId = 0;
+
+        try {
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            String sql = "INSERT INTO  A_Author (Name, FirstName, LastName) values (?,?,?)";
+
+            ps1 = conn.prepareStatement(sql);
+
+            ps1.setString(1, FullName);
+            ps1.setString(2, FirstName);
+            ps1.setString(3, LastName);
+
+            ps1.executeUpdate();
+
+            System.out.println("Name  " + FullName + ", FirstName  " + FirstName + ", LastName  " + LastName);
+
+            ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+            res = ps2.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    authorId = res.getInt(1);
+                    System.out.println("GrantApplicationDAO insertNewAuthor  id::   " + authorId);
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, ps2, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, ps2, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return authorId;
     }
 }

@@ -399,7 +399,7 @@ public class ApplicationDAO {
                     application.setApplicationYear(res.getString("ApplicationYear"));
                     application.setReferenceNumber(res.getString("ReferenceNumber"));
                     application.setCompany(res.getString("company"));
-                    application.setPublisherID(res.getString("publisherID"));
+                    application.setPublisherID(res.getInt("publisherID"));
                     application.setUserID(res.getString("userID"));
                     application.setAgreement(res.getString("agreement"));
                     application.setAgreementDocName(res.getString("agreementDocName"));

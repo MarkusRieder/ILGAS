@@ -1,0 +1,10 @@
+DEBUG   2017-06-20 21:07:43,398 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-20 21:11:26,079 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-22 14:05:34,749 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-22 14:19:06,034 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-22 19:34:48,743 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-23 10:22:05,223 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
+DEBUG   2017-06-23 10:24:51,161 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
+DEBUG   2017-06-23 10:36:02,368 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
+DEBUG   2017-06-23 11:01:44,036 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
+DEBUG   2017-06-23 12:53:03,134 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1

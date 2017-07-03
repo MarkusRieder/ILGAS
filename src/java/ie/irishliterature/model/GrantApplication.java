@@ -13,7 +13,7 @@ public class GrantApplication {
 
     private String company;
 
-    private String publisherID;
+    private int publisherID;
 
     private String userID;
 
@@ -100,14 +100,14 @@ public class GrantApplication {
     /**
      * @return the publisherID
      */
-    public String getPublisherID() {
+    public int getPublisherID() {
         return publisherID;
     }
 
     /**
      * @param publisherID the publisherID to set
      */
-    public void setPublisherID(String publisherID) {
+    public void setPublisherID(int publisherID) {
         this.publisherID = publisherID;
     }
 

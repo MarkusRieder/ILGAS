@@ -26,7 +26,7 @@ public class Publisher {
     private String id;
     private String value;
     private String Company;
-    private String Company_Number;
+    private int Company_Number;
     private String Address1;
     private String Address2;
     private String Address3;
@@ -37,6 +37,7 @@ public class Publisher {
     private String CountryCode;
     private String Telephone;
     private String Fax;
+    private String Email;
     private String WWW;
     private String DoNotMail;
     private String Bursaries;
@@ -45,7 +46,7 @@ public class Publisher {
     private String DateModified;
     private String Notes;
     private String Status;
-
+    private java.sql.Timestamp LASTUPDATED;
 
     /**
      * @return the id
@@ -92,14 +93,14 @@ public class Publisher {
     /**
      * @return the Company_Number
      */
-    public String getCompany_Number() {
+    public int getCompany_Number() {
         return Company_Number;
     }
 
     /**
      * @param Company_Number the Company_Number to set
      */
-    public void setCompany_Number(String Company_Number) {
+    public void setCompany_Number(int Company_Number) {
         this.Company_Number = Company_Number;
     }
 
@@ -324,8 +325,8 @@ public class Publisher {
      * @param DateModified the DateModified to set
      */
     public void setDateModified(String DateModified) {
-        
-         this.DateModified = DateModified;
+
+        this.DateModified = DateModified;
 
 //        try {
 //            SimpleDateFormat sourceFormat = new SimpleDateFormat("yy.MM.dd");
@@ -370,5 +371,33 @@ public class Publisher {
      */
     public void setStatus(String Status) {
         this.Status = Status;
+    }
+
+    /**
+     * @return the Email
+     */
+    public String getEmail() {
+        return Email;
+    }
+
+    /**
+     * @param Email the Email to set
+     */
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+
+    /**
+     * @return the LASTUPDATED
+     */
+    public java.sql.Timestamp getLASTUPDATED() {
+        return LASTUPDATED;
+    }
+
+    /**
+     * @param LASTUPDATED the LASTUPDATED to set
+     */
+    public void setLASTUPDATED(java.sql.Timestamp LASTUPDATED) {
+        this.LASTUPDATED = LASTUPDATED;
     }
 }

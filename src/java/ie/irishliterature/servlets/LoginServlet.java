@@ -59,24 +59,24 @@ public class LoginServlet extends HttpServlet {
 
         boolean isValidUser = Boolean.parseBoolean(replied[0]);
 
-        String role = replied[1];
-        String function = replied[2];
-        String firstname = replied[3];
-        String lastname = replied[4];
-        String name = replied[5];
-        String email = replied[6];
-        int userID = Integer.parseInt(replied[7]);
-
-        request.setAttribute("username", username);
-        request.setAttribute("password", password);
-        request.setAttribute("firstname", firstname);
-        request.setAttribute("lastname", lastname);
-        request.setAttribute("email", email);
-        request.setAttribute("userID", userID);
-
-        System.out.println("reply " + Arrays.toString(replied));
-
         if (isValidUser) {
+
+            String role = replied[1];
+            String function = replied[2];
+            String firstname = replied[3];
+            String lastname = replied[4];
+            String name = replied[5];
+            String email = replied[6];
+            int userID = Integer.parseInt(replied[7]);
+
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
+            request.setAttribute("firstname", firstname);
+            request.setAttribute("lastname", lastname);
+            request.setAttribute("email", email);
+            request.setAttribute("userID", userID);
+
+            System.out.println("reply " + Arrays.toString(replied));
 
             System.out.println("Heelllllooooooooooooooooooo");
             System.out.println("role: " + role);

@@ -1,10 +1,12 @@
 package ie.irishliterature.servlets;
 
+import static ie.irishliterature.dao.ACpublisherDAO_test.updatePublisher;
 import ie.irishliterature.dao.GrantApplicationDAO;
-import ie.irishliterature.db.DBException;
+import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.model.Library;
 import ie.irishliterature.model.Publisher;
+import static ie.irishliterature.dao.LibraryDAO.insertBook;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ import java.text.ParseException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import ie.irishliterature.db.DBException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import static javax.xml.bind.DatatypeConverter.parseInteger;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -58,10 +59,10 @@ public class GrantApplicationServlet extends HttpServlet {
     private int ApplicationNumber = 0;
     private String ReferenceNumber;
     private String company;
-    private String publisherID;
+    private int publisherID;
     private String userID;
-    private String agreement;
-    private String contract;
+    private String agreement; // path to file
+    private String contract;  // path to file
     private String proposedDateOfPublication;
     private String proposedDateOfPrintRun;
     private String plannedPageExtent;
@@ -72,7 +73,7 @@ public class GrantApplicationServlet extends HttpServlet {
     private String Notes;
     private String copySent;
     private String dateCopiesWereSent;
-    private String copiesTranslationSample;
+    private String copiesTranslationSample;  // path to file
     private String TCACCEPTED;
     private String ieAPPROVED;
     private String Status;
@@ -92,11 +93,19 @@ public class GrantApplicationServlet extends HttpServlet {
     private String Address2;
     private String Address3;
     private String Address4;
-    private String City;
     private String postCode;
-    private String Email;
+    private String City;
+    private String country;
+    private String countryCode;
     private String Telephone;
+    private String Email;
     private String Fax;
+    private String WWW;
+    private String DoNotMail;
+    private String Bursaries;
+    private String Founded;
+    private String NumberOfTitles;
+    private String DateModified;
 
     ////////////////////////////////////////////////////////////////////////////
     ///
@@ -107,7 +116,7 @@ public class GrantApplicationServlet extends HttpServlet {
 
     private String referenceNumber;
 
-    private String Author;
+    private ArrayList Author;
 
     private String writerType;  // options Author, Editor, Translator
 
@@ -125,7 +134,7 @@ public class GrantApplicationServlet extends HttpServlet {
 
     private String translationPublisherYear;
 
-    private String Translator;
+    private ArrayList Translator;
 
     private String Language;
 
@@ -148,8 +157,8 @@ public class GrantApplicationServlet extends HttpServlet {
     ///  For Irish Literature Staff
     ///
     ////////////////////////////////////////////////////////////////////////////
-    private String TranslatorTrackRecord;  //Array of Autho/Title
-    private String Cover;
+    private String TranslatorTrackRecord;  //Array of Author/Title
+    private String Cover;                   // path to file
     private String Sample_Sent_out; //  Date
     private String Sample_Returned; //  Date
     private String Reader_Report;
@@ -176,32 +185,37 @@ public class GrantApplicationServlet extends HttpServlet {
     private String Press_cuttings;  //  boolean
     private String Sales_figures;
     private String Anthology; //Array of Author/Title
+    private String[] authorArray;  //Array of Author/Title
 
     public void init() {
 
         // Get the file location where it would be stored.
         tempPath = "/home/markus/test/tempDir";
         rootPath = "/home/markus/public_html/test";
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String task = "Open New Application";
-        // task = request.getParameter("task");
 
+//        String[] authorArray;
+        // task = request.getParameter("task");
         System.out.println("task:: " + task);
         switch (task) {
             case "Open New Application":
                 Status = "new";
-
+                String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                 Calendar now = Calendar.getInstance();
                 int year = now.get(Calendar.YEAR);
                 String yearInString = String.valueOf(year);
 
-                String[] fileNames = new String[4];
-                String[] justFiles = new String[4];
-                String[] tpe = {"Agreement", "Contract", "Translator_CV", "TranslationSample"};
+                java.sql.Timestamp timestamp = getcurrentTimeStamp();
+
+                String[] fileNames = new String[5];
+                String[] justFiles = new String[5];
+                String[] tpe = {"Cover", "Agreement", "Contract", "Translator_CV", "TranslationSample"};
                 String message = "";
 
                 int z = 0;
@@ -236,7 +250,7 @@ public class GrantApplicationServlet extends HttpServlet {
                     // Create a new file upload handler
                     ServletFileUpload upload = new ServletFileUpload(factory);
                     // maximum file size to be uploaded.
-                    upload.setSizeMax(maxFileSize);
+                    //  upload.setSizeMax(maxFileSize);
 
                     // Parse the request to get file items.
                     List<FileItem> items = null;
@@ -253,11 +267,14 @@ public class GrantApplicationServlet extends HttpServlet {
                             //collect all data input from input fileds
                             String fieldname = item.getFieldName();
                             String fieldvalue = item.getString();
+                            System.out.println("fieldname :: " + fieldname + " fieldvalue " + fieldvalue);
 
                             switch (fieldname) {
                                 case "Company":
                                     company = fieldvalue;
-                                    System.out.println("fieldname Company:: " + company);
+                                    break;
+                                case "Company_Number":
+                                    publisherID = Integer.parseInt(fieldvalue);
                                     break;
                                 case "firstname":
                                     firstname = fieldvalue;
@@ -283,6 +300,12 @@ public class GrantApplicationServlet extends HttpServlet {
                                 case "postCode":
                                     postCode = fieldvalue;
                                     break;
+                                case "Country":
+                                    country = fieldvalue;
+                                    break;
+                                case "Country_Code":
+                                    countryCode = fieldvalue;
+                                    break;
                                 case "Email":
                                     Email = fieldvalue;
                                     break;
@@ -292,6 +315,24 @@ public class GrantApplicationServlet extends HttpServlet {
                                 case "Fax":
                                     Fax = fieldvalue;
                                     break;
+                                case "WWW":
+                                    WWW = fieldvalue;
+                                    break;
+                                case "doNotMail":
+                                    DoNotMail = fieldvalue;
+                                    break;
+                                case "Bursaries":
+                                    Bursaries = fieldvalue;
+                                    break;
+                                case "Founded":
+                                    Founded = fieldvalue;
+                                    break;
+                                case "NumberOfTitles":
+                                    NumberOfTitles = fieldvalue;
+                                    break;
+                                case "Notes":
+                                    Notes = fieldvalue;
+                                    break;
                                 case "destination":
                                     Type = fieldvalue;
                                     break;
@@ -299,7 +340,7 @@ public class GrantApplicationServlet extends HttpServlet {
                                     userID = fieldvalue;
                                     break;
                                 case "publisherID":
-                                    publisherID = fieldvalue;
+                                    publisherID = Integer.parseInt(fieldvalue);
                                     break;
                                 case "proposedDateOfPublication":
                                     proposedDateOfPublication = fieldvalue;
@@ -319,9 +360,9 @@ public class GrantApplicationServlet extends HttpServlet {
                                 case "translatorFee":
                                     translatorFee = fieldvalue;
                                     break;
-                                case "Notes":
-                                    Notes = fieldvalue;
-                                    break;
+//                                case "Notes":
+//                                    Notes = fieldvalue;
+//                                    break;
                                 case "copiesSent":
                                     copySent = fieldvalue;
                                     if ("ticked".equals(copySent)) {
@@ -349,6 +390,13 @@ public class GrantApplicationServlet extends HttpServlet {
                                         APPROVED = 0;
                                     }
                                     break;
+                                case "authorArray":
+
+                                    authorArray = fieldvalue.split(","); //split string by ,
+                                    for (String individualValue : authorArray) {
+                                        System.out.println("authorArray  GrantApplicationServlet:: " + individualValue);
+                                    }
+
                             } // end switch
 
                         } else {
@@ -448,18 +496,48 @@ public class GrantApplicationServlet extends HttpServlet {
 
                     try {
 
+                        //ReferenceNumber = ApplicationNumber + "/" + yearInString;
                         ReferenceNumber = GrantApplicationDAO.insertRow(application);
 
-                        int iend = ReferenceNumber.indexOf("/"); //this finds the first occurrence of "/" 
+                        //ReferenceNumber contains ApplicationNumber seperated by a "/"
+                        //find the first occurrence of "/" 
+                        int iend = ReferenceNumber.indexOf("/");
 
+                        //get ApplicationNumber from ReferenceNumber
                         if (iend != -1) {
                             ApplicationNumber = Integer.parseInt(ReferenceNumber.substring(0, iend));
                         }
 
-                        System.out.println("GrantApplicationServlet:402:: ApplicationNumber:  " + ApplicationNumber);
+                        String[] processingArray = new String[3];
 
-//                        ReferenceNumber = ApplicationNumber + "/" + yearInString;
-                        System.out.println("GrantApplicationServlet: 406:: ReferenceNumber:  " + ReferenceNumber);
+                        //convert processingArray to ArrayList Author
+                        Author = new ArrayList<>(Arrays.asList(processingArray));
+
+                        int idx = 0;
+
+                        //loop through the Authors and insert each into A_Author
+                        for (String individualValue : authorArray) {
+
+                            String AuthorName = individualValue;
+                            processingArray[idx] = AuthorName;
+
+                            //when we have a complete set (FullName, FirstName, LastName) 
+                            if (idx == processingArray.length - 1) {
+
+                                //set the variables and
+                                String Name = processingArray[0];
+                                String FirstName = processingArray[1];
+                                String LastName = processingArray[2];
+
+                                // insert them into the tables A_Author
+                                GrantApplicationDAO.insertAuthors(ReferenceNumber, Name, FirstName, LastName);
+
+                                //reset index 
+                                idx = -1;
+                            }
+
+                            idx++;
+                        }
 
                     } catch (DBException ex) {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -471,31 +549,100 @@ public class GrantApplicationServlet extends HttpServlet {
 
                 // Update new publisher
                 Publisher publisher = new Publisher();
+//   String sql = "UPDATE international_publishers SET Company = ?, Company_Number = ? ,Address1 = ? ,Address2 = ? ,Address3 = ? ,
+                //Address4 = ? ,postCode = ? ,City = ? ,Country = ? ,CountryCode = ? ,Telephone = ? ,Fax = ? ,WWW = ? ,DoNotMail = ? ,
+                //Bursaries = ?,Founded = ? ,NumberOfTitles = ? ,DateModified = ? ,Notes = ?";
 
-//        updatePublisher(Publisher publisher, int Company_Number) 
-//        publisher.setFIRST_NAME(firstname);
-//        publisher.setLAST_NAME(firstname);
+                publisher.setCompany(company);
+                publisher.setCompany_Number(publisherID);
                 publisher.setAddress1(Address1);
                 publisher.setAddress2(Address2);
                 publisher.setAddress3(Address3);
                 publisher.setAddress4(Address4);
-                publisher.setCity(City);
                 publisher.setPostCode(postCode);
-//        publisher.s(Email);
+                publisher.setCity(City);
+                publisher.setCountry(country);
+                publisher.setCountryCode(countryCode);
                 publisher.setTelephone(Telephone);
+                publisher.setEmail(Email);
                 publisher.setFax(Fax);
-//    private String postCode;
-//    private String Email;
-//    private String Telephone;
-//    private String Fax;
-                //    private String DateModified;
+                publisher.setWWW(WWW);
+
+                String doNotMail;
+
+                if ("true".equals(DoNotMail)) {
+                    doNotMail = "1";
+                } else {
+                    doNotMail = "0";
+                }
+
+                publisher.setDoNotMail(doNotMail);
+
+                String bursaries;
+
+                if ("true".equals(Bursaries)) {
+                    bursaries = "1";
+                } else {
+                    bursaries = "0";
+                }
+
+                publisher.setBursaries(bursaries);
+                publisher.setFounded(Founded);
+                publisher.setNumberOfTitles(NumberOfTitles);
+
+                publisher.setDateModified(timeStamp);
+                publisher.setNotes(Notes);
+                publisher.setStatus("");
+
+                 {
+                    try {
+                        updatePublisher(publisher, publisherID);
+                    } catch (DBException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
 
                 // Update library
                 Library library = new Library();
 
+//bookID, referenceNumber, Author, Title, Publisher, publishingYear, Genre, translationTitle, translationPublisher, translationPublisherYear, 
+//Translator, Language, Cover, CoverName, physicalDescription, Duplicates, Copies, Notes, ISBN, ISSN
+                library.setBookID(bookID);
+                library.setReferenceNumber(ReferenceNumber);
+
+
+                String fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                System.out.println(fn);
+                library.setCover(fn);
+                System.out.println("fileNames[0]:: " + fileNames[0]);
+                library.setCoverName(justFiles[0]);
+                System.out.println("justFiles[0]:: " + justFiles[0]);
+
+                library.setTitle(Title);
+                library.setPublisheryear(Publisheryear);
+                library.setGenre(Genre);
+                library.setTranslationTitle(translationTitle);
+                library.setTranslationPublisherYear(translationPublisherYear);
+                library.setPhysicalDescription(physicalDescription);
+                library.setDuplicates(Duplicates);
+                library.setCopies(Copies);
+                library.setNotes(Notes);
+                library.setISBN(ISBN);
+                library.setISSN(ISSN);
+                library.setLASTUPDATED(timestamp);
+
+                 {
+                    try {
+                        insertBook(library);
+                    } catch (DBException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                // Update  GrantApplication to contain the filePaths
                 // path = path + File.separator + yearInString + File.separator + Company + File.separator + Type + ApplicationNumber;
                 // upload to temp dir then move to final directory
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 5; i++) {
                     final String destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator + ApplicationNumber + File.separator + tpe[i] + File.separator;
 
                     // create final directory if it does not exist
@@ -511,32 +658,37 @@ public class GrantApplicationServlet extends HttpServlet {
                     FileUtils.moveFileToDirectory(sourceFile, destinationDir, true);
 
                     fileNames[i] = destinationDirectory + justFiles[i];
+
+                    System.out.println("fileNames[" + i + "]  :: " + fileNames[i]);
                 }
 
                 //Update  GrantApplication to contain the filePaths
                 GrantApplication application = new GrantApplication();
 
-                String fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                fn = fileNames[1].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 System.out.println(fn);
                 application.setAgreement(fn);
-                System.out.println("fileNames[0]:: " + fileNames[0]);
-                application.setAgreementDocName(justFiles[0]);
-                System.out.println("justFiles[0]:: " + justFiles[0]);
-                fn = fileNames[1].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setContract(fn);
                 System.out.println("fileNames[1]:: " + fileNames[1]);
-                application.setContractDocName(justFiles[1]);
+                application.setAgreementDocName(justFiles[1]);
                 System.out.println("justFiles[1]:: " + justFiles[1]);
+
                 fn = fileNames[2].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setTranslatorCV(fn);
+                application.setContract(fn);
                 System.out.println("fileNames[2]:: " + fileNames[2]);
-                application.setTranslatorCVDocName(justFiles[2]);
+                application.setContractDocName(justFiles[2]);
                 System.out.println("justFiles[2]:: " + justFiles[2]);
+
                 fn = fileNames[3].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setCopiesTranslationSample(fn);
+                application.setTranslatorCV(fn);
                 System.out.println("fileNames[3]:: " + fileNames[3]);
-                application.setCopiesTranslationSampleDocName(justFiles[3]);
+                application.setTranslatorCVDocName(justFiles[3]);
                 System.out.println("justFiles[3]:: " + justFiles[3]);
+
+                fn = fileNames[4].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                application.setCopiesTranslationSample(fn);
+                System.out.println("fileNames[4]:: " + fileNames[4]);
+                application.setCopiesTranslationSampleDocName(justFiles[4]);
+                System.out.println("justFiles[4]:: " + justFiles[4]);
 
                 application.setApplicationNumber(ApplicationNumber);
                 application.setReferenceNumber(ReferenceNumber);
@@ -560,16 +712,6 @@ public class GrantApplicationServlet extends HttpServlet {
 
             case "Pending Applications":
                 request.getRequestDispatcher("/WEB-INF/views/pendingApplications.jsp").forward(request, response);
-//                try {
-//                    List<GrantApplication> rows = listAllApplications();
-//                    //request.getSession().setAttribute("rows", rows);
-//                    request.setAttribute("rows", rows);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    System.out.print("servlet");
-//                }
-//                request.getRequestDispatcher("pendingApplications.jsp").forward(request, response);
                 break;
 
             case "Closed Applications":
@@ -594,4 +736,5 @@ public class GrantApplicationServlet extends HttpServlet {
         return date;
 
     }
+
 }

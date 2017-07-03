@@ -22,16 +22,16 @@ import ie.irishliterature.dao.ACCGenreDAO;
 /**
  *
  * @author markus
+ *
+ * AC for AutoComplete
  */
-
 @WebServlet(urlPatterns = "/ACGenre")
 public class ACGenre extends HttpServlet {
 
-  
     private static final long serialVersionUID = 1L;
 
     public ACGenre() {
-        
+
         super();
 
     }
@@ -41,24 +41,25 @@ public class ACGenre extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String text = request.getParameter("term");
-        
-        System.out.println("term:: " + text );
-        
-        ACCGenreDAO genreDAO  = new ACCGenreDAO();
-        
+
+        System.out.println("term:: " + text);
+
+        ACCGenreDAO genreDAO = new ACCGenreDAO();
+
         try {
-            
+
             ArrayList<ACgenre> genres = genreDAO.getGenre(text);
-            
+
             genres.stream().map((genre) -> {
-             //  System.out.println(genre.getValue());
+                //  System.out.println(genre.getValue());
                 return genre;
             }).forEachOrdered((ACgenre genre) -> {
-          //      System.out.println(country.getId());
+                //      System.out.println(country.getId());
             });
 
             String searchResult = new Gson().toJson(genres);
             response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
             PrintWriter writer = response.getWriter();
             writer.write(searchResult);
 

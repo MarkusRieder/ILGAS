@@ -51,26 +51,29 @@ public class LibraryDAO {
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
 
-            ps1 = conn.prepareStatement("INSERT INTO library ( bookID , referenceNumber , Author , Title , Publisher , publishingYear , Genre , translationTitle , translationPublisher , translationPublisherYear , Translator , Language , physicalDescription , Duplicates , Copies , Notes , ISBN , ISSN ) VALUES( ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?)");
+            ps1 = conn.prepareStatement("INSERT INTO library ( referenceNumber, Title, Publisher, publishingYear, Genre, "
+                    + "translationTitle, translationPublisher, translationPublisherYear, Language, Cover, CoverName, physicalDescription, "
+                    + "Duplicates, Copies, Notes, ISBN, ISSN, LASTUPDATED) "
+                    + "VALUES( ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?, ?, ?)");
 
-            ps1.setInt(1, library.getBookID());
-            ps1.setString(2, library.getReferenceNumber());
-            ps1.setString(3, library.getAuthor());
-            ps1.setString(4, library.getTitle());
-            ps1.setString(5, library.getPublisher());
-            ps1.setString(6, library.getPublishingYear());
-            ps1.setString(7, library.getGenre());
-            ps1.setString(8, library.getTranslationTitle());
-            ps1.setString(9, library.getTranslationPublisher());
-            ps1.setString(10, library.getPublishingYear());
-            ps1.setString(11, library.getTranslator());
-            ps1.setString(12, library.getLanguage());
-            ps1.setString(13, library.getPhysicalDescription());
-            ps1.setInt(14, library.getDuplicates());
-            ps1.setString(15, library.getCopies());
-            ps1.setString(16, library.getNotes());
-            ps1.setString(17, library.getISBN());
-            ps1.setString(18, library.getISSN());
+            ps1.setString(1, library.getReferenceNumber());
+            ps1.setString(2, library.getTitle());
+            ps1.setString(3, library.getPublisher());
+            ps1.setString(4, library.getPublisheryear());
+            ps1.setString(5, library.getGenre());
+            ps1.setString(6, library.getTranslationTitle());
+            ps1.setString(7, library.getTranslationPublisher());
+            ps1.setString(8, library.getTranslationPublisherYear());
+            ps1.setString(9, library.getLanguage());
+            ps1.setString(10, library.getCover());
+            ps1.setString(11, library.getCoverName());
+            ps1.setString(12, library.getPhysicalDescription());
+            ps1.setInt(13, library.getDuplicates());
+            ps1.setString(14, library.getCopies());
+            ps1.setString(15, library.getNotes());
+            ps1.setString(16, library.getISBN());
+            ps1.setString(17, library.getISSN());
+            ps1.setTimestamp(18, library.getLASTUPDATED());
 
             ps1.executeUpdate();
 
@@ -93,7 +96,34 @@ public class LibraryDAO {
             e.printStackTrace();
             throw new DBException("4 Excepion while accessing database");
         }
-        System.out.println(" insertBook id: " + id);
+
+       // add Arrays to Application_Author / Application_Translator System 
+
+        // reset variables
+//        conn = null;
+//        ps1 = null;
+//        ps2 = null;
+//        res = null;
+// 
+//        try {
+//
+//            ps1 = conn.prepareStatement("INSERT INTO Application_Author (ReferenceNumber, idAuthor) VALUES( ?,  ?)");
+//
+//            ps1.setInt(1, library.getBookID());
+//            ps1.setString(2, library.getReferenceNumber());
+////            ps1.setString(3, library.getAuthor());
+//
+//            conn = DBConn.getConnection();
+//            conn.setAutoCommit(false);
+//
+//            conn.commit();
+//            DBConn.close(conn, ps1, ps2, res);
+//
+//        } catch (ClassNotFoundException | SQLException e) {
+//            DBConn.close(conn, ps1, ps2, res);
+//            e.printStackTrace();
+//            throw new DBException("4 Excepion while accessing database");
+//        }
 
         return id;
     }
@@ -119,15 +149,15 @@ public class LibraryDAO {
 
                 library.setBookID(rs.getInt("bookID"));
                 library.setReferenceNumber(rs.getString("referenceNumber"));
-                library.setAuthor(rs.getString("Author"));
+//                library.setAuthor(rs.getString("Author"));
                 library.setTitle(rs.getString("Title"));
                 library.setPublisher(rs.getString("Publisher"));
-                library.setPublishingYear(rs.getString("publishingYear"));
+                library.setPublisheryear(rs.getString("publishingYear"));
                 library.setGenre(rs.getString("Genre"));
                 library.setTranslationTitle(rs.getString("translationTitle"));
                 library.setTranslationPublisher(rs.getString("translationPublisher"));
                 library.setTranslationPublisherYear(rs.getString("translationPublisherYear"));
-                library.setTranslator(rs.getString("Translator"));
+//                library.setTranslator(rs.getString("Translator"));
                 library.setLanguage(rs.getString("Language"));
                 library.setPhysicalDescription(rs.getString("physicalDescription"));
                 library.setDuplicates(rs.getInt("Duplicates"));
@@ -151,8 +181,8 @@ public class LibraryDAO {
 
         return listLibrary;
     }
-
     //updateLibrary
+
     public static boolean updateLibrary(Library library, int bookID) throws DBException {
 
         Connection conn = null;
@@ -177,15 +207,15 @@ public class LibraryDAO {
 
             ps1.setInt(1, library.getBookID());
             ps1.setString(2, library.getReferenceNumber());
-            ps1.setString(3, library.getAuthor());
+//            ps1.setString(3, library.getAuthor());
             ps1.setString(4, library.getTitle());
             ps1.setString(5, library.getPublisher());
-            ps1.setString(6, library.getPublishingYear());
+            ps1.setString(6, library.getPublisheryear());
             ps1.setString(7, library.getGenre());
             ps1.setString(8, library.getTranslationTitle());
             ps1.setString(9, library.getTranslationPublisher());
-            ps1.setString(10, library.getPublishingYear());
-            ps1.setString(11, library.getTranslator());
+            ps1.setString(10, library.getTranslationPublisherYear());
+//            ps1.setString(11, library.getTranslator());
             ps1.setString(12, library.getLanguage());
             ps1.setString(13, library.getPhysicalDescription());
             ps1.setInt(14, library.getDuplicates());
@@ -260,15 +290,15 @@ public class LibraryDAO {
 
                     library.setBookID(res.getInt("BookID"));
                     library.setReferenceNumber(res.getString("referenceNumber"));
-                    library.setAuthor(res.getString("Author"));
+//                    library.setAuthor(res.getString("Author"));
                     library.setTitle(res.getString("Title"));
 //                library.setPublisher(res.getString("Publisher"));
-                    library.setPublishingYear(res.getString("Publisheryear"));
+                    library.setPublisheryear(res.getString("Publisheryear"));
                     library.setGenre(res.getString("Genre"));
                     library.setTranslationTitle(res.getString("translationTitle"));
 //                library.setTranslationPublisher(res.getString("translationPublisher"));
                     library.setTranslationPublisherYear(res.getString("translationPublisherYear"));
-                    library.setTranslator(res.getString("Translator"));
+//                    library.setTranslator(res.getString("Translator"));
                     library.setLanguage(res.getString("Language"));
                     library.setPhysicalDescription(res.getString("physicalDescription"));
                     library.setDuplicates(res.getInt("Duplicates"));

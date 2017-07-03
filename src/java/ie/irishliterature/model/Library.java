@@ -1,5 +1,7 @@
 package ie.irishliterature.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author markus
@@ -7,40 +9,46 @@ package ie.irishliterature.model;
 public class Library {
 
     private int bookID;
-    
+
     private String referenceNumber;
 
-    private String Author;
-    
+    private ArrayList<ACauthor> Author;
+
     private String Title;
 
     private String Publisher;
-    
+
     private String Publisheryear;
 
     private String Genre;
-    
+
     private String translationTitle;
 
     private String translationPublisher;
-    
+
     private String translationPublisherYear;
 
-    private String Translator;
-    
+    private ArrayList<ACtranslator> Translator;
+
     private String Language;
 
     private String physicalDescription;
-    
+
+    private String cover;//path + filename
+
+    private String coverName; //filename
+
     private int Duplicates;
 
     private String Copies;
-    
+
     private String Notes;
 
     private String ISBN;
-    
+
     private String ISSN;
+
+    private java.sql.Timestamp LASTUPDATED;
 
     /**
      * @return the bookID
@@ -73,14 +81,14 @@ public class Library {
     /**
      * @return the Author
      */
-    public String getAuthor() {
+    public ArrayList<ACauthor> getAuthor() {
         return Author;
     }
 
     /**
      * @param Author the Author to set
      */
-    public void setAuthor(String Author) {
+    public void setAuthor(ArrayList<ACauthor> Author) {
         this.Author = Author;
     }
 
@@ -113,16 +121,16 @@ public class Library {
     }
 
     /**
-     * @return the publishingYear
+     * @return the Publisheryear
      */
-    public String getPublishingYear() {
+    public String getPublisheryear() {
         return Publisheryear;
     }
 
     /**
      * @param Publisheryear the Publisheryear to set
      */
-    public void setPublishingYear(String Publisheryear) {
+    public void setPublisheryear(String Publisheryear) {
         this.Publisheryear = Publisheryear;
     }
 
@@ -185,14 +193,14 @@ public class Library {
     /**
      * @return the Translator
      */
-    public String getTranslator() {
+    public ArrayList<ACtranslator> getTranslator() {
         return Translator;
     }
 
     /**
      * @param Translator the Translator to set
      */
-    public void setTranslator(String Translator) {
+    public void setTranslator(ArrayList<ACtranslator> Translator) {
         this.Translator = Translator;
     }
 
@@ -292,6 +300,48 @@ public class Library {
      */
     public void setISSN(String ISSN) {
         this.ISSN = ISSN;
+    }
+
+    /**
+     * @return the LASTUPDATED
+     */
+    public java.sql.Timestamp getLASTUPDATED() {
+        return LASTUPDATED;
+    }
+
+    /**
+     * @param LASTUPDATED the LASTUPDATED to set
+     */
+    public void setLASTUPDATED(java.sql.Timestamp LASTUPDATED) {
+        this.LASTUPDATED = LASTUPDATED;
+    }
+
+    /**
+     * @return the coverName
+     */
+    public String getCoverName() {
+        return coverName;
+    }
+
+    /**
+     * @param coverName the coverName to set
+     */
+    public void setCoverName(String coverName) {
+        this.coverName = coverName;
+    }
+
+    /**
+     * @return the cover
+     */
+    public String getCover() {
+        return cover;
+    }
+
+    /**
+     * @param cover the cover to set
+     */
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
 }

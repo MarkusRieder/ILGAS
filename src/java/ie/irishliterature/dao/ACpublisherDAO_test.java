@@ -5,6 +5,7 @@
  */
 package ie.irishliterature.dao;
 
+import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.Publisher;
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 /**
  *
@@ -99,7 +99,7 @@ public class ACpublisherDAO_test {
         return publisherList;
     }
 
-        //getpublisher by publisherID
+    //getpublisher by publisherID
     public static ArrayList getpublisherByID(int publisherID) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
         ArrayList publisherList = new ArrayList();
@@ -146,8 +146,7 @@ public class ACpublisherDAO_test {
 
         return publisherList;
     }
-    
-    
+
     //isPublisherExists
     public static boolean isPublisherExists(String Company) throws DBException {
         Connection conn = null;
@@ -180,14 +179,13 @@ public class ACpublisherDAO_test {
 
         return verified;
     }
-    
-     //isNewPublisher 
+
+    //isNewPublisher 
     public static boolean isNewPublisher(int Company_Number) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean newPublisher = false;
         ResultSet res = null;
-       
 
         try {
 
@@ -195,25 +193,25 @@ public class ACpublisherDAO_test {
 
             ps = conn.prepareStatement("SELECT Company, Status FROM international_publishers "
                     + "WHERE Company_Number = ?");
-            
+
             ps.setInt(1, Company_Number);
-            
+
             res = ps.executeQuery();
             if (res != null) {
                 while (res.next()) {
                     System.out.println("isPublisherNew res:   " + res.getString(1));
-                    
-                    if("new".equals(res.getString(2))){
-                    
+
+                    if ("new".equals(res.getString(2))) {
+
                         newPublisher = true;
-                        
-                    }else{
-                    
+
+                    } else {
+
                         newPublisher = false;
-                        
+
                     }
-                    
-                 System.out.println("isPublisherNew Status: try:: " + newPublisher);
+
+                    System.out.println("isPublisherNew Status: try:: " + newPublisher);
                 }
             }
 
@@ -224,7 +222,7 @@ public class ACpublisherDAO_test {
             throw new DBException("3 Excepion while accessing database");
         }
         System.out.println("return newPublisher:  " + newPublisher);
-        
+
         return newPublisher;
     }
 
@@ -240,7 +238,7 @@ public class ACpublisherDAO_test {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
-                                                        
+
             ps1 = conn.prepareStatement("INSERT INTO international_publishers (Company,Address1,Address2,Address3,Address4,postCode,City,Country,CountryCode,Telephone,Fax,WWW,DoNotMail,Bursaries,Founded,NumberOfTitles,DateModified,Notes,Status) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             ps1.setString(1, pojo.getCompany());
@@ -314,7 +312,7 @@ public class ACpublisherDAO_test {
             ps1 = conn.prepareStatement("insert into international_publishers (Company, Status) values (?,?)");
 
             ps1.setString(1, pojo.getCompany());
-            ps1.setString(2, pojo.getStatus());     
+            ps1.setString(2, pojo.getStatus());
 
             String company = pojo.getCompany();
             System.out.println("insertRudimentaryPublisher new Publisher name: " + company);
@@ -383,7 +381,7 @@ public class ACpublisherDAO_test {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ACpublisherDAO_test.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return id;
     }
 
@@ -444,7 +442,7 @@ public class ACpublisherDAO_test {
     }
 
     //deletePublisher
-    public static boolean deletePublisher(Publisher publisher) throws SQLException {
+    public static boolean deletePublisher(int Company_Number) throws SQLException {
 
         Connection conn;
         PreparedStatement ps;
@@ -458,7 +456,7 @@ public class ACpublisherDAO_test {
             String sql = "DELETE FROM publisher where Company_Number = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setString(1, publisher.getCompany_Number());
+            ps.setInt(1, Company_Number);
 
             id = ps.executeUpdate() > 0;
             ps.close();
@@ -484,35 +482,61 @@ public class ACpublisherDAO_test {
         System.out.println("doing updatePublisher::  ");
         try {
             conn = DBConn.getConnection();
-            //conn.setAutoCommit(false);
+            conn.setAutoCommit(false);
 
-            String sql = "UPDATE international_publishers SET Company = ?, Company_Number = ? ,Address1 = ? ,Address2 = ? ,Address3 = ? ,Address4 = ? ,postCode = ? ,City = ? ,Country = ? ,CountryCode = ? ,Telephone = ? ,Fax = ? ,WWW = ? ,DoNotMail = ? ,Bursaries = ?,Founded = ? ,NumberOfTitles = ? ,DateModified = ? ,Notes = ?";
+            java.sql.Timestamp timestamp = getcurrentTimeStamp();
+
+            String sql = "UPDATE international_publishers SET Company = ?, Company_Number = ? ,Address1 = ? ,Address2 = ? ,Address3 = ? ,Address4 = ? ,postCode = ? ,City = ? ,Country = ? ,CountryCode = ? ,Telephone = ? ,Fax = ? ,WWW = ? ,DoNotMail = ? ,Bursaries = ?,Founded = ? ,NumberOfTitles = ? ,DateModified = ?,Notes = ?, Status = ?";
             sql += " WHERE Company_Number = " + CompanyNumber;
 
             System.out.println("sql::  " + sql);
-            System.out.println("UserID::  " + Company_Number);
+            System.out.println("Company_Number::  " + Company_Number);
+
+            System.out.println("Company:  " + publisher.getCompany());
+            System.out.println("Company_Number:  " + CompanyNumber);
+            System.out.println("Address1:  " + publisher.getAddress1());
+            System.out.println("Address2:  " + publisher.getAddress2());
+            System.out.println("Address3:  " + publisher.getAddress3());
+            System.out.println("Address4:  " + publisher.getAddress4());
+            System.out.println("postCode:  " + publisher.getPostCode());
+            System.out.println("City:  " + publisher.getCity());
+            System.out.println("Country:  " + publisher.getCountry());
+            System.out.println("CountryCode:  " + publisher.getCountryCode());
+            System.out.println("Telephone:  " + publisher.getTelephone());
+            System.out.println("Fax:  " + publisher.getFax());
+            System.out.println("WWW:  " + publisher.getWWW());
+            System.out.println("DoNotMail:  " + publisher.getDoNotMail());
+            System.out.println("Bursaries:  " + publisher.getBursaries());
+            System.out.println("Founded:  " + publisher.getFounded());
+            System.out.println("NumberOfTitles:  " + publisher.getNumberOfTitles());
+            System.out.println("DateModified:  " + publisher.getDateModified());
+            System.out.println("Notes:  " + publisher.getNotes());
+            System.out.println("Notes:  " + publisher.getStatus());
 
             ps1 = conn.prepareStatement(sql);
 
-            ps1.setString(1, publisher.getCompany());
-            ps1.setString(2, publisher.getAddress1());
-            ps1.setString(3, publisher.getAddress2());
-            ps1.setString(4, publisher.getAddress3());
-            ps1.setString(5, publisher.getAddress4());
-            ps1.setString(6, publisher.getPostCode());
-            ps1.setString(7, publisher.getCity());
-            ps1.setString(8, publisher.getCountry());
-            ps1.setString(9, publisher.getCountryCode());
-            ps1.setString(10, publisher.getTelephone());
-            ps1.setString(11, publisher.getFax());
-            ps1.setString(12, publisher.getWWW());
-            ps1.setString(13, publisher.getDoNotMail());
-            ps1.setString(14, publisher.getBursaries());
-            ps1.setString(15, publisher.getFounded());
-            ps1.setString(16, publisher.getNumberOfTitles());
-            ps1.setString(17, publisher.getDateModified());
-            ps1.setString(18, publisher.getNotes());
-            ps1.setString(19, publisher.getStatus());
+            ps1.setString(1, publisher.getCompany());            
+            ps1.setInt(2, publisher.getCompany_Number());            
+            ps1.setString(3, publisher.getAddress1());
+            ps1.setString(4, publisher.getAddress2());
+            ps1.setString(5, publisher.getAddress3());
+            ps1.setString(6, publisher.getAddress4());
+            ps1.setString(7, publisher.getPostCode());
+            ps1.setString(8, publisher.getCity());
+            ps1.setString(9, publisher.getCountry());
+            ps1.setString(10, publisher.getCountryCode());
+            ps1.setString(11, publisher.getTelephone());
+            ps1.setString(12, publisher.getFax());
+            ps1.setString(13, publisher.getWWW());
+            ps1.setString(14, publisher.getDoNotMail());
+            ps1.setString(15, publisher.getBursaries());
+            ps1.setString(16, publisher.getFounded());
+            ps1.setString(17, publisher.getNumberOfTitles());
+            ps1.setString(18, publisher.getDateModified());
+            ps1.setString(19, publisher.getNotes());
+            ps1.setString(20, publisher.getStatus());
+
+            System.out.println("ps1::  " + ps1);
 
             committed = ps1.executeUpdate();
 

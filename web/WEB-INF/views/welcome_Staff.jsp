@@ -674,6 +674,7 @@
             textarea {
                 resize: vertical;
             }
+
         </style>
 
 
@@ -877,7 +878,6 @@
 
 
                                 <!--userModal-->
-
                                 <div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="applicationsModalLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -897,9 +897,6 @@
 
                                                 <div class="tab-content">
                                                     <div class="tab-pane active" id="page1">
-
-
-
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px">
                                                             <div class="col-sm-4">
                                                                 <label for="appReferenceNumber" class="control-label pull-left">Reference Number</label>
@@ -934,7 +931,7 @@
 
                                                         <div class="row">
                                                             <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">
-                                                                <div class="col-sm-6">                                                        
+                                                                <div class="col-sm-2">                                                        
                                                                     <input id="appAgreement"
                                                                            type="hidden"        
                                                                            class="form-control"  
@@ -944,13 +941,13 @@
 
                                                                 <a class="btn btn-info" role="button" id="agreement" >
                                                                     <span class="glyphicon glyphicon-file"></span>
-                                                                    Open Agreement</a>
+                                                                    Agreement</a>
                                                             </div>
                                                             <!--</div>-->
 
                                                             <!--<div class="row">-->
                                                             <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px">
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-2">
                                                                     <input id="appcontract" 
                                                                            type="hidden"     
                                                                            name="appcontract"  
@@ -959,13 +956,13 @@
 
                                                                 <a class="btn btn-info" role="button" id="contract" >
                                                                     <span class="glyphicon glyphicon-file"></span>
-                                                                    Open Contract</a>
+                                                                    Contract</a>
                                                             </div>
                                                             <!--</div>-->
 
                                                             <!--<div class="row">-->
                                                             <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px">
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-2">
                                                                     <input id="apptranslatorCV"
                                                                            type="hidden"                                                             
                                                                            name="apptranslatorCV"                                
@@ -973,7 +970,7 @@
                                                                 </div>
                                                                 <a class="btn btn-info" role="button" id="translatorCV" >
                                                                     <span class="glyphicon glyphicon-file"></span>
-                                                                    Open Translator <br/> CV</a>
+                                                                    Translator CV</a>
                                                             </div>
                                                         </div>
 
@@ -1088,7 +1085,7 @@
                                                                 </div>
                                                                 <a class="btn btn-info" role="button" id="copiesTranslationSample" >
                                                                     <span class="glyphicon glyphicon-file"></span>
-                                                                    Open Translation Sample</a>
+                                                                    Translation Sample</a>
                                                             </div>
                                                         </div> <!--row-->
 
@@ -1118,12 +1115,54 @@
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px">
 
-                                                            TranslatorTrackRecord;  //Array of Autho/Title
-                                                            <!--                                                    <div class="col-sm-12">
-                                                                                                                    <div>
-        
-                                                    </div>-->
+                                                            input: <input type="text" id="idTranslator" />
+                                                            
+                                                            <script>
+                                                                
+                                                                var appRef = getElementbyID("appReferenceNumber");
+                                                                
+                                                            </script>
+                                                            
+                                                     <!--<p       get Translator via ReferenceNumber !!!!!!!!!!!!-->
+                                                            
+                                                            <sql:query var="referenceNumberQuery" dataSource="jdbc/ILGAS">
+                                                                SELECT * FROM GrantApplication
+                                                                WHERE ReferenceNumber = ?
+                                                                 <sql:param value="appRef"/>
+                                                            </sql:query>
+                                                                 <c:set var="appRefDetails" value="${referenceNumberQuery.rows[0]}"/>
+<textarea id="Item" name="Item" class="form-control" style="height: 98px; line-height: 55%; white-space: pre-wrap;">
+<c:forEach items="${referenceNumberQuery.rows}" var="currentItem"  varStatus="count" >                  
+<c:out value="${count.count}.  ${currentItem.Author} : ${currentItem.Title}"/>                                                       
+</c:forEach>
+</textarea>
+                                                            <div class="col-sm-12">
+                                                                <div>
+
+                                                                    <sql:query var="translatorQuery" dataSource="jdbc/ILGAS">
+                                                                        SELECT Translator.idTranslator, Translator.Name, TranslatorTrack.Author, TranslatorTrack.Title
+
+                                                                        FROM Translator, TranslatorTrack
+
+                                                                        WHERE TranslatorTrack.idTranslator = ? AND Translator.idTranslator = ?;         
+                                                                        <sql:param value="51"/>
+                                                                        <sql:param value="51"/>
+                                                                    </sql:query>
+                                                                    <c:set var="translatorDetails" value="${translatorQuery.rows[0]}"/>
+                                                                </div>
+                                                                <div class="pull-left">
+                                                                    Track record for ${translatorDetails.Name}
+                                                                </div>
+<textarea id="currentItem" name="currentItem" class="form-control" style="height: 98px; line-height: 55%; white-space: pre-wrap;">
+<c:forEach items="${translatorQuery.rows}" var="currentItem"  varStatus="count" >                  
+<c:out value="${count.count}.  ${currentItem.Author} : ${currentItem.Title}"/>                                                       
+</c:forEach>
+</textarea>
+
+                                                            </div>
                                                         </div> <!--row-->
+
+
 
 
                                                         <div class="row" style="margin-top: 30px;margin-bottom: 10px">
@@ -1443,21 +1482,18 @@
 
 
                                                             <div class="col-sm-12">
-                                                                <label for="appNotes" class="control-label pull-left">Anthology</label>
-                                                                <textarea id="appNotes" class="form-control" name="Notes" style="height: 183px" placeholder="Anthology; //Array of Author/Title"></textarea>
+                                                                <label for="appAnthology" class="control-label pull-left">Anthology</label>
+                                                                <textarea id="appAnthology" class="form-control" name="Anthology" style="height: 183px" placeholder="Anthology; //Array of Author/Title"></textarea>
                                                             </div>
 
-                                                            <div class="col-sm-2">
-                                                                <label for="approve" style="margin-top: 7px" class="control-label pull-left"> &nbsp;</label>
-                                                                <button id="approve" type="button" class="btn btn-success">Approve</button>
-
-                                                            </div>
-
-                                                            <div class="col-sm-2">
-                                                                <label for="reject" style="margin-top: 7px" class="control-label pull-left"> &nbsp;</label>
-                                                                <button  id="reject" type="button" class="btn btn-danger">Reject</button>
-                                                            </div>
                                                         </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">  
+                                                            <button id="approve" type="button" class="btn btn-success">Approve</button>
+                                                            <button  id="withdrawn" type="button" class="btn btn-warning">Withdrawn</button>
+                                                            <button  id="reject" type="button" class="btn btn-danger">Reject</button>
+                                                            <button  id="refused" type="button" class="btn btn-danger">Refused</button>
+                                                        </div>
                                                     </div> <!--page 5-->
                                                 </div> <!--tab content-->
                                             </div><!--modal body-->
@@ -1470,6 +1506,7 @@
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
                                 <!--userModal-->
+
                             </div><!-- <div class="tab-pane fade active in" id="Application"> --> 
 
 

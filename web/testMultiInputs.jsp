@@ -867,12 +867,12 @@ a.button.yahoo:active {
 
             <div id="myContent">
 
-                <form id="samplecode" name="samplecode" method="POST" action="<%= request.getContextPath()%>/DynamicForm">                   
-                    <div class="row" style="margin-bottom: 10px">
+                <!--<form id="samplecode" name="samplecode" method="POST" action="<%= request.getContextPath()%>/DynamicForm">-->                   
+<!--                    <div class="row" style="margin-bottom: 10px">
                         <div class='col-sm-2'>
                             <strong style='margin-bottom:2px'>Translator</strong>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row" style="margin-bottom: 10px">
                         <div class='col-sm-6'>
 
@@ -919,7 +919,7 @@ a.button.yahoo:active {
                             </div> <!--modal fade-->
                         </div> <!-- col-sm-6 -->
                     </div> <!-- row -->
-                </form>
+                <!--</form>-->
             </div>
         </div>
         <div></div>

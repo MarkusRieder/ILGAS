@@ -53,6 +53,7 @@ public class ApplicationDataServlet extends HttpServlet {
                 System.out.println("ApplicationDataServlet:  ");
 
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
 

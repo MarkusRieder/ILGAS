@@ -274,8 +274,10 @@
                                                data-placement="after" 
                                                placeholder="password"
                                                >
-                                        <div class="help-block with-errors"></div>
+
                                     </div>
+
+                                    <div class="help-block with-errors"></div>
 
                                     <div style="margin-top:10px" class="form-group">
                                         <!-- Button -->
