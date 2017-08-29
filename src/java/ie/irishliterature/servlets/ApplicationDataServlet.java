@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ie.irishliterature.DataTables.DataTableApplications;
 import ie.irishliterature.dao.ApplicationDAO;
+import static ie.irishliterature.dao.ApplicationDAO.getTranslatorTrack;
 import ie.irishliterature.db.DBException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,29 +29,19 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ApplicationDataServlet", urlPatterns = {"/ApplicationDataServlet"})
 public class ApplicationDataServlet extends HttpServlet {
 
-
     private static final long serialVersionUID = 1L;
 
-      public ApplicationDataServlet() {
-          
-          super();
+    public ApplicationDataServlet() {
+
+        super();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     @SuppressWarnings("unchecked")
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-                System.out.println("ApplicationDataServlet:  ");
+
+        System.out.println("ApplicationDataServlet:  ");
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -76,19 +67,10 @@ public class ApplicationDataServlet extends HttpServlet {
         out.print(json);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        doGet(request, response);
-        
+            // doGet(request, response);
     }
 }

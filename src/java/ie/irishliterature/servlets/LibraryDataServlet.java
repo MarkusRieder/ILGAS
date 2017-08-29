@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import ie.irishliterature.dao.LibraryDAO;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.DataTables.DataTableLibrary;
-import java.sql.SQLException;
 
 /**
  *
@@ -44,7 +43,7 @@ public class LibraryDataServlet extends HttpServlet {
 
         response.setContentType("application/json");
 
-        System.out.println("LibraryDataServlet: 1::  ");
+        System.out.println("running LibraryDataServlet......  ");
 
         PrintWriter out = response.getWriter();
 
@@ -52,9 +51,10 @@ public class LibraryDataServlet extends HttpServlet {
 
         try {
 
-            listLibrary = LibraryDAO.getAllBooks();
-
-        } catch (DBException | ClassNotFoundException | SQLException ex) {
+//            listLibrary = LibraryDAO.getAllBooks();
+            listLibrary = LibraryDAO.listAllLibrary();
+            
+        } catch (DBException ex) {
             Logger.getLogger(LibraryDataServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 

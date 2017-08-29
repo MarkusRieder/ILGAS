@@ -37,14 +37,6 @@ public class ApplicationServlet extends HttpServlet {
             throws ServletException, IOException {
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -52,7 +44,7 @@ public class ApplicationServlet extends HttpServlet {
         String task = request.getParameter("task");
 
         if (request.getParameter("New Application") != null) {
-            task = "Open New Application";
+            task = "Start New Application";
         } else if (request.getParameter("List New Applications") != null) {
             task = "List New Applications";
         } else if (request.getParameter("List Pending Applications") != null) {
@@ -71,12 +63,13 @@ public class ApplicationServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
                 break;
 
-            case "Open New Application": {
+            case "Start New Application": {
                 try {
 
                     int ApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
-                    System.out.println("/Application::ApplicationNumber:  " + ApplicationNumber);
+  //                  System.out.println("/Application::ApplicationNumber:  " + ApplicationNumber);
 
+                     response.setContentType("text/html;charset=UTF-8");
                     request.setAttribute("ApplicationNumber", ApplicationNumber);
 
                 } catch (DBException ex) {

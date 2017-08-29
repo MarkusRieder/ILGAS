@@ -1,7 +1,9 @@
 package ie.irishliterature.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class GrantApplication {
 
@@ -18,7 +20,6 @@ public class GrantApplication {
     private String userID;
 
 //    Rights Agreement
-    
     private String agreement;//path + filename
 
     private String agreementDocName; //filename
@@ -28,15 +29,13 @@ public class GrantApplication {
     private String contractDocName;  //filename
 
 //    Publication Details
-    
     private Date proposedDateOfPublication;
 
-    private Date proposedDateOfPrintRun;
+    private int proposedPrintRun;
 
     private int plannedPageExtent;
 
 //     a copy of the Translator's CV
-    
     private String translatorCV;//path + filename
 
     private String translatorCVDocName; //filename
@@ -52,7 +51,6 @@ public class GrantApplication {
     private String Status;
 
 //    Original Work & Sample Translation
-    
     private int copiesSent;
 
     private Date dateCopiesWereSent;
@@ -62,12 +60,57 @@ public class GrantApplication {
     private String copiesTranslationSampleDocName; //filename
 
 //    General
-    
     private int TC_ACCEPTED;
 
     private int APPROVED;
 
+    private String cover;//path + filename
+
+    private String coverName; //filename
+
+    private ArrayList<String> TranslatorName;
+    
+    private ArrayList<String> TranslatorTrack;
+    
+    private  ArrayList<ArrayList<String>> translatorTitles;
+
+    private String AuthorName;
+
+    private ArrayList<String> Author;
+
+    private int idTranslator;
+
+    private List<String> Titles;
+
     private java.sql.Timestamp LASTUPDATED;
+    
+                                                   
+private String foreignPublisher;
+private String foreignCountry ;
+private String targetLanguage;
+//4. Translator’s name
+//5. Translator’s track record
+//6. Translation Sample (as is!)
+private String Original; // (Like the attachment one for translation sample)
+//8. T&Cs Accepted (great!)
+//9. Application Approved (also great!)
+
+//1. Expert Reader
+//2. Sample Sent Out
+//3. Sample Returned
+//4. Reader’s Report
+//5. Reader’s Report Summary (this goes into the document for the board – staff can add this)
+//
+//1. Board Meeting
+//2. Amount Requested 
+//3. Fee Calculation (see below)
+//4. Proposed Publication Date
+//5. Planned Page Extent
+//6. Planned Print Run
+//7. Award (checkbox)
+//8. Amount Approved 
+//9. Publisher Informed of Outcome 
+//10. Board Comments/Instructions
 
     /**
      * @return the ApplicationNumber
@@ -81,6 +124,34 @@ public class GrantApplication {
      */
     public void setApplicationNumber(int ApplicationNumber) {
         this.ApplicationNumber = ApplicationNumber;
+    }
+
+    /**
+     * @return the ApplicationYear
+     */
+    public String getApplicationYear() {
+        return ApplicationYear;
+    }
+
+    /**
+     * @param ApplicationYear the ApplicationYear to set
+     */
+    public void setApplicationYear(String ApplicationYear) {
+        this.ApplicationYear = ApplicationYear;
+    }
+
+    /**
+     * @return the ReferenceNumber
+     */
+    public String getReferenceNumber() {
+        return ReferenceNumber;
+    }
+
+    /**
+     * @param ReferenceNumber the ReferenceNumber to set
+     */
+    public void setReferenceNumber(String ReferenceNumber) {
+        this.ReferenceNumber = ReferenceNumber;
     }
 
     /**
@@ -112,6 +183,20 @@ public class GrantApplication {
     }
 
     /**
+     * @return the userID
+     */
+    public String getUserID() {
+        return userID;
+    }
+
+    /**
+     * @param userID the userID to set
+     */
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    /**
      * @return the agreement
      */
     public String getAgreement() {
@@ -123,6 +208,20 @@ public class GrantApplication {
      */
     public void setAgreement(String agreement) {
         this.agreement = agreement;
+    }
+
+    /**
+     * @return the agreementDocName
+     */
+    public String getAgreementDocName() {
+        return agreementDocName;
+    }
+
+    /**
+     * @param agreementDocName the agreementDocName to set
+     */
+    public void setAgreementDocName(String agreementDocName) {
+        this.agreementDocName = agreementDocName;
     }
 
     /**
@@ -140,6 +239,20 @@ public class GrantApplication {
     }
 
     /**
+     * @return the contractDocName
+     */
+    public String getContractDocName() {
+        return contractDocName;
+    }
+
+    /**
+     * @param contractDocName the contractDocName to set
+     */
+    public void setContractDocName(String contractDocName) {
+        this.contractDocName = contractDocName;
+    }
+
+    /**
      * @return the proposedDateOfPublication
      */
     public Date getProposedDateOfPublication() {
@@ -154,17 +267,17 @@ public class GrantApplication {
     }
 
     /**
-     * @return the proposedDateOfPrintRun
+     * @return the proposedPrintRun
      */
-    public Date getProposedDateOfPrintRun() {
-        return proposedDateOfPrintRun;
+    public int getProposedPrintRun() {
+        return proposedPrintRun;
     }
 
     /**
-     * @param proposedDateOfPrintRun the proposedDateOfPrintRun to set
+     * @param proposedPrintRun the proposedPrintRun to set
      */
-    public void setProposedDateOfPrintRun(Date proposedDateOfPrintRun) {
-        this.proposedDateOfPrintRun = proposedDateOfPrintRun;
+    public void setProposedPrintRun(int proposedPrintRun) {
+        this.proposedPrintRun = proposedPrintRun;
     }
 
     /**
@@ -193,6 +306,20 @@ public class GrantApplication {
      */
     public void setTranslatorCV(String translatorCV) {
         this.translatorCV = translatorCV;
+    }
+
+    /**
+     * @return the translatorCVDocName
+     */
+    public String getTranslatorCVDocName() {
+        return translatorCVDocName;
+    }
+
+    /**
+     * @param translatorCVDocName the translatorCVDocName to set
+     */
+    public void setTranslatorCVDocName(String translatorCVDocName) {
+        this.translatorCVDocName = translatorCVDocName;
     }
 
     /**
@@ -308,6 +435,20 @@ public class GrantApplication {
     }
 
     /**
+     * @return the copiesTranslationSampleDocName
+     */
+    public String getCopiesTranslationSampleDocName() {
+        return copiesTranslationSampleDocName;
+    }
+
+    /**
+     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName to set
+     */
+    public void setCopiesTranslationSampleDocName(String copiesTranslationSampleDocName) {
+        this.copiesTranslationSampleDocName = copiesTranslationSampleDocName;
+    }
+
+    /**
      * @return the TC_ACCEPTED
      */
     public int getTC_ACCEPTED() {
@@ -336,102 +477,129 @@ public class GrantApplication {
     }
 
     /**
-     * @return the userID
+     * @return the cover
      */
-    public String getUserID() {
-        return userID;
+    public String getCover() {
+        return cover;
     }
 
     /**
-     * @param userID the userID to set
+     * @param cover the cover to set
      */
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     /**
-     * @return the agreementDocName
+     * @return the coverName
      */
-    public String getAgreementDocName() {
-        return agreementDocName;
+    public String getCoverName() {
+        return coverName;
     }
 
     /**
-     * @param agreementDocName the agreementDocName to set
+     * @param coverName the coverName to set
      */
-    public void setAgreementDocName(String agreementDocName) {
-        this.agreementDocName = agreementDocName;
+    public void setCoverName(String coverName) {
+        this.coverName = coverName;
     }
 
     /**
-     * @return the contractDocName
+     * @return the TranslatorName
      */
-    public String getContractDocName() {
-        return contractDocName;
+    public ArrayList<String> getTranslatorName() {
+        return TranslatorName;
     }
 
     /**
-     * @param contractDocName the contractDocName to set
+     * @param TranslatorName the TranslatorName to set
      */
-    public void setContractDocName(String contractDocName) {
-        this.contractDocName = contractDocName;
+    public void setTranslatorName(ArrayList<String> TranslatorName) {
+        this.TranslatorName = TranslatorName;
     }
 
     /**
-     * @return the translatorCVDocName
+     * @return the TranslatorTrack
      */
-    public String getTranslatorCVDocName() {
-        return translatorCVDocName;
+    public ArrayList<String> getTranslatorTrack() {
+        return TranslatorTrack;
     }
 
     /**
-     * @param translatorCVDocName the translatorCVDocName to set
+     * @param TranslatorTrack the TranslatorTrack to set
      */
-    public void setTranslatorCVDocName(String translatorCVDocName) {
-        this.translatorCVDocName = translatorCVDocName;
+    public void setTranslatorTrack(ArrayList<String> TranslatorTrack) {
+        this.TranslatorTrack = TranslatorTrack;
     }
 
     /**
-     * @return the copiesTranslationSampleDocName
+     * @return the translatorTitles
      */
-    public String getCopiesTranslationSampleDocName() {
-        return copiesTranslationSampleDocName;
+    public ArrayList<ArrayList<String>> getTranslatorTitles() {
+        return translatorTitles;
     }
 
     /**
-     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName
-     * to set
+     * @param translatorTitles the translatorTitles to set
      */
-    public void setCopiesTranslationSampleDocName(String copiesTranslationSampleDocName) {
-        this.copiesTranslationSampleDocName = copiesTranslationSampleDocName;
+    public void setTranslatorTitles(ArrayList<ArrayList<String>> translatorTitles) {
+        this.translatorTitles = translatorTitles;
     }
 
     /**
-     * @return the ApplicationYear
+     * @return the AuthorName
      */
-    public String getApplicationYear() {
-        return ApplicationYear;
+    public String getAuthorName() {
+        return AuthorName;
     }
 
     /**
-     * @param ApplicationYear the ApplicationYear to set
+     * @param AuthorName the AuthorName to set
      */
-    public void setApplicationYear(String ApplicationYear) {
-        this.ApplicationYear = ApplicationYear;
+    public void setAuthorName(String AuthorName) {
+        this.AuthorName = AuthorName;
     }
 
     /**
-     * @return the ReferenceNumber
+     * @return the Author
      */
-    public String getReferenceNumber() {
-        return ReferenceNumber;
+    public ArrayList<String> getAuthor() {
+        return Author;
     }
 
     /**
-     * @param ReferenceNumber the ReferenceNumber to set
+     * @param Author the Author to set
      */
-    public void setReferenceNumber(String ReferenceNumber) {
-        this.ReferenceNumber = ReferenceNumber;
+    public void setAuthor(ArrayList<String> Author) {
+        this.Author = Author;
+    }
+
+    /**
+     * @return the idTranslator
+     */
+    public int getIdTranslator() {
+        return idTranslator;
+    }
+
+    /**
+     * @param idTranslator the idTranslator to set
+     */
+    public void setIdTranslator(int idTranslator) {
+        this.idTranslator = idTranslator;
+    }
+
+    /**
+     * @return the Titles
+     */
+    public List<String> getTitles() {
+        return Titles;
+    }
+
+    /**
+     * @param Titles the Titles to set
+     */
+    public void setTitles(List<String> Titles) {
+        this.Titles = Titles;
     }
 
     /**
@@ -447,9 +615,6 @@ public class GrantApplication {
     public void setLASTUPDATED(java.sql.Timestamp LASTUPDATED) {
         this.LASTUPDATED = LASTUPDATED;
     }
-    
-        @Override
-    public String toString() {
-        return "ClassPojo [ApplicationNumber = " + getApplicationNumber() + ", company = " + getCompany() + ", publisherID = " + getPublisherID() + ", agreement = " + getAgreement() + ", contract = " + getContract() + ", proposedDateOfPublication = " + getProposedDateOfPublication() + ", proposedDateOfPrintRun = " + getProposedDateOfPrintRun() + ", plannedPageExtent = " + getPlannedPageExtent() + ", translatorCV = " + getTranslatorCV() + ", numberOfPages = " + getNumberOfPages() + ", feePerPage = " + getFeePerPage() + ", translatorFee = " + getTranslatorFee() + ", Notes = " + getNotes() + ", copiesSent = " + getCopiesSent() + ", dateCopiesWereSent = " + getDateCopiesWereSent() + ", copiesTranslationSample = " + getCopiesTranslationSample() + ", TC_ACCEPTED = " + getTC_ACCEPTED() + ", APPROVED = " + getAPPROVED() + "]";
-    }
+
+
 }

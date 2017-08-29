@@ -12,7 +12,7 @@ public class Library {
 
     private String referenceNumber;
 
-    private ArrayList<ACauthor> Author;
+    private ArrayList<String> Author;
 
     private String Title;
 
@@ -28,9 +28,9 @@ public class Library {
 
     private String translationPublisherYear;
 
-    private ArrayList<ACtranslator> Translator;
+    private ArrayList<String> Translator;
 
-    private String Language;
+    private ArrayList<String>  Language;
 
     private String physicalDescription;
 
@@ -47,6 +47,7 @@ public class Library {
     private String ISBN;
 
     private String ISSN;
+    
 
     private java.sql.Timestamp LASTUPDATED;
 
@@ -81,14 +82,14 @@ public class Library {
     /**
      * @return the Author
      */
-    public ArrayList<ACauthor> getAuthor() {
+    public ArrayList<String> getAuthor() {
         return Author;
     }
 
     /**
      * @param Author the Author to set
      */
-    public void setAuthor(ArrayList<ACauthor> Author) {
+    public void setAuthor(ArrayList<String> Author) {
         this.Author = Author;
     }
 
@@ -193,28 +194,28 @@ public class Library {
     /**
      * @return the Translator
      */
-    public ArrayList<ACtranslator> getTranslator() {
+    public ArrayList<String>getTranslator() {
         return Translator;
     }
 
     /**
      * @param Translator the Translator to set
      */
-    public void setTranslator(ArrayList<ACtranslator> Translator) {
+    public void setTranslator(ArrayList<String> Translator) {
         this.Translator = Translator;
     }
 
     /**
      * @return the Language
      */
-    public String getLanguage() {
+    public ArrayList<String>  getLanguage() {
         return Language;
     }
 
     /**
      * @param Language the Language to set
      */
-    public void setLanguage(String Language) {
+    public void setLanguage(ArrayList<String>  Language) {
         this.Language = Language;
     }
 

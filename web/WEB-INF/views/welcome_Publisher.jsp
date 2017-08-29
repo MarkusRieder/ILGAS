@@ -109,7 +109,7 @@
                                                 required
                                                 >      
                                             <option value="">Choose Task</option>
-                                            <option>Open New Application</option>
+                                            <option>Start New Application</option>
                                             <option>List New Applications</option>
                                             <option>List Pending Applications</option>
                                             <option>List Closed Applications</option>

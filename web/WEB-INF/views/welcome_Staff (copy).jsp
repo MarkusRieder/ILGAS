@@ -14,29 +14,17 @@
 
         <title>Translation Grant Application System</title>
 
-        
-        <!--JQuery-->
-        
+        <!-- Bootstrap -->
+
         <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
 
 
-        <!-- Bootstrap -->
-        
+
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-        
-        <!--http://jschr.github.io/bootstrap-modal/bs3.html-->
-        
-        <link href="css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
-        <link href="css/bootstrap-modal.css" rel="stylesheet" />
-        
-        <!--DataTables-->
-        
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/1.10.15/integration/font-awesome/dataTables.fontAwesome.css">
-        
-        
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
@@ -47,6 +35,8 @@
 
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
+        <!--<script src="js/bootstrap-datepicker.js"></script>-->
+        <!--<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>-->  
         <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 
         <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>  
@@ -62,11 +52,6 @@
         <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/jquery-ui.js"></script>
-        
-        <!--http://jschr.github.io/bootstrap-modal/bs3.html-->
-        
-        <script src="js/bootstrap-modalmanager.js"></script>
-        <script src="js/bootstrap-modal.js"></script>
 
 
         <script>
@@ -967,10 +952,7 @@
                     </div>
                     <a href="/" class="logo"><span class="hidden">Literature Ireland</span></a>
                 </div> <!--  End of topbar div -->
-                
-                
-                <!--container for welcome/logout-->                
-                
+                <!--container for welcome/logout-->
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
                         <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
@@ -1092,8 +1074,7 @@
 
 
                                 <!--userModal-->
-                                <div id="applicationsModal" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-                                <!--<div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="applicationsModalLabel"  data-focus-on="input:first" style="display: none;">-->
+                                <div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="applicationsModalLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -1483,7 +1464,7 @@
 
                                                     <div class="tab-pane" id="page3">
 
-                                                        <!-- Reader’s  Report -->
+                                                        <!--<li><a href="#page3" data-toggle="tab">Reader’s  <br/>Report</a></li>-->
 
                                                         <!--
                                                                                                                 I think the Reader info should be in a separate tab called ‘Reader’s Report’, with the following fields:
@@ -1496,14 +1477,6 @@
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
-                                                            <div>
-    <p>One fine body…</p>
-    <p>One fine body…</p>
-    <p>One fine body…</p>
-    <input data-tabindex="1" type="text">
-    <input data-tabindex="2" type="text">
-    <a class="btn" data-toggle="modal" href="#stack2">Launch modal</a>
-  </div>
 
                                                             <div class='col-sm-6'>
                                                                 <strong class=" pull-left">Expert Reader</strong>
@@ -1965,11 +1938,10 @@
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 <button type="button" class="btn btn-primary">Save changes</button>
                                             </div>
-                                        </div> <!--modal-content -->
-                                    </div> <!--modal-dialog -->
-                                </div><!--modal -->
-                               
-                                
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                                <!--userModal-->
 
                             </div><!-- <div class="tab-pane fade active in" id="Application"> --> 
 
@@ -2411,104 +2383,5 @@
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2017 mgr Software
         </div>
-                                        
-<!--<div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">-->
-<div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-                                <!--<div class="modal fade" id="stack2" tabindex="-1" role="dialog" aria-labelledby="stack2Label" >-->
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="stack2Label">Display Expert Readers</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    
-                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
-
-                                                            <div class='col-sm-6'>
-                                                                <strong class=" pull-left">Expert Reader</strong>
-                                                                <div class="input-group pull-left">
-                                                                    <input type="text" name="appExpertReader" 
-                                                                           id="appExpertReader" 
-                                                                           class="form-control" 
-                                                                           />    
-                                                                </div>
-                                                            </div>
-
-                                                        </div> <!--row-->                                                      
-
-                                                        <div class="row" style="margin-top: 30px;margin-bottom: 10px">
-                                                            <div class='col-sm-4'>
-                                                                <strong class=" pull-left"> Sample sent out</strong>
-                                                                <div class="input-group">
-                                                                    <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="sampleSentOut">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <script>
-                                                                $("#sampleSentOut").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
-                                                                });
-                                                            </script>
-
-                                                            <div class='col-sm-4'>
-                                                                <strong class=" pull-left"> Sample returned</strong>
-                                                                <div class="input-group">
-                                                                    <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="sampleReturned">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-
-                                                            <script>
-                                                                $("#sampleReturned").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
-                                                                });
-                                                            </script>
-
-                                                        </div> <!--row-->
-
-                                                        <div class="row" style="margin-bottom: 20px;">
-
-                                                            <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
-                                                                <div class="col-sm-2">
-                                                                    <input id="ReadersReport"                                
-                                                                           type="hidden"                                                            
-                                                                           name="ReadersReport"                                
-                                                                           >
-                                                                </div>
-                                                                <a class="btn btn-info" role="button" id="appReadersReport" >
-                                                                    <span class="glyphicon glyphicon-file"></span>
-                                                                    Reader’s Report</a>
-                                                            </div>
-
-                                                            <div class="col-sm-10">
-                                                                <label for="readerReport" class="control-label pull-left"> Reader’s Report Summary</label>
-                                                                <textarea id="readerReport" 
-                                                                          class="form-control"                                               
-                                                                          name="readerReport"    
-                                                                          style="height: 98px"
-                                                                          >                 
-                                                                </textarea>
-                                                            </div>
-                                                        </div> <!--row-->
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
-
-                           
     </body>
 </html>

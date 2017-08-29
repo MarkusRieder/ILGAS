@@ -175,7 +175,7 @@ public class CSVReader {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
-            ps1 = conn.prepareStatement("insert into TranslatorTrack (idTranslator, Author, Title, ReferenceNumer) values (?,?,?,?)");
+            ps1 = conn.prepareStatement("insert into TranslatorTrack (idTranslator, Author, Title, ReferenceNumber) values (?,?,?,?)");
             ps1.setInt(1, TranslatorID);
             ps1.setString(2, Author);
             ps1.setString(3, Title);

@@ -8,3 +8,25 @@ DEBUG   2017-06-23 10:24:51,161 [http-listener-1(5)] ie.irishliterature.dao.Gran
 DEBUG   2017-06-23 10:36:02,368 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
 DEBUG   2017-06-23 11:01:44,036 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
 DEBUG   2017-06-23 12:53:03,134 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-07-27 22:58:13,921 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'ID' in 'field list'
+DEBUG   2017-07-29 21:45:40,118 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(idLanguages, language, bookID, ReferenceNumber) values (0,'English',0,'169/2017' at line 1
+DEBUG   2017-07-29 21:50:16,960 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(idLanguages, language, bookID, ReferenceNumber) values (0,'English',0,'170/2017' at line 1
+DEBUG   2017-07-29 22:29:41,202 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'language' in 'field list'
+DEBUG   2017-07-30 15:38:19,273 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 4
+DEBUG   2017-07-30 15:40:43,181 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 4
+DEBUG   2017-08-02 00:27:12,704 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (2 > number of parameters, which is 1).
+DEBUG   2017-08-02 00:28:49,657 [http-listener-1(5)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (2 > number of parameters, which is 1).
+DEBUG   2017-08-02 00:29:56,469 [http-listener-1(4)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (2 > number of parameters, which is 1).
+DEBUG   2017-08-02 00:36:38,972 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (2 > number of parameters, which is 1).
+DEBUG   2017-08-02 01:02:51,792 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (1 > number of parameters, which is 0).
+DEBUG   2017-08-02 10:12:02,006 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column Index out of range, 2 > 1. 
+DEBUG   2017-08-02 10:15:05,582 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'TranslatorTrack' not found.
+DEBUG   2017-08-02 10:17:01,889 [http-listener-1(5)] ie.irishliterature.dao.ApplicationDAO  - Column Index out of range, 2 > 1. 
+DEBUG   2017-08-02 10:18:36,713 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column Index out of range, 2 > 1. 
+DEBUG   2017-08-02 23:32:41,776 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.Name FROM TranslatorTrack, Author  WHERE TranslatorTrack.ReferenceNumber = '1/2' at line 1
+DEBUG   2017-08-04 13:09:28,126 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+DEBUG   2017-08-04 13:12:10,216 [http-listener-1(4)] ie.irishliterature.dao.ApplicationDAO  - Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+DEBUG   2017-08-07 22:02:38,016 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Invalid value for getInt() - 'Last Poems'
+DEBUG   2017-08-10 14:21:12,768 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Field 'TranslatorTrack_idTranslatorTrack' doesn't have a default value
+DEBUG   2017-08-17 03:51:02,732 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Before start of result set
+DEBUG   2017-08-17 03:55:52,101 [http-listener-1(5)] ie.irishliterature.dao.ApplicationDAO  - Before start of result set

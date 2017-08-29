@@ -1,7 +1,7 @@
 package ie.irishliterature.util;
 
 public class Setup {
-	  public static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS?autoReconnect=true&useSSL=false&useUnicode=yes&character_set_server=utf8mb4";
+	  public static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS?autoReconnect=true&useSSL=false&useUnicode=yes&charset=UTF-8";
 
 //    public static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS";
     public static final String DB_USERNAME = "root";

@@ -3,27 +3,26 @@ package ie.irishliterature.servlets;
 import static ie.irishliterature.dao.ACpublisherDAO_test.updatePublisher;
 import ie.irishliterature.dao.GrantApplicationDAO;
 import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
+import static ie.irishliterature.dao.GrantApplicationDAO.ifLanguageExist;
+import static ie.irishliterature.dao.GrantApplicationDAO.ifTranslatorExist;
+import static ie.irishliterature.dao.LibraryDAO.insertBook;
+import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.model.Library;
 import ie.irishliterature.model.Publisher;
-import static ie.irishliterature.dao.LibraryDAO.insertBook;
-
 import java.io.*;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ie.irishliterature.db.DBException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -64,13 +63,16 @@ public class GrantApplicationServlet extends HttpServlet {
     private String agreement; // path to file
     private String contract;  // path to file
     private String proposedDateOfPublication;
-    private String proposedDateOfPrintRun;
+    private int proposedPrintRun;
     private String plannedPageExtent;
     private String translatorCV;
+    private String translatorName;
+    private String languages;
+    private String translatorNotes;
     private String numberOfPages;
     private String feePerPage;
     private String translatorFee;
-    private String Notes;
+    private String bookNotes;
     private String copySent;
     private String dateCopiesWereSent;
     private String copiesTranslationSample;  // path to file
@@ -105,6 +107,7 @@ public class GrantApplicationServlet extends HttpServlet {
     private String Bursaries;
     private String Founded;
     private String NumberOfTitles;
+    private String companyNotes;
     private String DateModified;
 
     ////////////////////////////////////////////////////////////////////////////
@@ -117,6 +120,10 @@ public class GrantApplicationServlet extends HttpServlet {
     private String referenceNumber;
 
     private ArrayList Author;
+
+    private String authorName;
+
+    private ArrayList Translator;
 
     private String writerType;  // options Author, Editor, Translator
 
@@ -134,9 +141,13 @@ public class GrantApplicationServlet extends HttpServlet {
 
     private String translationPublisherYear;
 
-    private ArrayList Translator;
+    private String[] translatorArray;
 
-    private String Language;
+    private String[] authorArray;  //Array of Author/Title
+
+    private String[] languageArray;
+
+    private ArrayList Languages;
 
     private String physicalDescription;
 
@@ -162,17 +173,11 @@ public class GrantApplicationServlet extends HttpServlet {
     private String Sample_Sent_out; //  Date
     private String Sample_Returned; //  Date
     private String Reader_Report;
-    private String Date_Reader_Paid; //  Date
-    private String Cheque_Number;
-    private String Cheque_Cleared; //  Date
     private String Date_Contract_Sent_to_Publisher; //  Date
-    private String Date_ILE_Acknowledgement_Received; //  Date
     private String Date_ILE_Acknowlegement_Approved; //  Date
     private String Date_Published_Books_Received; //  Date
-    private String Date_Details_of_Payment_to_Translator_Received; //  Date
     private String Date_Payment_Made_to_Publisher; //  Date
-    private String Publisher_Cheque_Number;
-    private String Publisher_Cheque_Cleared; //   boolean
+    private String Payment_Reference_Number;
     private String Comments_re_Application;
     private String Board_Meeting;
     private String Date_publisher_informed_of_meeting; //  Date 
@@ -185,7 +190,6 @@ public class GrantApplicationServlet extends HttpServlet {
     private String Press_cuttings;  //  boolean
     private String Sales_figures;
     private String Anthology; //Array of Author/Title
-    private String[] authorArray;  //Array of Author/Title
 
     public void init() {
 
@@ -198,13 +202,13 @@ public class GrantApplicationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String task = "Open New Application";
+        String task = "Start New Application";
 
 //        String[] authorArray;
         // task = request.getParameter("task");
         System.out.println("task:: " + task);
         switch (task) {
-            case "Open New Application":
+            case "Start New Application":
                 Status = "new";
                 String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                 Calendar now = Calendar.getInstance();
@@ -226,21 +230,7 @@ public class GrantApplicationServlet extends HttpServlet {
                     isMultipart = ServletFileUpload.isMultipartContent(request);
                     System.out.println("isMultipart:: " + isMultipart);
                     response.setContentType("text/html;charset=UTF-8");
-//
-//            PrintWriter out = response.getWriter();
-//
-//            if (!isMultipart) {
-//                out.println("<html>");
-//                out.println("<head>");
-//                out.println("<title>Servlet upload</title>");
-//                out.println("</head>");
-//                out.println("<body>");
-//                out.println("<p>No file uploaded</p>");
-//                out.println("</body>");
-//                out.println("</html>");
-//
-//                return;
-//            }
+
                     DiskFileItemFactory factory = new DiskFileItemFactory();
                     // maximum size that will be stored in memory
                     factory.setSizeThreshold(maxMemSize);
@@ -267,7 +257,7 @@ public class GrantApplicationServlet extends HttpServlet {
                             //collect all data input from input fileds
                             String fieldname = item.getFieldName();
                             String fieldvalue = item.getString();
-                            System.out.println("fieldname :: " + fieldname + " fieldvalue " + fieldvalue);
+                       //     System.out.println("fieldname :: " + fieldname + " fieldvalue " + fieldvalue);
 
                             switch (fieldname) {
                                 case "Company":
@@ -330,8 +320,8 @@ public class GrantApplicationServlet extends HttpServlet {
                                 case "NumberOfTitles":
                                     NumberOfTitles = fieldvalue;
                                     break;
-                                case "Notes":
-                                    Notes = fieldvalue;
+                                case "companyNotes":
+                                    companyNotes = fieldvalue;
                                     break;
                                 case "destination":
                                     Type = fieldvalue;
@@ -345,8 +335,8 @@ public class GrantApplicationServlet extends HttpServlet {
                                 case "proposedDateOfPublication":
                                     proposedDateOfPublication = fieldvalue;
                                     break;
-                                case "proposedDateOfPrintRun":
-                                    proposedDateOfPrintRun = fieldvalue;
+                                case "proposedPrintRun":
+                                    proposedPrintRun = Integer.parseInt(fieldvalue);
                                     break;
                                 case "plannedPageExtent":
                                     plannedPageExtent = fieldvalue;
@@ -357,12 +347,15 @@ public class GrantApplicationServlet extends HttpServlet {
                                 case "feePerPage":
                                     feePerPage = fieldvalue;
                                     break;
+                                case "translatorName":
+                                    translatorName = fieldvalue;
+                                    break;
                                 case "translatorFee":
                                     translatorFee = fieldvalue;
                                     break;
-//                                case "Notes":
-//                                    Notes = fieldvalue;
-//                                    break;
+                                case "translatorNotes":
+                                    translatorNotes = fieldvalue;
+                                    break;
                                 case "copiesSent":
                                     copySent = fieldvalue;
                                     if ("ticked".equals(copySent)) {
@@ -391,12 +384,62 @@ public class GrantApplicationServlet extends HttpServlet {
                                     }
                                     break;
                                 case "authorArray":
-
                                     authorArray = fieldvalue.split(","); //split string by ,
                                     for (String individualValue : authorArray) {
                                         System.out.println("authorArray  GrantApplicationServlet:: " + individualValue);
                                     }
-
+                                    break;
+                                case "title":
+                                    Title = fieldvalue;
+                                    break;
+                                case "copies":
+                                    Copies = fieldvalue;
+                                    break;
+                                case "publicationYear":
+                                    Publisheryear = fieldvalue;
+                                    break;
+                                case "genre":
+                                    Genre = fieldvalue;
+                                    break;
+                                case "translationTitle":
+                                    translationTitle = fieldvalue;
+                                    break;
+                                case "translationPublicationYear":
+                                    translationPublisherYear = fieldvalue;
+                                    break;
+                                case "translatorArray":
+                                    translatorArray = fieldvalue.split(","); //split string by ,
+                                    for (String individualValue : translatorArray) {
+                                        System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue);
+                                    }
+                                    break;
+                                case "languages":
+                                    languageArray = fieldvalue.split(","); //split string by ,
+                                    for (String individualValue : languageArray) {
+                                        System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
+                                    }
+                                    break;
+                                case "physicalDescription":
+                                    physicalDescription = fieldvalue;
+                                    break;
+                                case "duplicates":
+                                    Duplicates = Integer.parseInt(fieldvalue);
+                                    break;
+                                case "translationPublisher":
+                                    translationPublisher = fieldvalue;
+                                    break;
+                                case "bookNotes":
+                                    bookNotes = fieldvalue;
+                                    break;
+                                case "series":
+                                    Series = fieldvalue;
+                                    break;
+                                case "isbn":
+                                    ISBN = fieldvalue;
+                                    break;
+                                case "issn":
+                                    ISSN = fieldvalue;
+                                    break;
                             } // end switch
 
                         } else {
@@ -464,13 +507,9 @@ public class GrantApplicationServlet extends HttpServlet {
 //                        }
                             }
 
-                            filecontent.close();
-
                         } // else
 
                     }  // for (FileItem item : items)
-
-                    System.out.println("message:  " + message);
 
                     // INSERT new application
                     GrantApplication application = new GrantApplication();
@@ -480,14 +519,14 @@ public class GrantApplicationServlet extends HttpServlet {
                     application.setPublisherID(publisherID);
                     application.setUserID(userID);
                     application.setProposedDateOfPublication(convertDate(proposedDateOfPublication));
-                    application.setProposedDateOfPrintRun(convertDate(proposedDateOfPrintRun));
+                    application.setProposedPrintRun(proposedPrintRun);
                     application.setPlannedPageExtent(Integer.parseInt(plannedPageExtent));
                     application.setNumberOfPages(Integer.parseInt(numberOfPages));
                     BigDecimal fpp = new BigDecimal(feePerPage.replaceAll(",", ""));
                     application.setFeePerPage(fpp);
                     BigDecimal tf = new BigDecimal(translatorFee.replaceAll(",", ""));
                     application.setTranslatorFee(tf);
-                    application.setNotes(Notes);
+                    application.setNotes(translatorNotes);
                     application.setCopiesSent(copiesSent);
                     application.setDateCopiesWereSent(convertDate(dateCopiesWereSent));
                     application.setTC_ACCEPTED(TC_ACCEPTED);
@@ -507,29 +546,35 @@ public class GrantApplicationServlet extends HttpServlet {
                         if (iend != -1) {
                             ApplicationNumber = Integer.parseInt(ReferenceNumber.substring(0, iend));
                         }
-
-                        String[] processingArray = new String[3];
+                        
+                        
+                        //Process Authors
+                        
+                        // String[3] => Name, FirstName, LastName
+                        String[] processingAuthorArray = new String[3];
 
                         //convert processingArray to ArrayList Author
-                        Author = new ArrayList<>(Arrays.asList(processingArray));
+                        Author = new ArrayList<>(Arrays.asList(processingAuthorArray));
 
                         int idx = 0;
 
-                        //loop through the Authors and insert each into A_Author
+                        //loop through the Authors and insert each into Author
                         for (String individualValue : authorArray) {
 
                             String AuthorName = individualValue;
-                            processingArray[idx] = AuthorName;
+                            processingAuthorArray[idx] = AuthorName;
 
                             //when we have a complete set (FullName, FirstName, LastName) 
-                            if (idx == processingArray.length - 1) {
+                            if (idx == processingAuthorArray.length - 1) {
 
                                 //set the variables and
-                                String Name = processingArray[0];
-                                String FirstName = processingArray[1];
-                                String LastName = processingArray[2];
+                                String Name = processingAuthorArray[0];
+                                String FirstName = processingAuthorArray[1];
+                                String LastName = processingAuthorArray[2];
 
-                                // insert them into the tables A_Author
+                                authorName = Name;
+
+                                // insert them into the tables Application_Author 
                                 GrantApplicationDAO.insertAuthors(ReferenceNumber, Name, FirstName, LastName);
 
                                 //reset index 
@@ -546,12 +591,97 @@ public class GrantApplicationServlet extends HttpServlet {
                 } catch (ParseException ex) {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
+//                        //Process Authors
+//                        if (authorArray.length > 1) {
+//                            String[] processingAuthorArray = new String[3];
+//
+//                            //convert processingArray to ArrayList Author
+//                            Author = new ArrayList<>(Arrays.asList(processingAuthorArray));
+//
+//                            int idx = 0;
+//System.out.println("Process Authors :: authorArray.length: " + authorArray.length);
+//                            //loop through the Authors and insert each into Author
+//                            for (String individualValue : authorArray) {
+//
+//                                String AuthorName = individualValue;
+//                                processingAuthorArray[idx] = AuthorName;
+//
+//                                System.out.println("Process Authors :: AuthorName: " + AuthorName);
+//                                
+//                                System.out.println("Process Authors :: idx 1: " + idx);
+//
+//                                //when we have a complete set (FullName, FirstName, LastName) 
+//                                if (idx == processingAuthorArray.length - 1) {
+//System.out.println("Process Authors :: idx 2: " + idx);
+//                                    //set the variables and
+//                                    String Name = processingAuthorArray[0];
+//                                    String FirstName = processingAuthorArray[1];
+//                                    String LastName = processingAuthorArray[2];
+//
+//                                    authorName = Name;
+//
+//                                    // insert them into the tables Author
+//                                    System.out.println("Sending to GrantApplicationDAO.insertAuthors  ReferenceNumber: " + ReferenceNumber + " , Name: " 
+//                                            + Name + " , FirstName: " + FirstName + " , LastName: " + LastName);
+//                                    GrantApplicationDAO.insertAuthors(ReferenceNumber, Name, FirstName, LastName);
+//
+//                                    //reset index 
+//                                    idx = -1;
+//                                }
+//
+//                                idx++;
+//                            }
+//                        }
+//                    
+//                    } catch (DBException ex) {
+//                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//
+//                } catch (ParseException ex) {
+//                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+
+                //Process Translators
+               
+                    String[] processingTranslatorArray = new String[1];
+                    System.out.println("translatorArray.length: " + translatorArray.length);
+                    //convert processingArray to ArrayList Translator
+                    Translator = new ArrayList<>(Arrays.asList(translatorArray));
+                  
+                    //loop through the Translators and insert each into TranslatorTrack
+                    for (String individualValue : translatorArray) {
+
+                        translatorName = individualValue;
+                                                      
+
+                            System.out.println("calling insertTranslators......................:  " + translatorName);
+                            
+                            
+
+                                try {
+                                    
+                                //set the variables and
+                             //   translatorName = processingTranslatorArray[0];
+                                int idTranslator = ifTranslatorExist(translatorName);
+                                
+                                
+                                    // insert them into the tables TranslatorTrack
+                                    GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title);
+
+                                    //reset index
+                                  //   idx = -1;
+                                     
+                                } catch (DBException ex) {
+                                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+
+                          //  idx++;
+                      
+                }
 
                 // Update new publisher
                 Publisher publisher = new Publisher();
-//   String sql = "UPDATE international_publishers SET Company = ?, Company_Number = ? ,Address1 = ? ,Address2 = ? ,Address3 = ? ,
-                //Address4 = ? ,postCode = ? ,City = ? ,Country = ? ,CountryCode = ? ,Telephone = ? ,Fax = ? ,WWW = ? ,DoNotMail = ? ,
-                //Bursaries = ?,Founded = ? ,NumberOfTitles = ? ,DateModified = ? ,Notes = ?";
 
                 publisher.setCompany(company);
                 publisher.setCompany_Number(publisherID);
@@ -591,49 +721,12 @@ public class GrantApplicationServlet extends HttpServlet {
                 publisher.setNumberOfTitles(NumberOfTitles);
 
                 publisher.setDateModified(timeStamp);
-                publisher.setNotes(Notes);
+                publisher.setNotes(companyNotes);
                 publisher.setStatus("");
 
                  {
                     try {
                         updatePublisher(publisher, publisherID);
-                    } catch (DBException ex) {
-                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                // Update library
-                Library library = new Library();
-
-//bookID, referenceNumber, Author, Title, Publisher, publishingYear, Genre, translationTitle, translationPublisher, translationPublisherYear, 
-//Translator, Language, Cover, CoverName, physicalDescription, Duplicates, Copies, Notes, ISBN, ISSN
-                library.setBookID(bookID);
-                library.setReferenceNumber(ReferenceNumber);
-
-
-                String fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                System.out.println(fn);
-                library.setCover(fn);
-                System.out.println("fileNames[0]:: " + fileNames[0]);
-                library.setCoverName(justFiles[0]);
-                System.out.println("justFiles[0]:: " + justFiles[0]);
-
-                library.setTitle(Title);
-                library.setPublisheryear(Publisheryear);
-                library.setGenre(Genre);
-                library.setTranslationTitle(translationTitle);
-                library.setTranslationPublisherYear(translationPublisherYear);
-                library.setPhysicalDescription(physicalDescription);
-                library.setDuplicates(Duplicates);
-                library.setCopies(Copies);
-                library.setNotes(Notes);
-                library.setISBN(ISBN);
-                library.setISSN(ISSN);
-                library.setLASTUPDATED(timestamp);
-
-                 {
-                    try {
-                        insertBook(library);
                     } catch (DBException ex) {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -662,33 +755,77 @@ public class GrantApplicationServlet extends HttpServlet {
                     System.out.println("fileNames[" + i + "]  :: " + fileNames[i]);
                 }
 
+                // Update library
+                Library library = new Library();
+
+//bookID, referenceNumber, Author, Title, Publisher, publishingYear, Genre, translationTitle, translationPublisher, translationPublisherYear, 
+//Translator, Language, Cover, CoverName, physicalDescription, Duplicates, Copies, Notes, ISBN, ISSN
+                library.setReferenceNumber(ReferenceNumber);
+
+                String fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+//                System.out.println("library fn:: " + fn);
+                library.setCover(fn);
+//                System.out.println("fileNames[0]:: " + fileNames[0]);
+                library.setCoverName(justFiles[0]);
+//                System.out.println("justFiles[0]:: " + justFiles[0]);
+
+                library.setTitle(Title);
+                library.setPublisher(company);
+                library.setPublisheryear(Publisheryear);
+                library.setGenre(Genre);
+                library.setTranslationPublisher(translationPublisher);
+                library.setTranslationTitle(translationTitle);
+                library.setTranslationPublisherYear(translationPublisherYear);
+                library.setPhysicalDescription(physicalDescription);
+                library.setDuplicates(Duplicates);
+                library.setCopies(Copies);
+                library.setNotes(bookNotes);
+                library.setISBN(ISBN);
+                library.setISSN(ISSN);
+                library.setLASTUPDATED(timestamp);
+
+                 {
+                    try {
+                        bookID = insertBook(library);
+                    } catch (DBException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
                 //Update  GrantApplication to contain the filePaths
                 GrantApplication application = new GrantApplication();
+//                System.out.println("fileNames[0]  before replace: " + fileNames[0]);
+                fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+//                System.out.println("fn after replace: " + fn);
+                application.setCover(fn);
+//                System.out.println("fileNames[0]:: " + fileNames[0]);
+                application.setCoverName(justFiles[0]);
+//                System.out.println("justFiles[0]:: " + justFiles[0]);
 
                 fn = fileNames[1].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                System.out.println(fn);
+//                System.out.println(fn);
                 application.setAgreement(fn);
-                System.out.println("fileNames[1]:: " + fileNames[1]);
+//                System.out.println("fileNames[1]:: " + fileNames[1]);
                 application.setAgreementDocName(justFiles[1]);
-                System.out.println("justFiles[1]:: " + justFiles[1]);
+//                System.out.println("justFiles[1]:: " + justFiles[1]);
 
                 fn = fileNames[2].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setContract(fn);
-                System.out.println("fileNames[2]:: " + fileNames[2]);
+//                System.out.println("fileNames[2]:: " + fileNames[2]);
                 application.setContractDocName(justFiles[2]);
-                System.out.println("justFiles[2]:: " + justFiles[2]);
+//                System.out.println("justFiles[2]:: " + justFiles[2]);
 
                 fn = fileNames[3].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setTranslatorCV(fn);
-                System.out.println("fileNames[3]:: " + fileNames[3]);
+//                System.out.println("fileNames[3]:: " + fileNames[3]);
                 application.setTranslatorCVDocName(justFiles[3]);
-                System.out.println("justFiles[3]:: " + justFiles[3]);
+//                System.out.println("justFiles[3]:: " + justFiles[3]);
 
                 fn = fileNames[4].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setCopiesTranslationSample(fn);
-                System.out.println("fileNames[4]:: " + fileNames[4]);
+//                System.out.println("fileNames[4]:: " + fileNames[4]);
                 application.setCopiesTranslationSampleDocName(justFiles[4]);
-                System.out.println("justFiles[4]:: " + justFiles[4]);
+//                System.out.println("justFiles[4]:: " + justFiles[4]);
 
                 application.setApplicationNumber(ApplicationNumber);
                 application.setReferenceNumber(ReferenceNumber);
@@ -699,6 +836,62 @@ public class GrantApplicationServlet extends HttpServlet {
 
                 } catch (DBException ex) {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                //Process Languages
+                if (languageArray.length != 0) {
+                    String[] processingLanguagesArray = new String[languageArray.length - 1];
+
+                    //convert processingArray to ArrayList Languages
+                    Languages = new ArrayList<>(Arrays.asList(processingLanguagesArray));
+
+                    int idx = 0;
+
+                    //loop through the Languages and insert each into Languages_Library
+                    for (String individualValue : languageArray) {
+//                        System.out.println(" idx :: " + idx);
+                        languages = individualValue;
+
+                        if (idx < languages.length()) {
+                            processingLanguagesArray[idx] = languages;
+//                            System.out.println("processingLanguagesArray[" + idx + "] = " + languages);
+//                            System.out.println("1:: processingLanguagesArray[" + idx + "] = " + processingLanguagesArray[idx]);
+                            //when we have a complete set (idLanguages, lang, bookID, ReferenceNumber) 
+
+                            String language = processingLanguagesArray[idx];
+                            int idLanguages = 0;
+                            try {
+                                idLanguages = ifLanguageExist(processingLanguagesArray[idx]);
+                            } catch (DBException ex) {
+                                Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            try {
+                                //set the variables and
+
+//                                System.out.println("idLanguages: " + idLanguages);
+//                                System.out.println("idLanguages, language, bookID, ReferenceNumber:: idLanguages " + idLanguages + " , language: " + language + ", bookID: " + bookID + " , ReferenceNumber: " + ReferenceNumber);
+                                // insert them into the tables Languages_Library
+                                GrantApplicationDAO.insertLanguages_Library(idLanguages, language, bookID, ReferenceNumber);
+
+                            } catch (DBException ex) {
+                                Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            idx++;
+                        }
+                    }
+                } else {
+
+                    try {
+                        int idLanguages = ifLanguageExist(languages);
+//                        System.out.println("language: " + languages);
+//                        System.out.println("idLanguages, language, bookID, ReferenceNumber:: idLanguages " + idLanguages + " , language: " + languages + ", bookID: " + bookID + " , ReferenceNumber: " + ReferenceNumber);
+                        GrantApplicationDAO.insertLanguages_Library(idLanguages, languages, bookID, ReferenceNumber);
+
+                    } catch (DBException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
                 request.setAttribute("message", message);

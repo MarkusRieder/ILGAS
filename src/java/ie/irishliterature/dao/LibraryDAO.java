@@ -1,17 +1,15 @@
 package ie.irishliterature.dao;
 
+import ie.irishliterature.db.DBConn;
+import ie.irishliterature.db.DBException;
+import ie.irishliterature.model.Library;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import ie.irishliterature.db.DBConn;
-import ie.irishliterature.db.DBException;
-import ie.irishliterature.model.Library;
 
 /**
  *
@@ -64,7 +62,7 @@ public class LibraryDAO {
             ps1.setString(6, library.getTranslationTitle());
             ps1.setString(7, library.getTranslationPublisher());
             ps1.setString(8, library.getTranslationPublisherYear());
-            ps1.setString(9, library.getLanguage());
+//            ps1.setString(9, library.getLanguage());
             ps1.setString(10, library.getCover());
             ps1.setString(11, library.getCoverName());
             ps1.setString(12, library.getPhysicalDescription());
@@ -97,8 +95,7 @@ public class LibraryDAO {
             throw new DBException("4 Excepion while accessing database");
         }
 
-       // add Arrays to Application_Author / Application_Translator System 
-
+        // add Arrays to Application_Author / Application_Translator System 
         // reset variables
 //        conn = null;
 //        ps1 = null;
@@ -124,24 +121,29 @@ public class LibraryDAO {
 //            e.printStackTrace();
 //            throw new DBException("4 Excepion while accessing database");
 //        }
-
         return id;
     }
 
     //listAllLibrary
     @SuppressWarnings("unchecked")
     public static ArrayList listAllLibrary() throws DBException {
-        ArrayList listLibrary = new ArrayList();
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
+        ArrayList listLibrary = new ArrayList();
+        
+        ArrayList<String> authorList;
+
+        ArrayList<String> translatorList;
+        ArrayList<String> languageList;
+
         try {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT * FROM Books");
+            ps = conn.prepareStatement("SELECT * FROM library");
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -149,40 +151,168 @@ public class LibraryDAO {
 
                 library.setBookID(rs.getInt("bookID"));
                 library.setReferenceNumber(rs.getString("referenceNumber"));
-//                library.setAuthor(rs.getString("Author"));
+
+                authorList = getAuthorList(rs.getString("referenceNumber"));
+
+                library.setAuthor(authorList);
                 library.setTitle(rs.getString("Title"));
                 library.setPublisher(rs.getString("Publisher"));
-                library.setPublisheryear(rs.getString("publishingYear"));
+
+                // checking full null value
+                String publishingYear = rs.getString("publishingYear");
+
+                if (publishingYear == null) {
+
+                    publishingYear = "n/a";
+
+                }
+                library.setPublisheryear(publishingYear);
                 library.setGenre(rs.getString("Genre"));
                 library.setTranslationTitle(rs.getString("translationTitle"));
                 library.setTranslationPublisher(rs.getString("translationPublisher"));
-                library.setTranslationPublisherYear(rs.getString("translationPublisherYear"));
-//                library.setTranslator(rs.getString("Translator"));
-                library.setLanguage(rs.getString("Language"));
+                // checking full null value
+                String translationPublisherYear = rs.getString("translationPublisherYear");
+
+                if (translationPublisherYear == null) {
+
+                    translationPublisherYear = "n/a";
+
+                }
+
+                library.setTranslationPublisherYear(translationPublisherYear);
+
+                translatorList = getTranslatorList(rs.getString("referenceNumber"));
+                library.setTranslator(translatorList);
+                System.out.println("return translatorList::  " + translatorList);
+
+                languageList = getLanguageList(rs.getString("referenceNumber"));
+                System.out.println("return languageList::  " + translatorList);
+                library.setLanguage(languageList);
+
                 library.setPhysicalDescription(rs.getString("physicalDescription"));
                 library.setDuplicates(rs.getInt("Duplicates"));
                 library.setCopies(rs.getString("Copies"));
                 library.setNotes(rs.getString("Notes"));
                 library.setISBN(rs.getString("ISBN"));
                 library.setISSN(rs.getString("ISSN"));
+                library.setCover(rs.getString("cover"));
 
                 listLibrary.add(library);
             }
 
-            conn.commit();
             DBConn.close(conn, ps, rs);
-
-            disconnect();
 
         } catch (ClassNotFoundException | SQLException e) {
             DBConn.close(conn, ps, rs);
+            System.err.println("Error: " + e);
             throw new DBException("4 Excepion while accessing database");
         }
 
         return listLibrary;
     }
-    //updateLibrary
 
+    public static ArrayList<String> getLanguageList(String referenceNumber) throws DBException, ClassNotFoundException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        ArrayList<String> languageList = new ArrayList<>();
+
+        try {
+
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement("SELECT lang FROM Languages_Library WHERE ReferenceNumber  = ?");
+
+            ps.setString(1, referenceNumber);
+
+            res = ps.executeQuery();
+            if (res != null) {
+                while (res.next()) {
+                    languageList.add(res.getString(1));
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(LibraryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        DBConn.close(conn, ps, res);
+
+        return languageList;
+    }
+
+    public static ArrayList<String> getTranslatorList(String referenceNumber) throws DBException, ClassNotFoundException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        ArrayList<String> translatorList = new ArrayList<>();
+
+        try {
+
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement("SELECT Translator.Name\n"
+                    + "FROM Translator, TranslatorTrack\n"
+                    + "WHERE TranslatorTrack.idTranslator = Translator.idTranslator\n"
+                    + "AND TranslatorTrack.ReferenceNumber  = ?");
+
+            ps.setString(1, referenceNumber);
+
+            res = ps.executeQuery();
+            if (res != null) {
+                while (res.next()) {
+                    translatorList.add(res.getString(1));
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(LibraryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        DBConn.close(conn, ps, res);
+
+        return translatorList;
+    }
+
+    public static ArrayList<String> getAuthorList(String referenceNumber) throws DBException, ClassNotFoundException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        ArrayList<String> authorList = new ArrayList<>();
+
+        try {
+
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement("SELECT Application_Author.idAuthor, Author.Name FROM Application_Author \n"
+                    + "JOIN Author ON Author.idAuthor = Application_Author.idAuthor\n"
+                    + "WHERE Application_Author.ReferenceNumber = ?");
+
+            ps.setString(1, referenceNumber);
+
+            res = ps.executeQuery();
+            if (res != null) {
+                while (res.next()) {
+                    authorList.add(res.getString(2));
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(LibraryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        DBConn.close(conn, ps, res);
+
+        return authorList;
+    }
+
+//updateLibrary
     public static boolean updateLibrary(Library library, int bookID) throws DBException {
 
         Connection conn = null;
@@ -200,9 +330,8 @@ public class LibraryDAO {
             String sql = "UPDATE library SET ( bookID , referenceNumber , Author , Title , Publisher , publishingYear , Genre , translationTitle , translationPublisher , translationPublisherYear , Translator , Language , physicalDescription , Duplicates , Copies , Notes , ISBN , ISSN ) VALUES ( ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?)";
             sql += " WHERE bookID = " + book;
 
-            System.out.println("sql::  " + sql);
-            System.out.println("bookID::  " + bookID);
-
+            //        System.out.println("sql::  " + sql);
+            //        System.out.println("bookID::  " + bookID);
             ps1 = conn.prepareStatement(sql);
 
             ps1.setInt(1, library.getBookID());
@@ -216,7 +345,7 @@ public class LibraryDAO {
             ps1.setString(9, library.getTranslationPublisher());
             ps1.setString(10, library.getTranslationPublisherYear());
 //            ps1.setString(11, library.getTranslator());
-            ps1.setString(12, library.getLanguage());
+//            ps1.setString(12, library.getLanguage());
             ps1.setString(13, library.getPhysicalDescription());
             ps1.setInt(14, library.getDuplicates());
             ps1.setString(15, library.getCopies());
@@ -236,7 +365,7 @@ public class LibraryDAO {
             DBConn.close(conn, ps1, res);
             throw new DBException("4 Excepion while accessing database");
         }
-        System.out.println("return id::  " + id);
+        //    System.out.println("return id::  " + id);
         return id;
     }
 
@@ -261,7 +390,8 @@ public class LibraryDAO {
             disconnect();
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LibraryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LibraryDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         return id;
@@ -274,6 +404,8 @@ public class LibraryDAO {
         Connection conn;
         PreparedStatement ps = null;
 
+        System.out.println("running LibraryDAO getAllBooks......  ");
+
         try {
 
             conn = DBConn.getConnection();
@@ -282,8 +414,7 @@ public class LibraryDAO {
             PreparedStatement Stmt = conn.prepareStatement(searchQuery);
             ResultSet res = Stmt.executeQuery(searchQuery);
 
-            System.out.println("res:  " + res);
-
+            //   System.out.println("res:  " + res);
             if (res != null) {
                 while (res.next()) {
                     Library library = new Library();
@@ -299,7 +430,7 @@ public class LibraryDAO {
 //                library.setTranslationPublisher(res.getString("translationPublisher"));
                     library.setTranslationPublisherYear(res.getString("translationPublisherYear"));
 //                    library.setTranslator(res.getString("Translator"));
-                    library.setLanguage(res.getString("Language"));
+//                    library.setLanguage(res.getString("Language"));
                     library.setPhysicalDescription(res.getString("physicalDescription"));
                     library.setDuplicates(res.getInt("Duplicates"));
                     library.setCopies(res.getString("Copies"));
@@ -316,7 +447,8 @@ public class LibraryDAO {
             DBConn.close(conn, ps, res);
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LibraryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LibraryDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         return listLibrary;

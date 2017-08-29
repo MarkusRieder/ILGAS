@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
@@ -20,6 +21,7 @@ public class ApplicationDAO {
     private static String translatorName;
     private static String AuthorName = "";
     private static ArrayList titleList = new ArrayList<>();
+    private static ArrayList<String> testList = new ArrayList<>();
 
     public static User selectUSER(String uname) throws DBException {
         Connection conn = null;
@@ -386,8 +388,8 @@ public class ApplicationDAO {
         ArrayList listApplications = new ArrayList();
         ArrayList<String> translatorTrackId = new ArrayList<>();
         ArrayList<String> authorList = new ArrayList<>();
-        //  ArrayList<String> list = new ArrayList<>();
-
+          ArrayList<TranslatorTracker> list = new ArrayList<>();
+TranslatorTracker translatorTrack  = new TranslatorTracker();
         ArrayList<String> translatorList = new ArrayList<>();
 
         String searchQuery = "SELECT * FROM GrantApplication";
@@ -415,7 +417,7 @@ public class ApplicationDAO {
                     application.setContract(res.getString("contract"));
                     application.setContractDocName(res.getString("contractDocName"));
                     application.setProposedDateOfPublication(res.getDate("proposedDateOfPublication"));
-                    application.setProposedPrintRun(res.getInt("proposedPrintRun"));
+                    application.setProposedDateOfPrintRun(res.getDate("proposedDateOfPrintRun"));
                     application.setPlannedPageExtent(res.getInt("plannedPageExtent"));
                     application.setTranslatorCV(res.getString("translatorCV"));
                     application.setTranslatorCVDocName(res.getString("translatorCVDocName"));
@@ -434,31 +436,88 @@ public class ApplicationDAO {
 
                     //get all idTranslator / Translator.Name  for that ReferenceNumber return ArrayList
                     translatorTrackId = getTranslatorTrackId(res.getString("ReferenceNumber"));
-
+                    
+  System.out.println("translatorTrackId: " + translatorTrackId);
                     translatorList = new ArrayList<>();
                     ArrayList<ArrayList<String>> mixedList = new ArrayList<>();
-                    ArrayList<String> testList = new ArrayList<>();
+                   testList = new ArrayList<>();
                     titleList = new ArrayList<>();
+                    translatorTrack = new TranslatorTracker();
 
                     authorList = getAuthors(res.getString("ReferenceNumber"));
+                    System.out.println("-------------------------------------------------------- \n");
+                    System.out.println(">>> ReferenceNumber: " + res.getString("ReferenceNumber"));
+                    System.out.println("list list translatorTrackId <<< 1234567890: " + Arrays.toString(translatorTrackId.toArray()));
+                    System.out.println("translatorTrackId.size(): " + translatorTrackId.size());
 
                     for (int i = 0; i < translatorTrackId.size(); i++) {
 
+                        System.out.println(" i: " + i);
+
+                        System.out.println(" translatorTrackId: " + translatorTrackId.get(i));
+
+                        System.out.println(" ReferenceNumber: " + res.getString("ReferenceNumber"));
+
                         String translatorNameForList = getTranslatorNames(translatorTrackId.get(i));
 
-                        testList = getTranslatorTrack(translatorTrackId.get(i));
+                        
+                        //    testList = new ArrayList<>();
+                        System.out.println("getTranslatorTrack Fill testList for  " + translatorTrackId.get(i));
+
+                        translatorTrack = getTranslatorTrack(translatorTrackId.get(i));
+                        
+                        testList = translatorTrack.getTitles();
+
+                        System.out.println(" i: " + i + " list testList <<< : " + Arrays.toString(testList.toArray()));
 
                         translatorList.add(translatorNameForList);
-                 
-                         // mixedList contains [0] Translator [1..] Titles
+
+                        System.out.println("list testList before added to  mixedList : " + Arrays.toString(testList.toArray()));
                         mixedList.add(testList);
 
                     }
 
-                    application.setTranslatorTitles(mixedList);
+                    System.out.println("End of  ReferenceNumber: " + res.getString("ReferenceNumber"));
+                    System.out.println("--------------------------------------------------------");
+
+                    System.out.println("list translatorList <<< 1234567890: " + Arrays.toString(translatorList.toArray()));
+                        System.out.println("list translatorTrack New <<< 1234567890: " + Arrays.toString(translatorTrack.getTitles().toArray()));
+                    System.out.println("list mixedList <<< : " + Arrays.toString(mixedList.toArray()));
+
+                 //   application.setTranslatorTitles(mixedList);
                     application.setTitles(titleList);
                     application.setTranslatorName(translatorList);
+
+                    // combine these two 
+                    //     }
+                    //          System.out.println("list getAuthors <<< : " + Arrays.toString(authorList.toArray()));
+//                    for (String[] arr : TranslatorTrack) {
+//                        System.out.println("list TranslatorTrack >>>> : " + Arrays.toString(arr));
+//                    }
+//
+//                    for (int i = 0; i < TranslatorTrack.size(); i++) {
+//
+//                        String[] xyz = TranslatorTrack.get(i);
+//                        System.out.println("list TranslatorTrack  xyz: " + Arrays.toString(xyz));
+//
+//                        String Title = xyz[0];
+//                        String Translator = xyz[1];
+//                        String ReferenceNumber = xyz[2];
+//                        String Author = xyz[3];
+//
+//                        System.out.println("list TranslatorTrack  xyz: " + Title);
+//                        System.out.println("list TranslatorTrack  xyz: " + Translator);
+//                        System.out.println("list TranslatorTrack  xyz: " + ReferenceNumber);
+//                        System.out.println("list TranslatorTrack  xyz: " + Author);
+//
+//                    }
+//                        application.setTitles(translatorTracks[0]);
+                    //    System.out.println("translatorList  " + Arrays.toString(translatorList.toArray()));
                     application.setAuthor(authorList);
+                    // }
+                    
+                    application.setTitles(translatorTrack.getTitles());
+                    
                     application.setStatus(res.getString("Status"));
 
                     listApplications.add(application);
@@ -476,13 +535,13 @@ public class ApplicationDAO {
         return listApplications;
     }
 
-     @SuppressWarnings("unchecked")
-    public static ArrayList getTranslatorTrack(String TranslatorTrackId) throws DBException {
+    public static TranslatorTracker getTranslatorTrack(String TranslatorTrackId) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
-
+        System.out.println("getTranslatorTrack TranslatorTracker: " + TranslatorTrackId);
+     //   ArrayList titleList = new ArrayList<>();
         ArrayList authorList = new ArrayList<>();
         ArrayList testList = new ArrayList<>();
         TranslatorTracker translatorTracker;
@@ -492,6 +551,7 @@ public class ApplicationDAO {
 
             translatorTracker = new TranslatorTracker();
 
+            // ps = conn.prepareStatement("SELECT Title FROM TranslatorTrack WHERE  TranslatorTrack.idTranslator = ?");
             ps = conn.prepareStatement("SELECT Translator.Name, TranslatorTrack.Title FROM Translator, TranslatorTrack WHERE TranslatorTrack.idTranslator = Translator.idTranslator AND TranslatorTrack.idTranslator = ?");
             ps.setString(1, TranslatorTrackId);
 
@@ -509,7 +569,9 @@ public class ApplicationDAO {
                     if (idx == 0) {
 
                         translatorTracker.setTranslatorName(res.getString(1));
+                  //     titleList.add(res.getString(1));
                         testList.add(res.getString(1));
+                        System.out.println(" idx: " + idx + " getTranslatorTrack translatorTracks Author: " + res.getString(1));
                     }
 
                     idx++;
@@ -522,6 +584,7 @@ public class ApplicationDAO {
             }
 
             translatorTracker.setTitles(titleList);
+            //  translatorTracker.setAuthorName(authorList);
 
         } catch (ClassNotFoundException | SQLException e) {
             LOGGER.debug(e.getMessage());
@@ -530,8 +593,11 @@ public class ApplicationDAO {
         }
 
         DBConn.close(conn, ps, res);
-        
-        return testList;
+
+        System.out.println("HiHo: titleList " + Arrays.toString(titleList.toArray()));
+        System.out.println("HiHo: testList  " + Arrays.toString(testList.toArray()));
+
+        return translatorTracker;
     }
 
     public static String getTranslatorNames(String translatorTrackId) throws ClassNotFoundException, SQLException {
@@ -541,7 +607,7 @@ public class ApplicationDAO {
         ResultSet res = null;
 
         /*
-         * translatorTrackID returns a list with all translators for a specific translatorTrackId
+         * translatorTrackID returns a list with all translators for a specific ReferenceNumber
          */
         String aTranslatorName = "";
 
@@ -586,7 +652,7 @@ public class ApplicationDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
-
+ System.out.println("getTranslatorTrackId: appRef " + appRef);
         /*
          * translatorTrackID returns a list with all translators for a specific ReferenceNumber
          */
@@ -618,7 +684,7 @@ public class ApplicationDAO {
         }
 
         DBConn.close(conn, ps, res);
-
+System.out.println("list translatorTrackID <<< : " + Arrays.toString(translatorTrackID.toArray()));
         return translatorTrackID;
     }
 

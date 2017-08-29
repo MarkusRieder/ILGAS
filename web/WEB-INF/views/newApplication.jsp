@@ -38,7 +38,7 @@
         <script src="js/jquery-ui.js"></script>
 
         <script>
-            var jsArray = [];
+            var translatorArray = [];
             var authorArray = [];
             var languageArray = [];
             var Name = "";
@@ -191,6 +191,7 @@
 
         <!--AutoComplete_Languages-->
         <script>
+            console.log(" AutoComplete_Languages ");
             $(function () {
                 function split(val) {
                     return val.split(/,\s*/);
@@ -230,22 +231,22 @@
                                 terms.pop();
                                 // add the selected item
                                 terms.push(ui.item.value);
+                                languageArray.push(ui.item.value);
                                 // add placeholder to get the comma-and-space at the end
                                 terms.push("");
                                 this.value = terms.join(", ");
-
                                 console.log("this.value:  ", this.value); //List
-                                console.log("terms: ", terms);  //Array
+                                console.log("terms: ", terms); //Array
 
-                                languageArray.push(terms);
+                                //languageArray.push(ui.item.value);
 
-                                $("#language_array").val(authorArray);
-
+                                //Do something
                                 var arrayLength = languageArray.length;
                                 for (var i = 0; i < arrayLength; i++) {
                                     console.log("itemValue   " + i + ":  ", languageArray[i]);
                                 }
-                                //Do something
+
+                                $("#language_array").val(languageArray);
                                 return false;
                             }
 
@@ -445,7 +446,6 @@
                     var tab = $(e.target.attributes.href.value);
                     $(tab).load(tab.data('url'));
                 });
-
                 $('.nav-tabs a:first').each(function () {
                     $(this.attributes.href.value).load($(this.attributes.href.value).data('url'));
                 });
@@ -462,8 +462,6 @@
                     document.getElementById("label_agreement").value = label;
                 });
             });
-
-
             $(function () {
                 $('div.contract').on('change', ':file', function () {
                     var input = $(this),
@@ -473,8 +471,6 @@
                     document.getElementById("label_contract").value = label;
                 });
             });
-
-
             $(function () {
                 $('div.translator_cv').on('change', ':file', function () {
                     var input = $(this),
@@ -484,7 +480,6 @@
                     document.getElementById("label_translator").value = label;
                 });
             });
-
             $(function () {
                 $('div.translationSample').on('change', ':file', function () {
                     var input = $(this),
@@ -494,8 +489,6 @@
                     document.getElementById("label_translationSample").value = label;
                 });
             });
-
-
             $(function () {
                 $('div.cover').on('change', ':file', function () {
                     var input = $(this),
@@ -515,23 +508,16 @@
             $(document).ready(function () {
 
                 counter = 1;
-
-
                 $("#addElement").click(function (event) {
 
                     counter++;
-
                     var $newDiv = $("<div class='input-group' style='margin-bottom:2px'>" + counter + ". Translator  </div>");
                     var $newInput = $("<input placeholder='Translator Name' value='' type='text'>");
-
                     $newInput
                             .attr("name", "Name" + counter)
                             .attr("id", "name" + counter)
                             .addClass("text wsp");
                     $newInput.appendTo($newDiv);
-
-
-
 //                    var $newInput = $("<input value='Last Name' type='text'> ");
 //                    $newInput
 //                            .attr("name", "LastName" + counter)
@@ -540,9 +526,7 @@
 //                    $newInput.appendTo($newDiv);
 
                     $newDiv.appendTo($("#generatedForm"));
-
                 });
-
             });
         </script>
         <script>
@@ -551,13 +535,9 @@
 
                 var fn = document.getElementById("translatorName");
                 document.getElementById("first0").value = fn.value;
-
-
                 Name = fn.value;
-
-                jsArray.push(Name);
-                console.log(" first entry in jsArray:: ", fn.value);
-
+                translatorArray.push(Name);
+                console.log(" first entry in translatorArray ", fn.value);
             }
 
             //    Add to an array
@@ -584,25 +564,21 @@
 
 
                     var item = document.getElementById(nr);
-
                     var itemValue = item.value;
-
 //                    console.log("itemValue   ", itemValue);
 
-                    jsArray.push(itemValue);
-
-//                    console.log("Array   ", jsArray[i]);
+                    translatorArray.push(itemValue);
+//                    console.log("Array   ", translatorArray[i]);
                     //Do something
                 }
 
                 $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
-
-                var arrayLength = jsArray.length;
+                var arrayLength = translatorArray.length;
                 for (var i = 0; i < arrayLength; i++) {
-                    console.log("itemValue   " + i + ":  ", jsArray[i]);
+                    console.log("itemValue   " + i + ":  ", translatorArray[i]);
                     //Do something
                 }
-
+                $("#translatorArray").val(translatorArray);
             }
         </script>
 
@@ -614,59 +590,37 @@
             $(document).ready(function () {
 
                 Authorcounter = 1;
-
-
                 $("#addAuthor").click(function (event) {
 
                     Authorcounter++;
-
                     var $newDiv = $("<div class='col-sm-12' style='margin-bottom:2px'>" + Authorcounter + ". Author  </div>");
                     var $newInput = $("<input placeholder='First Name'  type='text' autofocus>");
-
                     $newInput
                             .attr("name", "FirstName")
                             .attr("id", "authorFirstName" + Authorcounter)
                             .addClass("text wsp");
                     $newInput.appendTo($newDiv);
-
-
-
                     var $newInput = $("<input placeholder='Last Name' type='text'> ");
                     $newInput
                             .attr("name", "LastName")
                             .attr("id", "authorLastName" + Authorcounter)
                             .addClass("text");
                     $newInput.appendTo($newDiv);
-
-
                     $newDiv.appendTo($("#generatedFormAuthors"));
-
                 });
-
             });
         </script>
         <script>
             function  copyFirstRow2() {
 
                 console.log("document.getElementById(aFirstName)   ", document.getElementById("aFirstName").value);
-
-
                 var aFirstName = document.getElementById("aFirstName");
-
                 console.log("aFirstName.value   ", aFirstName.value);
-
                 document.getElementById("firstAuthor0").value = aFirstName.value;
-
-
-
                 var aLastName = document.getElementById("aLastName");
                 document.getElementById("lastAuthor0").value = aLastName.value;
-
                 var fulln = aFirstName.value + " " + aLastName.value;
-
                 authorArray.push(fulln, aFirstName.value, aLastName.value);
-
-
             }
 
             //    Add to an array
@@ -692,31 +646,20 @@
 //                     console.log("nr   ", nr);
 
                     var nrL = "authorLastName" + i;
-
                     var first = document.getElementById(nr);
-
                     var last = document.getElementById(nrL);
-
                     var firstValue = first.value;
-
                     var lastValue = last.value;
-
                     console.log("firstValue   ", firstValue);
-
                     console.log("lastValue   ", lastValue);
-
                     var fullName = firstValue + " " + lastValue;
-
                     console.log("fullName   ", fullName);
-
                     authorArray.push(fullName, firstValue, lastValue);
-
 //                    console.log("Array   ", jsArray[i]);
                     //Do something
                 }
 
                 $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
-
                 var arrayLength = authorArray.length;
                 for (var i = 0; i < arrayLength; i++) {
                     console.log("authorArray   " + i + ":  ", authorArray[i]);
@@ -861,7 +804,7 @@
 
                                     <h3> Translator's Details</h3>
                                     <ul class="dashed">
-                                        <li>A copy of the translator’s CV, including a list of previous published literary translations</li>
+                                        <li>A copy of the translator's CV, including a list of previous published literary translations</li>
                                         <li>Details of the fee to be paid to the translator (this should include the total sum in Euro and a breakdown of the rate according to which this sum has been calculated)</li>
                                     </ul>
 
@@ -1171,30 +1114,10 @@
                                                        placeholder="Number of Titles"
                                                        >      
                                             </div>
-                                            <!--
-                                            <div class="col-sm-3">    
-                                            <input id="DateModified"                                
-                                            type="text"                                
-                                            class="form-control"                                
-                                            name="DateModified"                                
-                                            value="${companyDetails.DateModified}"    
-                                            readonly
-                                            placeholder="Date modified"
-                                            >
-                                            </div>
-                                            -->
                                         </div> <!--row-->
 
                                         <!--keep in one line otherwise placeholder doesn't show-->
-                                        <textarea id="Notes" 
-                                                  class="form-control" 
-                                                  style="width: 883px; height: 343px;" 
-                                                  name="Notes"            
-                                                  placeholder="enter optional notes"
-                                                  >                 
-                                            <c:out value="${companyDetails.Notes}" />
-                                        </textarea>
-
+<textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
                                     </div> <!--container-->
                                 </div> <!--tab contact-->
 
@@ -1226,7 +1149,7 @@
                                                                        class="form-control"                                
                                                                        name="AuthorFirstName"                                
                                                                        value=""    
-                                                                       placeholder="Author FirstName"
+                                                                       placeholder="Author First Name"
                                                                        >
                                                                 <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                                             </div>
@@ -1240,7 +1163,7 @@
                                                                        class="form-control"                                
                                                                        name="AuthorLastName"                                
                                                                        value=""    
-                                                                       placeholder="Author LastName"
+                                                                       placeholder="Author Last Name"
                                                                        >
                                                                 <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                                             </div>
@@ -1354,41 +1277,9 @@
                                                                >add more Translators</a>
 
                                                         </div>
-                                                        <!--                                                        <div class="col-md-4">  
-                                                                                                                    <div class="imageupload">
-                                                                                                                        <div class="file-tab panel-body cover">
-                                                                                                                            <label class="btn btn-default btn-file">
-                                                                                                                                <span></span>
-                                                                                                                                 The file is stored here. 
-                                                                                                                                <input type="file" name="image-file">
-                                                                                                                                <i class="glyphicon glyphicon-picture"></i>
-                                                                                                                            </label>
-                                                                                                                            <button type="button" class="btn btn-default">Remove</button>
-                                                                                                                        </div>
-                                                        
-                                                                                                                        <input type="hidden" value="Cover" name="image-file" id="cover_upload"/>
-                                                                                                                    </div>
-                                                                                                                </div>-->
-                                                        <!--Upload form for agreement-->
 
-                                                        <!--                                                        <div class="col-md-4">                                                
-                                                                                                                    <strong class="pull-left">Upload book cover</strong>
-                                                                                                                    <label for="cover" class="pull-left">Upload book cover</label>
-                                                                                                                    <div class="input-group cover">                                      
-                                                                                                                        <label class="btn btn-default btn-file">
-                                                                                                                            Select image <input type="file"  name="file" id="cover" >
-                                                                                                                            <span class="glyphicon glyphicon-picture"></span>
-                                                                                                                        </label>
-                                                        
-                                                                                                                        <input type="hidden" name="userID" value="${userID}">
-                                                                                                                        <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                                                                        <input id="label_cover" class="pull-left"/>
-                                                                                                                        <br/>
-                                                                                                                        <br/>
-                                                                                                                        <input type="hidden" value="cover" name="destination" id="cover_upload"/>
-                                                                                                                    </div>
-                                                                                                                </div>-->
+                                                        <input type="hidden" id="translatorArray" name="translatorArray" >
+
                                                     </div> <!--row-->
 
                                                     <!--Fifth row-->
@@ -1441,6 +1332,8 @@
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
 
+                                                                <input type="hidden" id="language_Array" name="languageArray" >
+
                                                                 <div class="col-xs-6">
                                                                     <div class="mini-box">
                                                                         <label for="physicalDescription" class="pull-left" >Physical Description</label>
@@ -1470,33 +1363,59 @@
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
 
+                                                                <div class="col-xs-6">
+                                                                    <div class="mini-box" style="margin-bottom: 20px">
+                                                                        <label for="duplicates" class="pull-left" style="margin-top: 10px">Copies</label>
+                                                                        <input id="copies"                                
+                                                                               type="text"                                
+                                                                               class="form-control"                                
+                                                                               name="copies"                                
+                                                                               value=""    
+                                                                               placeholder="Copies"
+                                                                               >
+                                                                    </div>
+                                                                </div> <!--col-xs-6-->
+
+
+                                                                <div class="col-xs-6">
+                                                                    <div class="mini-box" style="margin-bottom: 20px">
+                                                                        <label for="series" class="pull-left" style="margin-top: 10px">Series</label>
+                                                                        <input id="series"                                
+                                                                               type="text"                                
+                                                                               class="form-control"                                
+                                                                               name="series"                                
+                                                                               value=""    
+                                                                               placeholder="Series"
+                                                                               >
+                                                                    </div>
+                                                                </div> <!--col-xs-6-->
                                                             </div> <!--row-->
 
                                                             <div class="row">
                                                                 <div class="col-sm-5">
                                                                     <!--<div class="mini-box">-->   
-                                                                        <label for="isbn" class="pull-left">ISBN</label>
-                                                                        <input id="isbn"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="isbn"                                
-                                                                               value=""    
-                                                                               placeholder="ISBN"
-                                                                               >
+                                                                    <label for="isbn" class="pull-left">ISBN</label>
+                                                                    <input id="isbn"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="isbn"                                
+                                                                           value=""    
+                                                                           placeholder="ISBN"
+                                                                           >
 
                                                                     <!--</div>-->
                                                                 </div> <!--col-xs-6-->
 
                                                                 <div class="col-sm-5" style="margin-left: 45px">  
                                                                     <!--<div class="mini-box">-->
-                                                                        <label for="isnn" class="pull-left">ISSN</label>
-                                                                        <input id="isnn"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="isnn"                                
-                                                                               value=""    
-                                                                               placeholder="ISSN"
-                                                                               >
+                                                                    <label for="isnn" class="pull-left">ISSN</label>
+                                                                    <input id="isnn"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="issn"                                
+                                                                           value=""    
+                                                                           placeholder="ISSN"
+                                                                           >
                                                                     <!--</div>-->                                                                                    
                                                                 </div> <!--col-xs-6-->
                                                             </div> <!--row-->
@@ -1521,70 +1440,17 @@
                                                                 <input type="hidden" value="Cover" name="image-file" id="label_cover"/>
                                                             </div>
                                                         </div>
-                                                        <!--
-                                                                                                                </div> col-xs-8
-                                                        
-                                                        
-                                                                                                                <div class="col-sm-3">
-                                                                                                                    <img src="images/not-available.jpg" class="img-rounded" alt="Cinque Terre" width="204" height="206"> 
-                                                                                                                </div>-->
-                                                        <!-- bootstrap-imageupload. -->
-                                                        <!--                    <div class="imageupload panel panel-default">
-                                                                                <div class="panel-heading clearfix">
-                                                                                </div>
-                                                                                <div class="file-tab panel-body cover">
-                                                                                    <label class="btn btn-default btn-file">
-                                                                                        <span></span>
-                                                                                         The file is stored here. 
-                                                                                        <input type="file" name="image-file">
-                                                                                        <i class="glyphicon glyphicon-picture"></i>
-                                                                                    </label>
-                                                                                    <button type="button" class="btn btn-default">Remove</button>
-                                                                                </div>
-                                                        
-                                                        
-                                                                                <input id="label_agreement" class="pull-left"/>
-                                                                                <br/>
-                                                                                <br/>
-                                                                                <input type="hidden" value="Cover" name="image-file" id="cover_upload"/>
-                                                                            </div>-->
                                                     </div> <!--row-->
 
-                                                    <!--Seventh row-->
-
-<!--                                                    <div class="row" style="margin-bottom: 10px">
-
-                                                        <div class="col-sm-3">    
-                                                            <label for="isbn" class="pull-left">ISBN</label>
-                                                            <input id="isbn"                                
-                                                                   type="text"                                
-                                                                   class="form-control"                                
-                                                                   name="isbn"                                
-                                                                   value=""    
-                                                                   placeholder="ISBN"
-                                                                   >
-                                                        </div>
-
-                                                        <div class="col-sm-3" style="margin-left: 70px">    
-                                                            <label for="isnn" class="pull-left">ISNN</label>
-                                                            <input id="isnn"                                
-                                                                   type="text"                                
-                                                                   class="form-control"                                
-                                                                   name="isnn"                                
-                                                                   value=""    
-                                                                   placeholder="ISNN"
-                                                                   >
-                                                        </div>
-                                                    </div> row-->
 
                                                     <!--Eigth row-->
 
                                                     <div class="row" style="margin-bottom: 10px">
 
                                                         <div class="col-sm-4">   
-                                                            <label for="notes" class="pull-left">Notes</label>
+                                                            <label for="bookNotes" class="pull-left">Notes</label>
                                                             <div class="form-group">
-                                                                <textarea class="form-control" id="notes" name="notes" style="width: 800px; height: 215px" placeholder="Notes"></textarea>
+                                                                <textarea class="form-control" id="bookNotes" name="bookNotes" style="width: 800px; height: 215px" placeholder="Notes"></textarea>
                                                             </div>
                                                         </div>
                                                     </div> <!-- row  -->
@@ -1673,12 +1539,9 @@
                                                         </label>
                                                     </div>
 
-                                                    <strong>   The date of proposed print run:</strong> 
+                                                    <strong>   The proposed print run:</strong> 
                                                     <div class="input-group"  style="margin-bottom: 40px;">
-                                                        <input type="text" name="proposedDateOfPrintRun" id="proposed-print-run" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                        <label class="input-group-addon" for="proposed-print-run">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </label>
+                                                        <input type="text" name="proposedPrintRun" id="proposed-print-run" class="form-control" />    
                                                     </div>
 
                                                     <strong  style="margin-bottom: 40px;">The planned page extent of the published translation:</strong>
@@ -1689,13 +1552,6 @@
                                                 </div>
                                                 <script>
                                                     $("#proposed-date-of-publication").datepicker({
-                                                        showWeekDays: true,
-                                                        todayHighlight: true,
-                                                        autoclose: true
-                                                    });
-                                                </script>
-                                                <script>
-                                                    $("#proposed-print-run").datepicker({
                                                         showWeekDays: true,
                                                         todayHighlight: true,
                                                         autoclose: true
@@ -1746,7 +1602,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <textarea class="form-control" placeholder="Notes" name="Notes"
+                                                <textarea class="form-control" placeholder="Notes" name="translatorNotes"
                                                           style="width: 280px; height: 196px;"></textarea>
                                             </div>
                                         </div> 
@@ -1998,7 +1854,6 @@
         <script>
                                                 var $imageupload = $('.imageupload');
                                                 $imageupload.imageupload();
-
                                                 $('#imageupload-disable').on('click', function () {
                                                     $imageupload.imageupload('disable');
                                                     $(this).blur();
