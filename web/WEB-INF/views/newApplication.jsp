@@ -45,7 +45,7 @@
             var Author = "";
             var counter = 0;
             var Authorcounter = 0;
-
+            var zzz = 0;
             var translatorName876;
 
             $.datepicker.setDefaults({dateFormat: 'dd/mm/yy'});
@@ -475,11 +475,12 @@
             });
             $(function () {
                 $('div.translator_cv').on('change', ':file', function () {
+                    console.log("label_translator" + zzz);
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_translator").value = label;
+                    document.getElementById("label_translator" + zzz).value = label;
                 });
             });
             $(function () {
@@ -513,23 +514,111 @@
                 $("#addElement").click(function (event) {
 
                     counter++;
-                    var $newDiv = $("<div class='input-group' style='margin-bottom:2px'>" + counter + ". Translator  </div>");
-                    var $newInput = $("<input placeholder='Translator Name' value='' type='text'>");
+                    var $newDiv = $("<div class='input-group' style='mar gin-bottom :2px'>" + counter + ". Translator  </div>");
+                    //      var $newInput = $("<input placeholder='Translator Name' type='text'> ");
+
+                    var $newInput = $("<input placeholder='Translator Name' type='text'> ");
                     $newInput
                             .attr("name", "Name" + counter)
                             .attr("id", "name" + counter)
                             .addClass("text wsp");
-                    $newInput.appendTo($newDiv);
-//                    var $newInput = $("<input value='Last Name' type='text'> ");
-//                    $newInput
-//                            .attr("name", "LastName" + counter)
-//                            .attr("id", "last" + counter)
-//                            .addClass("text");
-//                    $newInput.appendTo($newDiv);
 
+                    $newInput.appendTo($newDiv);
+
+                    $newDiv.appendTo($("#generatedForm"));
+
+
+                    zzz = counter;
+
+                    var $newDiv = document.createElement("div");
+
+                    $newDiv.className = ("col-md-8");
+                    $newDiv.style = ("margin-bottom: 20px");
+
+
+                    $label = document.createElement("label");
+
+                    $label.for = ("label_translator" + zzz);
+                    $label.className = ("control-label pull-left");
+                    $label.innerHTML = ("Upload a copy of Jean Yves Masson's CV:");
+
+                    $break = document.createElement("br");
+
+                    $small = document.createElement("small");
+
+                    $small.className = ("pull-left");
+                    $small.style = ("margin-bottom: 10px");
+                    $small.innerHTML = ("this should include a list of previous published literary translations");
+
+                    var $newDiv1 = document.createElement("div");
+
+                    $newDiv1.className = ("input-group translator_cv pull-left");
+                    $newDiv1.style = ("margin-bottom: 40px");
+
+                    $label1 = document.createElement("label");
+
+                    $label1.className = ("btn btn-default btn-file pull-left");
+                    $label1.innerHTML = ("Select file ");
+
+                    var $newInput = document.createElement("input");
+
+
+                    $newInput.type = ("file");
+                    $newInput.name = ("file");
+                    $newInput.id = ("translator_cv" + zzz);
+
+                    var $span = document.createElement("span");
+
+                    $span.className = ("glyphicon glyphicon-folder-open");
+
+                    var $newInput1 = document.createElement("input");
+
+                    $newInput1.className = ("pull-left");
+                    $newInput1.id = ("label_translator" + zzz);
+
+                    var $newInput2 = document.createElement("input");
+
+                    $newInput2.className = ("pull-left");
+                    $newInput2.id = ("translator_cv_upload" + zzz);
+                    $newInput2.type = ("hidden");
+                    $newInput2.name = ("destination");
+                    $newInput2.value = ("Translator_CV");
+
+                    $newDiv.append($label);
+                    $newDiv.append($break);
+                    $newDiv.append($small);
+
+                    $label1.append($newInput);
+                    $label1.append($span);
+
+                    $newDiv1.append($label1);
+
+
+
+                    $newDiv.append($newDiv1);
+                    $newDiv.append($newInput1);
+                    $newDiv.append($newInput2);
+
+                    document.getElementById("additionalTranslator").appendChild($newDiv);
+
+
+//                        $newDiv                    <div class="col-md-8"   style="margin-bottom: 60px">
+//                        $label                        <label for="label_translator" class="control-label pull-left" id="123"></label>
+//                        $break                        <br/>
+//                        $small                        <small class="pull-left"   style="margin-bottom: 10px">this should include a list of previous published literary translations</small> 
+//                        $newDiv1                        <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
+//                        $label1                            <label class="btn btn-default btn-file pull-left">Select file //                                                           
+//                        $newInput                          <input type="file"  name="file" id="translator_cv" >
+//                        $span                              <span class="glyphicon glyphicon-folder-open"></span>
+//                                                         </label>
+//                       $newInput1                        <input id="label_translator0" class="pull-left"/>
+//                        $newInput2                       <input type="hidden" id="translator_cv_upload" value="Translator_CV" name="destination" />                                          
+//                                                </div>
+//                                            </div>
 
                 });
             });
+
         </script>
         <script>
             function  copyFirstRow() {
@@ -674,19 +763,13 @@
 
             function myFunction() {
                 var x = document.getElementById("translatorName");
-
                 translatorName876 = x.value;
-
                 var tester = "Upload a copy of " + translatorName876 + "'s CV:";
-
                 localStorage.setItem('translatorName876', tester);
                 localStorage.setItem('translatorName8', translatorName876);
-
                 var tripper = localStorage.getItem("translatorName876");
-                
                 document.getElementById("123").innerHTML = tripper;
                 document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-
                 console.log("translatorName876   ", localStorage.getItem("translatorName876"));
                 console.log("translatorName8   ", localStorage.getItem("translatorName8"));
                 console.log("tester   ", tester);
@@ -694,22 +777,18 @@
             }
 
         </script>
-        
-             <script>
 
-             $(document).ready(function () {
-               
+        <script>
+
+            $(document).ready(function () {
+
                 var tripper = localStorage.getItem("translatorName876");
-                
                 document.getElementById("123").innerHTML = tripper;
                 document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-
                 console.log("translatorName876   ", localStorage.getItem("translatorName876"));
                 console.log("translatorName8   ", localStorage.getItem("translatorName8"));
-
                 console.log("tripper 1  ", tripper);
             });
-
         </script>
 
         <style>
@@ -1646,13 +1725,13 @@
                                                 <label for="label_translator" class="control-label pull-left" id="123"></label>
                                                 <br/>
                                                 <small class="pull-left"   style="margin-bottom: 10px">this should include a list of previous published literary translations</small> 
-                                                <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
                                                     <label class="btn btn-default btn-file pull-left">
                                                         Select file 
-                                                        <input type="file"  name="file" id="translator" >
+                                                        <input type="file"  name="file" id="translator_cv" >
                                                         <span class="glyphicon glyphicon-folder-open"></span>
                                                     </label>
-                                                    <input id="label_translator" class="pull-left"/>
+                                                    <input id="label_translator0" class="pull-left"/>
                                                     <br/>
                                                     <br/>          
                                                     <input type="hidden" name="userID" value="${userID}">
@@ -1665,7 +1744,7 @@
 
                                             <input type="text" name="userID" id="translatorName123" value='' placeholder="yuuiytuituit">
 
-                                            <div class="row" id="additionalTranslator"> </div>
+                                            <div id="additionalTranslator"> </div>
 
                                             <div class="col-md-4" style="margin-bottom: 20px">                                              
 
