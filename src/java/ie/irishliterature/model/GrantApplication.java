@@ -18,6 +18,8 @@ public class GrantApplication {
     private int publisherID;
 
     private String userID;
+    
+    private String bookTitle;
 
 //    Rights Agreement
     private String agreement;//path + filename
@@ -67,12 +69,14 @@ public class GrantApplication {
     private String cover;//path + filename
 
     private String coverName; //filename
+    
+    private String genre;
 
     private ArrayList<String> TranslatorName;
-    
+
     private ArrayList<String> TranslatorTrack;
-    
-    private  ArrayList<ArrayList<String>> translatorTitles;
+
+    private ArrayList<ArrayList<String>> translatorTitles;
 
     private String AuthorName;
 
@@ -83,23 +87,22 @@ public class GrantApplication {
     private List<String> Titles;
 
     private java.sql.Timestamp LASTUPDATED;
-    
-                                                   
-private String foreignPublisher;
-private String foreignCountry ;
-private String targetLanguage;
+
+    private String foreignPublisher;
+    private String foreignCountry;
+    private String targetLanguage;
 //4. Translator’s name
 //5. Translator’s track record
 //6. Translation Sample (as is!)
-private String Original; // (Like the attachment one for translation sample)
+    private String Original; // (Like the attachment one for translation sample)
 //8. T&Cs Accepted (great!)
 //9. Application Approved (also great!)
 
-//1. Expert Reader
-//2. Sample Sent Out
-//3. Sample Returned
-//4. Reader’s Report
-//5. Reader’s Report Summary (this goes into the document for the board – staff can add this)
+    private String expertReaderName;
+    private Date sampleSentOut;
+    private Date sampleReturned;
+    private String readerReport;
+    private String readerReportSummary; // (this goes into the document for the board – staff can add this)
 //
 //1. Board Meeting
 //2. Amount Requested 
@@ -616,5 +619,158 @@ private String Original; // (Like the attachment one for translation sample)
         this.LASTUPDATED = LASTUPDATED;
     }
 
+    /**
+     * @return the foreignPublisher
+     */
+    public String getForeignPublisher() {
+        return foreignPublisher;
+    }
+
+    /**
+     * @param foreignPublisher the foreignPublisher to set
+     */
+    public void setForeignPublisher(String foreignPublisher) {
+        this.foreignPublisher = foreignPublisher;
+    }
+
+    /**
+     * @return the foreignCountry
+     */
+    public String getForeignCountry() {
+        return foreignCountry;
+    }
+
+    /**
+     * @param foreignCountry the foreignCountry to set
+     */
+    public void setForeignCountry(String foreignCountry) {
+        this.foreignCountry = foreignCountry;
+    }
+
+    /**
+     * @return the targetLanguage
+     */
+    public String getTargetLanguage() {
+        return targetLanguage;
+    }
+
+    /**
+     * @param targetLanguage the targetLanguage to set
+     */
+    public void setTargetLanguage(String targetLanguage) {
+        this.targetLanguage = targetLanguage;
+    }
+
+    /**
+     * @return the Original
+     */
+    public String getOriginal() {
+        return Original;
+    }
+
+    /**
+     * @param Original the Original to set
+     */
+    public void setOriginal(String Original) {
+        this.Original = Original;
+    }
+
+    /**
+     * @return the expertReaderName
+     */
+    public String getExpertReaderName() {
+        return expertReaderName;
+    }
+
+    /**
+     * @param expertReaderName the expertReaderName to set
+     */
+    public void setExpertReaderName(String expertReaderName) {
+        this.expertReaderName = expertReaderName;
+    }
+
+    /**
+     * @return the sampleSentOut
+     */
+    public Date getSampleSentOut() {
+        return sampleSentOut;
+    }
+
+    /**
+     * @param sampleSentOut the sampleSentOut to set
+     */
+    public void setSampleSentOut(Date sampleSentOut) {
+        this.sampleSentOut = sampleSentOut;
+    }
+
+    /**
+     * @return the sampleReturned
+     */
+    public Date getSampleReturned() {
+        return sampleReturned;
+    }
+
+    /**
+     * @param sampleReturned the sampleReturned to set
+     */
+    public void setSampleReturned(Date sampleReturned) {
+        this.sampleReturned = sampleReturned;
+    }
+
+    /**
+     * @return the readerReport
+     */
+    public String getReaderReport() {
+        return readerReport;
+    }
+
+    /**
+     * @param readerReport the readerReport to set
+     */
+    public void setReaderReport(String readerReport) {
+        this.readerReport = readerReport;
+    }
+
+    /**
+     * @return the readerReportSummary
+     */
+    public String getReaderReportSummary() {
+        return readerReportSummary;
+    }
+
+    /**
+     * @param readerReportSummary the readerReportSummary to set
+     */
+    public void setReaderReportSummary(String readerReportSummary) {
+        this.readerReportSummary = readerReportSummary;
+    }
+
+    /**
+     * @return the genre
+     */
+    public String getGenre() {
+        return genre;
+    }
+
+    /**
+     * @param genre the genre to set
+     */
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    /**
+     * @return the bookTitle
+     */
+    public String getBookTitle() {
+        return bookTitle;
+    }
+
+    /**
+     * @param bookTitle the bookTitle to set
+     */
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+    }
 
 }

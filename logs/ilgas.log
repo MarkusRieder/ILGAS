@@ -30,3 +30,8 @@ DEBUG   2017-08-07 22:02:38,016 [http-listener-1(2)] ie.irishliterature.dao.Appl
 DEBUG   2017-08-10 14:21:12,768 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Field 'TranslatorTrack_idTranslatorTrack' doesn't have a default value
 DEBUG   2017-08-17 03:51:02,732 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Before start of result set
 DEBUG   2017-08-17 03:55:52,101 [http-listener-1(5)] ie.irishliterature.dao.ApplicationDAO  - Before start of result set
+DEBUG   2017-09-01 14:33:08,547 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Column 'sampleSentOut' not found.
+DEBUG   2017-09-01 15:13:08,409 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'genre' not found.
+DEBUG   2017-09-01 15:16:01,933 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
+DEBUG   2017-09-01 15:17:33,524 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
+DEBUG   2017-09-01 15:18:09,274 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.

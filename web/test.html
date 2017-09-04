@@ -2,26 +2,39 @@
 
 <html>
     <head>
+        <meta charset="utf-8">
         <title>Test</title>
 
+
+        <!--JQuery-->
 
         <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
 
 
+        <!-- Bootstrap -->
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+        <!--http://jschr.github.io/bootstrap-modal/bs3.html-->
+
+        <!--        <link href="css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
+                <link href="css/bootstrap-modal.css" rel="stylesheet" />-->
+
+        <!--DataTables-->
+
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/1.10.15/integration/font-awesome/dataTables.fontAwesome.css">
+
+
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css" />
-        <link href="css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
-        <link href="css/bootstrap-modal.css" rel="stylesheet" />
+
 
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
@@ -41,76 +54,161 @@
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/jquery-ui.js"></script>
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script type="text/javascript" language="javascript" src="http://getbootstrap.com/2.3.2/assets/js/google-code-prettify/prettify.js"></script>
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
-        <script src="js/bootstrap-modalmanager.js"></script>
-        <script src="js/bootstrap-modal.js"></script>
+        <style type="text/css">
+            .zoomin img { height: 200px; 
+                          width: 200px; 
+                          -webkit-transition: all 2s ease; 
+                          -moz-transition: all 2s ease; 
+                          -ms-transition: all 2s ease; 
+                          transition: all 2s ease; 
+            } 
+            .zoomin img:hover { 
+                width: 300px; 
+                height: 300px;
+            }
+            td.details-control {
+                background: url('images/details_open.png') no-repeat center center;
+                cursor: pointer;
+            }
+            tr.shown td.details-control {
+                background: url('images/details_close.png') no-repeat center center;
+            }
+            div.container {
+                width: 80%;
+            }
+            .dropdown-container {
+                position: relative;
+            }
 
+            .dropdown-menu {
+                position: absolute;
+                top: 100%; /* Bottom of button */
+                right: 0;
+                margin-left: -100px; /* More to the left */
+            }
+        </style>
 
     </head>
     <body>
 
         <div class="container">
-            <div>
+            <!--            <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Translator</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="background-color: yellow">Jean Yves Masson</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp</td>
+                                    <td></td>
+                                </tr>
+            
+                                <tr>
+                                    <td align="left">Last Poems</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td align="left">The Tower</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td align="left">Moonshine Opera</td>  
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td align="left">Moonshine Opera 2</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table border="0">
+                            <thead>
+                                <tr>
+                                    <th>Translator: </th>
+                                    <th> &nbsp Title(s): </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="left">Jean Yves Masson: &nbsp;</td>
+                                    <td align="left">&nbsp Last Poems &nbsp</td>
+                                    <td align="left">&nbsp The Tower &nbsp</td>
+                                    <td align="left">&nbsp Moonshine Opera &nbsp</td>  
+                                    <td align="left">&nbsp Moonshine Opera 2 &nbsp</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>-->
 
-                Hello!
-
-                <div id="stack1" class="modal fade" tabindex="-1" data-focus-on="input:first" >
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Stack One</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>One fine body…</p>
-                        <p>One fine body…</p>
-                        <p>One fine body…</p>
-                        <input class="form-control" type="text" data-tabindex="1" />
-                        <input class="form-control" type="text" data-tabindex="2" />
-                        <a class="btn btn-default" data-toggle="modal" href="#stack2">Launch modal</a>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-                        <button type="button" class="btn btn-primary">Ok</button>
-                    </div>
+            <div class="dropdown-container">
+                <div class="btn-group">
+                    <button class="btn btn-small btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="true">
+                        Jean Yves Masson:
+                        <span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Last Poems</a></li>
+                        <li><a href="#">The Tower</a></li>
+                        <li><a href="#">Moonshine Opera</a></li>
+                        <li><a href="#">Moonshine Opera 2</a></li>
+                    </ul>
                 </div>
 
-                <div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" >
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Stack Two</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>One fine body…</p>
-                        <p>One fine body…</p>
-                        <input class="form-control" type="text" data-tabindex="1" />
-                        <input class="form-control" type="text" data-tabindex="2" />
-                        <a class="btn btn-default" data-toggle="modal" href="#stack3">Launch modal</a>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-                        <button type="button" class="btn btn-primary">Ok</button>
-                    </div>
+                <div class="btn-group">
+                    <button class="btn btn-small btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="true">
+                        Sparky Sparkster:
+                        <span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Moonshine Opera 2</a></li>
+                    </ul>
                 </div>
 
-                <div id="stack3" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Stack Three</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>One fine body…</p>
-                        <input class="form-control" type="text" data-tabindex="1" />
-                        <input class="form-control" type="text" data-tabindex="2" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-                        <button type="button" class="btn btn-primary">Ok</button>
-                    </div>
+                <div class="btn-group">
+                    <button class="btn btn-small btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="true">
+                        Felix Nutter:
+                        <span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Moonshine Opera</a></li>
+                        <li><a href="#">Moonshine Opera</a></li>
+                        <li><a href="#">Moonshine Opera 2</a></li>
+                    </ul>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-small btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="true">
+                        Nathalie Shepard:
+                        <span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Moonshine Opera</a></li>
+                        <li><a href="#">Moonshine Opera</a></li>
+                        <li><a href="#">Moonshine Opera</a></li>
+                        <li><a href="#">Moonshine Opera</a></li>
+                        <li><a href="#">Moonshine Opera</a></li>
+                        <li><a href="#">Moonshine Opera</a></li>
+
+                        <li><a href="#">Moonshine Opera 2</a></li>
+                    </ul>
                 </div>
 
             </div>
         </div>
+
 
     </body>
 </html>

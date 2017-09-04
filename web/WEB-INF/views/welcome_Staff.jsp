@@ -14,29 +14,29 @@
 
         <title>Translation Grant Application System</title>
 
-        
+
         <!--JQuery-->
-        
+
         <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
 
 
         <!-- Bootstrap -->
-        
+
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-        
+
         <!--http://jschr.github.io/bootstrap-modal/bs3.html-->
-        
-        <link href="css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
-        <link href="css/bootstrap-modal.css" rel="stylesheet" />
-        
+
+        <!--        <link href="css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
+                <link href="css/bootstrap-modal.css" rel="stylesheet" />-->
+
         <!--DataTables-->
-        
+
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/1.10.15/integration/font-awesome/dataTables.fontAwesome.css">
-        
-        
+
+
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
@@ -62,11 +62,11 @@
         <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/jquery-ui.js"></script>
-        
+
         <!--http://jschr.github.io/bootstrap-modal/bs3.html-->
-        
-        <script src="js/bootstrap-modalmanager.js"></script>
-        <script src="js/bootstrap-modal.js"></script>
+
+        <!--        <script src="js/bootstrap-modalmanager.js"></script>
+                <script src="js/bootstrap-modal.js"></script>-->
 
 
         <script>
@@ -300,7 +300,7 @@
                                 //if length = 1 we have just 1 Author ==> display
                                 //if length >  we have more than 1 Author ==>
                                 // display first Author - put the rest into modal2
-                                console.log("Author length :" + data.length);
+                                //     console.log("Author length :" + data.length);
                                 if (type === 'display') {
                                     return '<textarea name="Author" rows="2" cols="40">'
                                             + data
@@ -370,10 +370,7 @@
                     }
 
                     $("#bookCover").val(cver);
-
                     document.getElementById("bookCover").src = cver;
-
-
 
                     $("#Title").val($(this).closest('tr').children()[5].textContent); // First
                     $("#Genre").val($(this).closest('tr').children()[7].textContent); // Last
@@ -511,6 +508,7 @@
                         //    {"data": "ReferenceNumber"},
 
                         {"data": "company"},
+
                         {"data": "agreement",
                             "render": function (data, type, row) {
 
@@ -593,13 +591,16 @@
                                 }
                                 ;
                             }},
+                        {"data": "genre"},
                         {"data": "TranslatorName"},
+                        {"data": "expertReaderName"},
 //                        {"data": "idTranslator"},
+                        {"data": "bookTitle"},
                         {"data": "translatorTitles"},
-
                         {"data": "Titles"},
                         {"data": "translatorCVDocName"},
                         {"data": "cover"}
+
 
                     ],
                     columnDefs: [
@@ -699,8 +700,8 @@
                     var TranslName = rowdata.TranslatorName;
                     $("#TranslatorName").val(TranslName);
 
-                    console.log("TranslName   " + TranslName);
-                    console.log("rowdata.TranslatorName   " + rowdata.TranslatorName);
+//                    console.log("TranslName   " + TranslName);
+//                    console.log("rowdata.TranslatorName   " + rowdata.TranslatorName);
 
 
                     var bookTitles = rowdata.Titles;
@@ -708,11 +709,11 @@
 
 
 
-                    console.log("TranslName   " + TranslName);
-
-                    console.log("rowdata.Title   " + rowdata.Titles);
-
-                    console.log("rowdata.agreemnt   " + agreement);
+//                    console.log("TranslName   " + TranslName);
+//
+//                    console.log("rowdata.Title   " + rowdata.Titles);
+//
+//                    console.log("rowdata.agreemnt   " + agreement);
 
                     // Generate table translatorTrackTable
 
@@ -766,8 +767,38 @@
                     myTableDiv.appendChild(tble);
 
 
+// build modals first
 
 
+                    for (i = 0; i < translatorTrack.length; i++) {
+                        for (j = 0; j < translatorTrack[i].length; j++) {
+
+                            // get translators
+                            if (i === 0) {
+                                var newdiv = $('<div>', {class: 'text-left', text: translatorTrack[i][j]});
+                                var a = document.createElement('a');
+                                var linkText = document.createTextNode("  see Trackrecord");
+                                //       console.log("translators:  " + translatorTrack[i][j]);
+                                a.appendChild(linkText);
+                                a.title = "see Trackrecord";
+                                a.class = "button";
+                                a.href = "#stack2";
+
+                                newdiv.append(a);
+
+                            }
+                            $('#testcontainer').find('a').attr('data-toggle', 'modal');
+
+                            $('#testcontainer').append(newdiv);
+
+                            //print track record
+                            if (i !== 0) {
+                                //    console.log("translatorTrack[i][j]:  " + translatorTrack[i][j]);
+                            }
+                        }
+
+
+                    }
 
 //                    $("#appcontract").val($(this).closest('tr').children()[6].textContent);
 
@@ -783,7 +814,7 @@
 //                    var cv = $trans;
 //                    alert("$trans 2:: " + $trans);
 //                    $("#apptranslatorCV").val(trans);
-                    console.log(rowdata.copiesTranslationSample);
+                    //   console.log(rowdata.copiesTranslationSample);
 
                     $("#appnumberOfPages").val($(this).closest('tr').children()[11].textContent);
                     $("#appfeePerPage").val($(this).closest('tr').children()[12].textContent);
@@ -793,7 +824,6 @@
                     $("#appcopiesSent").val($(this).closest('tr').children()[16].textContent);
                     $("#appdateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
 //                    $("#appcopiesTranslationSample").val($(this).closest('tr').children()[18].textContent);
-
 //                    var ts = $transSamp;
 //                    alert("$transSamp 2:: " + $transSamp);
 //                    $("#appcopiesTranslationSample").val(transSamp);
@@ -801,11 +831,14 @@
 
                     $("#appTC_ACCEPTED").val($(this).closest('tr').children()[19].textContent);
                     $("#appAPPROVED").val($(this).closest('tr').children()[20].textContent);
+                    $("#appGenre").val($(this).closest('tr').children()[21].textContent);
+                    $("#appExpertReader").val($(this).closest('tr').children()[23].textContent);
+                    $("#appBookTitle").val($(this).closest('tr').children()[24].textContent);
+
                     console.log(table.row(this).data());
                 });
             });
         </script>
-
 
         <style>
             .ui-datepicker { 
@@ -820,6 +853,25 @@
             }
             table#translatorTrackTable{
                 border: 1px solid black;
+            }
+
+            /*https://designshack.net/articles/css/joshuajohnson-2/*/
+
+            /*GROW*/
+            .grow img {
+                height: 300px;
+                width: 300px;
+
+                -webkit-transition: all 1s ease;
+                -moz-transition: all 1s ease;
+                -o-transition: all 1s ease;
+                -ms-transition: all 1s ease;
+                transition: all 1s ease;
+            }
+
+            .grow img:hover {
+                width: 400px;
+                height: 400px;
             }
         </style>
 
@@ -954,6 +1006,8 @@
                 $("a[href='" + anchor + "']").tab("show");
             });
         </script>
+
+
     </head>
     <body style="height: 100%">
 
@@ -967,10 +1021,10 @@
                     </div>
                     <a href="/" class="logo"><span class="hidden">Literature Ireland</span></a>
                 </div> <!--  End of topbar div -->
-                
-                
+
+
                 <!--container for welcome/logout-->                
-                
+
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
                         <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
@@ -1024,7 +1078,8 @@
                                                     <th class="all">Application<br/>  Nr</th>
                                                     <th class="all">Application<br/>  Year</th>
                                                     <th class="all">Reference<br/>  Nr</th>
-                                                    <th class="all">Publisher</th>                                                  
+                                                    <th class="all">Publisher</th>       
+
                                                     <!--<th class="all">PublisherID</th>-->
                                                     <!--<th class="all">userID</th>-->
                                                     <th class="all">Agreement</th>
@@ -1042,7 +1097,10 @@
                                                     <th class="all">Date Copies  <br/> Were Sent</th>
                                                     <th class="all">Copies of  <br/> Translation Sample</th>
                                                     <th class="all">T&C has been <br/> Accepted</th>
-                                                    <th class="all">Approved</th>    
+                                                    <th class="all">Approved</th> 
+                                                    <th class="all">Genre</th>   
+                                                    <th class="all"></th>
+                                                    <th class="all">Expert Reader</th>
                                                     <th class="all"></th>
                                                     <th class="all"></th>
                                                     <th class="all"></th>
@@ -1054,33 +1112,37 @@
                                             <tfoot>
                                                 <tr>
                                                     <th class="details-control"></th>   
-                                                    <th class="all">Application<br/>  Nr</th>
-                                                    <th class="all">Application<br/>  Year</th>
-                                                    <th class="all">Reference<br/>  Nr</th>
-                                                    <th class="all">Publisher</th>                                                  
+                                                    <th class="all">1<br/>  Nr</th>
+                                                    <th class="all">2<br/>  Year</th>
+                                                    <th class="all">3<br/>  Nr</th>
+                                                    <th class="all">4</th>              
+
                                                     <!--<th class="all">PublisherID</th>-->
                                                     <!--<th class="all">userID</th>-->
-                                                    <th class="all">Agreement</th>
-                                                    <th class="all">Contract</th>
-                                                    <th class="all">Proposed<br/> Date of <br/> Publication</th>
-                                                    <th class="all">Proposed<br/> Print Run</th>
-                                                    <th class="all">Planned Page <br/>  Extent</th>
-                                                    <th class="all">Translator<br/> CV</th>
-                                                    <th class="all">Number<br/> Pages</th>
-                                                    <th class="all">Fee per  <br/> Page</th>
-                                                    <th class="all">Translator  <br/> Fee</th>
-                                                    <th class="all">Notes</th>
-                                                    <th class="all select-filter">Status</th>
-                                                    <th class="all">Copies <br/> Sent</th>
-                                                    <th class="all">Date Copies  <br/> Were Sent</th>
-                                                    <th class="all">Copies of  <br/> Translation Sample</th>
-                                                    <th class="all">T&C has been <br/> Accepted</th>
-                                                    <th class="all">Approved</th>    
+                                                    <th class="all">4</th>
+                                                    <th class="all">5</th>
+                                                    <th class="all">6<br/> Date of <br/> Publication</th>
+                                                    <th class="all">7<br/> Print Run</th>
+                                                    <th class="all">8 Page <br/>  Extent</th>
+                                                    <th class="all">9<br/> CV</th>
+                                                    <th class="all">10<br/> Pages</th>
+                                                    <th class="all">11 per  <br/> Page</th>
+                                                    <th class="all">12  <br/> Fee</th>
+                                                    <th class="all">13</th>
+                                                    <th class="all select-filter">14</th>
+                                                    <th class="all">15 <br/> Sent</th>
+                                                    <th class="all">16 Copies  <br/> Were Sent</th>
+                                                    <th class="all">17 of  <br/> Translation Sample</th>
+                                                    <th class="all">18 has been <br/> Accepted</th>
+                                                    <th class="all">19</th>
+                                                    <th class="all">20 Genre</th>    
+                                                    <th class="all">21</th>
+                                                    <th class="all">22</th>
+                                                    <th class="all">23</th>
+                                                    <th class="all">24</th>
+                                                    <th class="all">25</th>
                                                     <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
+                                                    <th class="all">26</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -1093,14 +1155,15 @@
 
                                 <!--userModal-->
                                 <div id="applicationsModal" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-                                <!--<div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="applicationsModalLabel"  data-focus-on="input:first" style="display: none;">-->
+                                    <!--<div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="applicationsModalLabel"  data-focus-on="input:first" style="display: none;">-->
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                            <div class="modal-header">
+                                            <div class="modal-header" style="background-color: #c3bcbc">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <h4 class="modal-title" id="applicationsModalLabel">Applications</h4>
                                             </div>
-                                            <div class="modal-body">
+
+                                            <div class="modal-body" style="background-color: #d9d1d1">
 
                                                 <ul class="nav nav-tabs" id="tabContent">
                                                     <li class="active"><a href="#page1" data-toggle="tab">Original <br/>and Contracts</a></li>
@@ -1138,7 +1201,7 @@
                                                         </div> <!--row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px">
-                                                            <div class="col-sm-4">
+                                                            <div class="col-sm-8">
                                                                 <label for="appBookTitle" class="control-label pull-left">Book Title</label>
                                                                 <input  id="appBookTitle" 
                                                                         type="text"                                                  
@@ -1438,7 +1501,9 @@
                                                             </div>
                                                         </div> <!--row-->
 
+                                                        <div id="testcontainer">
 
+                                                        </div>
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">                                               
@@ -1497,13 +1562,13 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
                                                             <div>
-    <p>One fine body…</p>
-    <p>One fine body…</p>
-    <p>One fine body…</p>
-    <input data-tabindex="1" type="text">
-    <input data-tabindex="2" type="text">
-    <a class="btn" data-toggle="modal" href="#stack2">Launch modal</a>
-  </div>
+                                                                <p>One fine body…</p>
+                                                                <p>One fine body…</p>
+                                                                <p>One fine body…</p>
+                                                                <input data-tabindex="1" type="text">
+                                                                <input data-tabindex="2" type="text">
+                                                                <a class="btn" data-toggle="modal" href="#stack2">Launch modal</a>
+                                                            </div>
 
                                                             <div class='col-sm-6'>
                                                                 <strong class=" pull-left">Expert Reader</strong>
@@ -1520,38 +1585,17 @@
                                                         <div class="row" style="margin-top: 30px;margin-bottom: 10px">
                                                             <div class='col-sm-4'>
                                                                 <strong class=" pull-left"> Sample sent out</strong>
-                                                                <div class="input-group">
+                                                                <div class="input-group pull-left">
                                                                     <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="sampleSentOut">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
                                                                 </div>
                                                             </div>
-                                                            <script>
-                                                                $("#sampleSentOut").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
-                                                                });
-                                                            </script>
 
                                                             <div class='col-sm-4'>
                                                                 <strong class=" pull-left"> Sample returned</strong>
-                                                                <div class="input-group">
+                                                                <div class="input-group pull-left">
                                                                     <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="sampleReturned">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
                                                                 </div>
                                                             </div>
-
-                                                            <script>
-                                                                $("#sampleReturned").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
-                                                                });
-                                                            </script>
 
                                                         </div> <!--row-->
 
@@ -1638,9 +1682,9 @@
                                                                 <strong class="pull-left">Proposed  Publication Date &nbsp;&nbsp;&nbsp; </strong>
                                                                 <div class="input-group pull-left" >
                                                                     <input type="text" name="proposedPublicationDate" id="proposedPublicationDate" class="form-control" placeholder="DD/MM/YYYY" />    
-<!--                                                                    <label class="input-group-addon" for="proposedPublicationDate">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>-->
+                                                                    <!--                                                                    <label class="input-group-addon" for="proposedPublicationDate">
+                                                                                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                                                                                        </label>-->
                                                                 </div> 
                                                             </div>
 
@@ -1968,8 +2012,8 @@
                                         </div> <!--modal-content -->
                                     </div> <!--modal-dialog -->
                                 </div><!--modal -->
-                               
-                                
+
+
 
                             </div><!-- <div class="tab-pane fade active in" id="Application"> --> 
 
@@ -2021,13 +2065,12 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
 
-                                                <div class="modal-header">
+                                                <div class="modal-header" style="background-color: #c3bcbc">
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                     <h4 class="modal-title" id="userModalLabel"><span id="usr_name">_</span></h4>
-                                                    <hr/>
                                                 </div>
 
-                                                <div class="modal-body">
+                                                <div class="modal-body" style="background-color: #d9d1d1">
 
                                                     <div class="row" style="margin-bottom: 5px;margin-top: 5px">
                                                         <div class="col-sm-4">
@@ -2097,7 +2140,7 @@
 
                                                 </div><!-- /.modal body -->
 
-                                                <div class="modal-footer">
+                                                <div class="modal-footer"  style="background-color: #c3bcbc">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                     <button type="button" class="btn btn-primary">Save changes</button>
                                                 </div>
@@ -2146,32 +2189,65 @@
                                     </div> <!-- /container-fluid -->
 
                                     <!--expReaderModal-->
-
                                     <div class="modal fade" id="expReaderModal" tabindex="-1" role="dialog" aria-labelledby="expReaderModalLabel">
+
                                         <div class="modal-dialog" role="document">
+
                                             <div class="modal-content">
-                                                <div class="modal-header">
+
+                                                <div class="modal-header" style="background-color: #c3bcbc">
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                     <h4 class="modal-title" id="expReaderModalLabel">Display Expert Readers</h4>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <label> First Name: </label>
-                                                    <p><input type="text" class="input-sm" id="FirstNameExpReader"/></p>
-                                                    <label> Last Name: </label>
-                                                    <p><input type="text" class="input-sm" id="LastNameExpReader"/></p>
-                                                    <label> Email: </label>
-                                                    <p><input type="text" class="input-sm" id="EmailExpReader"/></p>
 
-                                                </div>
-                                                <div class="modal-footer">
+                                                <div class="modal-body" style="background-color: #d9d1d1">
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+                                                        <div class="col-sm-4">
+                                                            <label for="FirstNameExpReader" class="control-label pull-left">First Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                            <input type="text" class="input-sm" id="FirstNameExpReader"/>
+                                                        </div>
+
+                                                        <div class="col-sm-1"></div>
+
+                                                        <div class="col-sm-4">
+
+                                                            <label for="expertReaderReferenceNumber"> Assign Expert Readers to Reference Number: </label>
+                                                            <input type="text" class="input-sm" id="expertReaderReferenceNumber"/>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        <div class="col-sm-4">
+                                                            <label for="LastNameExpReader" class="control-label pull-left"> Last Name: </label>
+                                                            <input type="text" class="input-sm" id="LastNameExpReader"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        <div class="col-sm-4">
+                                                            <label for="EmailExpReader" class="control-label pull-left">  Email: </label>
+                                                            <input type="text" class="input-sm" id="EmailExpReader"/>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                </div><!-- modal body -->
+
+                                                <div class="modal-footer"  style="background-color: #c3bcbc">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                     <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
+                                                </div><!-- modal-footer -->
 
-                                </div> <!--expReaderModal-->
+                                            </div><!-- modal-content -->
+                                        </div><!-- modal-dialog -->
+                                    </div><!-- modal -->
+
+                                </div> <!-- tab-pane expReader-->
 
 
 
@@ -2243,11 +2319,11 @@
                                     <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
-                                                <div class="modal-header">
+                                                <div class="modal-header" style="background-color: #c3bcbc">
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                     <h4 class="modal-title" id="booksModalLabel">Display Library</h4>
                                                 </div>
-                                                <div class="modal-body">
+                                                <div class="modal-body" style="background-color: #d9d1d1">
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
@@ -2303,7 +2379,7 @@
 
                                                 </div>
 
-                                                <div class="modal-footer">
+                                                <div class="modal-footer"  style="background-color: #c3bcbc">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                     <button type="button" class="btn btn-primary">Save changes</button>
                                                 </div>
@@ -2364,7 +2440,7 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="modal-footer">
+                                                <div class="modal-footer"  style="background-color: #c3bcbc">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                     <button type="button" class="btn btn-primary">Save changes</button>
                                                 </div>
@@ -2411,104 +2487,82 @@
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2017 mgr Software
         </div>
-                                        
-<!--<div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">-->
-<div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-                                <!--<div class="modal fade" id="stack2" tabindex="-1" role="dialog" aria-labelledby="stack2Label" >-->
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="stack2Label">Display Expert Readers</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    
-                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
-                                                            <div class='col-sm-6'>
-                                                                <strong class=" pull-left">Expert Reader</strong>
-                                                                <div class="input-group pull-left">
-                                                                    <input type="text" name="appExpertReader" 
-                                                                           id="appExpertReader" 
-                                                                           class="form-control" 
-                                                                           />    
-                                                                </div>
-                                                            </div>
 
-                                                        </div> <!--row-->                                                      
+        <div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="stack2Label">Display Expert Readers</h4>
+                    </div>
+                    <div class="modal-body">
 
-                                                        <div class="row" style="margin-top: 30px;margin-bottom: 10px">
-                                                            <div class='col-sm-4'>
-                                                                <strong class=" pull-left"> Sample sent out</strong>
-                                                                <div class="input-group">
-                                                                    <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="sampleSentOut">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <script>
-                                                                $("#sampleSentOut").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
-                                                                });
-                                                            </script>
+                        <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
-                                                            <div class='col-sm-4'>
-                                                                <strong class=" pull-left"> Sample returned</strong>
-                                                                <div class="input-group">
-                                                                    <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="sampleReturned">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
+                            <div class='col-sm-6'>
+                                <strong class=" pull-left">Expert Reader</strong>
+                                <div class="input-group pull-left">
+                                    <input type="text" name="appExpertReader" 
+                                           id="appExpertReader" 
+                                           class="form-control" 
+                                           />    
+                                </div>
+                            </div>
 
-                                                            <script>
-                                                                $("#sampleReturned").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
-                                                                });
-                                                            </script>
+                        </div> <!--row-->                                                      
 
-                                                        </div> <!--row-->
+                        <div class="row" style="margin-top: 30px;margin-bottom: 10px">
+                            <div class='col-sm-4'>
+                                <!--<strong class=" pull-left"> Sample sent out</strong>-->
+                                <label class="pull-left">  Sample sent out </label>
+                                <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
+                            </div>
+                        </div>
 
-                                                        <div class="row" style="margin-bottom: 20px;">
+                        <div class='col-sm-4'>
+                            <strong class=" pull-left"> Sample returned</strong>
+                            <div class="input-group pull-left">
+                                <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
+                            </div>
+                        </div>
 
-                                                            <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
-                                                                <div class="col-sm-2">
-                                                                    <input id="ReadersReport"                                
-                                                                           type="hidden"                                                            
-                                                                           name="ReadersReport"                                
-                                                                           >
-                                                                </div>
-                                                                <a class="btn btn-info" role="button" id="appReadersReport" >
-                                                                    <span class="glyphicon glyphicon-file"></span>
-                                                                    Reader’s Report</a>
-                                                            </div>
 
-                                                            <div class="col-sm-10">
-                                                                <label for="readerReport" class="control-label pull-left"> Reader’s Report Summary</label>
-                                                                <textarea id="readerReport" 
-                                                                          class="form-control"                                               
-                                                                          name="readerReport"    
-                                                                          style="height: 98px"
-                                                                          >                 
-                                                                </textarea>
-                                                            </div>
-                                                        </div> <!--row-->
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
+                        <div class="row" style="margin-bottom: 20px;">
 
-                           
+                            <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
+                                <div class="col-sm-2">
+                                    <input id="ReadersReport"                                
+                                           type="hidden"                                                            
+                                           name="ReadersReport"                                
+                                           >
+                                </div>
+                                <a class="btn btn-info" role="button" id="appReadersReport" >
+                                    <span class="glyphicon glyphicon-file"></span>
+                                    Reader’s Report</a>
+                            </div>
+
+                            <div class="col-sm-10">
+                                <label for="readerReport" class="control-label pull-left"> Reader’s Report Summary</label>
+                                <textarea id="readerReport" 
+                                          class="form-control"                                               
+                                          name="readerReport"    
+                                          style="height: 98px"
+                                          >                 
+                                </textarea>
+                            </div>
+                        </div> <!--row-->
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
     </body>
 </html>

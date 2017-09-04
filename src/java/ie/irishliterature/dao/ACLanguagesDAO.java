@@ -35,9 +35,9 @@ public class ACLanguagesDAO {
                 AClanguages language = new AClanguages();
                 language.setId(rs.getString("id"));
                 language.setValue(rs.getString("lang"));
-
-                System.out.println("language.setId : " + rs.getString("id"));
-                System.out.println("language.setValue : " + rs.getString("lang"));
+//
+//                System.out.println("language.setId : " + rs.getString("id"));
+//                System.out.println("language.setValue : " + rs.getString("lang"));
 
                 languageList.add(language);
             }

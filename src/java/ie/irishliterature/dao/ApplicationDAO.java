@@ -404,12 +404,18 @@ public class ApplicationDAO {
                 while (res.next()) {
                     GrantApplication application = new GrantApplication();
 
+                    String ReferenceNumber = res.getString("ReferenceNumber");
+
                     application.setApplicationNumber(res.getInt("ApplicationNumber"));
                     application.setApplicationYear(res.getString("ApplicationYear"));
-                    application.setReferenceNumber(res.getString("ReferenceNumber"));
+                    application.setReferenceNumber(ReferenceNumber);
                     application.setCompany(res.getString("company"));
                     application.setPublisherID(res.getInt("publisherID"));
                     application.setUserID(res.getString("userID"));
+
+                    String bookTitle = getBookTitle(ReferenceNumber);
+
+                    application.setBookTitle(bookTitle);
                     application.setAgreement(res.getString("agreement"));
                     application.setAgreementDocName(res.getString("agreementDocName"));
                     application.setContract(res.getString("contract"));
@@ -431,16 +437,24 @@ public class ApplicationDAO {
                     application.setAPPROVED(res.getInt("APPROVED"));
                     application.setCover(res.getString("cover"));
                     application.setCoverName(res.getString("coverName"));
+                    application.setGenre("Crime Fiction");
+                    String expertReaderName = getExpertReaderName(ReferenceNumber);
+
+                    application.setExpertReaderName(expertReaderName);
+//                    application.setSampleSentOut(res.getDate("sampleSentOut"));
+//                    application.setSampleReturned(res.getDate("sampleReturned"));
+//                    application.setReaderReport(res.getString("readerReport"));
+//                    application.setReaderReportSummary(res.getString("readerReportSummary"));
 
                     //get all idTranslator / Translator.Name  for that ReferenceNumber return ArrayList
-                    translatorTrackId = getTranslatorTrackId(res.getString("ReferenceNumber"));
+                    translatorTrackId = getTranslatorTrackId(ReferenceNumber);
 
                     translatorList = new ArrayList<>();
                     ArrayList<ArrayList<String>> mixedList = new ArrayList<>();
                     ArrayList<String> testList = new ArrayList<>();
                     titleList = new ArrayList<>();
 
-                    authorList = getAuthors(res.getString("ReferenceNumber"));
+                    authorList = getAuthors(ReferenceNumber);
 
                     for (int i = 0; i < translatorTrackId.size(); i++) {
 
@@ -449,8 +463,8 @@ public class ApplicationDAO {
                         testList = getTranslatorTrack(translatorTrackId.get(i));
 
                         translatorList.add(translatorNameForList);
-                 
-                         // mixedList contains [0] Translator [1..] Titles
+
+                        // mixedList contains [0] Translator [1..] Titles
                         mixedList.add(testList);
 
                     }
@@ -462,6 +476,8 @@ public class ApplicationDAO {
                     application.setStatus(res.getString("Status"));
 
                     listApplications.add(application);
+
+                    System.out.println("listApplications: " + listApplications);
                 }
             }
 
@@ -476,7 +492,7 @@ public class ApplicationDAO {
         return listApplications;
     }
 
-     @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public static ArrayList getTranslatorTrack(String TranslatorTrackId) throws DBException {
 
         Connection conn = null;
@@ -530,7 +546,7 @@ public class ApplicationDAO {
         }
 
         DBConn.close(conn, ps, res);
-        
+
         return testList;
     }
 
@@ -547,7 +563,7 @@ public class ApplicationDAO {
 
         try {
 
-            System.out.println("getTranslatorNames translatorTrackId: " + translatorTrackId);
+          //  System.out.println("getTranslatorNames translatorTrackId: " + translatorTrackId);
 
             conn = DBConn.getConnection();
 
@@ -663,4 +679,82 @@ public class ApplicationDAO {
         return authorList;
     }
 
+    public static String getExpertReaderName(String appRef) {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        /*
+         * authorList returns a list with the expertReaderName for a specific ReferenceNumber
+         */
+        String expertReaderName = "";
+
+        try {
+
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement("SELECT CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM users, expertReader\n"
+                    + "WHERE expertReader.expertReaderUserID = users.userID\n"
+                    + "AND expertReader.referenceNumber = ? ");
+
+            ps.setString(1, appRef);
+
+            res = ps.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    expertReaderName = res.getString(1);
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            java.util.logging.Logger.getLogger(ApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        DBConn.close(conn, ps, res);
+
+        return expertReaderName;
+    }
+
+    public static String getBookTitle(String appRef) {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        /*
+         * authorList returns a list with the expertReaderName for a specific ReferenceNumber
+         */
+        String bookTitle = "";
+
+        try {
+
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement("SELECT Title FROM library\n"
+                    + "WHERE library.referenceNumber  = ? ");
+
+            ps.setString(1, appRef);
+
+            res = ps.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    bookTitle = res.getString(1);
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            java.util.logging.Logger.getLogger(ApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        DBConn.close(conn, ps, res);
+
+        return bookTitle;
+    }
 }

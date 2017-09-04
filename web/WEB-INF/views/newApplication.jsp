@@ -46,48 +46,50 @@
             var counter = 0;
             var Authorcounter = 0;
 
+            var translatorName876;
+
             $.datepicker.setDefaults({dateFormat: 'dd/mm/yy'});
 
         </script>
-        <script>
-            function getNumberPages()
-            {
-                //Assume form with id="theform"
-                var theForm = document.forms["feeCalculationForm"];
-                //Get a reference to the TextBox
-                var numberPages = document.getElementById("numberOfPages");
-                var noPages = 0;
-                //If the textbox is not blank
-                if (numberPages.value !== "")
-                {
-                    noPages = parseFloat(numberPages.value);
-                }
-                return noPages;
-            }
-
-            function getFeePerPage()
-            {
-                //Assume form with id="theform"
-                var theForm = document.forms["feeCalculationForm"];
-                //Get a reference to the TextBox
-                var numberPages = document.getElementById("feePerPage");
-                var amountPage = 10;
-                //If the textbox is not blank
-                if (feePerPage.value !== "")
-                {
-                    amountPage = parseFloat(feePerPage.value);
-                }
-                return amountPage;
-            }
-
-            function getTotal()
-            {
-                var feeTotal = getNumberPages() * getFeePerPage();
-                document.getElementById("translatorFee").value = feeTotal.toFixed(2).replace(/./g, function (c, i, a) {
-                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-                });
-            }
-        </script>
+        <!--        <script>
+                    function getNumberPages()
+                    {
+                        //Assume form with id="theform"
+                        var theForm = document.forms["feeCalculationForm"];
+                        //Get a reference to the TextBox
+                        var numberPages = document.getElementById("numberOfPages");
+                        var noPages = 0;
+                        //If the textbox is not blank
+                        if (numberPages.value !== "")
+                        {
+                            noPages = parseFloat(numberPages.value);
+                        }
+                        return noPages;
+                    }
+        
+                    function getFeePerPage()
+                    {
+                        //Assume form with id="theform"
+                        var theForm = document.forms["feeCalculationForm"];
+                        //Get a reference to the TextBox
+                        var numberPages = document.getElementById("feePerPage");
+                        var amountPage = 10;
+                        //If the textbox is not blank
+                        if (feePerPage.value !== "")
+                        {
+                            amountPage = parseFloat(feePerPage.value);
+                        }
+                        return amountPage;
+                    }
+        
+                    function getTotal()
+                    {
+                        var feeTotal = getNumberPages() * getFeePerPage();
+                        document.getElementById("translatorFee").value = feeTotal.toFixed(2).replace(/./g, function (c, i, a) {
+                            return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+                        });
+                    }
+                </script>-->
 
         <!--AutoComplete_Genres-->
         <script type="text/javascript">
@@ -525,14 +527,12 @@
 //                            .addClass("text");
 //                    $newInput.appendTo($newDiv);
 
-                    $newDiv.appendTo($("#generatedForm"));
+
                 });
             });
         </script>
         <script>
             function  copyFirstRow() {
-
-
                 var fn = document.getElementById("translatorName");
                 document.getElementById("first0").value = fn.value;
                 Name = fn.value;
@@ -670,6 +670,48 @@
         </script>
 
 
+        <script>
+
+            function myFunction() {
+                var x = document.getElementById("translatorName");
+
+                translatorName876 = x.value;
+
+                var tester = "Upload a copy of " + translatorName876 + "'s CV:";
+
+                localStorage.setItem('translatorName876', tester);
+                localStorage.setItem('translatorName8', translatorName876);
+
+                var tripper = localStorage.getItem("translatorName876");
+                
+                document.getElementById("123").innerHTML = tripper;
+                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
+
+                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
+                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
+                console.log("tester   ", tester);
+                console.log("tripper   ", tripper);
+            }
+
+        </script>
+        
+             <script>
+
+             $(document).ready(function () {
+               
+                var tripper = localStorage.getItem("translatorName876");
+                
+                document.getElementById("123").innerHTML = tripper;
+                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
+
+                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
+                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
+
+                console.log("tripper 1  ", tripper);
+            });
+
+        </script>
+
         <style>
             .btn-file {
                 position: relative;
@@ -709,6 +751,20 @@
                 border-left: 1px solid #ddd;
             }
 
+            .longLabel{
+                display: inline-table;
+                line-height: initial;
+            }
+
+            .form-input {
+                height: 50px;
+                font-size: 16px;
+            }
+
+            .form-btn {
+                line-height: 50px;
+                font-size: 16px;
+            }
         </style>
     </head>
 
@@ -1117,7 +1173,7 @@
                                         </div> <!--row-->
 
                                         <!--keep in one line otherwise placeholder doesn't show-->
-<textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
+                                        <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
                                     </div> <!--container-->
                                 </div> <!--tab contact-->
 
@@ -1208,7 +1264,6 @@
                                                                    >                                                     
                                                         </div>
 
-
                                                         <div class="col-sm-3">    
                                                             <label for="publicationYear" class="pull-left">Publication Year</label>
                                                             <input id="publicationYear"                                
@@ -1263,12 +1318,17 @@
                                                                        class="form-control"                                
                                                                        name="translatorName"                                
                                                                        value=""    
+                                                                       onblur="myFunction();"
                                                                        placeholder="Translator Name"
                                                                        >
                                                                 <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                                             </div>
                                                         </div>
 
+                                                        <script>
+//                                                            var translatorName = document.getElementById("translatorName").value;
+//                                                            session.setAttribute("translatorName", translatorName);
+                                                        </script>
                                                         <div class="col-sm-4" style="margin-top: 30px;">    
                                                             <a href="#" class="btn btn-group-sm btn-default pull-left" 
                                                                data-toggle="modal" 
@@ -1515,7 +1575,6 @@
                                                     ${requestScope.message}
                                                 </div>
                                             </div>
-
                                         </div> <!-- row -->
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="orange" -->
@@ -1525,31 +1584,42 @@
                                     <h1 style="margin-bottom: 60px">Publication Details</h1>
 
                                     <div class="container-fluid">
-                                        <div class="row"  style="display: block;
-                                             margin-right: auto;
-                                             margin-left: auto;">
-                                            <div class="col-xs-12 content">
-
-                                                <div class='col-sm-8'  style="margin-bottom: 40px; margin-top: 20px">
-                                                    <strong> The proposed date of publication:</strong>
-                                                    <div class="input-group"  style="margin-bottom: 40px;">
-                                                        <input type="text" name="proposedDateOfPublication" id="proposed-date-of-publication" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                        <label class="input-group-addon" for="proposed-date-of-publication">
+                                        <div class="col-xs-12 content">
+                                            <div class="row">
+                                                <div class='col-sm-4'>
+                                                    <label for="proposedDateOfPublication" class="control-label pull-left">Proposed date of publication: </label>
+                                                    <div class="input-group pull-left"   style="margin-bottom: 40px;">
+                                                        <input type="text" name="proposedDateOfPublication" id="proposedDateOfPublication" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                        <label class="input-group-addon" for="proposedDateOfPublication">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </label>
                                                     </div>
+                                                </div>
+                                            </div>
 
-                                                    <strong>   The proposed print run:</strong> 
-                                                    <div class="input-group"  style="margin-bottom: 40px;">
-                                                        <input type="text" name="proposedPrintRun" id="proposed-print-run" class="form-control" />    
-                                                    </div>
-
-                                                    <strong  style="margin-bottom: 40px;">The planned page extent of the published translation:</strong>
-                                                    <div class="input-group input-group-lg">
-                                                        <span class="input-group-addon" id="sizing-addon1">  <span class="glyphicon glyphicon-book"></span></span>
-                                                        <input type="text" name="plannedPageExtent" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">
+                                            <div class="row">
+                                                <div class='col-sm-4'>
+                                                    <label for="proposedPrintRun" class="control-label pull-left">Proposed print run: </label>
+                                                    <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                        <span class="input-group-addon" id="sizing-addon1">  
+                                                            <span class="glyphicon glyphicon-book"></span>                                                            
+                                                        </span>
+                                                        <input type="text" name="proposedPrintRun" id="proposedPrintRun" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">  
                                                     </div>
                                                 </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class='col-sm-4'  style="margin-bottom: 40px;">                                                
+                                                    <label for="plannedPageExtent" class="control-label pull-left">Planned page extent of the <br/>  published translation: </label>
+                                                    <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                        <span class="input-group-addon" id="sizing-addon2">  
+                                                            <span class="glyphicon glyphicon-book"></span>                                                            
+                                                        </span>
+                                                        <input type="text" name="plannedPageExtent" id="plannedPageExtent" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon2">
+                                                    </div>
+                                                </div>
+
                                                 <script>
                                                     $("#proposed-date-of-publication").datepicker({
                                                         showWeekDays: true,
@@ -1557,57 +1627,66 @@
                                                         autoclose: true
                                                     });
                                                 </script>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+
                                 <!-- Translator's Details -->
-                                <div class="tab-pane" id="Translator">                           
+
+                                <div class="tab-pane" id="Translator"> 
+                                    <h1 style="margin-bottom: 60px">Translator Details</h1>
+
                                     <div class="container-fluid">
 
-                                        <div class="col-md-8"   style="margin-bottom: 60px">
-                                            <h1 style="margin-top: 50px; margin-bottom: 20px">Upload a copy of the Translator's CV:<br/>
-                                                <small>this should include a list of previous published literary translations</small></h1>                                    
-                                            <br/>
-                                            <div class="input-group translator_cv"  style="margin-bottom: 40px;">
-                                                <label class="btn btn-default btn-file pull-left">
-                                                    Select file <input type="file"  name="file" id="translator" >
-                                                    <span class="glyphicon glyphicon-folder-open"></span>
-                                                </label>
-                                                <input id="label_translator" class="pull-left"/>
+                                        <div class="row">
+                                            <div class="col-md-8"   style="margin-bottom: 60px">
+                                                <label for="label_translator" class="control-label pull-left" id="123"></label>
                                                 <br/>
-                                                <br/>          
-                                                <input type="hidden" name="userID" value="${userID}">
-                                                <input type="hidden" name="publisherID" value="${publisherID}">
-                                                <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                <!--Destination:-->
-                                                <input type="hidden" id="translator_cv_upload" value="Translator_CV" name="destination" />                                          
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4" style="margin-bottom: 20px ;margin-top: 50px;">
-
-                                            Number of pages:<input type="text"  name="numberOfPages" id="numberOfPages"  style="margin-bottom: 30px"/><br/>
-                                            Fee per page: 
-                                            <input type="text"  name="feePerPage"  id="feePerPage"   style="margin-bottom: 30px"/>
-                                            <button type="button" class="btn btn-default"  id='submit' onclick="getTotal()" style="margin-bottom: 10px">Calculate fee</button>
-
-                                            <strong>Translator fee:</strong>                                                                        
-                                            <div class="input-group" style="margin-bottom: 40px">
-                                                <label class="input-group-addon" for="translatorFee">
-                                                    <span class="glyphicon glyphicon-euro"></span>                                     
-                                                </label>
-                                                <input type="text" class="form-control" name="translatorFee" id="translatorFee" placeholder="fee">    
+                                                <small class="pull-left"   style="margin-bottom: 10px">this should include a list of previous published literary translations</small> 
+                                                <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                    <label class="btn btn-default btn-file pull-left">
+                                                        Select file 
+                                                        <input type="file"  name="file" id="translator" >
+                                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                                    </label>
+                                                    <input id="label_translator" class="pull-left"/>
+                                                    <br/>
+                                                    <br/>          
+                                                    <input type="hidden" name="userID" value="${userID}">
+                                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                    <!--Destination:-->
+                                                    <input type="hidden" id="translator_cv_upload" value="Translator_CV" name="destination" />                                          
+                                                </div>
                                             </div>
 
-                                            <div class="form-group">
-                                                <textarea class="form-control" placeholder="Notes" name="translatorNotes"
-                                                          style="width: 280px; height: 196px;"></textarea>
+                                            <input type="text" name="userID" id="translatorName123" value='' placeholder="yuuiytuituit">
+
+                                            <div class="row" id="additionalTranslator"> </div>
+
+                                            <div class="col-md-4" style="margin-bottom: 20px">                                              
+
+                                                <label for="plannedPageExtent" class="control-label pull-left">Translator fee:</label>                                                                        
+                                                <div class="input-group pull-left" style="margin-bottom: 20px">
+                                                    <label class="input-group-addon" for="translatorFee">
+                                                        <span class="glyphicon glyphicon-euro"></span>                                     
+                                                    </label>
+                                                    <input type="text" class="form-control pull-left" name="translatorFee" id="translatorFee" placeholder="fee">    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" style="margin-bottom: 40px">         
+                                                <div class="form-group">
+                                                    <textarea class="form-control" placeholder="Break-down of translator fee" name="translatorNotes"
+                                                              style="width: 280px; height: 196px;"></textarea>
+                                                </div>
                                             </div>
                                         </div> 
-                                    </div>              
-                                </div>
+                                    </div> 
+                                </div>              
+
 
                                 <!-- Original Work & Sample Translation -->
                                 <div class="tab-pane" id="Original">
@@ -1618,7 +1697,7 @@
                                                 <div class="panel-body">
 
                                                     <!--copies of the original work-->
-                                                    <div class="col-md-9"   style="margin-bottom: 40px; margin-top: 40px">
+                                                    <div class="col-md-9" >
                                                         <div class="checkbox">                                                             
                                                             <label for="copies" class=" pull-left"><strong>Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong></label>
                                                             <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
@@ -1637,7 +1716,7 @@
                                                     </div> <!-- col-md-9 -->
 
                                                     <!--Date copies were sent:-->
-                                                    <div class="col-md-3"   style="margin-top: 30px">
+                                                    <div class="col-md-3" >
                                                         <strong>Date copies were sent:</strong> 
                                                         <div class="input-group">
                                                             <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
@@ -1655,7 +1734,6 @@
                                                             autoclose: true
                                                         });
                                                     </script>
-
                                                 </div> <!--panel--body-->
                                             </div> <!--panel-default-->
                                         </div> <!-- row -->
@@ -1663,7 +1741,7 @@
                                         <div class="row" >
                                             <div class="panel panel-default">        
                                                 <div class="panel-body">
-                                                    <div class="col-md-12" style="margin-bottom: 40px; margin-top: 60px">
+                                                    <div class="col-md-12">
 
                                                         <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
                                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -1676,21 +1754,48 @@
                                                             <span class="message"></span>
                                                         </div>
 
-                                                        <strong style="margin-bottom: 20px" class="pull-left">Two copies of a translation sample<sup>**</sup> consisting of 10 to 12 pages of prose or six poems</strong> 
-                                                        <br/>
-                                                        <div class="input-group agreement translationSample" >                                      
-                                                            <label class="btn btn-default btn-file pull-left">
-                                                                Select file <input type="file"  name="file" id="translationSample" >
-                                                                <span class="glyphicon glyphicon-folder-open"></span>
-                                                            </label>
-                                                            <input id="label_translationSample" class="pull-left"/>
-                                                            <br/>
-                                                            <br/>       
-                                                            <input type="hidden" name="userID" value="${userID}">
-                                                            <input type="hidden" name="publisherID" value="${publisherID}">
-                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                            <input type="hidden" value="TranslationSample" name="destination"/>
-                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-8"   style="margin-bottom: 40px">
+                                                                <label for="label_originalSample" class="control-label pull-left">Upload electronic copy of original work</label>
+                                                                <div class="input-group pull-left"  >
+                                                                    <label class="btn btn-default btn-file pull-left">
+                                                                        Select file 
+                                                                        <input type="file"  name="file" id="originalSample" >
+                                                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    </label>
+                                                                    <input id="label_originalSample" class="pull-left"/>
+                                                                    <br/>
+                                                                    <br/>          
+                                                                    <input type="hidden" name="userID" value="${userID}">
+                                                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                    <!--Destination:-->
+                                                                    <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />                                          
+                                                                </div>
+                                                            </div>
+                                                        </div> <!--row-->
+
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <label for="translationSample" class="control-label longLabel pull-left">Upload two copies of a translation sample<sup>**</sup> <br/>consisting of 10 to 12 pages of prose or six poems</label>
+                                                                <div class="input-group pull-left" >
+                                                                    <label class="btn btn-default btn-file pull-left">
+                                                                        Select file 
+                                                                        <input type="file"  name="file" id="translationSample" class="form-input">
+                                                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    </label>
+                                                                    <input id="label_translationSample" class="pull-left"/>
+                                                                    <br/>
+                                                                    <br/>          
+                                                                    <input type="hidden" name="userID" value="${userID}">
+                                                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                    <!--Destination:-->
+                                                                    <input type="hidden" id="translationSample_upload" value="translationSample" name="destination" />                                          
+                                                                </div>
+                                                            </div> <!-- col-md-8 -->
+                                                        </div> <!--row-->                                                            
+
                                                         <!-- translationSampleForm -->                                                                                                              
                                                     </div>  <!-- col-md-12 -->
                                                 </div>  <!--panel--body-->
@@ -1702,7 +1807,7 @@
                                                 <div class="panel-body">
                                                     <!--<div class="col-md-12" style="margin-bottom: 40px; margin-top: 60px">-->
 
-                                                    <div class="col-md-9"   style="margin-bottom: 10px; margin-top: 10px;">
+                                                    <div class="col-md-9"   >
                                                         <div class="input-group input-group-lg">Finally <br/>
                                                             <button type="submit"                                                                          
                                                                     data-toggle="tooltip" 

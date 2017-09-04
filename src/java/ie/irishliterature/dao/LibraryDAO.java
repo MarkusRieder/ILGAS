@@ -183,10 +183,10 @@ public class LibraryDAO {
 
                 translatorList = getTranslatorList(rs.getString("referenceNumber"));
                 library.setTranslator(translatorList);
-                System.out.println("return translatorList::  " + translatorList);
+//                System.out.println("return translatorList::  " + translatorList);
 
                 languageList = getLanguageList(rs.getString("referenceNumber"));
-                System.out.println("return languageList::  " + translatorList);
+//                System.out.println("return languageList::  " + translatorList);
                 library.setLanguage(languageList);
 
                 library.setPhysicalDescription(rs.getString("physicalDescription"));

@@ -7,6 +7,9 @@ package ie.irishliterature.servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import ie.irishliterature.DataTables.DataTableLibrary;
+import ie.irishliterature.dao.LibraryDAO;
+import ie.irishliterature.db.DBException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -17,10 +20,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ie.irishliterature.dao.LibraryDAO;
-import ie.irishliterature.db.DBException;
-import ie.irishliterature.DataTables.DataTableLibrary;
 
 /**
  *
@@ -63,7 +62,7 @@ public class LibraryDataServlet extends HttpServlet {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(dtl);
-        System.out.println("json:  " + json);
+       // System.out.println("json:  " + json);
         out.print(json);
 
     }
