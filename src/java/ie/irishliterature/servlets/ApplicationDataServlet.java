@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ie.irishliterature.DataTables.DataTableApplications;
 import ie.irishliterature.dao.ApplicationDAO;
-import static ie.irishliterature.dao.ApplicationDAO.getTranslatorTrack;
 import ie.irishliterature.db.DBException;
 import java.io.IOException;
 import java.io.PrintWriter;

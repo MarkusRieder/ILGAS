@@ -53,165 +53,55 @@
         <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/jquery-ui.js"></script>
-        <script>
+
+
+        <script type="text/javascript">
             $(document).ready(function () {
-        <div id="additionalTranslator"> <div class="col-md-8" style="margin-bottom: 60px;"><label class="control-label pull-left" id="last 2">Here goes the text  2</label><br><small style="margin-bottom: 10px;">this should include a list of previous published literary translations</small><div class="input-group pull-left" style="margin-bottom: 40px;"><label class="btn btn-default btn-file pull-left">Select file <input name="file" id="translator" type="file"><span class="glyphicon glyphicon-folder-open"></span></label><input class="pull-left" id="label_translator"><input name="destination" id="translator_cv_upload" value="Translator_CV" type="hidden"></div></div><div class="col-md-8" style="margin-bottom: 60px;"><label class="control-label pull-left" id="last 3">Here goes the text  3</label><br><small style="margin-bottom: 10px;">this should include a list of previous published literary translations</small><div class="input-group pull-left" style="margin-bottom: 40px;"><label class="btn btn-default btn-file pull-left">Select file <input name="file" id="translator" type="file"><span class="glyphicon glyphicon-folder-open"></span></label><input class="pull-left" id="label_translator"><input name="destination" id="translator_cv_upload" value="Translator_CV" type="hidden"></div></div></div>
-        );
-        });
+                $("input[id^='upload_file']").each(function () {
+                    var id = parseInt(this.id.replace("upload_file", ""));
+                    $("#upload_file" + id).change(function () {
+                        if ($("#upload_file" + id).val() !== "") {
+                            $("#moreImageUploadLink").show();
+                        }
+                    });
+                });
+            });
         </script>
 
-        <style type="text/css">
-            .zoomin img { height: 200px; 
-                          width: 200px; 
-                          -webkit-transition: all 2s ease; 
-                          -moz-transition: all 2s ease; 
-                          -ms-transition: all 2s ease; 
-                          transition: all 2s ease; 
-            } 
-            .zoomin img:hover { 
-                width: 300px; 
-                height: 300px;
-            }
-            td.details-control {
-                background: url('images/details_open.png') no-repeat center center;
-                cursor: pointer;
-            }
-            tr.shown td.details-control {
-                background: url('images/details_close.png') no-repeat center center;
-            }
-            div.container {
-                width: 80%;
-            }
-            .dropdown-container {
-                position: relative;
-            }
 
-            .dropdown-menu {
-                position: absolute;
-                top: 100%; /* Bottom of button */
-                right: 0;
-                margin-left: -100px; /* More to the left */
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var upload_number = 2;
+                $('#attachMore').click(function () {
+        //add more file
+                    var moreUploadTag = '';
+                    moreUploadTag += '<div class="element"><label for="upload_file"' + upload_number + '>Upload File ' + upload_number + '</label>';
+                    moreUploadTag += '<input type="file" id="upload_file' + upload_number + '" name="upload_file' + upload_number + '"/>';
+                    moreUploadTag += '&nbsp;<a href="javascript:del_file(' + upload_number + ')" style="cursor:pointer;" onclick="return confirm(\"Are you really want to delete ?\")">Delete ' + upload_number + '</a></div>';
+                    $('<dl id="delete_file' + upload_number + '">' + moreUploadTag + '</dl>').fadeIn('slow').appendTo('#moreImageUpload');
+                    upload_number++;
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            function del_file(eleId) {
+                var ele = document.getElementById("delete_file" + eleId);
+                ele.parentNode.removeChild(ele);
             }
-        </style>
+        </script>
 
     </head>
     <body>
-
-        <div class="container">
-            <!--            <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>Translator</th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="background-color: yellow">Jean Yves Masson</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp</td>
-                                    <td></td>
-                                </tr>
-            
-                                <tr>
-                                    <td align="left">Last Poems</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td align="left">The Tower</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td align="left">Moonshine Opera</td>  
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td align="left">Moonshine Opera 2</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table border="0">
-                            <thead>
-                                <tr>
-                                    <th>Translator: </th>
-                                    <th> &nbsp Title(s): </th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td align="left">Jean Yves Masson: &nbsp;</td>
-                                    <td align="left">&nbsp Last Poems &nbsp</td>
-                                    <td align="left">&nbsp The Tower &nbsp</td>
-                                    <td align="left">&nbsp Moonshine Opera &nbsp</td>  
-                                    <td align="left">&nbsp Moonshine Opera 2 &nbsp</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>-->
-
-            <div class="dropdown-container">
-                <div class="btn-group">
-                    <button class="btn btn-small btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="true">
-                        Jean Yves Masson:
-                        <span class="caret"></span>
-                    </button>
-                    <ul role="menu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Last Poems</a></li>
-                        <li><a href="#">The Tower</a></li>
-                        <li><a href="#">Moonshine Opera</a></li>
-                        <li><a href="#">Moonshine Opera 2</a></li>
-                    </ul>
-                </div>
-
-                <div class="btn-group">
-                    <button class="btn btn-small btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="true">
-                        Sparky Sparkster:
-                        <span class="caret"></span>
-                    </button>
-                    <ul role="menu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Moonshine Opera 2</a></li>
-                    </ul>
-                </div>
-
-                <div class="btn-group">
-                    <button class="btn btn-small btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="true">
-                        Felix Nutter:
-                        <span class="caret"></span>
-                    </button>
-                    <ul role="menu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Moonshine Opera</a></li>
-                        <li><a href="#">Moonshine Opera</a></li>
-                        <li><a href="#">Moonshine Opera 2</a></li>
-                    </ul>
-                </div>
-
-                <div class="btn-group">
-                    <button class="btn btn-small btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="true">
-                        Nathalie Shepard:
-                        <span class="caret"></span>
-                    </button>
-                    <ul role="menu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Moonshine Opera</a></li>
-                        <li><a href="#">Moonshine Opera</a></li>
-                        <li><a href="#">Moonshine Opera</a></li>
-                        <li><a href="#">Moonshine Opera</a></li>
-                        <li><a href="#">Moonshine Opera</a></li>
-                        <li><a href="#">Moonshine Opera</a></li>
-
-                        <li><a href="#">Moonshine Opera 2</a></li>
-                    </ul>
-                </div>
-
+        <div class="container-fluid" id="Translator"> 
+            <div class="element">
+                <label>Upload file</label>
+                <input type="file" name="upload_file1" id="upload_file1"/>
+            </div>
+            <div id="moreImageUpload"></div>
+            <div class="clear"></div>
+            <div id="moreImageUploadLink" style="display:none;margin-left: 10px;">
+                <a href="javascript:void(0);" id="attachMore">Attach another file</a>
             </div>
         </div>
 

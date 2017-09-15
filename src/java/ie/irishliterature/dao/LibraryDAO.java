@@ -132,10 +132,8 @@ public class LibraryDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        ArrayList listLibrary = new ArrayList();
-        
+        ArrayList listLibrary = new ArrayList();        
         ArrayList<String> authorList;
-
         ArrayList<String> translatorList;
         ArrayList<String> languageList;
 
@@ -166,10 +164,12 @@ public class LibraryDAO {
                     publishingYear = "n/a";
 
                 }
+                
                 library.setPublisheryear(publishingYear);
                 library.setGenre(rs.getString("Genre"));
                 library.setTranslationTitle(rs.getString("translationTitle"));
                 library.setTranslationPublisher(rs.getString("translationPublisher"));
+                
                 // checking full null value
                 String translationPublisherYear = rs.getString("translationPublisherYear");
 
@@ -183,12 +183,8 @@ public class LibraryDAO {
 
                 translatorList = getTranslatorList(rs.getString("referenceNumber"));
                 library.setTranslator(translatorList);
-//                System.out.println("return translatorList::  " + translatorList);
-
                 languageList = getLanguageList(rs.getString("referenceNumber"));
-//                System.out.println("return languageList::  " + translatorList);
                 library.setLanguage(languageList);
-
                 library.setPhysicalDescription(rs.getString("physicalDescription"));
                 library.setDuplicates(rs.getInt("Duplicates"));
                 library.setCopies(rs.getString("Copies"));
@@ -312,7 +308,7 @@ public class LibraryDAO {
         return authorList;
     }
 
-//updateLibrary
+    //updateLibrary
     public static boolean updateLibrary(Library library, int bookID) throws DBException {
 
         Connection conn = null;
@@ -330,8 +326,6 @@ public class LibraryDAO {
             String sql = "UPDATE library SET ( bookID , referenceNumber , Author , Title , Publisher , publishingYear , Genre , translationTitle , translationPublisher , translationPublisherYear , Translator , Language , physicalDescription , Duplicates , Copies , Notes , ISBN , ISSN ) VALUES ( ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?)";
             sql += " WHERE bookID = " + book;
 
-            //        System.out.println("sql::  " + sql);
-            //        System.out.println("bookID::  " + bookID);
             ps1 = conn.prepareStatement(sql);
 
             ps1.setInt(1, library.getBookID());

@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import ie.irishliterature.dao.UserDAO;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.DataTables.DataTableUser;
-import ie.irishliterature.model.User;
-import java.util.ArrayList;
 
 /**
  *
@@ -74,7 +72,7 @@ public class UserDataServlet extends HttpServlet {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(dtu);
-        System.out.println("json:  " + json);
+   //     System.out.println("json:  " + json);
         out.print(json);
     }
 

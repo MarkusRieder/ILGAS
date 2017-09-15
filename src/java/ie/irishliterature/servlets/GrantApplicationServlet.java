@@ -2,14 +2,20 @@ package ie.irishliterature.servlets;
 
 import static ie.irishliterature.dao.ACpublisherDAO_test.updatePublisher;
 import ie.irishliterature.dao.GrantApplicationDAO;
+import static ie.irishliterature.dao.GrantApplicationDAO.getAttachments;
+import static ie.irishliterature.dao.GrantApplicationDAO.getExpertReaderEmail;
+import static ie.irishliterature.dao.GrantApplicationDAO.getExpertReaderUserID;
 import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import static ie.irishliterature.dao.GrantApplicationDAO.ifLanguageExist;
 import static ie.irishliterature.dao.GrantApplicationDAO.ifTranslatorExist;
+import static ie.irishliterature.dao.GrantApplicationDAO.updateExpertReader;
 import static ie.irishliterature.dao.LibraryDAO.insertBook;
 import ie.irishliterature.db.DBException;
+import ie.irishliterature.model.ExpertReader;
 import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.model.Library;
 import ie.irishliterature.model.Publisher;
+import ie.irishliterature.util.MailUtil;
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -18,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -202,11 +209,15 @@ public class GrantApplicationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String task = "Start New Application";
+//        String task = "Start New Application";
 
 //        String[] authorArray;
-        // task = request.getParameter("task");
+        String task = request.getParameter("AssignExpertReader");
+        String name = request.getParameter("name");
+        String value = request.getParameter("value");
+
         System.out.println("task:: " + task);
+
         switch (task) {
             case "Start New Application":
                 Status = "new";
@@ -257,7 +268,7 @@ public class GrantApplicationServlet extends HttpServlet {
                             //collect all data input from input fileds
                             String fieldname = item.getFieldName();
                             String fieldvalue = item.getString();
-                       //     System.out.println("fieldname :: " + fieldname + " fieldvalue " + fieldvalue);
+                            //     System.out.println("fieldname :: " + fieldname + " fieldvalue " + fieldvalue);
 
                             switch (fieldname) {
                                 case "Company":
@@ -546,10 +557,8 @@ public class GrantApplicationServlet extends HttpServlet {
                         if (iend != -1) {
                             ApplicationNumber = Integer.parseInt(ReferenceNumber.substring(0, iend));
                         }
-                        
-                        
+
                         //Process Authors
-                        
                         // String[3] => Name, FirstName, LastName
                         String[] processingAuthorArray = new String[3];
 
@@ -642,42 +651,34 @@ public class GrantApplicationServlet extends HttpServlet {
 //                }
 
                 //Process Translators
-               
-                    String[] processingTranslatorArray = new String[1];
-                    System.out.println("translatorArray.length: " + translatorArray.length);
-                    //convert processingArray to ArrayList Translator
-                    Translator = new ArrayList<>(Arrays.asList(translatorArray));
-                  
-                    //loop through the Translators and insert each into TranslatorTrack
-                    for (String individualValue : translatorArray) {
+                String[] processingTranslatorArray = new String[1];
+                System.out.println("translatorArray.length: " + translatorArray.length);
+                //convert processingArray to ArrayList Translator
+                Translator = new ArrayList<>(Arrays.asList(translatorArray));
 
-                        translatorName = individualValue;
-                                                      
+                //loop through the Translators and insert each into TranslatorTrack
+                for (String individualValue : translatorArray) {
 
-                            System.out.println("calling insertTranslators......................:  " + translatorName);
-                            
-                            
+                    translatorName = individualValue;
 
-                                try {
-                                    
-                                //set the variables and
-                             //   translatorName = processingTranslatorArray[0];
-                                int idTranslator = ifTranslatorExist(translatorName);
-                                
-                                
-                                    // insert them into the tables TranslatorTrack
-                                    GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title);
+                    System.out.println("calling insertTranslators......................:  " + translatorName);
 
-                                    //reset index
-                                  //   idx = -1;
-                                     
-                                } catch (DBException ex) {
-                                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            
+                    try {
 
-                          //  idx++;
-                      
+                        //set the variables and
+                        //   translatorName = processingTranslatorArray[0];
+                        int idTranslator = ifTranslatorExist(translatorName);
+
+                        // insert them into the tables TranslatorTrack
+                        GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title);
+
+                        //reset index
+                        //   idx = -1;
+                    } catch (DBException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    //  idx++;
                 }
 
                 // Update new publisher
@@ -910,6 +911,79 @@ public class GrantApplicationServlet extends HttpServlet {
             case "Closed Applications":
                 request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
                 break;
+
+            case "AssignExpertReader":
+
+                String expertReaderEmail = "";
+                List<String[]> fileAttachment = new ArrayList<>();
+
+                String expertReaderName = request.getParameter("selectedUnassignedER");
+                String expectedReturnDate = request.getParameter("expectedReturnDate");
+               
+
+                String newAssignedReferenceNumber = request.getParameter("NewAssignedERRefNo");
+
+                int expertReaderUserID = 0;
+                try {
+
+                    expertReaderUserID = getExpertReaderUserID(expertReaderName);
+                    expertReaderEmail = getExpertReaderEmail(expertReaderName);
+                    fileAttachment = getAttachments(newAssignedReferenceNumber);
+
+
+                } catch (DBException ex) {
+                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                String originalPath;
+                String originalName;
+                String translationPath;
+                String translationName;
+
+                // INSERT new ExpertReader
+                ExpertReader expertReader = new ExpertReader();
+
+                expertReader.setExpertReaderUserID(expertReaderUserID);
+                expertReader.setExpertReaderName(expertReaderName);
+                expertReader.setReferenceNumber(newAssignedReferenceNumber);
+
+                 {
+                    try {
+                        String[] attachFiles = new String[2];
+
+                        for (String[] scoreRow : fileAttachment) {
+
+                            originalPath = scoreRow[1].replace("/~markus", "/home/markus/public_html");                           
+                            originalName = scoreRow[2];
+
+                            translationPath = scoreRow[3].replace("/~markus", "/home/markus/public_html");
+                            translationName = scoreRow[4];
+
+                            attachFiles[0] = originalPath;
+                            attachFiles[1] = translationPath;
+
+                        }
+
+                        int result = updateExpertReader(expertReader);
+
+                        if (result > 0) {
+
+                            try {
+                                
+                                //send email with attachment
+                                MailUtil.sendEmailWithAttachmentExpertReader(expertReaderName, expertReaderEmail, attachFiles, expectedReturnDate);
+
+                            } catch (MessagingException ex) {
+                                Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+
+                    } catch (DBException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                //    request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
+                break;
         }
     }
 
@@ -929,5 +1003,4 @@ public class GrantApplicationServlet extends HttpServlet {
         return date;
 
     }
-
 }

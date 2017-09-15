@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
 
         <title>Translation Grant Application System</title>
 
@@ -45,51 +45,11 @@
             var Author = "";
             var counter = 0;
             var Authorcounter = 0;
-            var zzz = 0;
+            var translatorCounter = 0;
+            var translatorCounter1 = 0;
             var translatorName876;
-
             $.datepicker.setDefaults({dateFormat: 'dd/mm/yy'});
-
         </script>
-        <!--        <script>
-                    function getNumberPages()
-                    {
-                        //Assume form with id="theform"
-                        var theForm = document.forms["feeCalculationForm"];
-                        //Get a reference to the TextBox
-                        var numberPages = document.getElementById("numberOfPages");
-                        var noPages = 0;
-                        //If the textbox is not blank
-                        if (numberPages.value !== "")
-                        {
-                            noPages = parseFloat(numberPages.value);
-                        }
-                        return noPages;
-                    }
-        
-                    function getFeePerPage()
-                    {
-                        //Assume form with id="theform"
-                        var theForm = document.forms["feeCalculationForm"];
-                        //Get a reference to the TextBox
-                        var numberPages = document.getElementById("feePerPage");
-                        var amountPage = 10;
-                        //If the textbox is not blank
-                        if (feePerPage.value !== "")
-                        {
-                            amountPage = parseFloat(feePerPage.value);
-                        }
-                        return amountPage;
-                    }
-        
-                    function getTotal()
-                    {
-                        var feeTotal = getNumberPages() * getFeePerPage();
-                        document.getElementById("translatorFee").value = feeTotal.toFixed(2).replace(/./g, function (c, i, a) {
-                            return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-                        });
-                    }
-                </script>-->
 
         <!--AutoComplete_Genres-->
         <script type="text/javascript">
@@ -423,6 +383,10 @@
 
                 margin-right: 5px;
             }
+
+            h1 {
+                text-align: center;
+            }
         </style>
 
         <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh -->
@@ -454,7 +418,21 @@
             });
         </script> 
 
+
+        <!--Triggering the Tooltips-->
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $('[data-toggle="tooltip"]').tooltip();
+                $(".tip-top").tooltip({placement: 'top'});
+            });
+
+        </script>
+
+
         <script>
+
             $(function () {
                 $('div.agreement').on('change', ':file', function () {
                     var input = $(this),
@@ -473,14 +451,29 @@
                     document.getElementById("label_contract").value = label;
                 });
             });
+
             $(function () {
+
                 $('div.translator_cv').on('change', ':file', function () {
-                    console.log("label_translator" + zzz);
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_translator" + zzz).value = label;
+                    var label_translatorid2 = "label_translator" + id2;
+                    document.getElementById(label_translatorid2).value = label;
+                });
+            });
+
+
+            $(function () {
+                $(document).on('change', 'div.translatorcv :file', function () {
+
+                    var id = parseInt(this.id.replace("translator_cv", ""));
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    var label_translatorid = "label_translator" + id;
+                    document.getElementById(label_translatorid).value = label;
                 });
             });
             $(function () {
@@ -499,127 +492,35 @@
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
                     document.getElementById("label_cover").value = label;
-                    console.log("label  ", label);
-                    console.log("numFiles  ", numFiles);
                 });
             });
         </script>
 
+        <script type="text/javascript">
+            function del_file(eleId) {
+                var ele = document.getElementById("delete_file" + eleId);
+                ele.parentNode.removeChild(ele);
+            }
+        </script>
+
         <!--add more Translators-->
         <script type="text/javascript">
-
             $(document).ready(function () {
-
                 counter = 1;
                 $("#addElement").click(function (event) {
-
                     counter++;
                     var $newDiv = $("<div class='input-group' style='mar gin-bottom :2px'>" + counter + ". Translator  </div>");
-                    //      var $newInput = $("<input placeholder='Translator Name' type='text'> ");
-
                     var $newInput = $("<input placeholder='Translator Name' type='text'> ");
                     $newInput
                             .attr("name", "Name" + counter)
                             .attr("id", "name" + counter)
                             .addClass("text wsp");
-
                     $newInput.appendTo($newDiv);
-
                     $newDiv.appendTo($("#generatedForm"));
-
-
-                    zzz = counter;
-
-                    var $newDiv = document.createElement("div");
-
-                    $newDiv.className = ("col-md-8");
-                    $newDiv.style = ("margin-bottom: 20px");
-
-
-                    $label = document.createElement("label");
-
-                    $label.for = ("label_translator" + zzz);
-                    $label.className = ("control-label pull-left");
-                    $label.innerHTML = ("Upload a copy of Jean Yves Masson's CV:");
-
-                    $break = document.createElement("br");
-
-                    $small = document.createElement("small");
-
-                    $small.className = ("pull-left");
-                    $small.style = ("margin-bottom: 10px");
-                    $small.innerHTML = ("this should include a list of previous published literary translations");
-
-                    var $newDiv1 = document.createElement("div");
-
-                    $newDiv1.className = ("input-group translator_cv pull-left");
-                    $newDiv1.style = ("margin-bottom: 40px");
-
-                    $label1 = document.createElement("label");
-
-                    $label1.className = ("btn btn-default btn-file pull-left");
-                    $label1.innerHTML = ("Select file ");
-
-                    var $newInput = document.createElement("input");
-
-
-                    $newInput.type = ("file");
-                    $newInput.name = ("file");
-                    $newInput.id = ("translator_cv" + zzz);
-
-                    var $span = document.createElement("span");
-
-                    $span.className = ("glyphicon glyphicon-folder-open");
-
-                    var $newInput1 = document.createElement("input");
-
-                    $newInput1.className = ("pull-left");
-                    $newInput1.id = ("label_translator" + zzz);
-
-                    var $newInput2 = document.createElement("input");
-
-                    $newInput2.className = ("pull-left");
-                    $newInput2.id = ("translator_cv_upload" + zzz);
-                    $newInput2.type = ("hidden");
-                    $newInput2.name = ("destination");
-                    $newInput2.value = ("Translator_CV");
-
-                    $newDiv.append($label);
-                    $newDiv.append($break);
-                    $newDiv.append($small);
-
-                    $label1.append($newInput);
-                    $label1.append($span);
-
-                    $newDiv1.append($label1);
-
-
-
-                    $newDiv.append($newDiv1);
-                    $newDiv.append($newInput1);
-                    $newDiv.append($newInput2);
-
-                    document.getElementById("additionalTranslator").appendChild($newDiv);
-
-
-//                        $newDiv                    <div class="col-md-8"   style="margin-bottom: 60px">
-//                        $label                        <label for="label_translator" class="control-label pull-left" id="123"></label>
-//                        $break                        <br/>
-//                        $small                        <small class="pull-left"   style="margin-bottom: 10px">this should include a list of previous published literary translations</small> 
-//                        $newDiv1                        <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
-//                        $label1                            <label class="btn btn-default btn-file pull-left">Select file //                                                           
-//                        $newInput                          <input type="file"  name="file" id="translator_cv" >
-//                        $span                              <span class="glyphicon glyphicon-folder-open"></span>
-//                                                         </label>
-//                       $newInput1                        <input id="label_translator0" class="pull-left"/>
-//                        $newInput2                       <input type="hidden" id="translator_cv_upload" value="Translator_CV" name="destination" />                                          
-//                                                </div>
-//                                            </div>
-
                 });
             });
-
         </script>
+         
         <script>
             function  copyFirstRow() {
                 var fn = document.getElementById("translatorName");
@@ -628,51 +529,53 @@
                 translatorArray.push(Name);
                 console.log(" first entry in translatorArray ", fn.value);
             }
-
-            //    Add to an array
-
         </script>
 
         <script>
             function backToBooks() {
-
-//                console.log("counter :: ", counter);
-
-
-
+                var upload_number = 2;
                 for (var i = 2; i <= counter; i++) {
-//
-//                    var itm = document.getElementById("first0");
-//
-//                    console.log("itm  first0 ", itm);
-//
-//                    console.log("name+i   ", "name" + i);
 
                     var nr = "name" + i;
-//                     console.log("nr   ", nr);
-
-
                     var item = document.getElementById(nr);
                     var itemValue = item.value;
-//                    console.log("itemValue   ", itemValue);
 
                     translatorArray.push(itemValue);
-//                    console.log("Array   ", translatorArray[i]);
-                    //Do something
+
+                    var moreUploadTag = '';
+
+                    moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+                    moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
+                    moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
+                    moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
+                    moreUploadTag += 'Select file ';
+                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
+                    moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
+                    moreUploadTag += '</label>';
+                    moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
+                    moreUploadTag += '</div>';
+                    moreUploadTag += '</div>';
+
+                    $(moreUploadTag).appendTo('#additionalTranslator');
+
+                    upload_number++;
                 }
 
                 $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
                 var arrayLength = translatorArray.length;
                 for (var i = 0; i < arrayLength; i++) {
-                    console.log("itemValue   " + i + ":  ", translatorArray[i]);
-                    //Do something
                 }
                 $("#translatorArray").val(translatorArray);
             }
         </script>
 
 
-
+        <!--';-->
         <!--add more Authors -->
         <script type="text/javascript">
 
@@ -699,6 +602,7 @@
                 });
             });
         </script>
+
         <script>
             function  copyFirstRow2() {
 
@@ -712,47 +616,28 @@
                 authorArray.push(fulln, aFirstName.value, aLastName.value);
             }
 
-            //    Add to an array
-
         </script>
 
         <script>
             function backToBooks2() {
 
-//                console.log("counter :: ", counter);
-
-
-
                 for (var i = 2; i <= Authorcounter; i++) {
-//
-//                    var itm = document.getElementById("first0");
-//
-//                    console.log("itm  first0 ", itm);
-//
-//                    console.log("name+i   ", "name" + i);
 
                     var nr = "authorFirstName" + i;
-//                     console.log("nr   ", nr);
-
                     var nrL = "authorLastName" + i;
                     var first = document.getElementById(nr);
                     var last = document.getElementById(nrL);
                     var firstValue = first.value;
                     var lastValue = last.value;
-                    console.log("firstValue   ", firstValue);
-                    console.log("lastValue   ", lastValue);
                     var fullName = firstValue + " " + lastValue;
-                    console.log("fullName   ", fullName);
+
                     authorArray.push(fullName, firstValue, lastValue);
-//                    console.log("Array   ", jsArray[i]);
-                    //Do something
                 }
 
                 $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
                 var arrayLength = authorArray.length;
                 for (var i = 0; i < arrayLength; i++) {
                     console.log("authorArray   " + i + ":  ", authorArray[i]);
-                    //Do something
                 }
                 $("#author_array").val(authorArray);
             }
@@ -770,10 +655,10 @@
                 var tripper = localStorage.getItem("translatorName876");
                 document.getElementById("123").innerHTML = tripper;
                 document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
-                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
-                console.log("tester   ", tester);
-                console.log("tripper   ", tripper);
+//                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
+//                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
+//                console.log("tester   ", tester);
+//                console.log("tripper   ", tripper);
             }
 
         </script>
@@ -785,9 +670,9 @@
                 var tripper = localStorage.getItem("translatorName876");
                 document.getElementById("123").innerHTML = tripper;
                 document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
-                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
-                console.log("tripper 1  ", tripper);
+//                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
+//                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
+//                console.log("tripper 1  ", tripper);
             });
         </script>
 
@@ -816,7 +701,7 @@
             .panel {
                 background-color: #d9d1d1 ;
                 margin-top: 50px;
-                box-shadow: 0 0 30px  #b6a6a6;
+                box-shadow: 0 0 30px  #b6a6a6;    
                 padding:0 15px 0 15px;
             }
             .panel-horizontal {
@@ -837,7 +722,7 @@
 
             .form-input {
                 height: 50px;
-                font-size: 16px;
+                font-size: 16px;    
             }
 
             .form-btn {
@@ -849,11 +734,11 @@
 
     <body style="height: 100%">
 
-        <sql:query var="companyQuery" dataSource="jdbc/ILGAS">
+        <sql:query var="companyQu    ery" dataSource="jdbc/ILGAS">
             SELECT * FROM international_publishers
-            WHERE international_publishers.Company_Number = ?
+            WHERE  international_publishers.Company_Number = ?
             <sql:param value="${publisherID}"/>
-        </sql:query>
+        </sql:query>    
         <c:set var="companyDetails" value="${companyQuery.rows[0]}"/>
 
         <div id="shadowholder">
@@ -865,13 +750,21 @@
                         <a href="/the-translation-grant-programme"><img src="images/flashtext-animated2.gif" height="80" alt="Promoting Irish Literature Abroad" /></a>
                     </div>
                     <a href="/" class="logo"><span class="hidden">Literature Ireland</span></a>
-
-                    <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
-                        <div class="pull-right">
-                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
-                        </div>
-                    </div> <!--container for welcome/logout-->
                 </div> <!--  End of topbar div -->
+
+
+                <!--container for welcome/logout-->                
+
+                <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
+                    <div class="pull-right">
+                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                    </div>
+                </div> <!--container for welcome/logout-->
+
+                <h1 style="align-content: center">Grant Application System for Literature Ireland</h1>
+
+                <div class="container-fluid" style="margin-bottom: 20px">
+                </div> 
 
                 <nav class="navbar navbar-default" >
                     <div class="container-fluid"  style="background-color: #d9d1d1">
@@ -907,7 +800,8 @@
                                     <br/>
                                     <br/>
                                     <img style="margin:0px auto;display:block" src="images/favicon.png" alt="favicon" width="50" height="50"/>
-                                    <h1 align="center" style="margin-bottom: 40px; margin-top: 60px"> <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span> 
+                                    <h1 style="margin-bottom: 40px; margin-top: 60px"> 
+                                        <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span> 
                                         Information - Please read!
                                         <span class="glyphicon glyphicon-exclamation-sign  icon-exclamation"></span> 
                                     </h1>
@@ -1404,10 +1298,6 @@
                                                             </div>
                                                         </div>
 
-                                                        <script>
-//                                                            var translatorName = document.getElementById("translatorName").value;
-//                                                            session.setAttribute("translatorName", translatorName);
-                                                        </script>
                                                         <div class="col-sm-4" style="margin-top: 30px;">    
                                                             <a href="#" class="btn btn-group-sm btn-default pull-left" 
                                                                data-toggle="modal" 
@@ -1415,7 +1305,7 @@
                                                                onclick="copyFirstRow();"
                                                                >add more Translators</a>
 
-                                                        </div>
+                                                        </div>                                                    
 
                                                         <input type="hidden" id="translatorArray" name="translatorArray" >
 
@@ -1455,6 +1345,23 @@
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
 
+
+                                                                <div class="col-xs-6">
+                                                                    <div class="mini-box">
+                                                                        <div class="form-group has-feedback">
+                                                                            <label for="languages" class="pull-left" >Language (of the original)</label>
+                                                                            <input id="languageOfTheOriginal"                                
+                                                                                   type="text"                                
+                                                                                   class="form-control"                                
+                                                                                   name="languageOfTheOriginal"                                
+                                                                                   value=""    
+                                                                                   placeholder="Language"
+                                                                                   >
+                                                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> <!--col-xs-6-->
+
                                                                 <div class="col-xs-6">
                                                                     <div class="mini-box">
                                                                         <div class="form-group has-feedback">
@@ -1475,6 +1382,18 @@
 
                                                                 <div class="col-xs-6">
                                                                     <div class="mini-box">
+                                                                        <label for="countryOfPublication" class="pull-left" >Country of Publication</label>
+                                                                        <input id="countryOfPublication"                                
+                                                                               type="text"                                
+                                                                               class="form-control"                                
+                                                                               name="countryOfPublication"                                
+                                                                               value=""    
+                                                                               placeholder="Country of Publication"
+                                                                               >
+                                                                    </div>
+                                                                </div> <!--col-xs-6-->
+                                                                <div class="col-xs-6">
+                                                                    <div class="mini-box">
                                                                         <label for="physicalDescription" class="pull-left" >Physical Description</label>
                                                                         <input id="physicalDescription"                                
                                                                                type="text"                                
@@ -1485,7 +1404,6 @@
                                                                                >
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
-
                                                             </div> <!--row-->
 
                                                             <div class="row">
@@ -1558,10 +1476,7 @@
                                                                     <!--</div>-->                                                                                    
                                                                 </div> <!--col-xs-6-->
                                                             </div> <!--row-->
-
-
-
-                                                        </div> <!--col-xs-8-->
+                                                        </div><!--col-xs-8-->
 
 
                                                         <div class="col-sm-3">
@@ -1578,11 +1493,11 @@
 
                                                                 <input type="hidden" value="Cover" name="image-file" id="label_cover"/>
                                                             </div>
-                                                        </div>
-                                                    </div> <!--row-->
+                                                        </div>                                                    
+                                                    </div> <!-- row-->
 
 
-                                                    <!--Eigth row-->
+                                                    <!--Eigthrow-->
 
                                                     <div class="row" style="margin-bottom: 10px">
 
@@ -1591,7 +1506,7 @@
                                                             <div class="form-group">
                                                                 <textarea class="form-control" id="bookNotes" name="bookNotes" style="width: 800px; height: 215px" placeholder="Notes"></textarea>
                                                             </div>
-                                                        </div>
+                                                        </div>                                                    
                                                     </div> <!-- row  -->
                                                 </div>  <!-- panel-body-->     
                                             </div>  <!-- panel --> 
@@ -1666,7 +1581,17 @@
                                         <div class="col-xs-12 content">
                                             <div class="row">
                                                 <div class='col-sm-4'>
-                                                    <label for="proposedDateOfPublication" class="control-label pull-left">Proposed date of publication: </label>
+                                                    <label for="DateOfPublicationOriginal" class="control-label pull-left">Date of Publication (of the original): </label>
+                                                    <div class="input-group pull-left"   style="margin-bottom: 40px;">
+                                                        <input type="text" name="DateOfPublicationOriginal" id="DateOfPublicationOriginal" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                        <label class="input-group-addon" for="DateOfPublicationOriginal">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class='col-sm-4'>
+                                                    <label for="proposedDateOfPublication" class="control-label pull-left">Proposed date of publication:<br/> &nbsp;</label>
                                                     <div class="input-group pull-left"   style="margin-bottom: 40px;">
                                                         <input type="text" name="proposedDateOfPublication" id="proposedDateOfPublication" class="form-control" placeholder="DD/MM/YYYY" />    
                                                         <label class="input-group-addon" for="proposedDateOfPublication">
@@ -1677,18 +1602,17 @@
                                             </div>
 
                                             <div class="row">
-                                                <div class='col-sm-4'>
-                                                    <label for="proposedPrintRun" class="control-label pull-left">Proposed print run: </label>
+
+                                                <div class='col-sm-4'  style="margin-bottom: 40px;">                                                
+                                                    <label for="pageExtentOfTheOriginal" class="control-label pull-left">Page extent of the <br/> (of the original): </label>
                                                     <div class="input-group pull-left"  style="margin-bottom: 40px;">
-                                                        <span class="input-group-addon" id="sizing-addon1">  
+                                                        <span class="input-group-addon" id="sizing-addon3">  
                                                             <span class="glyphicon glyphicon-book"></span>                                                            
                                                         </span>
-                                                        <input type="text" name="proposedPrintRun" id="proposedPrintRun" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">  
+                                                        <input type="text" name="pageExtentOfTheOriginal" id="pageExtentOfTheOriginal" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon3">
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="row">
                                                 <div class='col-sm-4'  style="margin-bottom: 40px;">                                                
                                                     <label for="plannedPageExtent" class="control-label pull-left">Planned page extent of the <br/>  published translation: </label>
                                                     <div class="input-group pull-left"  style="margin-bottom: 40px;">
@@ -1699,14 +1623,34 @@
                                                     </div>
                                                 </div>
 
+
                                                 <script>
-                                                    $("#proposed-date-of-publication").datepicker({
+                                                    $("#DateOfPublicationOriginal").datepicker({
                                                         showWeekDays: true,
                                                         todayHighlight: true,
                                                         autoclose: true
                                                     });
                                                 </script>
 
+                                                <script>
+                                                    $("#proposedDateOfPublication").datepicker({
+                                                        showWeekDays: true,
+                                                        todayHighlight: true,
+                                                        autoclose: true
+                                                    });
+                                                </script>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-sm-4'>
+                                                    <label for="proposedPrintRun" class="control-label pull-left">Proposed print run: </label>
+                                                    <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                        <span class="input-group-addon" id="sizing-addon1">  
+                                                            <span class="glyphicon glyphicon-book"></span>                                                            
+                                                        </span>
+                                                        <input type="text" name="proposedPrintRun" id="proposedPrintRun" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">  
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1721,48 +1665,53 @@
                                     <div class="container-fluid">
 
                                         <div class="row">
-                                            <div class="col-md-8"   style="margin-bottom: 60px">
-                                                <label for="label_translator" class="control-label pull-left" id="123"></label>
-                                                <br/>
-                                                <small class="pull-left"   style="margin-bottom: 10px">this should include a list of previous published literary translations</small> 
-                                                <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
-                                                    <label class="btn btn-default btn-file pull-left">
-                                                        Select file 
-                                                        <input type="file"  name="file" id="translator_cv" >
-                                                        <span class="glyphicon glyphicon-folder-open"></span>
-                                                    </label>
-                                                    <input id="label_translator0" class="pull-left"/>
-                                                    <br/>
-                                                    <br/>          
-                                                    <input type="hidden" name="userID" value="${userID}">
-                                                    <input type="hidden" name="publisherID" value="${publisherID}">
-                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                    <!--Destination:-->
-                                                    <input type="hidden" id="translator_cv_upload" value="Translator_CV" name="destination" />                                          
-                                                </div>
-                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="col-md-8"   style="margin-bottom: 20px">
+                                                        <label for="label_translator0" class="control-label pull-left" id="123"></label>
+                                                        <br/>
+                                                        <small class="pull-left"   style="margin-bottom: 10px">this should include a list of previous published literary translations</small> 
+                                                        <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
+                                                            <label class="btn btn-default btn-file pull-left">
+                                                                Select file 
+                                                                <input multiple="" type="file"  name="file" id="translator_cv0" >
+                                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                            </label>
+                                                            <input id="label_translator0" class="pull-left"/>
+                                                            <br/>
+                                                            <br/>          
+                                                            <input type="hidden" name="userID" value="${userID}">
+                                                            <input type="hidden" name="publisherID" value="${publisherID}">
+                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                            <!--Destination:-->
+                                                            <input type="hidden" id="translator_cv_upload0" value="Translator_CV" name="destination" />                                          
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="userID" id="translatorName123" value=''>
+                                                    <div id="additionalTranslator"></div>
 
-                                            <input type="text" name="userID" id="translatorName123" value='' placeholder="yuuiytuituit">
-
-                                            <div id="additionalTranslator"> </div>
-
-                                            <div class="col-md-4" style="margin-bottom: 20px">                                              
-
-                                                <label for="plannedPageExtent" class="control-label pull-left">Translator fee:</label>                                                                        
-                                                <div class="input-group pull-left" style="margin-bottom: 20px">
-                                                    <label class="input-group-addon" for="translatorFee">
-                                                        <span class="glyphicon glyphicon-euro"></span>                                     
-                                                    </label>
-                                                    <input type="text" class="form-control pull-left" name="translatorFee" id="translatorFee" placeholder="fee">    
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4" style="margin-bottom: 40px">         
-                                                <div class="form-group">
-                                                    <textarea class="form-control" placeholder="Break-down of translator fee" name="translatorNotes"
-                                                              style="width: 280px; height: 196px;"></textarea>
                                                 </div>
                                             </div>
                                         </div> 
+                                        <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">                                              
+
+                                            <label for="translatorFee" class="control-label pull-left">Translator fee:</label>                                                                        
+                                            <div class="input-group pull-left" style="margin-bottom: 20px">
+                                                <label class="input-group-addon" for="translatorFee">
+                                                    <span class="glyphicon glyphicon-euro"></span>                                     
+                                                </label>
+                                                <input type="text" class="form-control pull-left" name="translatorFee" id="translatorFee" placeholder="fee">    
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">  
+                                            <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator fee:</label>                                                  
+                                            <div class="form-group">
+                                                <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee'
+                                                          style="width: 280px; height: 196px;"></textarea>
+                                            </div>
+                                        </div>
+
                                     </div> 
                                 </div>              
 
@@ -1836,13 +1785,18 @@
                                                         <div class="row">
                                                             <div class="col-md-8"   style="margin-bottom: 40px">
                                                                 <label for="label_originalSample" class="control-label pull-left">Upload electronic copy of original work</label>
-                                                                <div class="input-group pull-left"  >
+                                                                <div class="input-group pull-left"  
+                                                                     data-toggle="tooltip"
+                                                                     title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
+                                                                     data-placement="bottom" >
                                                                     <label class="btn btn-default btn-file pull-left">
                                                                         Select file 
-                                                                        <input type="file"  name="file" id="originalSample" >
+                                                                        <input type="file"  
+                                                                               name="file" 
+                                                                               id="originalSample" >
                                                                         <span class="glyphicon glyphicon-folder-open"></span>
                                                                     </label>
-                                                                    <input id="label_originalSample" class="pull-left"/>
+                                                                    <input id="label_originalSample" class="pull-left">                                                                               
                                                                     <br/>
                                                                     <br/>          
                                                                     <input type="hidden" name="userID" value="${userID}">
@@ -1884,7 +1838,6 @@
                                         <div class="row" >
                                             <div class="panel panel-default">        
                                                 <div class="panel-body">
-                                                    <!--<div class="col-md-12" style="margin-bottom: 40px; margin-top: 60px">-->
 
                                                     <div class="col-md-9"   >
                                                         <div class="input-group input-group-lg">Finally <br/>
@@ -2036,22 +1989,22 @@
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-                                                var $imageupload = $('.imageupload');
-                                                $imageupload.imageupload();
-                                                $('#imageupload-disable').on('click', function () {
-                                                    $imageupload.imageupload('disable');
-                                                    $(this).blur();
-                                                })
+            var $imageupload = $('.imageupload');
+            $imageupload.imageupload();
+            $('#imageupload-disable').on('click', function () {
+                $imageupload.imageupload('disable');
+                $(this).blur();
+            });
 
-                                                $('#imageupload-enable').on('click', function () {
-                                                    $imageupload.imageupload('enable');
-                                                    $(this).blur();
-                                                })
+            $('#imageupload-enable').on('click', function () {
+                $imageupload.imageupload('enable');
+                $(this).blur();
+            });
 
-                                                $('#imageupload-reset').on('click', function () {
-                                                    $imageupload.imageupload('reset');
-                                                    $(this).blur();
-                                                });
+            $('#imageupload-reset').on('click', function () {
+                $imageupload.imageupload('reset');
+                $(this).blur();
+            });
         </script>
     </body>
 </html>

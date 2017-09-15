@@ -44,7 +44,8 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css" />
 
-
+        <link rel="stylesheet" href="css/lesshat.css" />
+        <link rel="stylesheet" href="css/newfile.css" />
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
         <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
@@ -177,6 +178,25 @@
             });
         </script>
 
+        <script type="text/javascript">
+
+            function getTodaysDate() {
+                var date = new Date();
+
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+
+                if (month < 10)
+                    month = "0" + month;
+                if (day < 10)
+                    day = "0" + day;
+
+                var today = day + "/" + month + "/" + year;
+                document.getElementById('sampleSentOut1').value = today;
+            };
+
+        </script>
         <!--script for DataTable Modal popup-->
         <script type="text/javascript">
             $(document).ready(function () {
@@ -416,7 +436,7 @@
 
 
         <script type="text/javascript">
-
+            var cntr = 0;
             $(document).ready(function () {
                 var table = $("#applications").DataTable({
                     autoWidth: false,
@@ -508,7 +528,6 @@
                         //    {"data": "ReferenceNumber"},
 
                         {"data": "company"},
-
                         {"data": "agreement",
                             "render": function (data, type, row) {
 
@@ -524,7 +543,6 @@
 
                                 var date = new Date(data);
                                 var month = date.getMonth() + 1;
-
                                 return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
                             }},
                         {"data": "proposedPrintRun"},
@@ -545,7 +563,6 @@
                                     return mValue.toFixed(2);
                                 } else
                                     return '-';
-
                                 return data;
                             }
                         },
@@ -554,9 +571,9 @@
                         {"data": "copiesSent",
                             "render": function (data, type, row) {
                                 if (data === 0) {
-                                    return 'Niet';
+                                    return 'No';
                                 } else {
-                                    return 'Da';
+                                    return 'Yes';
                                 }
                                 ;
                             }},
@@ -575,33 +592,50 @@
                         {"data": "TC_ACCEPTED",
                             "render": function (data, type, row) {
                                 if (data === 0) {
-                                    return 'Nope';
+                                    return 'No';
                                 } else {
-                                    return 'Oui';
+                                    return 'Yes';
                                 }
                                 ;
                             }},
                         {"data": "APPROVED",
                             "render": function (data, type, row) {
                                 if (data === 0) {
-                                    return 'Nada';
+                                    return 'No';
                                 } else {
 
-                                    return 'JaJa';
+                                    return 'Yes';
                                 }
                                 ;
                             }},
                         {"data": "genre"},
                         {"data": "TranslatorName"},
                         {"data": "expertReaderName"},
-//                        {"data": "idTranslator"},
                         {"data": "bookTitle"},
                         {"data": "translatorTitles"},
                         {"data": "Titles"},
                         {"data": "translatorCVDocName"},
-                        {"data": "cover"}
-
-
+                        {"data": "cover"},
+                        {"data": "sampleSentOut",
+                            "render": function (data) {
+                                var date = new Date(data);
+                                var month = date.getMonth() + 1;
+                                return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
+                            }},
+                        {"data": "sampleReturned",
+                            "render": function (data) {
+                                var date = new Date(data);
+                                var month = date.getMonth() + 1;
+                                return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
+                            }},
+                        {"data": "readerReport",
+                            "render": function (data, type, row) {
+                                return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                            }},
+//                        {"data": "readerReportSummary"},
+                        {"data": "expertReaderList"},
+                        {"data": "unassignedExpertReaderList"},
+                        {"data": "idTranslator"}
                     ],
                     columnDefs: [
                         {
@@ -630,7 +664,20 @@
 
                 });
 
-                $('#applications tbody').on('click', 'tr td.details-control', function () {
+//                $("#applications tbody").off("click").on("click", 'tr td.details-control', function (e) {
+//                    alert("clicked");
+////                });
+
+                //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
+                $('#additionalExpertReaderModal').empty();  // empty the div before fetching and adding new data
+
+                $('#applications tbody').on('click', 'tr td.details-control', function (e) {
+                    e.preventDefault();
+
+                    //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
+                    $('#additionalExpertReaderModal').empty();  // empty the div before fetching and adding new data
+
+                    cntr++;
 
                     var agreemnt = "";
                     var contr = "";
@@ -640,23 +687,23 @@
                     var TranslName = "";
                     var bookTitles = "";
                     var TranslTitles = "";
-
+                    var readerReport = "";
                     var tr = $(this).closest('tr');
                     var row = table.row(tr);
                     var rowdata = (table.row(tr).data());
 
-                    var statii = rowdata.Status;
+                    var expertReaderName = "";
 
+
+                    var statii = rowdata.Status;
                     if (statii === 'new') {
 
                         document.getElementById("appStatus").style.backgroundColor = '#aefca1';
                         document.getElementById("agreement").value = 'new';
-
                     } else if (statii === 'pending') {
 
                         document.getElementById("appStatus").style.backgroundColor = '#a1fcef';
                         document.getElementById("agreement").value = 'pending';
-
                     } else {
 
                         document.getElementById("appStatus").style.backgroundColor = '#efa1fc';
@@ -666,7 +713,6 @@
 
                     var agreemnt = 'http://localhost' + rowdata.agreement + '';
                     $("#appAgreement").val(agreemnt);
-
                     document.getElementById("agreement").href = agreemnt;
 
                     if (typeof (rowdata.cover) === "undefined") {
@@ -677,18 +723,16 @@
 
                     $("#cover").val(cver);
                     document.getElementById("cover").src = cver;
-
                     var contr = 'http://localhost' + rowdata.contract + '';
                     document.getElementById("contract").href = contr;
-
-
                     var trans = 'http://localhost' + rowdata.translatorCV + '';
                     document.getElementById("translatorCV").href = trans;
-
                     var transSamp = 'http://localhost' + rowdata.copiesTranslationSample + '';
                     document.getElementById("copiesTranslationSample").href = transSamp;
 
                     $("#applicationsModal").modal("show");
+
+                    $('#applications').DataTable().ajax.reload();
 
                     $("#appApplicationNumber").val($(this).closest('tr').children()[1].textContent);
                     $("#appApplicationYear").val($(this).closest('tr').children()[2].textContent);
@@ -696,28 +740,24 @@
                     $("#appCompany").val($(this).closest('tr').children()[4].textContent);
 //                    $("#appAgreement").val($(this).closest('tr').children()[5].textContent);
 
+                    var appReferenceNumber = rowdata.ReferenceNumber;
+                    console.log("appReferenceNumber " + appReferenceNumber);
+                    $("#unassignedERRefNo").val(appReferenceNumber);
 
                     var TranslName = rowdata.TranslatorName;
                     $("#TranslatorName").val(TranslName);
 
-//                    console.log("TranslName   " + TranslName);
-//                    console.log("rowdata.TranslatorName   " + rowdata.TranslatorName);
-
-
                     var bookTitles = rowdata.Titles;
                     $("#currentItem").val(bookTitles.join(""));
-
-
-
-//                    console.log("TranslName   " + TranslName);
-//
-//                    console.log("rowdata.Title   " + rowdata.Titles);
-//
-//                    console.log("rowdata.agreemnt   " + agreement);
+                    console.log("bookTitles: " + bookTitles);
 
                     // Generate table translatorTrackTable
-
                     var TranslTitles = rowdata.translatorTitles;
+
+                    console.log("TranslTitles: " + TranslTitles);
+
+                    //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
+                    $('#translTrackDiv').empty(); // empty the div before fetching and adding new data
 
                     var myTableDiv = document.getElementById("translTrackDiv");
                     var tble = document.createElement('TABLE');
@@ -726,9 +766,7 @@
                     tble.title = 'translatorTrackTable';
                     tble.className = "table table-striped table-condensed small";
                     tble.style = 'overflow-x: auto';
-
                     var tableBody = document.createElement('TBODY');
-
                     var translatorTrack = [];
                     for (var i = 0; i < TranslTitles.length; ++i) {
                         for (var j = 0; j < TranslTitles[i].length; ++j) {
@@ -757,18 +795,12 @@
                             }
                             td.appendChild(document.createTextNode(translatorTrack[i][j]));
                             tr.appendChild(td);
-
                         }
                         tableBody.appendChild(tr);
                     }
 
                     tble.appendChild(tableBody);
-
                     myTableDiv.appendChild(tble);
-
-
-// build modals first
-
 
                     for (i = 0; i < translatorTrack.length; i++) {
                         for (j = 0; j < translatorTrack[i].length; j++) {
@@ -783,29 +815,196 @@
                                 a.title = "see Trackrecord";
                                 a.class = "button";
                                 a.href = "#stack2";
-
                                 newdiv.append(a);
-
                             }
                             $('#testcontainer').find('a').attr('data-toggle', 'modal');
-
                             $('#testcontainer').append(newdiv);
-
                             //print track record
                             if (i !== 0) {
                                 //    console.log("translatorTrack[i][j]:  " + translatorTrack[i][j]);
                             }
                         }
-
-
                     }
+
+                    var expertReaderName = rowdata.expertReaderList;
+                    console.log("expertReaderName:  " + expertReaderName);
+                    console.log("expertReaderName length:  " + expertReaderName.length);
+
+                    document.getElementById("unassignedERRefNo").value = appReferenceNumber;
+                    document.getElementById("NewAssignedERRefNo").value = appReferenceNumber;
+
+
+                    /*
+                     * get the whole List with the arrays  
+                     * no of arrays = expertReaderName.length
+                     */
+                    //          alert(cntr);
+
+                    //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
+                    $('#additionalExpertReader').empty();  // empty the div before fetching and adding new data
+
+//                    if (expertReaderName.length !== 0) {
+                    if (cntr === 1) {
+
+
+                        //   var addExpertReaderModalDiv = document.getElementById("translTrackDiv");
+                        for (var i = 0; i < expertReaderName.length; ++i) {
+                            /*
+                             * build the link buttons in the listAssignedEReadermodal
+                             */
+
+
+
+                            var addExpertReaderTag = '';
+
+                            addExpertReaderTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+                            addExpertReaderTag += '<button class="btn btn-success btn-xs pull-left" style="margin-bottom: 20px;" data-toggle="modal" data-target="#listAssignedEReadermodal' + i + '">';
+                            addExpertReaderTag += 'Assigned Expert Reader for Reference: ' + expertReaderName[i][1] + "<br/> - <u>" + expertReaderName[i][6];
+                            addExpertReaderTag += '</u></button>';
+                            addExpertReaderTag += '</div>';
+                            $(addExpertReaderTag).appendTo('#additionalExpertReader');
+
+//                        var addExpertReaderModal = '';
+                            //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
+//                                $('#additionalExpertReaderModal').empty();  // empty the div before fetching and adding new data
+                            var addExpertReaderModal = document.getElementById("additionalExpertReaderModal");
+                            addExpertReaderModal = '';
+//                        console.log("i  " + i);
+                            var z = i + 4;
+                            addExpertReaderModal += '<div class="modal fade" id="listAssignedEReadermodal' + i + '" data-modal-index="' + z + '">';
+                            addExpertReaderModal += '<div class="modal-dialog">';
+                            addExpertReaderModal += '<div class="modal-content">';
+                            addExpertReaderModal += '<div class="modal-header" style="background-color: #c3bcbc">';
+                            addExpertReaderModal += '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>';
+                            addExpertReaderModal += '<h4 class="modal-title">Assigned Expert Reader</h4>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '<div class="modal-body" style="background-color: #d9d1d1">';
+                            addExpertReaderModal += '<div class="row" style="margin-bottom: 20px;margin-top: 5px"> ';
+                            addExpertReaderModal += '<div class="col-sm-6">';
+                            addExpertReaderModal += '<strong class="pull-left">Expert Reader</strong>';
+                            addExpertReaderModal += '<div class="input-group pull-left">';
+                            var ExpertReader = "appExpertReader" + i;
+//                        console.log("ExpertReader  " + ExpertReader);
+                            addExpertReaderModal += '<input type="text" name="appExpertReader' + i + '"';
+                            addExpertReaderModal += ' id="appExpertReader' + i + '" class="form-control" />';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += ' </div> ';
+                            addExpertReaderModal += '<div class="row" style="margin-top: 30px;margin-bottom: 10px">';
+                            addExpertReaderModal += '<div class="col-sm-4">';
+                            addExpertReaderModal += '<strong class=" pull-left"> Sample sent out</strong>';
+                            addExpertReaderModal += '<div class="input-group pull-left">';
+                            var sampleSentOut = "sampleSentOut" + i;
+//                        console.log("sampleSentOut  " + sampleSentOut);
+                            addExpertReaderModal += '<input type="text" name="sampleSentOut' + i + '" id="sampleSentOut' + i + '" class="form-control" placeholder="DD/MM/YYYY" /> ';
+                            addExpertReaderModal += '<label class="input-group-addon" for="sampleSentOut' + i + '">';
+                            addExpertReaderModal += '<span class="glyphicon glyphicon-calendar"></span>';
+                            addExpertReaderModal += '</label>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += ' </div>';
+                            addExpertReaderModal += '<div class="col-sm-4">';
+                            addExpertReaderModal += '<strong class=" pull-left"> Sample returned</strong>';
+                            addExpertReaderModal += '<div class="input-group pull-left">';
+                            var sampleReturned = "sampleReturned" + i;
+//                        console.log("sampleReturned  " + sampleReturned);
+                            addExpertReaderModal += '<input type="text" name="sampleReturned' + i + '" id="' + sampleReturned + '" class="form-control" placeholder="DD/MM/YYYY" />';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '<div class="row" style="margin-bottom: 20px;">';
+                            addExpertReaderModal += '<div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">';
+                            addExpertReaderModal += '<div class="col-sm-2">';
+                            addExpertReaderModal += '<input id="ReadersReport' + i + '"';
+                            addExpertReaderModal += 'type="hidden"';
+                            addExpertReaderModal += 'name="ReadersReport"';
+                            addExpertReaderModal += ' >';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '<a class="btn btn-info" role="button" id="appReadersReport' + i + '">';
+                            addExpertReaderModal += '<span class="glyphicon glyphicon-file"></span>';
+                            addExpertReaderModal += 'Reader’s Report</a>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '<div class="col-sm-10">';
+                            addExpertReaderModal += '<label for="readerReportSummary' + i + '" class="control-label pull-left"> Reader’s Report Summary</label>';
+                            addExpertReaderModal += '<textarea id="readerReportSummary' + i + '" ';
+                            addExpertReaderModal += 'class="form-control"';
+                            addExpertReaderModal += 'name="readerReportSummary' + i + '" ';
+                            addExpertReaderModal += 'style="height: 98px"';
+                            addExpertReaderModal += '>';
+                            addExpertReaderModal += '</textarea>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '<div class="modal-footer"  style="background-color: #c3bcbc">';
+                            addExpertReaderModal += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+                            addExpertReaderModal += '<button type="button" class="btn btn-primary">Save changes</button>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '</div>';
+                            addExpertReaderModal += '</div>';
+
+
+                            //     console.log(addExpertReaderModal);
+
+                            $(addExpertReaderModal).appendTo('#additionalExpertReaderModal');
+
+
+
+                            /* 
+                             * get the data from the array
+                             */
+
+                            for (var j = 0; j <= 6; ++j) {
+                                console.log("expertReaderName[" + i + "]  [" + j + "]   " + expertReaderName[i][j]);
+
+                                var ExpReader = expertReaderName[i][6];
+                                var expertReaderlElementID = "appExpertReader" + i;
+                                document.getElementById(expertReaderlElementID).value = ExpReader;
+
+                                var sampleSentOut = expertReaderName[i][3];
+                                var sampleSentOutElementID = "sampleSentOut" + i;
+                                document.getElementById(sampleSentOutElementID).value = sampleSentOut;
+
+                                var samplReturned = expertReaderName[i][4];
+                                var samplReturnedElementID = "sampleReturned" + i;
+                                document.getElementById(samplReturnedElementID).value = samplReturned;
+
+                                var readerSummaryReport = expertReaderName[i][5];
+                                var readersSummaryReportElementID = "readerReportSummary" + i;
+                                document.getElementById(readersSummaryReportElementID).value = readerSummaryReport;
+
+                                var readerReportLink = 'http://localhost' + expertReaderName[i][2] + '';
+                                var readersReportElementID = "appReadersReport" + i;
+                                document.getElementById(readersReportElementID).href = readerReportLink;
+
+                            }
+                        }
+                    }
+//                    }
+
+
+//Get all Expert Readers that are not assigned at the moment
+                    var unassignedExpertReaderList = rowdata.unassignedExpertReaderList;
+                    console.log(unassignedExpertReaderList.length);
+
+
+                    var select = document.getElementById("selectUnassignedER");
+                    // Optional: Clear all existing options first:
+                    select.innerHTML = "";
+                    // Populate list with options:
+                    var defaultSelect = "Select Expert Reader";
+                    //set default
+                    select.innerHTML += "<option value=\"" + defaultSelect + "\">" + defaultSelect + "</option>";
+                    for (var i = 0; i < unassignedExpertReaderList.length; i++) {
+                        var opt = unassignedExpertReaderList[i];
+                        select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+                    }
+
 
 //                    $("#appcontract").val($(this).closest('tr').children()[6].textContent);
 
 //                    var c = $contr;
 //                    alert("$contr 2:: " + $contr);
                     $("#appcontract").val(contr);
-
                     $("#appproposedDateOfPublication").val($(this).closest('tr').children()[7].textContent);
                     $("#appproposedPrintRun").val($(this).closest('tr').children()[8].textContent);
                     $("#appplannedPageExtent").val($(this).closest('tr').children()[9].textContent);
@@ -814,7 +1013,7 @@
 //                    var cv = $trans;
 //                    alert("$trans 2:: " + $trans);
 //                    $("#apptranslatorCV").val(trans);
-                    //   console.log(rowdata.copiesTranslationSample);
+//   console.log(rowdata.copiesTranslationSample);
 
                     $("#appnumberOfPages").val($(this).closest('tr').children()[11].textContent);
                     $("#appfeePerPage").val($(this).closest('tr').children()[12].textContent);
@@ -835,10 +1034,46 @@
                     $("#appExpertReader").val($(this).closest('tr').children()[23].textContent);
                     $("#appBookTitle").val($(this).closest('tr').children()[24].textContent);
 
+                    $("#expertReaderName").val($(this).closest('tr').children()[22].textContent);
+                    $("#sampleSentOut").val($(this).closest('tr').children()[29].textContent);
+                    $("#sampleReturned").val($(this).closest('tr').children()[30].textContent);
+                    $("#appReadersReport").val($(this).closest('tr').children()[31].textContent);
+//                    $("#readerReportSummary").val($(this).closest('tr').children()[32].textContent);
+
+
+
                     console.log(table.row(this).data());
                 });
             });
         </script>
+
+        <script type="text/javascript">
+
+            //             Stacked modals
+            //             https://codepen.io/anon/pen/ZJgLGz
+
+            $('.btn[data-toggle=modal]').on('click', function () {
+                var $btn = $(this);
+                var currentDialog = $btn.closest('.modal-dialog'),
+                        targetDialog = $($btn.attr('data-target'));
+                ;
+                if (!currentDialog.length)
+                    return;
+                targetDialog.data('previous-dialog', currentDialog);
+                currentDialog.addClass('aside');
+                var stackedDialogCount = $('.modal.in .modal-dialog.aside').length;
+                if (stackedDialogCount <= 5) {
+                    currentDialog.addClass('aside-' + stackedDialogCount);
+                }
+            });
+            $('.modal').on('hide.bs.modal', function () {
+                var $dialog = $(this);
+                var previousDialog = $dialog.data('previous-dialog');
+                if (previousDialog) {
+                    previousDialog.removeClass('aside');
+                    $dialog.data('previous-dialog', undefined);
+                }
+            });</script>
 
         <style>
             .ui-datepicker { 
@@ -881,8 +1116,7 @@
                 $('.selectpicker').on('change', function () {
                     var selected = $(this).find("option:selected").val();
                 });
-            });
-        </script>
+            });</script>
 
         <style>
             td.details-control {
@@ -902,6 +1136,11 @@
                 overflow-x:scroll;
             }
 
+            /*https://stackoverflow.com/questions/10476632/how-to-scroll-the-page-when-a-modal-dialog-is-longer-than-the-screen*/
+            .modal-body {
+                max-height: calc(100vh - 210px);
+                overflow-y: auto;
+            }
         </style>
 
 
@@ -985,8 +1224,7 @@
                 $('.nav-tabs a:first').each(function () {
                     $(this.attributes.href.value).load($(this.attributes.href.value).data('url'));
                 });
-            });
-        </script> 
+            });</script> 
 
 
 
@@ -1004,9 +1242,20 @@
             $(window).on("popstate", function () {
                 var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
                 $("a[href='" + anchor + "']").tab("show");
-            });
-        </script>
+            });</script>
 
+
+        <!--if Publisher selected display publisherBox-->
+        <script type="text/javascript">
+            function selectER() {
+                var selectBox = document.getElementById("selectUnassignedER");
+                var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+                alert("selectedValue " + selectedValue);
+
+                document.getElementById("selectUnassignedER").value = selectedValue;
+                document.getElementById("selectedUnassignedER").value = selectedValue;
+            }
+        </script>
 
     </head>
     <body style="height: 100%">
@@ -1106,6 +1355,12 @@
                                                     <th class="all"></th>
                                                     <th class="all"></th>
                                                     <th class="all"></th>
+                                                    <th class="all"></th>
+                                                    <th class="all"></th>
+                                                    <th class="all"></th>
+                                                    <th class="all"></th>
+                                                    <th class="all"></th>    
+                                                    <th class="all"></th>
                                                 </tr>
                                             </thead>
 
@@ -1141,8 +1396,14 @@
                                                     <th class="all">23</th>
                                                     <th class="all">24</th>
                                                     <th class="all">25</th>
-                                                    <th class="all"></th>
                                                     <th class="all">26</th>
+                                                    <th class="all">27</th>
+                                                    <th class="all">28</th>
+                                                    <th class="all">29</th>
+                                                    <th class="all">30</th>
+                                                    <th class="all">31</th>      
+                                                    <th class="all"></th>
+                                                    <th class="all"></th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -1154,15 +1415,21 @@
 
 
                                 <!--userModal-->
-                                <div id="applicationsModal" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-                                    <!--<div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="applicationsModalLabel"  data-focus-on="input:first" style="display: none;">-->
-                                    <div class="modal-dialog" role="document">
+                                <!--                                <div id="applicationsModal" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+                                                                    <div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="applicationsModalLabel"  data-focus-on="input:first" style="display: none;">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header" style="background-color: #c3bcbc">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                <h4 class="modal-title" id="applicationsModalLabel">Applications</h4>
+                                                                            </div>-->
+                                <div class="modal fade" id="applicationsModal" data-modal-index="1">
+                                    <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header" style="background-color: #c3bcbc">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="applicationsModalLabel">Applications</h4>
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <h4 class="modal-title">Applications</h4>
                                             </div>
-
                                             <div class="modal-body" style="background-color: #d9d1d1">
 
                                                 <ul class="nav nav-tabs" id="tabContent">
@@ -1179,7 +1446,6 @@
                                                     <div class="tab-pane active" id="page1">
 
                                                         <!--Original and Contracts-->
-
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px">
                                                             <div class="col-sm-4">
@@ -1559,70 +1825,96 @@
                                                                                                                 5. Reader’s Report Summary (this goes into the document for the board – staff can add this)-->
 
 
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
-
-                                                            <div>
-                                                                <p>One fine body…</p>
-                                                                <p>One fine body…</p>
-                                                                <p>One fine body…</p>
-                                                                <input data-tabindex="1" type="text">
-                                                                <input data-tabindex="2" type="text">
-                                                                <a class="btn" data-toggle="modal" href="#stack2">Launch modal</a>
-                                                            </div>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 20px"> 
 
                                                             <div class='col-sm-6'>
-                                                                <strong class=" pull-left">Expert Reader</strong>
-                                                                <div class="input-group pull-left">
-                                                                    <input type="text" name="appExpertReader" 
-                                                                           id="appExpertReader" 
-                                                                           class="form-control" 
-                                                                           />    
-                                                                </div>
+                                                                <button class="btn btn-success btn-xs" style="margin-bottom: 20px;" onclick="getTodaysDate()" data-toggle="modal" data-target="#assignEReadermodal">
+                                                                    Assign Expert Reader to Reference Number
+                                                                </button>
+                                                                <!--<a class="btn" data-toggle="modal" href="#stack2">Launch modal</a>-->
                                                             </div>
 
-                                                        </div> <!--row-->                                                      
+                                                        </div> <!--row-->          
 
-                                                        <div class="row" style="margin-top: 30px;margin-bottom: 10px">
-                                                            <div class='col-sm-4'>
-                                                                <strong class=" pull-left"> Sample sent out</strong>
-                                                                <div class="input-group pull-left">
-                                                                    <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                </div>
-                                                            </div>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
-                                                            <div class='col-sm-4'>
-                                                                <strong class=" pull-left"> Sample returned</strong>
-                                                                <div class="input-group pull-left">
-                                                                    <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                </div>
-                                                            </div>
+                                                            <!--                                                            <div class='col-sm-6'>
+                                                            
+                                                                                                                            <button class="btn btn-success btn-xs pull-left" style="margin-bottom: 20px;" data-toggle="modal" data-target="#listAssignedEReadermodal">
+                                                                                                                                List assigned Expert Reader
+                                                                                                                            </button>
+                                                            
+                                                                                                                        </div>-->
 
-                                                        </div> <!--row-->
+                                                            <div id="additionalExpertReader"></div>
+                                                        </div> <!--row-->          
 
-                                                        <div class="row" style="margin-bottom: 20px;">
-
-                                                            <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
-                                                                <div class="col-sm-2">
-                                                                    <input id="ReadersReport"                                
-                                                                           type="hidden"                                                            
-                                                                           name="ReadersReport"                                
-                                                                           >
-                                                                </div>
-                                                                <a class="btn btn-info" role="button" id="appReadersReport" >
-                                                                    <span class="glyphicon glyphicon-file"></span>
-                                                                    Reader’s Report</a>
-                                                            </div>
-
-                                                            <div class="col-sm-10">
-                                                                <label for="readerReport" class="control-label pull-left"> Reader’s Report Summary</label>
-                                                                <textarea id="readerReport" 
-                                                                          class="form-control"                                               
-                                                                          name="readerReport"    
-                                                                          style="height: 98px"
-                                                                          >                 
-                                                                </textarea>
-                                                            </div>
-                                                        </div> <!--row-->
+                                                        <!--                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
+                                                                                                                    
+                                                                                                                    <div class='col-sm-6'>
+                                                                                                                        <strong class=" pull-left">Expert Reader</strong>
+                                                                                                                        <div class="input-group pull-left">
+                                                                                                                            <input type="text" name="appExpertReader" 
+                                                                                                                                   id="appExpertReader" 
+                                                                                                                                   class="form-control" 
+                                                                                                                                   />    
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                        
+                                                                                                                </div> row                                                      
+                                                        
+                                                                                                                <div class="row" style="margin-top: 30px;margin-bottom: 10px">
+                                                                                                                    <div class='col-sm-4'>
+                                                                                                                        <strong class=" pull-left"> Sample sent out</strong>
+                                                                                                                        <div class="input-group pull-left">
+                                                                                                                            <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                                                                            <label class="input-group-addon" for="sampleSentOut">
+                                                                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                                                                            </label>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                        
+                                                                                                                    <script>
+                                                                                                                        $("#sampleSentOut").datepicker({
+                                                                                                                            showWeekDays: true,
+                                                                                                                            todayHighlight: true,
+                                                                                                                            autoclose: true
+                                                                                                                        });
+                                                                                                                    </script>
+                                                        
+                                                                                                                    <div class='col-sm-4'>
+                                                                                                                        <strong class=" pull-left"> Sample returned</strong>
+                                                                                                                        <div class="input-group pull-left">
+                                                                                                                            <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                        
+                                                                                                                </div> row
+                                                        
+                                                                                                                <div class="row" style="margin-bottom: 20px;">
+                                                        
+                                                                                                                    <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
+                                                                                                                        <div class="col-sm-2">
+                                                                                                                            <input id="ReadersReport"                                
+                                                                                                                                   type="hidden"                                                            
+                                                                                                                                   name="ReadersReport"                                
+                                                                                                                                   >
+                                                                                                                        </div>
+                                                                                                                        <a class="btn btn-info" role="button" id="appReadersReport" >
+                                                                                                                            <span class="glyphicon glyphicon-file"></span>
+                                                                                                                            Reader’s Report</a>
+                                                                                                                    </div>
+                                                        
+                                                                                                                    <div class="col-sm-10">
+                                                                                                                        <label for="readerReport" class="control-label pull-left"> Reader’s Report Summary</label>
+                                                                                                                        <textarea id="readerReport" 
+                                                                                                                                  class="form-control"                                               
+                                                                                                                                  name="readerReport"    
+                                                                                                                                  style="height: 98px"
+                                                                                                                                  >                 
+                                                                                                                        </textarea>
+                                                                                                                    </div>
+                                                                                                                </div> row-->
 
                                                     </div> <!--tab-pane" id="page 3" -->
 
@@ -1682,9 +1974,6 @@
                                                                 <strong class="pull-left">Proposed  Publication Date &nbsp;&nbsp;&nbsp; </strong>
                                                                 <div class="input-group pull-left" >
                                                                     <input type="text" name="proposedPublicationDate" id="proposedPublicationDate" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <!--                                                                    <label class="input-group-addon" for="proposedPublicationDate">
-                                                                                                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                                                                                                        </label>-->
                                                                 </div> 
                                                             </div>
 
@@ -2210,13 +2499,13 @@
                                                         </div>
 
                                                         <div class="col-sm-1"></div>
-
+<!--
                                                         <div class="col-sm-4">
 
                                                             <label for="expertReaderReferenceNumber"> Assign Expert Readers to Reference Number: </label>
                                                             <input type="text" class="input-sm" id="expertReaderReferenceNumber"/>
 
-                                                        </div>
+                                                        </div>-->
                                                     </div>
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
@@ -2316,188 +2605,254 @@
                                     <c:if test="${not empty error}">Error: ${error}</c:if>
 
 
-                                    <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header" style="background-color: #c3bcbc">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="booksModalLabel">Display Library</h4>
-                                                </div>
-                                                <div class="modal-body" style="background-color: #d9d1d1">
-
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-
-                                                        <div class="col-sm-4">
-                                                            <label class="pull-left"> referenceNumber </label>
-                                                            <p><input type="text" class="input-sm" id="referenceNumber"/></p>
-                                                        </div>
+                                        <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header" style="background-color: #c3bcbc">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="booksModalLabel">Display Library</h4>
                                                     </div>
+                                                    <div class="modal-body" style="background-color: #d9d1d1">
 
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-1"></div>
-                                                        <div class="col-sm-8">        
-                                                            <label class="control-label">Book Cover</label>                                                               
-                                                            <img id="bookCover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
+                                                            <div class="col-sm-4">
+                                                                <label class="pull-left"> referenceNumber </label>
+                                                                <p><input type="text" class="input-sm" id="referenceNumber"/></p>
+                                                            </div>
                                                         </div>
 
-                                                    </div>
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-1"></div>
+                                                            <div class="col-sm-8">        
+                                                                <label class="control-label">Book Cover</label>                                                               
+                                                                <img id="bookCover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
+                                                            </div>
+
+                                                        </div>
 
 
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-6">
-                                                            <label class="pull-left" for="Author"> Author </label>   
-                                                            <textarea  id="Author" name="Author"  rows="2" cols="65">
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-6">
+                                                                <label class="pull-left" for="Author"> Author </label>   
+                                                                <textarea  id="Author" name="Author"  rows="2" cols="65">
                                                         
-                                                            </textarea>
+                                                                </textarea>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-4">
-                                                            <label class="pull-left" for="Title"> Title: </label>
-                                                            <p><input type="text" class="input-sm" id="Title"/></p>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">
+                                                                <label class="pull-left" for="Title"> Title: </label>
+                                                                <p><input type="text" class="input-sm" id="Title"/></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-4">
-                                                            <label class="pull-left"> Genre: </label>
-                                                            <p><input type="text" class="input-sm" id="Genre"/></p>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">
+                                                                <label class="pull-left"> Genre: </label>
+                                                                <p><input type="text" class="input-sm" id="Genre"/></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-4">
-                                                            <label class="pull-left"> Language(s) </label>
-                                                            <p><input type="text" class="input-sm" id="Language"/></p>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">
+                                                                <label class="pull-left"> Language(s) </label>
+                                                                <p><input type="text" class="input-sm" id="Language"/></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-4">                                                                                                          
-                                                            <label class="pull-left"> ISBN </label>
-                                                            <p><input type="text" class="input-sm" id="ISBN"/></p>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">                                                                                                          
+                                                                <label class="pull-left"> ISBN </label>
+                                                                <p><input type="text" class="input-sm" id="ISBN"/></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                </div>
-
-                                                <div class="modal-footer"  style="background-color: #c3bcbc">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
-
-
-                                    <div class="modal fade" id="editBooksModal" tabindex="-1" role="dialog" aria-labelledby="editBooksModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="editBooksModalLabel">Edit Books</h4>
-                                                </div>
-                                                <div class="modal-body">
-
-
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-
-                                                        <div class="col-sm-4">
-                                                            <label class="pull-left"> referenceNumber </label>
-                                                            <p><input type="text" class="input-sm" id="referenceNumber2"/></p>
-                                                        </div>
                                                     </div>
 
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-6">
-                                                            <label class="pull-left" for="Author2"> Author </label>   
-                                                            <textarea  id="Author2" name="Author2"  rows="2" cols="65">
+                                                    <div class="modal-footer"  style="background-color: #c3bcbc">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+
+
+                                        <div class="modal fade" id="editBooksModal" tabindex="-1" role="dialog" aria-labelledby="editBooksModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="editBooksModalLabel">Edit Books</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+                                                            <div class="col-sm-4">
+                                                                <label class="pull-left"> referenceNumber </label>
+                                                                <p><input type="text" class="input-sm" id="referenceNumber2"/></p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-6">
+                                                                <label class="pull-left" for="Author2"> Author </label>   
+                                                                <textarea  id="Author2" name="Author2"  rows="2" cols="65">
                                                         
-                                                            </textarea>
+                                                                </textarea>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-4">
-                                                            <label class="pull-left" for="Title2"> Title: </label>
-                                                            <p><input type="text" class="input-sm" id="Title2"/></p>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">
+                                                                <label class="pull-left" for="Title2"> Title: </label>
+                                                                <p><input type="text" class="input-sm" id="Title2"/></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-4">
-                                                            <label class="pull-left"> Genre: </label>
-                                                            <p><input type="text" class="input-sm" id="Genre2"/></p>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">
+                                                                <label class="pull-left"> Genre: </label>
+                                                                <p><input type="text" class="input-sm" id="Genre2"/></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-4">
-                                                            <label class="pull-left"> Language(s) </label>
-                                                            <p><input type="text" class="input-sm" id="Language2"/></p>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">
+                                                                <label class="pull-left"> Language(s) </label>
+                                                                <p><input type="text" class="input-sm" id="Language2"/></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                        <div class="col-sm-4">                                                                                                          
-                                                            <label class="pull-left"> ISBN </label>
-                                                            <p><input type="text" class="input-sm" id="ISBN2"/></p>
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">                                                                                                          
+                                                                <label class="pull-left"> ISBN </label>
+                                                                <p><input type="text" class="input-sm" id="ISBN2"/></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                </div>
-                                                <div class="modal-footer"  style="background-color: #c3bcbc">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
+                                                    </div>
+                                                    <div class="modal-footer"  style="background-color: #c3bcbc">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
 
+
+
+                                    </div>
+                                </div> <!--Library-->
+
+                                <!--Misc-->
+                                <div class="tab-pane fade" id="Misc">
+                                    <h2>Misc Content Goes Here</h2>
 
 
                                 </div>
-                            </div> <!--Library-->
-
-                            <!--Misc-->
-                            <div class="tab-pane fade" id="Misc">
-                                <h2>Misc Content Goes Here</h2>
-
-
                             </div>
                         </div>
-                    </div>
 
-                    <!--footer start-->
-                    <div id="base">  
+                        <!--footer start-->
+                        <div id="base">  
 
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
-                        </div><!-- end of BaseText div -->
+                            <div class="basetext">  
+                                <h2>Literature Ireland</h2>
+                                <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
+                            </div><!-- end of BaseText div -->
 
-                        <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
-                        <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                        <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
+                            <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
+                            <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
+                            <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
 
-                        <div class="mobile-baselogos visible-phone"> 
-                            <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
-                            <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                            <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
-                        </div>
-                    </div><!-- end of Base div -->
+                            <div class="mobile-baselogos visible-phone"> 
+                                <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
+                                <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
+                                <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                            </div>
+                        </div><!-- end of Base div -->
+                </div>
+                <!-- end of container div -->
+                <div class="shadowbase"> </div>
+            </div><!-- end of Shadow container div -->
+            <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                &copy; 2017 mgr Software
             </div>
-            <!-- end of container div -->
-            <div class="shadowbase"> </div>
-        </div><!-- end of Shadow container div -->
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017 mgr Software
-        </div>
 
+            <div class="modal fade" id="assignEReadermodal" data-modal-index="2">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form 
+                            id="assignEReaderForm"  
+                            method="POST"
+                            role="form"  
+                            autocomplete="on"  
+                            action="${pageContext.request.contextPath}/GrantApplicationServlet" 
+                        >
 
-        <div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-            <div class="modal-dialog" role="document">
+                        <input type="hidden" name="AssignExpertReader"  class="form-control" value="AssignExpertReader">
+                        <div class="modal-header" style="background-color: #c3bcbc">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Assign Expert Reader to Reference Number</h4>
+                        </div>
+                        <div class="modal-body" style="background-color: #d9d1d1">
+
+                            <div class="row" style="margin-bottom: 20px;">  
+                                <div class='col-sm-4'>
+                                    <label for="selectUnassignedER" class="pull-left">Select</label>
+                                    <select class="selectpicker" id="selectUnassignedER" onchange="selectER();"></select>
+                                </div>
+                                <input type="hidden" name="selectedUnassignedER" id="selectedUnassignedER"  class="form-control">
+                                <div class='col-sm-4' style="padding-left: 5px">
+                                    <label for="unassignedERRefNo"  class="pull-left">for Reference Number</label>
+                                    <input id="unassignedERRefNo" value="" disabled />
+                                </div>
+                            </div> <!--row-->
+
+                            <div class="row" style="margin-bottom: 20px;">  
+                                <div class='col-sm-4'>
+                                    <strong class=" pull-left">&nbsp;<br/> Sample sent out</strong>
+                                    <div class="input-group pull-left">
+                                        <input type="text" name="sampleSentOut" id="sampleSentOut1" class="form-control" placeholder="DD/MM/YYYY" />    
+                                    </div>
+                                </div>
+                                <div class='col-sm-4'>
+                                    <strong class=" pull-left">Expected return date of report</strong>
+                                    <div class="input-group pull-left">
+                                        <input type="text" name="expectedReturnDate" id="expectedReturnDate" class="form-control" placeholder="DD/MM/YYYY" />    
+                                        <label class="input-group-addon" for="expectedReturnDate">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <script>
+                                    $("#expectedReturnDate").datepicker({
+                                        showWeekDays: true,
+                                        todayHighlight: true,
+                                        autoclose: true
+                                    });
+                                </script>
+                            </div> <!--row-->
+                            <input type="hidden" name="NewAssignedERRefNo" id="NewAssignedERRefNo"  class="form-control">
+                        </div>
+                        <div class="modal-footer"  style="background-color: #c3bcbc">
+                            <input type="hidden" name="userID" value="${userID}">
+                            <input type="hidden" name="publisherID" value="${publisherID}">
+                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" >Assign Expert Reader</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="modal fade" id="listAssignedEReadermodal" data-modal-index="3">
+            <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="stack2Label">Display Expert Readers</h4>
+                    <div class="modal-header" style="background-color: #c3bcbc">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">List assigned Expert Reader</h4>
                     </div>
-                    <div class="modal-body">
-
+                    <div class="modal-body" style="background-color: #d9d1d1">
                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
                             <div class='col-sm-6'>
@@ -2514,18 +2869,31 @@
 
                         <div class="row" style="margin-top: 30px;margin-bottom: 10px">
                             <div class='col-sm-4'>
-                                <!--<strong class=" pull-left"> Sample sent out</strong>-->
-                                <label class="pull-left">  Sample sent out </label>
-                                <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
+                                <strong class=" pull-left"> Sample sent out</strong>
+                                <div class="input-group pull-left">
+                                    <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
+                                    <label class="input-group-addon" for="sampleSentOut">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class='col-sm-4'>
-                            <strong class=" pull-left"> Sample returned</strong>
-                            <div class="input-group pull-left">
-                                <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
+                            <script>
+                                $("#sampleSentOut").datepicker({
+                                    showWeekDays: true,
+                                    todayHighlight: true,
+                                    autoclose: true
+                                });
+                            </script>
+
+                            <div class='col-sm-4'>
+                                <strong class=" pull-left"> Sample returned</strong>
+                                <div class="input-group pull-left">
+                                    <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
+                                </div>
                             </div>
-                        </div>
+
+                        </div> <!--row-->
 
 
 
@@ -2544,16 +2912,36 @@
                             </div>
 
                             <div class="col-sm-10">
-                                <label for="readerReport" class="control-label pull-left"> Reader’s Report Summary</label>
-                                <textarea id="readerReport" 
+                                <label for="readerReportSummary" class="control-label pull-left"> Reader’s Report Summary</label>
+                                <textarea id="readerReportSummary" 
                                           class="form-control"                                               
-                                          name="readerReport"    
+                                          name="readerReportSummary"    
                                           style="height: 98px"
                                           >                 
                                 </textarea>
                             </div>
                         </div> <!--row-->
+                        <button class="btn btn-default" data-toggle="modal" data-target="#test-modal-4">Launch Modal 4</button>
+                    </div>
+                    <div class="modal-footer"  style="background-color: #c3bcbc">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
+        <div id="additionalExpertReaderModal"></div>
+
+        <div class="modal fade" id="test-modal-4">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Modal title 4</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>One fine body&hellip;</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -2562,7 +2950,6 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
 
     </body>
 </html>

@@ -18,7 +18,7 @@ public class GrantApplication {
     private int publisherID;
 
     private String userID;
-    
+
     private String bookTitle;
 
 //    Rights Agreement
@@ -69,7 +69,7 @@ public class GrantApplication {
     private String cover;//path + filename
 
     private String coverName; //filename
-    
+
     private String genre;
 
     private ArrayList<String> TranslatorName;
@@ -99,10 +99,15 @@ public class GrantApplication {
 //9. Application Approved (also great!)
 
     private String expertReaderName;
-    private Date sampleSentOut;
-    private Date sampleReturned;
+    private String sampleSentOut;
+    private String sampleReturned;
     private String readerReport;
     private String readerReportSummary; // (this goes into the document for the board – staff can add this)
+
+    private List<String[]>  expertReaderList;
+    
+    private List<String>  unassignedExpertReaderList;
+
 //
 //1. Board Meeting
 //2. Amount Requested 
@@ -114,7 +119,6 @@ public class GrantApplication {
 //8. Amount Approved 
 //9. Publisher Informed of Outcome 
 //10. Board Comments/Instructions
-
     /**
      * @return the ApplicationNumber
      */
@@ -445,7 +449,8 @@ public class GrantApplication {
     }
 
     /**
-     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName to set
+     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName
+     * to set
      */
     public void setCopiesTranslationSampleDocName(String copiesTranslationSampleDocName) {
         this.copiesTranslationSampleDocName = copiesTranslationSampleDocName;
@@ -692,28 +697,28 @@ public class GrantApplication {
     /**
      * @return the sampleSentOut
      */
-    public Date getSampleSentOut() {
+    public String getSampleSentOut() {
         return sampleSentOut;
     }
 
     /**
      * @param sampleSentOut the sampleSentOut to set
      */
-    public void setSampleSentOut(Date sampleSentOut) {
+    public void setSampleSentOut(String sampleSentOut) {
         this.sampleSentOut = sampleSentOut;
     }
 
     /**
      * @return the sampleReturned
      */
-    public Date getSampleReturned() {
+    public String getSampleReturned() {
         return sampleReturned;
     }
 
     /**
      * @param sampleReturned the sampleReturned to set
      */
-    public void setSampleReturned(Date sampleReturned) {
+    public void setSampleReturned(String sampleReturned) {
         this.sampleReturned = sampleReturned;
     }
 
@@ -771,6 +776,34 @@ public class GrantApplication {
      */
     public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
+    }
+
+    /**
+     * @return the expertReaderList
+     */
+    public List<String[]>  getExpertReaderList() {
+        return expertReaderList;
+    }
+
+    /**
+     * @param expertReaderList the expertReaderList to set
+     */
+    public void setExpertReaderList(List<String[]>  expertReaderList) {
+        this.expertReaderList = expertReaderList;
+    }
+
+    /**
+     * @return the unassignedExpertReaderList
+     */
+    public List<String> getUnassignedExpertReaderList() {
+        return unassignedExpertReaderList;
+    }
+
+    /**
+     * @param unassignedExpertReaderList the unassignedExpertReaderList to set
+     */
+    public void setUnassignedExpertReaderList(List<String> unassignedExpertReaderList) {
+        this.unassignedExpertReaderList = unassignedExpertReaderList;
     }
 
 }

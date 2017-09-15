@@ -1,207 +1,80 @@
 <!DOCTYPE html>
-<head>
-    <title>Sample code - Traversing an HTML Table with JavaScript and DOM Interfaces</title>
-    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+        <link href="//datatables.net/download/build/nightly/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+        <script src="//datatables.net/download/build/nightly/jquery.dataTables.js"></script>
+
+        <meta charset=utf-8 />
+        <title>DataTables - JS Bin</title>
+
+        <!--JQuery-->
+
+        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+
+
+        <!-- Bootstrap -->
+
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+        <!--http://jschr.github.io/bootstrap-modal/bs3.html-->
+
+        <!--        <link href="css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
+                <link href="css/bootstrap-modal.css" rel="stylesheet" />-->
+
+        <!--DataTables-->
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/1.10.15/integration/font-awesome/dataTables.fontAwesome.css">
+
+
+        <link rel="stylesheet" type="text/css" href="css/layout.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css" />
+        <link rel="stylesheet" href="css/lesshat.css" />
+        <link rel="stylesheet" href="css/newfile.css" />
+
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>  
+
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>       
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+        <script src="//cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
+        <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
+        <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
+        <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js "></script>
+        <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+        <script src="js/jquery-ui.js"></script>
 
 
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/1.10.15/integration/font-awesome/dataTables.fontAwesome.css">
-    <link rel="stylesheet" type="text/css" href="css/layout.css">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css">
 
+        <style>
 
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
-    <script src="js/bootstrap-datepicker.js"></script>
-    <!--<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>-->  
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        </style>
+    </head>
+    <body>
 
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>  
-
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>       
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-    <script src="//cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
-    <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
-    <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
-    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js "></script>
-    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
-
-    <script>
-        function start() {
-            //   var myTableDiv = document.getElementById("TableTest2");
-
-            var arr = [[]];
-
-            var myTableDiv = document.getElementById("TableTest2");
-            var table1 = document.createElement('TABLE');
-            table1.id = 'TableTest';
-
-            table1.border = '1';
-            table1.title = 'translatorTrackTable';
-            table1.className = "table table-striped table-bordered table-hover table-condensed small";
-            table1.style = 'overflow-x: auto';
-            var tableBody = document.createElement('TBODY');
-
-            arr[0] = new Array("Jean Yves Masson", "Last Poems", "The Tower", "Moonshine Opera O", "Moonshine Opera 2 O");
-            arr[1] = new Array("Sparky Sparkster", "MoonshineA Opera 2 A");
-            arr[2] = new Array("Felix Nutter", "Moonshine Opera B", "Moonshine Opera B", "Moonshine Opera 2 B");
-            arr[3] = new Array("Nathalie Shepard", "Moonshine Opera C", "Moonshine Opera C", "Moonshine Opera C", "Moonshine Opera C", "Moonshine Opera C", "Moonshine Opera C", "Moonshine Opera 2 C");
-
-            var copy = [];
-            for (var i = 0; i < arr.length; ++i) {
-                for (var j = 0; j < arr[i].length; ++j) {
-                    // skip undefined values to preserve sparse array
-                    if (arr[i][j] === undefined)
-                        continue;
-                    // create row if it doesn't exist yet
-                    if (copy[j] === undefined)
-                        copy[j] = [];
-                    // swap the x and y coords for the copy
-                    copy[j][i] = arr[i][j];
-                }
-            }
-            //   return copy;
-            //    console.log("copy:  " + copy);
-
-            for (var i = 0; i < copy.length; i++) {
-                //    console.log("copy.length " + copy[i].length);
-                console.log("TranslTitles copy i: >>>> " + i + " : " + copy[i]);
-                for (j = 0; j < copy[i].length; j++) {
-// console.log("TranslTitles copy i: >>>> " + i + " j [" + j + "] " + copy[i]);
-
-                    //    console.log("TranslTitles stock i: >>>>  i [" + i + "] " + stock[i]);
-                    //    
-                    //console.log("TranslTitles  i: [" + i + "] j [" + j + "] " + TranslTitles[i]);
-//     console.log("filling stock[" + i + "] with " + TranslTitles[i][j]);
-                }
-            }
-
-//var div = document.createElement('DIV');
-            var spanner = document.createElement('span');
-            var divver = document.createElement('div');
-            //TABLE ROWS
-            for (i = 0; i < copy.length; i++) {
-                var tr = document.createElement('TR');
-                for (j = 0; j < copy[i].length; j++) {
-                    var td = document.createElement('TD');
-                    if (i === 0) {
-                        td.className = 'someClass rotate';
-
-
-                        //    <th class="rotate"><div><span>Column header 1</span></div></th>
-                        divver.appendChild(spanner);
-                        td.appendChild(divver);
-
-                    }
-                    // remove "undefined" cells
-                    if (typeof (copy[i][j]) === "undefined") {
-                        copy[i][j] = '';
-                        console.log("copy[i][j]  " + copy[i][j]);
-                    }
-                    td.appendChild(document.createTextNode(copy[i][j]));
-                    tr.appendChild(td);
-
-                }
-                tableBody.appendChild(tr);
-            }
-
-            table1.appendChild(tableBody);
-
-            myTableDiv.appendChild(table1);
-        }
-    </script>
-
-    <style>        
-        .someClass {
-            background:yellow;
-        }
-
-        th.rotate {
-            /* Something you can count on */
-            height: 140px;
-            white-space: nowrap;
-        }
-
-        th.rotate > div {
-            transform: 
-                /* Magic Numbers */
-                translate(25px, 51px)
-                /* 45 is really 360 - 45 */
-                rotate(315deg);
-            width: 30px;
-        }
-        th.rotate > div > span {
-            border-bottom: 1px solid #ccc;
-            padding: 5px 10px;
-        }
-
-    </style>
-    <script>
-        $('#TableTest2 td:first-child').addClass('someClass');
-    </script>
-</head>
-<body onload="start()">
-
-    <div>
-        <table class="table table-header-rotated">
-            <thead>
-                <tr>
-                    <!-- First column header is not rotated -->
-                    <th>hkllk</th>
-                    <!-- Following headers are rotated -->
-                    <th class="rotate"><div><span>Column header 1</span></div></th>
-                    <th class="rotate"><div><span>Column header 2</span></div></th>
-                    <th class="rotate"><div><span>Column header 3</span></div></th>
-                    <th class="rotate"><div><span>Column header 4</span></div></th>
-                    <th class="rotate"><div><span>Column header 5</span></div></th>
-                    <th class="rotate"><div><span>Column header 6</span></div></th>
-                </tr> 
-            </thead>
-            <tbody>
-                <tr>
-                    <th class="row-header">Row header 1</th>
-                    <td><input checked="checked" name="column1[]" type="radio" value="row1-column1"></td>
-                    <td><input checked="checked" name="column2[]" type="radio" value="row1-column2"></td>
-                    <td><input name="column3[]" type="radio" value="row1-column3"></td>
-                    <td><input name="column4[]" type="radio" value="row1-column4"></td>
-                    <td><input name="column5[]" type="radio" value="row1-column5"></td>
-                    <td><input name="column6[]" type="radio" value="row1-column6"></td>
-                </tr>
-                <tr>
-                    <th class="row-header">Row header 2</th>
-                    <td><input name="column1[]" type="radio" value="row2-column1"></td>
-                    <td><input name="column2[]" type="radio" value="row2-column2"></td>
-                    <td><input checked="checked" name="column3[]" type="radio" value="row2-column3"></td>
-                    <td><input checked="checked" name="column4[]" type="radio" value="row2-column4"></td>
-                    <td><input name="column5[]" type="radio" value="row2-column5"></td>
-                    <td><input name="column6[]" type="radio" value="row2-column6"></td>
-                </tr>
-                <tr>
-                    <th class="row-header">Row header 3</th>
-                    <td><input name="column1[]" type="radio" value="row3-column1"></td>
-                    <td><input name="column2[]" type="radio" value="row3-column2"></td>
-                    <td><input name="column3[]" type="radio" value="row3-column3"></td>
-                    <td><input name="column4[]" type="radio" value="row3-column4"></td>
-                    <td><input checked="checked" name="column5[]" type="radio" value="row3-column5"></td>
-                    <td><input checked="checked" name="column6[]" type="radio" value="row3-column6"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="col-sm-4 table-responsive">
-
-        <div id="TableTest2" class="table-responsive">
-
+        <div class="container">
+  <div>  Dear Froggy The Frog,<br/><br/>,<br/><br/>Many thanks for agreeing to take on this task. Please find attached a sample translation of the above mentioned title in German together with a copy of the original work. Please supply a report of no more than two pages on the sample translation enclosed, addressing the points below.<br/><br/>Your report will be taken into account by the Board of Literature Ireland (formerly Ireland Literature Exchange) when assessing this application. The report may also be made available, anonymously, to the publisher and/or translator of the work. For this reason, we would recommend that an objective tone be maintained throughout. <strong>Please do not sign your name to the report</strong>. Use the project reference number only.<br/><br/><ol><li>       Is the literary quality of the translation of an acceptable standard? Is the quality maintained consistently throughout the enclosed extract?</li><li>       Is the translation readable, i.e. does it flow?<li>       Does the style of the translation reflect that of the original?</li><li>       Is the translation complete, correct and accurate?<li>       Does the original pose specific difficulties, e.g. specialised terminology, culture-specific vocabulary, dialect? Does the translator resolve these difficulties adequately? Does the translator demonstrate complete creative command of his/her own language?</li><li>       If applicable, please comment on register, rhyme, rhythm, alliteration, word order and other poetic devices, or is the translation a free interpretation?</li><li>1       Would you recommend publication of the translation? If yes, please specify whether you would recommend publication a) as it stands or b) with revisions.</li></ol><strong>Please supply concrete textual examples</strong> both in the language of the original and in that of the translation to illustrate your assessment, bearing in mind that the board and staff of Literature Ireland may not be familiar with the language of the translation in question. In other words, we would ask you to furnish explanations in English for what in your opinion are grounds for praise or criticism. Also, if you can see an improved solution, we would ask you to provide concrete suggestions.The fee for the report will be EUR €125. We would be grateful if you could return your report to me as a <strong>Word document</strong> (or equivalent but not PDF) by 01/10/2017. Please let me know if you would like to receive a gratis copy of the finished translation on publication.We ask that submit an invoice, citing the project reference number, at the same time as your report, along with a completed bank details form. A copy of this form can be requested via email to <a href="mailto:florence@irelandliterature.com">florence@irelandliterature.com</a>.<br/><br/>If you have any queries, please do not hesitate to contact me.<br/><br/>Thank you for your time and expertise.<br/><br/>Kind regards, Rita McCann--Deputy DirectorLiterature IrelandTrinity Centre for Literary Translation, 36 Fenian Street, Trinity College Dublin, Dublin 2Ireland Tel: +353 1 896 4179</div>
         </div>
-    </div>
 
-</body>
+    </body>
 </html>

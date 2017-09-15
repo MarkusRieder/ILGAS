@@ -35,3 +35,8 @@ DEBUG   2017-09-01 15:13:08,409 [http-listener-1(2)] ie.irishliterature.dao.Appl
 DEBUG   2017-09-01 15:16:01,933 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
 DEBUG   2017-09-01 15:17:33,524 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
 DEBUG   2017-09-01 15:18:09,274 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
+DEBUG   2017-09-14 07:00:50,788 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-14 07:02:25,731 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-14 07:05:42,943 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-14 07:09:01,109 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-14 07:24:56,330 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.

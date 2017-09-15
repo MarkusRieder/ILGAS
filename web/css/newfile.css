@@ -1,0 +1,139 @@
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+@import url(https://fonts.googleapis.com/css?family=Shadows+Into+Light);
+/* distance between stacked modals*/
+/* The first modal translateZ value*/
+.container {
+  margin: 5em auto;
+}
+.modal.in {
+  -webkit-perspective: 2000px;
+  -moz-perspective: 2000px;
+  -ms-perspective: 2000px;
+  -o-perspective: 2000px;
+  perspective: 2000px;
+}
+.modal.in .modal-dialog.aside {
+  -webkit-transform: -340px;
+  -moz-transform: -340px;
+  -ms-transform: -340px;
+  -o-transform: -340px;
+  transform: -340px;
+  -webkit-transform: scale(0.8) rotateY(45deg) translateZ(-340px);
+  -ms-transform: scale(0.8) rotateY(45deg) translateZ(-340px);
+  -o-transform: scale(0.8) rotateY(45deg) translateZ(-340px);
+  transform: scale(0.8) rotateY(45deg) translateZ(-340px);
+  -webkit-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.modal.in .modal-dialog.aside.aside-1 {
+  -webkit-transform: calc(-300px);
+  -moz-transform: calc(-300px);
+  -ms-transform: calc(-300px);
+  -o-transform: calc(-300px);
+  transform: calc(-300px);
+  -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px));
+  -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px));
+  -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px));
+  transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px));
+}
+.modal.in .modal-dialog.aside.aside-2 {
+  -webkit-transform: calc(-260px);
+  -moz-transform: calc(-260px);
+  -ms-transform: calc(-260px);
+  -o-transform: calc(-260px);
+  transform: calc(-260px);
+  -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px));
+  -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px));
+  -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px));
+  transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px));
+}
+.modal.in .modal-dialog.aside.aside-3 {
+  -webkit-transform: calc(-220px);
+  -moz-transform: calc(-220px);
+  -ms-transform: calc(-220px);
+  -o-transform: calc(-220px);
+  transform: calc(-220px);
+  -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
+  -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
+  -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
+  transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
+}
+.modal.in .modal-dialog.aside.aside-4 {
+  -webkit-transform: calc(-180px);
+  -moz-transform: calc(-180px);
+  -ms-transform: calc(-180px);
+  -o-transform: calc(-180px);
+  transform: calc(-180px);
+  -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
+  -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
+  -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
+  transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
+}
+.modal.in .modal-dialog.aside.aside-5 {
+  -webkit-transform: calc(-140px);
+  -moz-transform: calc(-140px);
+  -ms-transform: calc(-140px);
+  -o-transform: calc(-140px);
+  transform: calc(-140px);
+  -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
+  -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
+  -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
+  transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
+}
+h1 {
+  font-family: 'Droid Serif', serif;
+}
+h3 {
+  font-family: 'Shadows Into Light', cursive;
+}
+.base,
+.box1 {
+  width: 100px;
+  height: 100px;
+  margin: 3px;
+  background-color: gray;
+  float: left;
+}
+.box1 {
+  -webkit-transform: skew(20deg, 40deg);
+  -moz-transform: skew(20deg, 40deg);
+  -ms-transform: skew(20deg, 40deg);
+  -o-transform: skew(20deg, 40deg);
+  transform: skew(20deg, 40deg);
+  -webkit-transform: skewY(80deg);
+  -moz-transform: skewY(80deg);
+  -ms-transform: skewY(80deg);
+  -o-transform: skewY(80deg);
+  transform: skewY(80deg);
+  -webkit-transform: skewX(20deg);
+  -moz-transform: skewX(20deg);
+  -ms-transform: skewX(20deg);
+  -o-transform: skewX(20deg);
+  transform: skewX(20deg);
+  -webkit-transform: skew(0);
+  -moz-transform: skew(0);
+  -ms-transform: skew(0);
+  -o-transform: skew(0);
+  transform: skew(0);
+}
+.box1:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+  -webkit-filter: drop-shadow(10px 10px 10px blue);
+  -moz-filter: drop-shadow(10px 10px 10px blue);
+  -ms-filter: drop-shadow(10px 10px 10px blue);
+  filter: drop-shadow(10px 10px 10px blue);
+  background-color: ;
+  -webkit-border-radius: 100px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 100px;
+  -moz-background-clip: padding;
+  border-radius: 100px;
+  background-clip: padding-box;
+}
+/*# sourceMappingURL=newfile.css.map */

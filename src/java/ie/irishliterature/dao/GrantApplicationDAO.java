@@ -1,18 +1,19 @@
 package ie.irishliterature.dao;
 
 import static ie.irishliterature.dao.ACpublisherDAO_test.disconnect;
+import ie.irishliterature.db.DBConn;
+import ie.irishliterature.db.DBException;
+import ie.irishliterature.model.ExpertReader;
+import ie.irishliterature.model.GrantApplication;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
-
-import ie.irishliterature.model.GrantApplication;
-import ie.irishliterature.db.DBConn;
-import ie.irishliterature.db.DBException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 public class GrantApplicationDAO {
 
@@ -717,7 +718,6 @@ public class GrantApplicationDAO {
             throw new DBException("getNextApplicationNumber :: Exception while accessing database");
         }
 
-//        System.out.println("getNextApplicationNumber::  " + nextApplicationNumber);
         return nextApplicationNumber;
     }
 
@@ -762,15 +762,22 @@ public class GrantApplicationDAO {
             ps = conn.prepareStatement("SELECT idTranslator FROM Translator WHERE Name = ?");
             ps.setString(1, translatorName);
             res = ps.executeQuery();
+            
             if (res != null) {
+                
                 while (res.next()) {
                     idTranslator = res.getInt(1);
                 }
-            }
-            DBConn.close(conn, ps, res);
+            }            
+            
+            DBConn.close(conn, ps, res);            
+            
         } catch (ClassNotFoundException | SQLException e) {
+            
             LOGGER.debug(e.getMessage());
+            
             DBConn.close(conn, ps, res);
+            
             throw new DBException("3 Excepion while accessing database");
         }
 
@@ -801,15 +808,18 @@ public class GrantApplicationDAO {
             if (res != null) {
                 while (res.next()) {
                     idLanguage = res.getInt(1);
-                    System.out.println("ifLanguageExist: idLanguage: " + idLanguage);
+
                 }
             }
 
             DBConn.close(conn, ps, res);
 
         } catch (ClassNotFoundException | SQLException e) {
+            
             LOGGER.debug(e.getMessage());
+            
             DBConn.close(conn, ps, res);
+            
             throw new DBException("3 Excepion while accessing database");
         }
 
@@ -850,16 +860,20 @@ public class GrantApplicationDAO {
                 while (res.next()) {
 
                     authorId = res.getInt(1);
-//                    System.out.println("GrantApplicationDAO insertNewAuthor  id::   " + authorId);
+                    
                 }
             }
 
             conn.commit();
 
             DBConn.close(conn, ps1, ps2, res);
+            
         } catch (ClassNotFoundException | SQLException e) {
+            
             LOGGER.debug(e.getMessage());
+            
             DBConn.close(conn, ps1, ps2, res);
+            
             throw new DBException("4 Excepion while accessing database");
         }
 
@@ -898,16 +912,19 @@ public class GrantApplicationDAO {
                 while (res.next()) {
 
                     idTranslator = res.getInt(1);
-//                    System.out.println("GrantApplicationDAO insertNewTranslator  id::   " + idTranslator);
                 }
             }
 
             conn.commit();
 
             DBConn.close(conn, ps1, ps2, res);
+            
         } catch (ClassNotFoundException | SQLException e) {
+            
             LOGGER.debug(e.getMessage());
+            
             DBConn.close(conn, ps1, ps2, res);
+            
             throw new DBException("4 Excepion while accessing database");
         }
 
@@ -940,7 +957,6 @@ public class GrantApplicationDAO {
 
             ps1.executeUpdate();
 
-//            System.out.println("idLanguages, language, bookID, ReferenceNumber:: idLanguages" + idLanguages + " , language: " + lang + ", bookID: " + bookID + " , ReferenceNumber: " + ReferenceNumber);
             ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
             res = ps2.executeQuery();
 
@@ -948,19 +964,187 @@ public class GrantApplicationDAO {
                 while (res.next()) {
 
                     idLanguages_Library = res.getInt(1);
-//                    System.out.println("GrantApplicationDAO insertLanguages_Library  id::   " + idLanguages_Library);
                 }
             }
 
             conn.commit();
 
             DBConn.close(conn, ps1, ps2, res);
+            
         } catch (ClassNotFoundException | SQLException e) {
+            
             LOGGER.debug(e.getMessage());
+            
             DBConn.close(conn, ps1, ps2, res);
+            
             throw new DBException("4 Excepion while accessing database");
         }
 
         return idLanguages_Library;
+    }
+
+    public static int getExpertReaderUserID(String expertReaderName) throws DBException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        int idExpertReaderUserID = 0;
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement("SELECT userID FROM users WHERE fullName LIKE ?");
+
+            ps.setString(1, "%" + expertReaderName + "%");
+            res = ps.executeQuery();
+            
+            if (res != null) {
+                while (res.next()) {
+                    idExpertReaderUserID = res.getInt(1);
+                }
+            }
+            
+            
+            DBConn.close(conn, ps, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            
+            LOGGER.debug(e.getMessage());
+            
+            
+            DBConn.close(conn, ps, res);
+            
+            throw new DBException("3 Excepion while accessing database");
+        }        
+
+        return idExpertReaderUserID;
+    }
+
+    public static int updateExpertReader(ExpertReader expertReader) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+
+        ResultSet res = null;
+
+        int idExpertReader = 0;
+
+        try {
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            String sql = "INSERT INTO expertReader (expertReaderUserID, referenceNumber) values (?,?)";
+
+            ps1 = conn.prepareStatement(sql);
+
+            ps1.setInt(1, expertReader.getExpertReaderUserID());
+            ps1.setString(2, expertReader.getReferenceNumber());
+
+            ps1.executeUpdate();
+
+            ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+            res = ps2.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    idExpertReader = res.getInt(1);
+
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, ps2, res);
+            
+        } catch (ClassNotFoundException | SQLException e) {
+            
+            LOGGER.debug(e.getMessage());
+            
+            DBConn.close(conn, ps1, ps2, res);
+            
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return idExpertReader;
+    }
+
+    public static String getExpertReaderEmail(String expertReaderName) throws DBException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        String expertReaderEmail = "";
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement("SELECT email FROM users WHERE fullName LIKE ?");
+
+            ps.setString(1, "%" + expertReaderName + "%");
+            res = ps.executeQuery();
+            if (res != null) {
+                while (res.next()) {
+                    expertReaderEmail = res.getString(1);
+                }
+            }
+            DBConn.close(conn, ps, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("3 Excepion while accessing database");
+        }
+
+        return expertReaderEmail;
+    }
+
+    public static List<String[]> getAttachments(String newAssignedReferenceNumber) throws DBException {
+        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        List<String[]> attachments = new ArrayList<>();
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement("SELECT Original, OriginalName, copiesTranslationSample, copiesTranslationSampleDocName "
+                    + "FROM GrantApplication WHERE ReferenceNumber = ?");
+
+            ps.setString(1, newAssignedReferenceNumber);
+
+            res = ps.executeQuery();
+
+            ResultSetMetaData metadata = res.getMetaData();
+            int numcols = metadata.getColumnCount();
+
+            while (res.next()) {
+
+                String[] attachmentDetails = new String[6];
+
+                int i = 1;
+
+                while (i <= numcols) {
+
+                    attachmentDetails[i] = res.getString(i++);
+                   
+                }
+
+                attachments.add(attachmentDetails);
+            }
+
+            DBConn.close(conn, ps, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("3 Excepion while accessing database");
+        }
+
+        return attachments;
     }
 }
