@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>PDF thumbnails</title>
+        <script src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/pdf.js"></script>
+        <!--<script type="text/javascript" src="jr-pdf.js"></script>-->
+        <!--<script type="text/javascript" src="canvas2image.js"></script>-->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/canvas2image@1.0.5/canvas2image.js"></script>
+        <style>
+            .pdf {
+                position: relative;
+                display: inline-block;
+            }
+
+            .pdf p {
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                bottom: 0;
+                left: 0;
+            }
+        </style>
+
+        <script>
+
+            function doit() {
+                // URL of PDF document
+                //       var url = "img/test.pdf";
+                var url = "";
+                url = document.getElementById("fls").files;
+                console.log("url:   " + url);
+                console.log("url length:   " + url.length);
+
+                for (var i = 0; i < url.length; i++)
+                {
+                    console.log("i on top   " + i);
+                    var pdfUrl = URL.createObjectURL(url[i]);
+                    var pdfName = url[i].name;
+//                    console.log("pdfNeme   [" + i + "] " + pdfName);
+//                    console.log("pdfUrl   [" + i + "] " + pdfUrl);
+
+                    console.log("sending  make2(" + pdfUrl + " :: " + pdfName + " :: " + i);
+                    make2(pdfUrl, pdfName, i);
+
+                    console.log("i on bottom  2 " + i);
+                }
+                ;
+            }
+            ;
+
+            function make2(pdfUrl, pdfName, i) {
+
+                console.log("receiving  make2(" + pdfUrl + " " + pdfName + " " + i);
+                
+                console.log("i >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + i);
+
+                PDFJS.getDocument(pdfUrl).promise.then(function (doc) {
+                    var pages = [];
+
+                    doc.getMetadata().then(function (stuff) {
+                        console.log(stuff); // Metadata object here
+                    }).catch(function (err) {
+                        console.log('Error getting meta data');
+                        console.log(err);
+                    });
+
+console.log("pages.length    " + pages.length );
+console.log("doc.numPages    " + doc.numPages );
+
+                    while (pages.length < doc.numPages)
+                        pages.push(pages.length + 1);
+                    
+                    return Promise.all(pages.map(function (num) {
+                        // create a div for each page and build a small canvas for it
+                        var div = document.createElement("div" + i);
+                            div.className = "pdf";
+                        console.log("div i   " + i);
+                        var p = document.createElement("p");
+                        p.innerHTML = pdfName;                       
+                        $(p).appendTo($(".pdf"));                        
+                        document.body.appendChild(div);
+                        return doc.getPage(num).then(makeThumb)
+                                .then(function (canvas) {
+                                    div.appendChild(canvas);
+                                });
+                    }));
+                }).catch(console.error);
+            }
+
+            function makeThumb(page) {
+                // draw page to fit into 96x96 canvas
+                var vp = page.getViewport(1);
+                var canvas = document.createElement("canvas");
+                canvas.style = "border:1px  solid black";
+                canvas.width = canvas.height = 150;
+                var scale = Math.min(canvas.width / vp.width, canvas.height / vp.height);
+                return page.render({canvasContext: canvas.getContext("2d"), viewport: page.getViewport(scale)}).promise.then(function () {
+                    return canvas;
+                });
+            }
+            ;
+        </script>
+    </head>
+
+    <body>
+
+
+        <div class="container">
+        </div>
+        <div id="pdf-main-container">
+            <form action="" method="POST">
+                <input type="file" name="fls[]" id="fls" accept="application/pdf" multiple onclick="doit()" />
+            </form>
+        </div>
+
+
+    </body>
+</html>

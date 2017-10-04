@@ -1,4 +1,4 @@
-package ie.irishliterature.emailRegistration;
+package ie.irishliterature.servlets;
 
 import java.io.IOException;
 

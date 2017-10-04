@@ -1,5 +1,6 @@
 package ie.irishliterature.dao;
 
+import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.Library;
@@ -43,6 +44,8 @@ public class LibraryDAO {
         PreparedStatement ps2 = null;
         int id = 0;
         ResultSet res = null;
+        
+         java.sql.Timestamp timestamp = getcurrentTimeStamp();
 
         try {
 
@@ -50,9 +53,9 @@ public class LibraryDAO {
             conn.setAutoCommit(false);
 
             ps1 = conn.prepareStatement("INSERT INTO library ( referenceNumber, Title, Publisher, publishingYear, Genre, "
-                    + "translationTitle, translationPublisher, translationPublisherYear, Language, Cover, CoverName, physicalDescription, "
+                    + "translationTitle, translationPublisher, translationPublisherYear, Cover, CoverName, physicalDescription, "
                     + "Duplicates, Copies, Notes, ISBN, ISSN, LASTUPDATED) "
-                    + "VALUES( ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?, ?, ?)");
+                    + "VALUES( ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?, ?, ?, ?)");
 
             ps1.setString(1, library.getReferenceNumber());
             ps1.setString(2, library.getTitle());
@@ -63,15 +66,15 @@ public class LibraryDAO {
             ps1.setString(7, library.getTranslationPublisher());
             ps1.setString(8, library.getTranslationPublisherYear());
 //            ps1.setString(9, library.getLanguage());
-            ps1.setString(10, library.getCover());
-            ps1.setString(11, library.getCoverName());
-            ps1.setString(12, library.getPhysicalDescription());
-            ps1.setInt(13, library.getDuplicates());
-            ps1.setString(14, library.getCopies());
-            ps1.setString(15, library.getNotes());
-            ps1.setString(16, library.getISBN());
-            ps1.setString(17, library.getISSN());
-            ps1.setTimestamp(18, library.getLASTUPDATED());
+            ps1.setString(9, library.getCover());
+            ps1.setString(10, library.getCoverName());
+            ps1.setString(11, library.getPhysicalDescription());
+            ps1.setInt(12, library.getDuplicates());
+            ps1.setString(13, library.getCopies());
+            ps1.setString(14, library.getNotes());
+            ps1.setString(15, library.getISBN());
+            ps1.setString(16, library.getISSN());
+            ps1.setTimestamp(17, timestamp);
 
             ps1.executeUpdate();
 

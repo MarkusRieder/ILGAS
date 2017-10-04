@@ -33,6 +33,58 @@ public class GrantApplication {
 //    Publication Details
     private Date proposedDateOfPublication;
 
+    private Date originalDateOfPublication;
+
+    private int originalPageExtent;
+
+    private String originalLanguage;
+
+    private String countryOfPublication;
+
+    private Date boardMeeting;
+
+    private BigDecimal amountRequested;
+
+    private BigDecimal amountApproved;
+
+    private Date publisherInformedOfMeeting;
+
+    private String boardComments_Instructions;
+
+    private Date contractSentToPublisher;
+
+    private Date acknowledgementApproved;
+
+    private Date datePublishedBooksReceived;
+
+    private Date datePaymentMadeToPublisher;
+
+    private String paymentReferenceNumber;
+
+    private String addendumRightsAgreement;
+
+    private String addendumRightsAgreementName;
+
+    private String proofOfPaymentToTranslator;
+
+    private String proofOfPaymentToTranslatorName;
+
+    private String bankDetailsForm;
+
+    private String bankDetailsFormName;
+
+    private String SignedLIContract;  //file path
+
+    private String SignedLIContractName; //filename
+
+    private String paymentStatus;
+
+    private ArrayList<ArrayList<String>> previousGrantAid;
+
+    private int award;
+
+    private int salesFigures;
+
     private int proposedPrintRun;
 
     private int plannedPageExtent;
@@ -42,9 +94,13 @@ public class GrantApplication {
 
     private String translatorCVDocName; //filename
 
+    private String original;//path + filename
+
+    private String originalName; //filename
+
     private int numberOfPages;
 
-    private BigDecimal feePerPage;
+    private String breakDownTranslatorFee;
 
     private BigDecimal translatorFee;
 
@@ -86,27 +142,30 @@ public class GrantApplication {
 
     private List<String> Titles;
 
-    private java.sql.Timestamp LASTUPDATED;
-
     private String foreignPublisher;
+
     private String foreignCountry;
+
     private String targetLanguage;
 //4. Translator’s name
 //5. Translator’s track record
 //6. Translation Sample (as is!)
-    private String Original; // (Like the attachment one for translation sample)
-//8. T&Cs Accepted (great!)
-//9. Application Approved (also great!)
 
     private String expertReaderName;
+
     private String sampleSentOut;
+
     private String sampleReturned;
+
     private String readerReport;
+
     private String readerReportSummary; // (this goes into the document for the board – staff can add this)
 
-    private List<String[]>  expertReaderList;
-    
-    private List<String>  unassignedExpertReaderList;
+    private List<String[]> expertReaderList;
+
+    private List<String> unassignedExpertReaderList;
+
+    private java.sql.Timestamp LASTUPDATED;
 
 //
 //1. Board Meeting
@@ -119,6 +178,10 @@ public class GrantApplication {
 //8. Amount Approved 
 //9. Publisher Informed of Outcome 
 //10. Board Comments/Instructions
+//    
+//Foreign Publisher
+//Foreign Country
+//Target Language
     /**
      * @return the ApplicationNumber
      */
@@ -204,6 +267,20 @@ public class GrantApplication {
     }
 
     /**
+     * @return the bookTitle
+     */
+    public String getBookTitle() {
+        return bookTitle;
+    }
+
+    /**
+     * @param bookTitle the bookTitle to set
+     */
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+    }
+
+    /**
      * @return the agreement
      */
     public String getAgreement() {
@@ -271,6 +348,371 @@ public class GrantApplication {
      */
     public void setProposedDateOfPublication(Date proposedDateOfPublication) {
         this.proposedDateOfPublication = proposedDateOfPublication;
+    }
+
+    /**
+     * @return the originalDateOfPublication
+     */
+    public Date getOriginalDateOfPublication() {
+        return originalDateOfPublication;
+    }
+
+    /**
+     * @param originalDateOfPublication the originalDateOfPublication to set
+     */
+    public void setOriginalDateOfPublication(Date originalDateOfPublication) {
+        this.originalDateOfPublication = originalDateOfPublication;
+    }
+
+    /**
+     * @return the originalPageExtent
+     */
+    public int getOriginalPageExtent() {
+        return originalPageExtent;
+    }
+
+    /**
+     * @param originalPageExtent the originalPageExtent to set
+     */
+    public void setOriginalPageExtent(int originalPageExtent) {
+        this.originalPageExtent = originalPageExtent;
+    }
+
+    /**
+     * @return the originalLanguage
+     */
+    public String getOriginalLanguage() {
+        return originalLanguage;
+    }
+
+    /**
+     * @param originalLanguage the originalLanguage to set
+     */
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
+    }
+
+    /**
+     * @return the countryOfPublication
+     */
+    public String getCountryOfPublication() {
+        return countryOfPublication;
+    }
+
+    /**
+     * @param countryOfPublication the countryOfPublication to set
+     */
+    public void setCountryOfPublication(String countryOfPublication) {
+        this.countryOfPublication = countryOfPublication;
+    }
+
+    /**
+     * @return the boardMeeting
+     */
+    public Date getBoardMeeting() {
+        return boardMeeting;
+    }
+
+    /**
+     * @param boardMeeting the boardMeeting to set
+     */
+    public void setBoardMeeting(Date boardMeeting) {
+        this.boardMeeting = boardMeeting;
+    }
+
+    /**
+     * @return the amountRequested
+     */
+    public BigDecimal getAmountRequested() {
+        return amountRequested;
+    }
+
+    /**
+     * @param amountRequested the amountRequested to set
+     */
+    public void setAmountRequested(BigDecimal amountRequested) {
+        this.amountRequested = amountRequested;
+    }
+
+    /**
+     * @return the amountApproved
+     */
+    public BigDecimal getAmountApproved() {
+        return amountApproved;
+    }
+
+    /**
+     * @param amountApproved the amountApproved to set
+     */
+    public void setAmountApproved(BigDecimal amountApproved) {
+        this.amountApproved = amountApproved;
+    }
+
+    /**
+     * @return the publisherInformedOfMeeting
+     */
+    public Date getPublisherInformedOfMeeting() {
+        return publisherInformedOfMeeting;
+    }
+
+    /**
+     * @param publisherInformedOfMeeting the publisherInformedOfMeeting to set
+     */
+    public void setPublisherInformedOfMeeting(Date publisherInformedOfMeeting) {
+        this.publisherInformedOfMeeting = publisherInformedOfMeeting;
+    }
+
+    /**
+     * @return the boardComments_Instructions
+     */
+    public String getBoardComments_Instructions() {
+        return boardComments_Instructions;
+    }
+
+    /**
+     * @param boardComments_Instructions the boardComments_Instructions to set
+     */
+    public void setBoardComments_Instructions(String boardComments_Instructions) {
+        this.boardComments_Instructions = boardComments_Instructions;
+    }
+
+    /**
+     * @return the contractSentToPublisher
+     */
+    public Date getContractSentToPublisher() {
+        return contractSentToPublisher;
+    }
+
+    /**
+     * @param contractSentToPublisher the contractSentToPublisher to set
+     */
+    public void setContractSentToPublisher(Date contractSentToPublisher) {
+        this.contractSentToPublisher = contractSentToPublisher;
+    }
+
+    /**
+     * @return the acknowledgementApproved
+     */
+    public Date getAcknowledgementApproved() {
+        return acknowledgementApproved;
+    }
+
+    /**
+     * @param acknowledgementApproved the acknowledgementApproved to set
+     */
+    public void setAcknowledgementApproved(Date acknowledgementApproved) {
+        this.acknowledgementApproved = acknowledgementApproved;
+    }
+
+    /**
+     * @return the datePublishedBooksReceived
+     */
+    public Date getDatePublishedBooksReceived() {
+        return datePublishedBooksReceived;
+    }
+
+    /**
+     * @param datePublishedBooksReceived the datePublishedBooksReceived to set
+     */
+    public void setDatePublishedBooksReceived(Date datePublishedBooksReceived) {
+        this.datePublishedBooksReceived = datePublishedBooksReceived;
+    }
+
+    /**
+     * @return the datePaymentMadeToPublisher
+     */
+    public Date getDatePaymentMadeToPublisher() {
+        return datePaymentMadeToPublisher;
+    }
+
+    /**
+     * @param datePaymentMadeToPublisher the datePaymentMadeToPublisher to set
+     */
+    public void setDatePaymentMadeToPublisher(Date datePaymentMadeToPublisher) {
+        this.datePaymentMadeToPublisher = datePaymentMadeToPublisher;
+    }
+
+    /**
+     * @return the paymentReferenceNumber
+     */
+    public String getPaymentReferenceNumber() {
+        return paymentReferenceNumber;
+    }
+
+    /**
+     * @param paymentReferenceNumber the paymentReferenceNumber to set
+     */
+    public void setPaymentReferenceNumber(String paymentReferenceNumber) {
+        this.paymentReferenceNumber = paymentReferenceNumber;
+    }
+
+    /**
+     * @return the addendumRightsAgreement
+     */
+    public String getAddendumRightsAgreement() {
+        return addendumRightsAgreement;
+    }
+
+    /**
+     * @param addendumRightsAgreement the addendumRightsAgreement to set
+     */
+    public void setAddendumRightsAgreement(String addendumRightsAgreement) {
+        this.addendumRightsAgreement = addendumRightsAgreement;
+    }
+
+    /**
+     * @return the addendumRightsAgreementName
+     */
+    public String getAddendumRightsAgreementName() {
+        return addendumRightsAgreementName;
+    }
+
+    /**
+     * @param addendumRightsAgreementName the addendumRightsAgreementName to set
+     */
+    public void setAddendumRightsAgreementName(String addendumRightsAgreementName) {
+        this.addendumRightsAgreementName = addendumRightsAgreementName;
+    }
+
+    /**
+     * @return the proofOfPaymentToTranslator
+     */
+    public String getProofOfPaymentToTranslator() {
+        return proofOfPaymentToTranslator;
+    }
+
+    /**
+     * @param proofOfPaymentToTranslator the proofOfPaymentToTranslator to set
+     */
+    public void setProofOfPaymentToTranslator(String proofOfPaymentToTranslator) {
+        this.proofOfPaymentToTranslator = proofOfPaymentToTranslator;
+    }
+
+    /**
+     * @return the proofOfPaymentToTranslatorName
+     */
+    public String getProofOfPaymentToTranslatorName() {
+        return proofOfPaymentToTranslatorName;
+    }
+
+    /**
+     * @param proofOfPaymentToTranslatorName the proofOfPaymentToTranslatorName
+     * to set
+     */
+    public void setProofOfPaymentToTranslatorName(String proofOfPaymentToTranslatorName) {
+        this.proofOfPaymentToTranslatorName = proofOfPaymentToTranslatorName;
+    }
+
+    /**
+     * @return the bankDetailsForm
+     */
+    public String getBankDetailsForm() {
+        return bankDetailsForm;
+    }
+
+    /**
+     * @param bankDetailsForm the bankDetailsForm to set
+     */
+    public void setBankDetailsForm(String bankDetailsForm) {
+        this.bankDetailsForm = bankDetailsForm;
+    }
+
+    /**
+     * @return the bankDetailsFormName
+     */
+    public String getBankDetailsFormName() {
+        return bankDetailsFormName;
+    }
+
+    /**
+     * @param bankDetailsFormName the bankDetailsFormName to set
+     */
+    public void setBankDetailsFormName(String bankDetailsFormName) {
+        this.bankDetailsFormName = bankDetailsFormName;
+    }
+
+    /**
+     * @return the SignedLIContract
+     */
+    public String getSignedLIContract() {
+        return SignedLIContract;
+    }
+
+    /**
+     * @param SignedLIContract the SignedLIContract to set
+     */
+    public void setSignedLIContract(String SignedLIContract) {
+        this.SignedLIContract = SignedLIContract;
+    }
+
+    /**
+     * @return the SignedLIContractName
+     */
+    public String getSignedLIContractName() {
+        return SignedLIContractName;
+    }
+
+    /**
+     * @param SignedLIContractName the SignedLIContractName to set
+     */
+    public void setSignedLIContractName(String SignedLIContractName) {
+        this.SignedLIContractName = SignedLIContractName;
+    }
+
+    /**
+     * @return the paymentStatus
+     */
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    /**
+     * @param paymentStatus the paymentStatus to set
+     */
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    /**
+     * @return the previousGrantAid
+     */
+    public ArrayList<ArrayList<String>> getPreviousGrantAid() {
+        return previousGrantAid;
+    }
+
+    /**
+     * @param previousGrantAid the previousGrantAid to set
+     */
+    public void setPreviousGrantAid(ArrayList<ArrayList<String>> previousGrantAid) {
+        this.previousGrantAid = previousGrantAid;
+    }
+
+    /**
+     * @return the award
+     */
+    public int getAward() {
+        return award;
+    }
+
+    /**
+     * @param award the award to set
+     */
+    public void setAward(int award) {
+        this.award = award;
+    }
+
+    /**
+     * @return the salesFigures
+     */
+    public int getSalesFigures() {
+        return salesFigures;
+    }
+
+    /**
+     * @param salesFigures the salesFigures to set
+     */
+    public void setSalesFigures(int salesFigures) {
+        this.salesFigures = salesFigures;
     }
 
     /**
@@ -344,17 +786,17 @@ public class GrantApplication {
     }
 
     /**
-     * @return the feePerPage
+     * @return the breakDownTranslatorFee
      */
-    public BigDecimal getFeePerPage() {
-        return feePerPage;
+    public String getBreakDownTranslatorFee() {
+        return breakDownTranslatorFee;
     }
 
     /**
-     * @param feePerPage the feePerPage to set
+     * @param breakDownTranslatorFee the breakDownTranslatorFee to set
      */
-    public void setFeePerPage(BigDecimal feePerPage) {
-        this.feePerPage = feePerPage;
+    public void setBreakDownTranslatorFee(String breakDownTranslatorFee) {
+        this.breakDownTranslatorFee = breakDownTranslatorFee;
     }
 
     /**
@@ -513,6 +955,20 @@ public class GrantApplication {
     }
 
     /**
+     * @return the genre
+     */
+    public String getGenre() {
+        return genre;
+    }
+
+    /**
+     * @param genre the genre to set
+     */
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    /**
      * @return the TranslatorName
      */
     public ArrayList<String> getTranslatorName() {
@@ -611,20 +1067,6 @@ public class GrantApplication {
     }
 
     /**
-     * @return the LASTUPDATED
-     */
-    public java.sql.Timestamp getLASTUPDATED() {
-        return LASTUPDATED;
-    }
-
-    /**
-     * @param LASTUPDATED the LASTUPDATED to set
-     */
-    public void setLASTUPDATED(java.sql.Timestamp LASTUPDATED) {
-        this.LASTUPDATED = LASTUPDATED;
-    }
-
-    /**
      * @return the foreignPublisher
      */
     public String getForeignPublisher() {
@@ -664,20 +1106,6 @@ public class GrantApplication {
      */
     public void setTargetLanguage(String targetLanguage) {
         this.targetLanguage = targetLanguage;
-    }
-
-    /**
-     * @return the Original
-     */
-    public String getOriginal() {
-        return Original;
-    }
-
-    /**
-     * @param Original the Original to set
-     */
-    public void setOriginal(String Original) {
-        this.Original = Original;
     }
 
     /**
@@ -751,44 +1179,16 @@ public class GrantApplication {
     }
 
     /**
-     * @return the genre
-     */
-    public String getGenre() {
-        return genre;
-    }
-
-    /**
-     * @param genre the genre to set
-     */
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    /**
-     * @return the bookTitle
-     */
-    public String getBookTitle() {
-        return bookTitle;
-    }
-
-    /**
-     * @param bookTitle the bookTitle to set
-     */
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
-    }
-
-    /**
      * @return the expertReaderList
      */
-    public List<String[]>  getExpertReaderList() {
+    public List<String[]> getExpertReaderList() {
         return expertReaderList;
     }
 
     /**
      * @param expertReaderList the expertReaderList to set
      */
-    public void setExpertReaderList(List<String[]>  expertReaderList) {
+    public void setExpertReaderList(List<String[]> expertReaderList) {
         this.expertReaderList = expertReaderList;
     }
 
@@ -804,6 +1204,48 @@ public class GrantApplication {
      */
     public void setUnassignedExpertReaderList(List<String> unassignedExpertReaderList) {
         this.unassignedExpertReaderList = unassignedExpertReaderList;
+    }
+
+    /**
+     * @return the LASTUPDATED
+     */
+    public java.sql.Timestamp getLASTUPDATED() {
+        return LASTUPDATED;
+    }
+
+    /**
+     * @param LASTUPDATED the LASTUPDATED to set
+     */
+    public void setLASTUPDATED(java.sql.Timestamp LASTUPDATED) {
+        this.LASTUPDATED = LASTUPDATED;
+    }
+
+    /**
+     * @return the original
+     */
+    public String getOriginal() {
+        return original;
+    }
+
+    /**
+     * @param original the original to set
+     */
+    public void setOriginal(String original) {
+        this.original = original;
+    }
+
+    /**
+     * @return the originalName
+     */
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    /**
+     * @param originalName the originalName to set
+     */
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
 }

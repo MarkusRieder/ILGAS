@@ -168,7 +168,7 @@ public class MailUtil {
                     .append("<li>       Would you recommend publication of the translation? If yes, please specify whether you would recommend publication a) as it stands or b) with revisions.</li>")
                     .append("</ol>")
                     .append("<strong>Please supply concrete textual examples</strong> both in the language of the original and in that of the translation to illustrate your assessment, bearing in mind that the board and staff of Literature Ireland may not be familiar with the language of the translation in question. In other words, we would ask you to furnish explanations in English for what in your opinion are grounds for praise or criticism. Also, if you can see an improved solution, we would ask you to provide concrete suggestions.<br />")
-                    .append("The fee for the report will be EUR €125. We would be grateful if you could return your report to me as a <strong>Word document</strong> (or equivalent but not PDF) by <strong>")
+                    .append("The fee for the report will be EUR &euro;125. We would be grateful if you could return your report to me as a <strong>Word document</strong> (or equivalent but not PDF) by <strong>")
                     .append(expectedReturnDate)
                     .append("</strong>. Please let me know if you would like to receive a gratis copy of the finished translation on publication.<br />")
                     .append("<br/><br/>")

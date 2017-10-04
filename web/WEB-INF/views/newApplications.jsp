@@ -100,7 +100,7 @@
     </head>
 
     <body style="height: 100%">
-        
+
         <sql:query var="applicationQuery" dataSource="jdbc/ILGAS">
             SELECT * FROM GrantApplication
             WHERE GrantApplication.Status = 'new' 
@@ -108,7 +108,7 @@
             <sql:param value="${publisherID}"/>
         </sql:query>
         <c:set var="applicationDetails" value="${applicationQuery.rows[0]}"/>
-        
+
         <div id="shadowholder">
             <div class="shadowtop"> </div>
             <div id="container">
@@ -128,10 +128,10 @@
                 </div> <!--  End of topbar div -->
 
                 <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
-                
+
                 <div class="container-fluid" style="margin-bottom: 20px"></div>
-                
-   <h1 style="background-color: red">Make sure they can only see their own applications</h1>
+
+                <h1 style="background-color: red">Make sure they can only see their own applications</h1>
                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
                     <h3 align="center" style="align-content: center">Display new applications</h3>
 
@@ -197,15 +197,17 @@
                     name="regF"
                     >
 
-                        <div class="container col-sm-12" style="margin-bottom: 40px">
+                    <div class="container col-sm-12" style="margin-bottom: 40px">
                         <button type="submit" class = "btn btn-default btn-sm" name="New Application">
                             New Application
                         </button>
 
-                          <button type = "submit" class = "btn btn-default btn-sm active"  name="List New Applications">
+                        <button type = "submit" class = "btn btn-default btn-sm active"  name="List New Applications">
                             List New Applications
                         </button>
-
+                        <button type = "submit" class = "btn btn-default btn-sm active"  name="List Open Applications">
+                            List Open Applications
+                        </button>
                         <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
                             List Pending Applications
                         </button>
@@ -215,7 +217,7 @@
                         </button>
                     </div>                        
                 </form>
-                
+
                 <!--footer start-->
 
                 <div id="base">  

@@ -40,3 +40,66 @@ DEBUG   2017-09-14 07:02:25,731 [http-listener-1(5)] ie.irishliterature.dao.Gran
 DEBUG   2017-09-14 07:05:42,943 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
 DEBUG   2017-09-14 07:09:01,109 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
 DEBUG   2017-09-14 07:24:56,330 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-16 00:59:12,921 [http-listener-1(4)] ie.irishliterature.dao.ApplicationDAO  - Column 'feePerPage' not found.
+DEBUG   2017-09-16 13:44:38,038 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'proposedDateOfPrintRun' in 'field list'
+DEBUG   2017-09-16 13:48:54,857 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'feePerPage' in 'field list'
+DEBUG   2017-09-16 13:50:23,347 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'feePerPage' in 'field list'
+DEBUG   2017-09-16 14:30:59,961 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (25 > number of parameters, which is 24).
+DEBUG   2017-09-16 14:31:43,499 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (25 > number of parameters, which is 24).
+DEBUG   2017-09-17 08:48:09,430 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 31
+DEBUG   2017-09-17 09:00:24,093 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (53 > number of parameters, which is 52).
+DEBUG   2017-09-17 09:02:16,220 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (52 > number of parameters, which is 51).
+DEBUG   2017-09-17 09:05:22,618 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (51 > number of parameters, which is 50).
+DEBUG   2017-09-17 09:10:32,481 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 52
+DEBUG   2017-09-17 09:12:12,177 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 52
+DEBUG   2017-09-17 09:15:38,974 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 51
+DEBUG   2017-09-17 09:28:39,504 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 50
+DEBUG   2017-09-17 09:30:33,583 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 51
+DEBUG   2017-09-17 09:37:43,637 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 50
+DEBUG   2017-09-17 09:39:53,885 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 50
+DEBUG   2017-09-17 09:49:14,372 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+company = 'Discwo' at line 1
+DEBUG   2017-09-17 09:58:45,282 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ReferenceNumber = '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+c' at line 1
+DEBUG   2017-09-17 10:07:44,528 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ReferenceNumber = '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+c' at line 1
+DEBUG   2017-09-17 10:08:37,310 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ReferenceNumber = '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+c' at line 1
+DEBUG   2017-09-17 10:15:51,378 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+company = 'Discwo' at line 1
+DEBUG   2017-09-17 10:22:21,130 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+company = 'Discwo' at line 1
+DEBUG   2017-09-17 10:28:27,470 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 51
+DEBUG   2017-09-17 21:07:59,772 [http-listener-1(3)] ie.irishliterature.dao.ApplicationDAO  - Column 'genre' not found.
+DEBUG   2017-09-17 21:09:20,130 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
+DEBUG   2017-09-17 21:44:15,144 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'genre' not found.
+DEBUG   2017-09-18 00:30:48,535 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Incorrect date value: 'English' for column 'originalDateOfPublication' at row 1
+DEBUG   2017-09-18 00:36:07,107 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Incorrect date value: 'English' for column 'originalDateOfPublication' at row 1
+DEBUG   2017-09-18 00:38:58,859 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Incorrect date value: 'English' for column 'originalDateOfPublication' at row 1
+DEBUG   2017-09-18 00:44:36,226 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (51 > number of parameters, which is 50).
+DEBUG   2017-09-18 00:46:38,328 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Column count doesn't match value count at row 1
+DEBUG   2017-09-18 00:47:09,201 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Column count doesn't match value count at row 1
+DEBUG   2017-09-18 10:41:46,442 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Column count doesn't match value count at row 1
+DEBUG   2017-09-18 11:12:22,333 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (51 > number of parameters, which is 50).
+DEBUG   2017-09-18 11:15:46,801 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (51 > number of parameters, which is 50).
+DEBUG   2017-09-22 16:12:03,001 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'today' in 'field list'
+DEBUG   2017-09-22 16:18:11,998 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'today' in 'field list'
+DEBUG   2017-09-25 11:41:16,414 [http-listener-1(2)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:41:51,687 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:43:05,209 [http-listener-1(5)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:46:22,742 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:48:26,382 [http-listener-1(5)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:53:54,945 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?2790' at line 1
+DEBUG   2017-09-25 11:54:20,672 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - Unknown column 'open' in 'where clause'

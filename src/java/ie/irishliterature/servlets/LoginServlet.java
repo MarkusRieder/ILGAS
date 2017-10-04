@@ -1,13 +1,11 @@
 package ie.irishliterature.servlets;
 
+import ie.irishliterature.dao.ACpublisherDAO_test;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.service.LoginService;
 import ie.irishliterature.util.BCrypt;
 import ie.irishliterature.util.GlobalConstants;
-
-import ie.irishliterature.dao.ACpublisherDAO_test;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -123,6 +120,10 @@ public class LoginServlet extends HttpServlet {
                         session.setAttribute("Company_Number", publisherID);
                         session.setAttribute("publisherName", publisherName);
 
+                        publisherID = (int) session.getAttribute("publisherID");
+
+                        System.out.println("login publisherID: " + publisherID);
+
                         request.getSession().setAttribute(publisherName, publisherName);
                         request.setAttribute("publisherName", publisherName);
 
@@ -141,6 +142,7 @@ public class LoginServlet extends HttpServlet {
 
                         } else {
                             System.out.println("Im here :1: ");
+                             session.setAttribute("publisherID", publisherID);
                             request.getRequestDispatcher("/WEB-INF/views/welcome_Publisher.jsp").forward(request, response);
                         }
 

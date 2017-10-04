@@ -1,80 +1,403 @@
+
+
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+<html lang="en">
     <head>
-        <meta charset="utf-8">
-        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-
-        <link href="//datatables.net/download/build/nightly/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-        <script src="//datatables.net/download/build/nightly/jquery.dataTables.js"></script>
-
-        <meta charset=utf-8 />
-        <title>DataTables - JS Bin</title>
-
-        <!--JQuery-->
-
-        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-
-
-        <!-- Bootstrap -->
-
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
-        <!--http://jschr.github.io/bootstrap-modal/bs3.html-->
-
-        <!--        <link href="css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
-                <link href="css/bootstrap-modal.css" rel="stylesheet" />-->
-
-        <!--DataTables-->
-
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/1.10.15/integration/font-awesome/dataTables.fontAwesome.css">
+        <meta charset="UTF-8"/>
+        <title>Testing</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+        <!--<link href="../themes/explorer/theme.css" media="all" rel="stylesheet" type="text/css"/>-->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="js/plugins/sortable.js" type="text/javascript"></script>
+        <script src="js/fileinput.js" type="text/javascript"></script>
+        <!--<script src="../themes/explorer/theme.js" type="text/javascript"></script>-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/modernizr.js" type="text/javascript"></script>
+        <script src="js/pdf.js" type="text/javascript"></script>
+        <script src="js/pdf.worker.js"></script>
 
 
-        <link rel="stylesheet" type="text/css" href="css/layout.css">
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css" />
-        <link rel="stylesheet" href="css/lesshat.css" />
-        <link rel="stylesheet" href="css/newfile.css" />
+        <script>
 
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+            var file = [];
+            var PDF_FILES = [];
 
-        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>  
+            var fileTypes = [
+                'image/jpeg',
+                'image/pjpeg',
+                'image/png',
+                'image/*',
+                'application/pdf',
+                '.doc,.docx,.xml,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 
-        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>       
-        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-        <script src="//cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
-        <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
-        <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
-        <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js "></script>
-        <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
-        <script src="js/bootstrap-datepicker.js"></script>
-        <script src="js/jquery-ui.js"></script>
+            ];
+
+            function validFileType(file) {
+                for (var i = 0; i < fileTypes.length; i++) {
+                    if (file.type === fileTypes[i]) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        </script>
+        <script>
+
+//            https://maraustria.wordpress.com/2014/04/25/multiple-select-and-preview-of-image-of-file-upload/
+            window.onload = function () {
+                //Check File API support
+                if (window.File && window.FileList && window.FileReader)
+                {
+                    $(document).on("change", "#files", function (event) {
+                        var files = event.target.files; //FileList object
+                        var output = document.getElementById("result");
+                        console.log("output   " + output.toSource());
+                        for (var i = 0; i < files.length; i++)
+                        {
+                            var file = files[i];
+
+                            console.log("files[i]" + files[i].name + " i: " + i);
+
+                            if (validFileType(files[i])) {
+                                if (this.files[0].size < 2097152) {
+
+                                    thumbnail(files[i].name, i);
+
+
+                                    var picReader = new FileReader();
+                                    picReader.addEventListener("load", function (event) {
+                                        var picFile = event.target;
+
+                                        console.log("picFile  " + picFile.result);
+                                        var picres = thumbnail(picFile.result, i);
+                                        console.log("picres  " + picres);
+
+                                        var div = document.createElement("div");
+                                        div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
+                                                "title='preview image'/>";
+                                        output.insertBefore(div, null);
+                                    });
+                                    //Read the image
+                                    $('#clear, #result').show();
+                                    picReader.readAsDataURL(file);
+
+                                } else {
+                                    alert("Image Size is too big.Minimum size is 2MB.");
+                                    $(this).val("");
+                                }
+                            } else {
+                                alert("You can only upload image file.");
+                                $(this).val("");
+                            }
+                        }
+
+
+                    });
+                } else
+                {
+                    console.log("Your browser does not support File API");
+                }
+            };
+
+            function printObject(o) {
+                var out = '';
+                for (var p in o) {
+                    out += p + ': ' + o[p] + '\n';
+                }
+                alert(out);
+            }
+
+//function test(){
+//    alert("test");
+//}
+
+            $(document).on("click", "#files", function () {
+                $('.thumbnail').parent().remove();
+                $('result').hide();
+                $(this).val("");
+            });
+            $(document).on("click", "#clear", function () {
+                $('.thumbnail').parent().remove();
+                $('#result').hide();
+                $('#files').val("");
+                $(this).hide();
+            });
 
 
 
+            function thumbnail(pdfURL, elementID) {
+
+                console.log("pdfURL " + pdfURL);
+                console.log("elementID " + elementID);
+
+                PDFJS.workerSrc = "js/pdf.worker.js";
+
+                PDFJS.getDocument(pdfURL).then(function (pdf) {
+
+                    console.log("pdfURL2: " + pdfURL);
+
+                    pdf.getPage(1).then(function (page) {  //1 is the page number we want to retrieve
+
+                        var viewport = page.getViewport(0.5);
+                        var canvas = document.createElement('canvas');
+                        var ctx = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+
+                        var renderContext = {
+                            canvasContext: ctx,
+                            viewport: viewport
+                        };
+
+                        page.render(renderContext).then(function () {
+                            //set to draw behind current content
+                            ctx.globalCompositeOperation = "destination-over";
+
+                            //set background color
+                            ctx.fillStyle = "#ffffff";
+
+                            //draw background / rect on entire canvas
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            var img = canvas.toDataURL();
+
+                            console.log("elementID 666 " + elementID);
+                            console.log("#" + elementID);
+                            $("#" + elementID).html('<img src="' + img + '"/>');
+                            $("#elem").html('<img src="' + img + '"/>');
+                            $("#thumbnail").html('<img src="' + img + '"/>');
+
+                        });
+
+
+                    });
+                });
+            }
+        </script>
 
         <style>
+            body{
+                font-family: 'Segoe UI';
+                font-size: 12pt;
+            }
+
+            header h1{
+                font-size:12pt;
+                color: #fff;
+                background-color: #1BA1E2;
+                padding: 20px;
+
+            }
+            #article
+            {
+                width: 80%;
+                margin:auto;
+                margin-top:10px;
+            }
+
+            .thumbnail1{
+
+                height: 100px;
+                margin: 10px;
+                float: left;
+            }
+            #clear{
+                display:none;
+            }
+            #result {
+                border: 4px dotted #cccccc;
+                display: none;
+                float: right;
+                margin:0 auto;
+                width: 511px;
+            }
+        </style>
+
+        <style>
+
+            html, body {
+                background: #dedede;
+                color: #222;
+                font-family: Roboto,sans-serif;
+                font-size: 13px;
+            }
+
+            #thumbnail {
+                position: absolute;
+                left: 0;
+                width: 600px;
+                float: left;
+            }
+
+            .file_info {
+                position: absolute;
+                left: 600px;
+                width: 300px;
+                height: auto;
+                background: #eee;
+                padding-left: 16px;
+                padding-top: 8px;
+                overflow-y: auto;
+            }
+
+            .thumb {
+                display: inline-block;
+                width: 250px;
+                height: 275px;
+                border: thin solid #dedede;
+                margin: 7px 15px;
+            }
+
+            .thumb.current {
+                border: medium solid #4285f4;
+            }
+
+            .thumb .close {
+                position: relative;
+                float: right;
+                font-weight: bold;
+                font-size: 20px;
+                padding: 1px;
+                cursor: pointer;
+            }
+
+            .thumb .info {
+                text-align: center;
+                font-weight: bold;
+                background: white;
+                border: none;
+                padding: 5px 0;
+            }        
+
+            #thumbnail img {
+                width: 250px;
+                height: 250px;
+            }
+
+            .action {
+                border: none;
+                padding: 5px;
+                margin: 5px;
+                color: white;
+            }
+
+            .share {
+                background: #4285f4;
+            }
+
+            .remove {
+                background: red;
+            }
+
+            .rename {
+                background: orange;
+            }
 
         </style>
     </head>
     <body>
+        <div class="container-fluid">
+            <header>
+                <h1>File API - FileReader</h1>
+            </header>
 
-        <div class="container">
-  <div>  Dear Froggy The Frog,<br/><br/>,<br/><br/>Many thanks for agreeing to take on this task. Please find attached a sample translation of the above mentioned title in German together with a copy of the original work. Please supply a report of no more than two pages on the sample translation enclosed, addressing the points below.<br/><br/>Your report will be taken into account by the Board of Literature Ireland (formerly Ireland Literature Exchange) when assessing this application. The report may also be made available, anonymously, to the publisher and/or translator of the work. For this reason, we would recommend that an objective tone be maintained throughout. <strong>Please do not sign your name to the report</strong>. Use the project reference number only.<br/><br/><ol><li>       Is the literary quality of the translation of an acceptable standard? Is the quality maintained consistently throughout the enclosed extract?</li><li>       Is the translation readable, i.e. does it flow?<li>       Does the style of the translation reflect that of the original?</li><li>       Is the translation complete, correct and accurate?<li>       Does the original pose specific difficulties, e.g. specialised terminology, culture-specific vocabulary, dialect? Does the translator resolve these difficulties adequately? Does the translator demonstrate complete creative command of his/her own language?</li><li>       If applicable, please comment on register, rhyme, rhythm, alliteration, word order and other poetic devices, or is the translation a free interpretation?</li><li>1       Would you recommend publication of the translation? If yes, please specify whether you would recommend publication a) as it stands or b) with revisions.</li></ol><strong>Please supply concrete textual examples</strong> both in the language of the original and in that of the translation to illustrate your assessment, bearing in mind that the board and staff of Literature Ireland may not be familiar with the language of the translation in question. In other words, we would ask you to furnish explanations in English for what in your opinion are grounds for praise or criticism. Also, if you can see an improved solution, we would ask you to provide concrete suggestions.The fee for the report will be EUR €125. We would be grateful if you could return your report to me as a <strong>Word document</strong> (or equivalent but not PDF) by 01/10/2017. Please let me know if you would like to receive a gratis copy of the finished translation on publication.We ask that submit an invoice, citing the project reference number, at the same time as your report, along with a completed bank details form. A copy of this form can be requested via email to <a href="mailto:florence@irelandliterature.com">florence@irelandliterature.com</a>.<br/><br/>If you have any queries, please do not hesitate to contact me.<br/><br/>Thank you for your time and expertise.<br/><br/>Kind regards, Rita McCann--Deputy DirectorLiterature IrelandTrinity Centre for Literary Translation, 36 Fenian Street, Trinity College Dublin, Dublin 2Ireland Tel: +353 1 896 4179</div>
+            <div class="input-group signedLIcontract pull-left" >
+                <!--<article>-->
+                <div id="account">
+                    <label for="files">Select multiple files: </label>
+                    <input id="files" type="file" multiple accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" >
+                </div>
+            </div>
+            <button type="button" id="clear">Clear</button>
+            <output id="result"></output>
+            <!--</article>-->
+
+            <input id="signedLIcontract">
+        </div>
+        <div id="0">0</div>
+
+        <canvas id="the-canvas"></canvas>
+
+        <div id="canvas">canvas</div>
+
+        <div class="container-fluid">
+            <!-- Final thumbnail image from the canvas will be rendered here -->
+            <div id="thumbnail"></div>
+            <!-- Shows some meta info about the files -->
+            <div id="file_info" class="file_info">
+
+                <h2 id="file_name_info">File Name</h2>
+                <hr>
+                <p>
+                    <strong>Type: </strong>
+                    PDF
+                </p>
+                <p>
+                    <strong>Pages: </strong>
+                    <span id="file_pages_info">3</span>
+                </p>
+
+                <p>
+                    <button class="rename action" id="rename">Rename</button>
+                    <button class="share action" id="share">Share</button>
+                    <button class="remove action" id="remove">Remove</button>
+                </p>
+            </div>
         </div>
 
+
+        <script>
+            $(document).ready(function () {
+
+                // check for necessary features
+                featureCheck();
+
+                function featureCheck() {
+                    // feature list required for this demo
+                    var features = ['webworkers', 'canvas'];
+                    var featuresAbsent = false;
+                    var $list = $("<ul>")
+                            .attr("id", "feature_list");
+                    $.each(features, function (index, feature) {
+                        if (Modernizr[feature]) {
+                            console.log("SUCCESS: " + feature + " present");
+                            var $li = $("<li>")
+                                    .css({
+                                        "border": "thin solid black",
+                                        "padding": "5px",
+                                        "margin": "5px",
+                                        "width": "auto",
+                                        "background": "lightgreen"
+                                    })
+                                    .text("SUCCESS: " + feature + " present");
+                            $list.append($li);
+                        } else {
+                            // necessary feature is not present
+                            featuresAbsent = true;
+                            console.log("FAILURE: " + feature + " NOT present");
+                            var $li = $("<li>")
+                                    .css({
+                                        "border": "thin solid black",
+                                        "padding": "5px",
+                                        "margin": "5px",
+                                        "width": "auto",
+                                        "background": "red"
+                                    })
+                                    .text("FAILURE: " + feature + " NOT present");
+                            $list.append($li);
+                        }
+                    });
+                    // append the feature list if any of the feature is not present
+                    if (featuresAbsent) {
+                        $(document.body).append($list);
+                    }
+                    ;
+                }
+            }
+            );
+
+        </script>
     </body>
 </html>

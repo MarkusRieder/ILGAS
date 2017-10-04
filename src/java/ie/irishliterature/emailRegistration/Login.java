@@ -1,16 +1,5 @@
 package ie.irishliterature.emailRegistration;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-
 import ie.irishliterature.dao.ApplicationDAO;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.Status;
@@ -18,6 +7,14 @@ import ie.irishliterature.model.User;
 import ie.irishliterature.util.BCrypt;
 import ie.irishliterature.util.GlobalConstants;
 import ie.irishliterature.util.Utils;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 /**
  * Servlet implementation class Login
  */
@@ -42,8 +39,13 @@ public class Login extends HttpServlet {
     	}
     }
 	/**
+     * @param request
+     * @param response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+        @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String inputEmail = request.getParameter("inputEmail");
 		String inputPassword = BCrypt.hashpw(request.getParameter("inputPassword"), GlobalConstants.SALT);

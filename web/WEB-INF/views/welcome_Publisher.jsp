@@ -111,6 +111,7 @@
                                             <option value="">Choose Task</option>
                                             <option>Start New Application</option>
                                             <option>List New Applications</option>
+                                            <option>List Open Applications</option>
                                             <option>List Pending Applications</option>
                                             <option>List Closed Applications</option>
                                         </select>                                        
@@ -120,6 +121,7 @@
                                 <input type="hidden" name="firstname" value ="${firstname}">
                                 <input type="hidden" name="lastname" value ="${lastname}">
                                 <input type="hidden" name="userID" value ="${userID}">
+                                <input type="hidden" name="publisherID" value ="${publisherID}">
                                 <div class="form-group">
                                     <!-- Button -->
                                     <div class="col-sm-12  pull-left">

@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%-- 
     Document   : newApplication
     Created on : 19-Mar-2017, 11:27:58
@@ -36,19 +37,24 @@
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/pdf.js"></script>
+        <script src="js/pdf.worker.js"></script>
 
         <script>
             var translatorArray = [];
             var authorArray = [];
             var languageArray = [];
+            var pressCuttingArray = [];
             var Name = "";
             var Author = "";
             var counter = 0;
             var Authorcounter = 0;
+            var pressCuttingCounter = 0;
             var translatorCounter = 0;
             var translatorCounter1 = 0;
-            var translatorName876;
+            var translatorName876 = "";
             $.datepicker.setDefaults({dateFormat: 'dd/mm/yy'});
+            PDFJS.workerSrc = 'js/pdf.worker.js';
         </script>
 
         <!--AutoComplete_Genres-->
@@ -258,6 +264,22 @@
                 }
             }
 
+            /*
+             * rewrite h1              
+            */
+
+            .header1 {
+                display: block;
+                font-size: 2em;
+                margin-top: 0.67em;
+                margin-bottom: 0.67em;
+                margin-left: 0;
+                margin-right: 0;
+                font-weight: bold;
+                text-align: center;
+            }
+
+
             /*        <!--Checkboxes with tick mark-->*/
 
             .checkbox label:after, 
@@ -387,7 +409,15 @@
             h1 {
                 text-align: center;
             }
+            .pressCuttingsUpload {
+                margin: 20px 0;
+            }
+
+            .imageupload{
+                margin: 20px 0;
+            }
         </style>
+
 
         <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh -->
         <script type="text/javascript">
@@ -453,14 +483,24 @@
             });
 
             $(function () {
+                $('div.addendum').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_addendum").value = label;
+                });
+            });
+
+            $(function () {
 
                 $('div.translator_cv').on('change', ':file', function () {
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-                    var label_translatorid2 = "label_translator" + id2;
-                    document.getElementById(label_translatorid2).value = label;
+//                  var label_translatorid2 = "label_translator" + id2;
+                    document.getElementById("label_translator0").value = label;
                 });
             });
 
@@ -477,6 +517,15 @@
                 });
             });
             $(function () {
+                $('div.originalSample').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_originalSample").value = label;
+                });
+            });
+            $(function () {
                 $('div.translationSample').on('change', ':file', function () {
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
@@ -490,8 +539,36 @@
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+
                     input.trigger('fileselect', [numFiles, label]);
                     document.getElementById("label_cover").value = label;
+                });
+            });
+            $(function () {
+                $('div.proofPayment').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_proofPayment").value = label;
+                });
+            });
+            $(function () {
+                $('div.bankDetailForm').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_BankDetailForm").value = label;
+                });
+            });
+            $(function () {
+                $('div.signedLIcontract').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_signedLIcontract").value = label;
                 });
             });
         </script>
@@ -520,7 +597,7 @@
                 });
             });
         </script>
-         
+
         <script>
             function  copyFirstRow() {
                 var fn = document.getElementById("translatorName");
@@ -574,6 +651,66 @@
             }
         </script>
 
+        <!--add more Add another Press Cutting-->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                pressCuttingCounter = 1;
+                $("#pressCutting").click(function (event) {
+                    pressCuttingCounter++;
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + pressCuttingCounter + ". Press Cutting  </div>");
+                    var $newInput = $("<input placeholder='Press Cutting' type='text'> ");
+                    $newInput
+                            .attr("name", "pressCutting" + pressCuttingCounter)
+                            .attr("id", "pressCutting" + pressCuttingCounter)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#addPressCuttingForm"));
+                });
+            });
+        </script>
+
+        <script>
+            function backToMisc() {
+                var upload_number = 2;
+                for (var i = 2; i <= pressCuttingCounter; i++) {
+
+                    var nr = "name" + i;
+                    var item = document.getElementById(nr);
+                    var itemValue = item.value;
+
+                    pressCuttingArray.push(itemValue);
+
+                    var moreUploadTag = '';
+
+                    moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+                    moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
+                    moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
+                    moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
+                    moreUploadTag += 'Select file ';
+                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
+                    moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
+                    moreUploadTag += '</label>';
+                    moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
+                    moreUploadTag += '</div>';
+                    moreUploadTag += '</div>';
+
+                    $(moreUploadTag).appendTo('#additionalTranslator');
+
+                    upload_number++;
+                }
+
+                $('#bs-example-navbar-collapse-1 a[href="#Misc"]').tab('show');
+                var arrayLength = pressCuttingArray.length;
+                for (var i = 0; i < arrayLength; i++) {
+                }
+                $("#pressCuttingArray").val(pressCuttingArray);
+            }
+        </script>
 
         <!--';-->
         <!--add more Authors -->
@@ -647,6 +784,7 @@
         <script>
 
             function myFunction() {
+                translatorName876 = "";
                 var x = document.getElementById("translatorName");
                 translatorName876 = x.value;
                 var tester = "Upload a copy of " + translatorName876 + "'s CV:";
@@ -730,11 +868,130 @@
                 font-size: 16px;
             }
         </style>
+
+        <script>
+            var fileTypes = [
+                'image/jpeg',
+                'image/pjpeg',
+                'image/png',
+                'image/*',
+                'application/pdf',
+                '.doc,.docx,.xml,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
+            ];
+
+            function validFileType(file) {
+                for (var i = 0; i < fileTypes.length; i++) {
+                    if (file.type === fileTypes[i]) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        </script>
+        <script>
+            $(document).ready(function () {
+                //Check File API support
+                if (window.File && window.FileList && window.FileReader)
+                {
+                    $('#files').on("change", function (event) {
+                        var files = event.target.files; //FileList object
+                        var output = document.getElementById("result");
+                        for (var i = 0; i < files.length; i++)
+                        {
+                            var file = files[i];
+                            var fileName = files[i].name;
+                            console.log("fileName  " + fileName);
+
+//                            if (file.type.match('image.*')) {
+                            if (validFileType(files[i])) {
+                                if (this.files[0].size < 2097152) {
+
+                                    var picReader = new FileReader();
+                                    picReader.addEventListener("load", function (event) {
+                                        var picFile = event.target;
+                                        var div = document.createElement("div");
+                                        div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
+                                                "title='preview image'/>";
+                                        output.insertBefore(div, null);
+                                    });
+                                    //Read the image
+                                    $('#clear, #result').show();
+                                    picReader.readAsDataURL(file);
+
+                                } else {
+                                    alert("Image Size is too big.Minimum size is 2MB.");
+                                    $(this).val("");
+                                }
+                            } else {
+                                alert("You can only upload image file.");
+                                $(this).val("");
+                            }
+                        }
+
+                    });
+                } else
+                {
+                    console.log("Your browser does not support File API");
+                }
+            });
+
+            $(document).on("click", "#files", function () {
+                $('.thumbnail').parent().remove();
+                $('result').hide();
+                $(this).val("");
+            });
+
+            $(document).on("click", "#clear", function () {
+                $('.thumbnail').parent().remove();
+                $('#result').hide();
+                $('#files').val("");
+                $(this).hide();
+            });
+
+        </script>
+
+        <style>
+
+            header h1{
+                font-size:12pt;
+                color: #fff;
+                background-color: #1BA1E2;
+                padding: 20px;
+
+            }
+            #article
+            {
+                width: 80%;
+                margin:auto;
+                margin-top:10px;
+            }
+
+            .thumbnail{
+
+                height: 100px;
+                margin: 10px;
+                float: left;
+            }
+            #clear{
+                display:none;
+            }
+            #result {
+                border: 4px dotted #cccccc;
+                display: none;
+                float: right;
+                margin:0 auto;
+                width: 511px;
+            }
+        </style>
+
+
     </head>
 
     <body style="height: 100%">
 
-        <sql:query var="companyQu    ery" dataSource="jdbc/ILGAS">
+        <sql:query var="companyQuery" dataSource="jdbc/ILGAS">
             SELECT * FROM international_publishers
             WHERE  international_publishers.Company_Number = ?
             <sql:param value="${publisherID}"/>
@@ -761,10 +1018,9 @@
                     </div>
                 </div> <!--container for welcome/logout-->
 
-                <h1 style="align-content: center">Grant Application System for Literature Ireland</h1>
+                <h1 style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
-                <div class="container-fluid" style="margin-bottom: 20px">
-                </div> 
+                <div class="container-fluid" style="margin-bottom: 20px"></div> 
 
                 <nav class="navbar navbar-default" >
                     <div class="container-fluid"  style="background-color: #d9d1d1">
@@ -788,6 +1044,7 @@
                                 <li><a href="#Rights" data-toggle="tab">Rights<br/>  Agreement</a></li>
                                 <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
                                 <li><a href="#Translator" data-toggle="tab">Translator's <br/> Details</a></li>
+                                <li><a href="#Misc" data-toggle="tab">Misc</a></li>
                                 <li><a href="#Original" data-toggle="tab"><span>Original Work &<br/> Sample Translation</span></a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
@@ -800,13 +1057,12 @@
                                     <br/>
                                     <br/>
                                     <img style="margin:0px auto;display:block" src="images/favicon.png" alt="favicon" width="50" height="50"/>
-                                    <h1 style="margin-bottom: 40px; margin-top: 60px"> 
+                                    <p class="header1" style="margin-bottom: 40px; margin-top: 60px"> 
                                         <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span> 
                                         Information - Please read!
-                                        <span class="glyphicon glyphicon-exclamation-sign  icon-exclamation"></span> 
-                                    </h1>
-                                    <p>                               
-
+                                        <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span> 
+                                    </p>
+                                    <!--<p>-->   
                                     <h2><strong>Translation Grant Programme Application Checklist</strong></h2>
                                     <br/>
                                     <br/>
@@ -856,8 +1112,10 @@
                                             <input type="checkbox" name="checkbox" value="check" id="agree" /> I have read and agree to the Terms and Conditions and Privacy Policy
                                             <input type="submit" name="submit" value="submit" />
 
-                                            <h1>Terms and Conditions</h1><br/>
-
+                                            <br/>
+                                            <p class="header1" style="margin-bottom: 40px">
+                                                Terms and Conditions
+                                            </p>
 
                                             <div class="checkbox">                                                             
                                                 <label style="margin-bottom: 30px" for="TC_ACCEPTED">By clicking on the "<i>I accept</i>" button, you are confirming that you have <strong>read</strong> and <strong>accepted</strong> <br/>the terms and conditions of use of this website (including disclaimer).</label>
@@ -880,9 +1138,9 @@
                                     All queries in relation to the Translation Grant Programme should be addressed to Deputy Director Rita McCann at rita[at]literatureireland[dot]com or Administrator Orla King at orla[at]literatureireland[dot]com.
                                     <br/>
                                     <br/>
-
-                                    <h1>NOTES</h1>
-
+                                    <p class="header1"> 
+                                        NOTES
+                                    </p>
                                     <br/>
                                     <ol>
                                         <li>The <strong>deadlines for application</strong> are available on the Literature Ireland website at <a href="http://www.literatureireland.com/programmes/translation-grant-programme/">http://www.literatureireland.com/programmes/translation-grant-programme/</a>. There are typically three deadlines per year.  </li>
@@ -1158,7 +1416,9 @@
 
                                 <!-- Book Details -->
                                 <div class="tab-pane fade" id="books">
-                                    <h1>Book Details</h1>
+                                    <p class="header1">
+                                        Book Details
+                                    </p>
                                     <div class="container-fluid">
                                         <div class="row"  style="display: block;
                                              margin-right: auto;
@@ -1382,7 +1642,7 @@
 
                                                                 <div class="col-xs-6">
                                                                     <div class="mini-box">
-                                                                        <label for="countryOfPublication" class="pull-left" >Country of Publication</label>
+                                                                        <label for="countryOfPublication" class="pull-left" > &nbsp;<br/> Country of Publication</label>
                                                                         <input id="countryOfPublication"                                
                                                                                type="text"                                
                                                                                class="form-control"                                
@@ -1392,51 +1652,61 @@
                                                                                >
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
-                                                                <div class="col-xs-6">
-                                                                    <div class="mini-box">
-                                                                        <label for="physicalDescription" class="pull-left" >Physical Description</label>
-                                                                        <input id="physicalDescription"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="physicalDescription"                                
-                                                                               value=""    
-                                                                               placeholder="Physical Description"
-                                                                               >
+                                                                <div class='col-sm-6'>
+                                                                    <label for="DateOfPublicationOriginal" class="control-label pull-left">Date of Publication (of the original): </label>
+                                                                    <div class="input-group pull-left"   style="margin-bottom: 40px;">
+                                                                        <input type="text" name="DateOfPublicationOriginal" id="DateOfPublicationOriginal" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                        <label class="input-group-addon" for="DateOfPublicationOriginal">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </label>
                                                                     </div>
-                                                                </div> <!--col-xs-6-->
+                                                                </div>
+                                                                <!--                                                                <div class="col-xs-6">
+                                                                                                                                    <div class="mini-box">
+                                                                                                                                        <label for="physicalDescription" class="pull-left" >Physical Description</label>
+                                                                                                                                        <input id="physicalDescription"                                
+                                                                                                                                               type="text"                                
+                                                                                                                                               class="form-control"                                
+                                                                                                                                               name="physicalDescription"                                
+                                                                                                                                               value=""    
+                                                                                                                                               placeholder="Physical Description"
+                                                                                                                                               >
+                                                                                                                                    </div>
+                                                                                                                                </div> col-xs-6-->
                                                             </div> <!--row-->
 
                                                             <div class="row">
-                                                                <div class="col-xs-6">
-                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                        <label for="duplicates" class="pull-left" style="margin-top: 10px">Duplicates</label>
-                                                                        <input id="duplicates"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="duplicates"                                
-                                                                               value=""    
-                                                                               placeholder="Duplicates"
-                                                                               >
-                                                                    </div>
-                                                                </div> <!--col-xs-6-->
+
+                                                                <!--                                                                <div class="col-xs-6">
+                                                                                                                                    <div class="mini-box" style="margin-bottom: 20px">
+                                                                                                                                        <label for="duplicates" class="pull-left" style="margin-top: 10px">Duplicates</label>
+                                                                                                                                        <input id="duplicates"                                
+                                                                                                                                               type="text"                                
+                                                                                                                                               class="form-control"                                
+                                                                                                                                               name="duplicates"                                
+                                                                                                                                               value=""    
+                                                                                                                                               placeholder="Duplicates"
+                                                                                                                                               >
+                                                                                                                                    </div>
+                                                                                                                                </div> col-xs-6-->
+
+                                                                <!--                                                                <div class="col-xs-6">
+                                                                                                                                    <div class="mini-box" style="margin-bottom: 20px">
+                                                                                                                                        <label for="copies" class="pull-left" style="margin-top: 10px">Copies</label>
+                                                                                                                                        <input id="copies"                                
+                                                                                                                                               type="text"                                
+                                                                                                                                               class="form-control"                                
+                                                                                                                                               name="copies"                                
+                                                                                                                                               value=""    
+                                                                                                                                               placeholder="Copies"
+                                                                                                                                               >
+                                                                                                                                    </div>
+                                                                                                                                </div> col-xs-6-->
+
 
                                                                 <div class="col-xs-6">
                                                                     <div class="mini-box" style="margin-bottom: 20px">
-                                                                        <label for="duplicates" class="pull-left" style="margin-top: 10px">Copies</label>
-                                                                        <input id="copies"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="copies"                                
-                                                                               value=""    
-                                                                               placeholder="Copies"
-                                                                               >
-                                                                    </div>
-                                                                </div> <!--col-xs-6-->
-
-
-                                                                <div class="col-xs-6">
-                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                        <label for="series" class="pull-left" style="margin-top: 10px">Series</label>
+                                                                        <label for="series" class="pull-left"> &nbsp;<br/> Series</label>
                                                                         <input id="series"                                
                                                                                type="text"                                
                                                                                class="form-control"                                
@@ -1446,54 +1716,65 @@
                                                                                >
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
+                                                                <div class='col-sm-6'  style="margin-bottom: 40px;">                                                
+                                                                    <label for="pageExtentOfTheOriginal" class="control-label pull-left">Page extent of the <br/> (of the original): </label>
+                                                                    <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                                        <span class="input-group-addon" id="sizing-addon3">  
+                                                                            <span class="glyphicon glyphicon-book"></span>                                                            
+                                                                        </span>
+                                                                        <input type="text" name="pageExtentOfTheOriginal" id="pageExtentOfTheOriginal" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon3">
+                                                                    </div>
+                                                                </div>
                                                             </div> <!--row-->
 
-                                                            <div class="row">
-                                                                <div class="col-sm-5">
-                                                                    <!--<div class="mini-box">-->   
-                                                                    <label for="isbn" class="pull-left">ISBN</label>
-                                                                    <input id="isbn"                                
-                                                                           type="text"                                
-                                                                           class="form-control"                                
-                                                                           name="isbn"                                
-                                                                           value=""    
-                                                                           placeholder="ISBN"
-                                                                           >
+                                                            <!--    <div class="row">
+                                                                                                                        <div class="col-sm-5">
+                                                                                                                                  <div class="mini-box">   
+                                                                                                                                  <label for="isbn" class="pull-left">ISBN</label>
+                                                                                                                                  <input id="isbn"                                
+                                                                                                                                         type="text"                                
+                                                                                                                                         class="form-control"                                
+                                                                                                                                         name="isbn"                                
+                                                                                                                                         value=""    
+                                                                                                                                         placeholder="ISBN"
+                                                                                                                                         >
+                                                              
+                                                                                                                                  </div>
+                                                                                                                              </div> col-xs-5-->
 
-                                                                    <!--</div>-->
-                                                                </div> <!--col-xs-6-->
-
-                                                                <div class="col-sm-5" style="margin-left: 45px">  
-                                                                    <!--<div class="mini-box">-->
-                                                                    <label for="isnn" class="pull-left">ISSN</label>
-                                                                    <input id="isnn"                                
-                                                                           type="text"                                
-                                                                           class="form-control"                                
-                                                                           name="issn"                                
-                                                                           value=""    
-                                                                           placeholder="ISSN"
-                                                                           >
-                                                                    <!--</div>-->                                                                                    
-                                                                </div> <!--col-xs-6-->
-                                                            </div> <!--row-->
+                                                            <!--                                                                <div class="col-sm-5" style="margin-left: 45px">  
+                                                                                                                                <div class="mini-box">
+                                                                                                                                <label for="isnn" class="pull-left">ISSN</label>
+                                                                                                                                <input id="isnn"                                
+                                                                                                                                       type="text"                                
+                                                                                                                                       class="form-control"                                
+                                                                                                                                       name="issn"                                
+                                                                                                                                       value=""    
+                                                                                                                                       placeholder="ISSN"
+                                                                                                                                       >
+                                                                                                                                </div>                                                                                    
+                                                                                                                            </div> col-xs-6
+                                                        </div> -->
                                                         </div><!--col-xs-8-->
 
 
-                                                        <div class="col-sm-3">
-                                                            <div class="imageupload">
-                                                                <div class="file-tab panel-body cover">
-                                                                    <label class="btn btn-default btn-file">
-                                                                        <span></span>
-                                                                        <!-- The file is stored here. -->
-                                                                        <input type="file" name="image-file">
-                                                                        <i class="glyphicon glyphicon-picture"></i>
-                                                                    </label>
-                                                                    <button type="button" class="btn btn-default">Remove</button>
-                                                                </div>
-
-                                                                <input type="hidden" value="Cover" name="image-file" id="label_cover"/>
-                                                            </div>
-                                                        </div>                                                    
+                                                        <!--   <strong >Book Cover</strong>
+                                                               <div class="col-sm-4">
+                                                                   <div class="imageupload">
+                                                                       <div class="file-tab panel-body cover">                                                                   
+                                                                           <label class="btn btn-default btn-file">
+                                                                               <span>Browse</span>
+                                                                                The file is stored here. 
+                                                                               <input type="file" name="image-file">
+                                                                               <i class="glyphicon glyphicon-picture"></i>
+                                                                           </label>
+                                                                           <button type="button" class="btn btn-default pull-left">Remove
+                                                                               <i class="glyphicon glyphicon-picture"></i></button>
+                                                                       </div>
+               
+                                                                       <input type="hidden" value="Cover" name="image-file" id="label_cover"/>
+                                                                   </div>
+                                                               </div>                                                    -->
                                                     </div> <!-- row-->
 
 
@@ -1516,7 +1797,10 @@
 
                                 <!-- Rights Agreement -->
                                 <div class="tab-pane" id="Rights">
-                                    <h1 style="margin-bottom: 40px">Rights Agreement</h1>
+                                    <p class="header1" style="margin-bottom: 40px">
+                                        Rights Agreement
+                                    </p>
+
                                     <div class="container-fluid">
                                         <div class="row"  style="display: block;
                                              margin-right: auto;
@@ -1524,7 +1808,7 @@
 
                                             <!--Upload form for agreement-->
 
-                                            <div class="col-md-12"   style="margin-bottom: 60px">                                                
+                                            <div class="col-md-12"   style="margin-bottom: 20px">                                                
                                                 <strong class="pull-left">Upload a copy of the agreement with the translation rights holder</strong> <br/>(where applicable)
                                                 <div class="margin-bottom: 60px"></div>   
                                                 <br/>
@@ -1547,7 +1831,7 @@
 
                                             <!--Upload form for contract-->
 
-                                            <div class="col-md-12"   style="margin-bottom: 60px">                          
+                                            <div class="col-md-12"   style="margin-bottom: 20px">                          
                                                 <strong class="pull-left">Upload a copy of the contract with the translator</strong> <br/>
                                                 <div class="margin-bottom: 60px"></div>
                                                 <br/>
@@ -1569,26 +1853,43 @@
                                                     ${requestScope.message}
                                                 </div>
                                             </div>
+
+                                            <div class="col-md-12"   style="margin-bottom: 20px">                          
+                                                <strong class="pull-left">Upload a copy of the Addendum to rights agreement</strong> <br/>
+                                                <div class="margin-bottom: 60px"></div>
+                                                <br/>
+                                                <div class="input-group addendum"  style="margin-bottom: 40px;">
+                                                    <label class="btn btn-default btn-file pull-left">
+                                                        Select file <input type="file"  name="file" id="addendum">
+                                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                                    </label>
+
+                                                    <input type="hidden" name="userID" value="${userID}">
+                                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                    <input id="label_addendum" class="pull-left"/>
+                                                    <br/>
+                                                    <br/> 
+                                                    <!--<label>Destination:</label>-->
+                                                    <input type="hidden" value="Addendum" name="destination" id="addendum_upload"/>
+
+                                                    ${requestScope.message}
+                                                </div>
+                                            </div>
                                         </div> <!-- row -->
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="orange" -->
 
                                 <!-- Publication Details -->
                                 <div class="tab-pane" id="Publication">
-                                    <h1 style="margin-bottom: 60px">Publication Details</h1>
+                                    <p class="header1" style="margin-bottom: 40px">
+                                        Publication Details
+                                    </p>
 
                                     <div class="container-fluid">
                                         <div class="col-xs-12 content">
+
                                             <div class="row">
-                                                <div class='col-sm-4'>
-                                                    <label for="DateOfPublicationOriginal" class="control-label pull-left">Date of Publication (of the original): </label>
-                                                    <div class="input-group pull-left"   style="margin-bottom: 40px;">
-                                                        <input type="text" name="DateOfPublicationOriginal" id="DateOfPublicationOriginal" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                        <label class="input-group-addon" for="DateOfPublicationOriginal">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
 
                                                 <div class='col-sm-4'>
                                                     <label for="proposedDateOfPublication" class="control-label pull-left">Proposed date of publication:<br/> &nbsp;</label>
@@ -1599,19 +1900,19 @@
                                                         </label>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-sm-4">
+                                                    <label for="appForeignPublisher" class="control-label pull-left">Foreign Publisher<br/> &nbsp;</label>
+                                                    <input id="appForeignPublisher"                                
+                                                           type="text"                                
+                                                           class="form-control"                                
+                                                           name="appForeignPublisher"                                
+                                                           >
+                                                </div>
+
                                             </div>
 
                                             <div class="row">
-
-                                                <div class='col-sm-4'  style="margin-bottom: 40px;">                                                
-                                                    <label for="pageExtentOfTheOriginal" class="control-label pull-left">Page extent of the <br/> (of the original): </label>
-                                                    <div class="input-group pull-left"  style="margin-bottom: 40px;">
-                                                        <span class="input-group-addon" id="sizing-addon3">  
-                                                            <span class="glyphicon glyphicon-book"></span>                                                            
-                                                        </span>
-                                                        <input type="text" name="pageExtentOfTheOriginal" id="pageExtentOfTheOriginal" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon3">
-                                                    </div>
-                                                </div>
 
                                                 <div class='col-sm-4'  style="margin-bottom: 40px;">                                                
                                                     <label for="plannedPageExtent" class="control-label pull-left">Planned page extent of the <br/>  published translation: </label>
@@ -1623,6 +1924,14 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="col-sm-4">
+                                                    <label for="appForeignCountry" class="control-label pull-left">Foreign Country <br/> &nbsp;</label>
+                                                    <input  id="appForeignCountry" 
+                                                            name="appForeignCountry" 
+                                                            type="text"                                                                
+                                                            class="form-control"     
+                                                            >
+                                                </div>
 
                                                 <script>
                                                     $("#DateOfPublicationOriginal").datepicker({
@@ -1641,6 +1950,7 @@
                                                 </script>
 
                                             </div>
+
                                             <div class="row">
                                                 <div class='col-sm-4'>
                                                     <label for="proposedPrintRun" class="control-label pull-left">Proposed print run: </label>
@@ -1648,8 +1958,17 @@
                                                         <span class="input-group-addon" id="sizing-addon1">  
                                                             <span class="glyphicon glyphicon-book"></span>                                                            
                                                         </span>
-                                                        <input type="text" name="proposedPrintRun" id="proposedPrintRun" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon1">  
+                                                        <input type="text" name="proposedPrintRun" id="proposedPrintRun" class="form-control" placeholder="number of books" aria-describedby="sizing-addon1">  
                                                     </div>
+                                                </div>
+
+                                                <div class="col-sm-4">        
+                                                    <label for="appTargetLanguage" class="control-label pull-left"> Target Language</label>
+                                                    <input id="appTargetLanguage"                                
+                                                           type="text"                                
+                                                           class="form-control"                                
+                                                           name="appTargetLanguage"                                
+                                                           >
                                                 </div>
                                             </div>
                                         </div>
@@ -1660,7 +1979,9 @@
                                 <!-- Translator's Details -->
 
                                 <div class="tab-pane" id="Translator"> 
-                                    <h1 style="margin-bottom: 60px">Translator Details</h1>
+                                    <p class="header1" style="margin-bottom: 40px">
+                                        Translator Details
+                                    </p>
 
                                     <div class="container-fluid">
 
@@ -1668,7 +1989,7 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="col-md-8"   style="margin-bottom: 20px">
-                                                        <label for="label_translator0" class="control-label pull-left" id="123"></label>
+                                                        <label for="translator_cv0" class="control-label pull-left" id="123"></label>
                                                         <br/>
                                                         <small class="pull-left"   style="margin-bottom: 10px">this should include a list of previous published literary translations</small> 
                                                         <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
@@ -1689,7 +2010,6 @@
                                                     </div>
                                                     <input type="hidden" name="userID" id="translatorName123" value=''>
                                                     <div id="additionalTranslator"></div>
-
                                                 </div>
                                             </div>
                                         </div> 
@@ -1711,14 +2031,38 @@
                                                           style="width: 280px; height: 196px;"></textarea>
                                             </div>
                                         </div>
-
                                     </div> 
                                 </div>              
 
+                                <!-- Miscellaneous -->
+                                <div class="tab-pane" id="Misc">
+
+                                    <p class="header1" style="margin-bottom: 40px">
+                                        Miscellaneous
+                                    </p>
+
+                                    <div class="container-fluid">
+
+                                        <div class="row">
+
+                                            <div class="col-md-3"   style="margin-top: 40px; margin-bottom: 40px">
+                                                <strong class="pull-left">Amount Requested</strong> 
+                                                <div class="input-group pull-left">
+                                                    <label class="input-group-addon" for="amountRequested">
+                                                        <span class="glyphicon glyphicon-euro"></span>                                     
+                                                    </label>
+                                                    <input type="text" class="form-control" name="amountRequested" id="amountRequested" placeholder="Amount Requested">    
+                                                </div>
+                                            </div>
+                                        </div> <!--row-->
+                                    </div> 
+                                </div>                         
 
                                 <!-- Original Work & Sample Translation -->
                                 <div class="tab-pane" id="Original">
-                                    <h1>Original Work & Sample Translation</h1>
+                                    <p class="header1" style="margin-bottom: 40px">
+                                        Original Work & Sample Translation
+                                    </p>
                                     <div class="container-fluid">
                                         <div class="row" >
                                             <div class="panel panel-default">
@@ -1785,7 +2129,7 @@
                                                         <div class="row">
                                                             <div class="col-md-8"   style="margin-bottom: 40px">
                                                                 <label for="label_originalSample" class="control-label pull-left">Upload electronic copy of original work</label>
-                                                                <div class="input-group pull-left"  
+                                                                <div class="input-group originalSample pull-left"  
                                                                      data-toggle="tooltip"
                                                                      title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
                                                                      data-placement="bottom" >
@@ -1811,7 +2155,7 @@
                                                         <div class="row">
                                                             <div class="col-md-8">
                                                                 <label for="translationSample" class="control-label longLabel pull-left">Upload two copies of a translation sample<sup>**</sup> <br/>consisting of 10 to 12 pages of prose or six poems</label>
-                                                                <div class="input-group pull-left" >
+                                                                <div class="input-group translationSample pull-left" >
                                                                     <label class="btn btn-default btn-file pull-left">
                                                                         Select file 
                                                                         <input type="file"  name="file" id="translationSample" class="form-input">
@@ -1844,10 +2188,10 @@
                                                             <button type="submit"                                                                          
                                                                     data-toggle="tooltip" 
                                                                     class="btn btn-success"
-                                                                    title="Click to save!"
+                                                                    title="Click to submit the application!"
                                                                     style="margin-bottom: 10px"
                                                                     >
-                                                                Make the application
+                                                                Submit the application
                                                                 <span class="glyphicon glyphicon-import"></span>
                                                             </button>
                                                         </div><!-- input-group -->
@@ -1865,16 +2209,56 @@
                             </div> <!-- my-tab-content -->
 
 
+                            <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: #c3bcbc">
+                                            <button type="button" class="close" data-dismiss="modal"  onclick="backToMisc();"  aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="pressCuttingsModalLabel">add Press Cuttings</h4>
+                                        </div>
+
+
+                                        <div class="modal-body" style="background-color: #d9d1d1">
+                                            <div class="row" style="margin-bottom: 10px">
+
+                                                <output id="result">Press Cuttings</output>
+                                                <!--<button type="button" id="clear">Clear</button>-->
+                                            </div>
+
+
+                                            <div class="row" style="margin-bottom: 10px">
+                                                <div class='col-sm-12'>
+                                                    <button type="button" id="clear">Clear</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer"  style="background-color: #c3bcbc">
+                                            <!--<button id="pressCutting" type="button" value="Add another Press Cutting"  class="btn btn-group-sm  button teal pull-left">Add Press Cuttings</button>-->
+                                            <label class="btn btn-default btn-file">
+                                                Add Press Cuttings<input type="file" id="files" multiple  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
+                                            </label>
+                                            <!--<button type="button" id="clear">Clear</button>-->
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToMisc();">Done</button>
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                        </div> <!--modal footer -->
+                                    </div> <!--modal content-->          
+                                </div> <!--modal dialog-->
+                            </div> <!--modal fade-->
+                            <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
+
+
+
                             <div class="modal fade" id="addTranslatorModal" tabindex="-1" role="dialog" aria-labelledby="addTranslatorModalLabel">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <div class="modal-header" style="background-color: lightseagreen">
+                                        <div class="modal-header" style="background-color: #c3bcbc">
                                             <button type="button" class="close" data-dismiss="modal"  onclick="backToBooks();"  aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="addTranslatorModalLabel">add more Translators</h4>
                                         </div>
 
 
-                                        <div class="modal-body" style="background-color: green">
+                                        <div class="modal-body" style="background-color: #d9d1d1">
 
                                             <div class="row" style="margin-bottom: 10px">
                                                 <div class='col-sm-12'>
@@ -1886,7 +2270,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="modal-footer" style="background-color: lightgreen">
+                                        <div class="modal-footer"  style="background-color: #c3bcbc">
                                             <button id="addElement" type="button" value="Add another Translator"  class="btn btn-group-sm  button teal pull-left">Add another Translator</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToBooks();">Done</button>
                                             <!--<button type="button" class="btn btn-primary">Save changes</button>-->
@@ -1899,13 +2283,13 @@
                             <div class="modal fade" id="addAuthorModal" tabindex="-1" role="dialog" aria-labelledby="addAuthorModalLabel">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <div class="modal-header" style="background-color: lightseagreen">
+                                        <div class="modal-header" style="background-color: #c3bcbc">
                                             <button type="button" class="close" data-dismiss="modal"  onclick="backToBooks();"  aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="addAuthorModalLabel">add more Authors</h4>
                                         </div>
 
 
-                                        <div class="modal-body" style="background-color: green">
+                                        <div class="modal-body" style="background-color: #d9d1d1">
 
                                             <div class="row" style="margin-bottom: 10px">
 
@@ -1918,7 +2302,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="modal-footer" style="background-color: lightgreen">
+                                        <div class="modal-footer"  style="background-color: #c3bcbc">
                                             <button id="addAuthor" type="button" value="Add another Author"  class="btn btn-group-sm  button teal pull-left">Add another Author</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToBooks2();">Done</button>
                                             <!--<button type="button" class="btn btn-primary">Save changes</button>-->
@@ -1946,6 +2330,10 @@
 
                         <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
                             List New Applications
+                        </button>
+
+                        <button type = "submit" class = "btn btn-default btn-sm" name="List Open Applications">
+                            List Open Applications
                         </button>
 
                         <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
@@ -1989,22 +2377,38 @@
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-            var $imageupload = $('.imageupload');
-            $imageupload.imageupload();
-            $('#imageupload-disable').on('click', function () {
-                $imageupload.imageupload('disable');
-                $(this).blur();
-            });
+                                                var $imageupload = $('.imageupload');
+                                                $imageupload.imageupload();
+//                                                $('#imageupload-disable').on('click', function () {
+//                                                    alert("imageupload-disable");
+//                                                    $imageupload.imageupload('disable');
+//                                                    $(this).blur();
+//                                                });
+//
+//                                                $('#imageupload-enable').on('click', function () {
+//                                                    alert("imageupload-enable");
+//                                                    $imageupload.imageupload('enable');
+//                                                    $(this).blur();
+//                                                });
+//
+//                                                $('#imageupload-reset').on('click', function () {
+//                                                     alert("imageupload-reset");
+//                                                    $imageupload.imageupload('reset');
+//                                                    $(this).blur();
+//                                                });
 
-            $('#imageupload-enable').on('click', function () {
-                $imageupload.imageupload('enable');
-                $(this).blur();
-            });
+                                                function pressCuttingsModal() {
+                                                    $("#pressCuttingsModal").modal("show");
+                                                }
 
-            $('#imageupload-reset').on('click', function () {
-                $imageupload.imageupload('reset');
-                $(this).blur();
-            });
+                                                var pressCuttingsUpload = $('.pressCuttingsUpload');
+                                                pressCuttingsUpload.imageupload();
+//                                                $('#pressCuttingsUpload-disable').on('click', function () {
+//                                                     alert("imageupload-disable");
+//                                                    pressCuttingsUpload.imageupload('disable');
+//                                                    $(this).blur();
+//                                                });
+
         </script>
     </body>
 </html>

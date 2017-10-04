@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="js/pdf.js"></script>
+        <script src="js/pdf.worker.js"></script>
+        <script src="js/pdfobject.js"></script>
+
+
+        <style type="text/css">
+
+            #upload-button {
+                width: 150px;
+                display: block;
+                margin: 20px auto;
+            }
+
+            #file-to-upload {
+                display: none;
+            }
+
+            #pdf-main-container {
+                width: 400px;
+                margin: 20px auto;
+            }
+
+            #pdf-loader {
+                display: none;
+                text-align: center;
+                color: #999999;
+                font-size: 13px;
+                line-height: 100px;
+                height: 100px;
+            }
+
+            #pdf-contents {
+                display: none;
+            }
+
+            #pdf-meta {
+                overflow: hidden;
+                margin: 0 0 20px 0;
+            }
+
+            #pdf-buttons {
+                float: left;
+            }
+
+            #page-count-container {
+                float: right;
+            }
+
+            #pdf-current-page {
+                display: inline;
+            }
+
+            #pdf-total-pages {
+                display: inline;
+            }
+
+            #pdf-canvas {
+                border: 1px solid rgba(0,0,0,0.2);
+                box-sizing: border-box;
+            }
+
+            #page-loader {
+                height: 100px;
+                line-height: 100px;
+                text-align: center;
+                display: none;
+                color: #999999;
+                font-size: 13px;
+            }
+
+        </style>
+
+        <script>
+
+            PDFJS.workerSrc = "js/pdf.worker.js";
+            PDFJS.disabled = false;
+
+//https://stackoverflow.com/questions/44547585/generating-thumbnail-of-a-pdf-using-pdf-js
+            function makeThumb(page) {
+                // draw page to fit into 96x96 canvas
+                var vp = page.getViewport(1);
+                var canvas = document.createElement("canvas");
+                canvas.width = canvas.height = 96;
+                var scale = Math.min(canvas.width / vp.width, canvas.height / vp.height);
+                return page.render({canvasContext: canvas.getContext("2d"), viewport: page.getViewport(scale)}).promise.then(function () {
+                    return canvas;
+                });
+            }
+
+            function showPDF(pdf_url) {
+
+
+                console.log(" hoi " + pdf_url);
+
+                PDFJS.getDocument({url: pdf_url}).promise.then(function (doc) {
+                    var pages = [];
+                    while (pages.length < doc.numPages)
+                        pages.push(pages.length + 1);
+                    return Promise.all(pages.map(function (num) {
+                        // create a div for each page and build a small canvas for it
+                        var div = document.createElement("div");
+                        document.body.appendChild(div);
+                        return doc.getPage(num).then(makeThumb)
+                                .then(function (canvas) {
+                                    div.appendChild(canvas);
+                                });
+                    }));
+
+
+                }).catch(console.error);
+            }
+
+            function showPDF1(pdf) {
+                forcePDFJS = true;
+                PDFJS_URL = "js/pdf.js";
+                PDFJS.workerSrc = "js/pdf.worker.js";
+                console.log(" hei " + pdf);
+
+                if (PDFObject.supportsPDFs) {
+                    console.log("Yay, this browser supports inline PDFs.");
+                } else {
+                    console.log("Boo, inline PDFs are not supported by this browser");
+                }
+                PDFObject.embed(pdf, "#viewer");
+
+            }
+        </script>
+
+        <script>
+
+            $(document).ready(function () {
+                // This is better than showing the not-good-looking file input element
+                $("#upload-button").on('click', function () {
+                    $("#file-to-upload").trigger('click');
+                });
+
+                // When user chooses a PDF file
+                $("#file-to-upload").on('change', function () {
+                    // Validate whether PDF
+                    if (['application/pdf'].indexOf($("#file-to-upload").get(0).files[0].type) === -1) {
+                        alert('Error : Not a PDF');
+                        return;
+                    }
+
+                    $("#upload-button").hide();
+
+                    // Send the object url of the pdf
+                    showPDF(URL.createObjectURL($("#file-to-upload").get(0).files[0]));
+                    showPDF1(URL.createObjectURL($("#file-to-upload").get(0).files[0]));
+                    
+                    console.log("file-to-upload" + $("#file-to-upload").get(0).files[0]);
+                    document.getElementById("viewer").src = URL.createObjectURL($("#file-to-upload").get(0).files[0]);
+                });
+            });
+
+        </script>
+
+        <style>
+            .pdfobject-container { height: 500px;}
+            .pdfobject { border: 1px solid #666; }
+        </style>
+    </head>
+
+    <body style="background-color: #d9d1d1">
+        <div class="container"  style="background-color: #d9d1d1">
+<!--            <div class="container-fluid"  style="background-color: #d9d1d1">
+                <header>
+                    <h1>File API - FileReader</h1>
+                </header>
+
+                <div class="input-group signedLIcontract pull-left" >
+                    <article>
+                    <div id="account">
+                        <label for="files">Select multiple files: </label>
+                        <input id="files" type="file" multiple accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf" >
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <output id="result"></output>
+                    </article>
+                </div>
+            </div>-->
+            
+<!--            <div id="mypdf">
+<iframe src="" id="iframe" style="width: 100%; height: 800px;" frameborder="0" scrolling="no">
+        <p>Your web browser doesn't support iframes.</p>
+   </iframe>
+</div>-->
+
+            <iframe class="pdfobject pdfobject-container" id="viewer">iframe</iframe>     
+
+            <button id="upload-button">Select PDF</button> 
+            <input type="file" id="file-to-upload" accept="application/pdf" multiple />
+
+            <div id="pdf-main-container">
+                <div id="pdf-loader">Loading document ...</div>
+                <div id="pdf-contents">
+                    <div id="pdf-meta">
+                        <div id="pdf-buttons">
+                            <button id="pdf-prev">Previous</button>
+                            <button id="pdf-next">Next</button>
+                        </div>
+                        <div id="page-count-container">Page 
+                            <div id="pdf-current-page">                                
+                            </div> 
+                            of 
+                            <div id="pdf-total-pages"></div>                                
+                        </div>
+                    </div>
+                    <canvas id="pdf-canvas" width="200"></canvas>
+                    <div id="page-loader">Loading page ...</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

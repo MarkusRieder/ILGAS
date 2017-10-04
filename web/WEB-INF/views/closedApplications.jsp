@@ -202,7 +202,9 @@
                         <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
                             List New Applications
                         </button>
-
+                        <button type = "submit" class = "btn btn-default btn-sm active"  name="List Open Applications">
+                            List Open Applications
+                        </button>
                         <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
                             List Pending Applications
                         </button>

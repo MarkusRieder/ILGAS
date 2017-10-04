@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,35 +42,58 @@ public class ApplicationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+        int publisherID = (Integer) session.getAttribute("publisherID");
+        
+        
+      //  String publisherID = (String) Integer.toString(xxx);
+       // String publisherID = (String) session.getAttribute("publisherID");
+     //   String publisherID = (String) Integer.toString(xxx);
+        
+        session.setAttribute("publisherID", publisherID);
+        
+      // publisherID = request.getParameter("publisherID");
         String task = request.getParameter("task");
+        
+        request.setAttribute("task", task);
+        request.setAttribute("publisherID", publisherID);
 
         if (request.getParameter("New Application") != null) {
             task = "Start New Application";
+            request.getSession().setAttribute("task", "Start New Application");
         } else if (request.getParameter("List New Applications") != null) {
             task = "List New Applications";
+            request.getSession().setAttribute("task", "List New Applications");
+        } else if (request.getParameter("List Open Applications") != null) {
+            task = "List Open Applications";
+            request.getSession().setAttribute("task", "List Open Applications");
         } else if (request.getParameter("List Pending Applications") != null) {
             task = "List Pending Applications";
+            request.getSession().setAttribute("task", "List Pending Applications");
         } else if (request.getParameter("List Closed Applications") != null) {
             task = "List Closed Applications";
+            request.getSession().setAttribute("task", "List Closed Applications");
         } else {
-            task = task;
+            //  task = task;
         }
 
-        System.out.println("task:  " + task);
+        System.out.println("task: Application " + task);
 
         switch (task) {
 
             case "List New Applications":
+                request.setAttribute("task", task);
+                System.out.println("List New Applications - session.getAttribute" + session.getAttribute("publisherID"));
                 request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
                 break;
 
             case "Start New Application": {
                 try {
-
+             System.out.println("Start New Application - session.getAttribute" + session.getAttribute("publisherID"));
                     int ApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
-  //                  System.out.println("/Application::ApplicationNumber:  " + ApplicationNumber);
+                    //                  System.out.println("/Application::ApplicationNumber:  " + ApplicationNumber);
 
-                     response.setContentType("text/html;charset=UTF-8");
+                    response.setContentType("text/html;charset=UTF-8");
                     request.setAttribute("ApplicationNumber", ApplicationNumber);
 
                 } catch (DBException ex) {
@@ -79,11 +103,22 @@ public class ApplicationServlet extends HttpServlet {
 
             request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
             break;
+            case "List Open Applications":
+System.out.println("List Open Applications - session.getAttribute" + session.getAttribute("publisherID"));
+            //    publisherID = request.getParameter("publisherID");
+                session.setAttribute("publisherID", publisherID);
+
+                request.getRequestDispatcher("/WEB-INF/views/openApplications.jsp").forward(request, response);
+                break;
             case "List Pending Applications":
+System.out.println("List Open Applications - session.getAttribute" + session.getAttribute("publisherID"));
+                session.setAttribute("publisherID", publisherID);
                 //         insertBook(request, response);
                 request.getRequestDispatcher("/WEB-INF/views/pendingApplications.jsp").forward(request, response);
                 break;
             case "List Closed Applications":
+System.out.println("List Open Applications - session.getAttribute" + session.getAttribute("publisherID"));
+                session.setAttribute("publisherID", publisherID);
                 //          deleteBook(request, response);
                 request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
                 break;

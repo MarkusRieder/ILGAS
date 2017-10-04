@@ -8,7 +8,7 @@ package ie.irishliterature.servlets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ie.irishliterature.DataTables.DataTableApplications;
-import ie.irishliterature.dao.ApplicationDAO;
+import ie.irishliterature.dao.openApplicationDAO;
 import ie.irishliterature.db.DBException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,17 +20,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author markus
  */
-@WebServlet(name = "ApplicationDataServlet", urlPatterns = {"/ApplicationDataServlet"})
-public class ApplicationDataServlet extends HttpServlet {
+@WebServlet(name = "openApplicationDataServlet", urlPatterns = {"/openApplicationDataServlet"})
+public class openApplicationDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public ApplicationDataServlet() {
+    public openApplicationDataServlet() {
 
         super();
     }
@@ -40,7 +41,15 @@ public class ApplicationDataServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        System.out.println("ApplicationDataServlet:  ");
+        System.out.println("openApplicationDataServlet:  ");
+
+        HttpSession session = request.getSession();
+        //  String publisherID = (String) session.getAttribute("publisherID");
+
+        int pID = (Integer) session.getAttribute("publisherID");
+        String publisherID = (String) Integer.toString(pID);
+
+        System.out.println("publisherID: " + publisherID);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -51,8 +60,8 @@ public class ApplicationDataServlet extends HttpServlet {
 
         try {
 
-            listApplications = ApplicationDAO.getAllApplications();
-            
+            listApplications = openApplicationDAO.getAllApplications(publisherID);
+
             System.out.println("ApplicationDataServlet listApplications: " + listApplications);
 
         } catch (ClassNotFoundException | DBException ex) {
@@ -71,7 +80,7 @@ public class ApplicationDataServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-            // doGet(request, response);
+
+        // doGet(request, response);
     }
 }

@@ -18,7 +18,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-       <title>Translation Grant Application System</title>
+        <title>Translation Grant Application System</title>
 
         <!-- Bootstrap -->
 
@@ -198,7 +198,9 @@
                         <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
                             List New Applications
                         </button>
-
+                        <button type = "submit" class = "btn btn-default btn-sm active"  name="List Open Applications">
+                            List Open Applications
+                        </button>
                         <button type = "submit" class = "btn btn-default btn-sm active" name="List Pending Applications">
                             List Pending Applications
                         </button>
