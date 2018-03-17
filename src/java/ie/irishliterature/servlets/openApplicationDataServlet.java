@@ -46,6 +46,8 @@ public class openApplicationDataServlet extends HttpServlet {
         HttpSession session = request.getSession();
         //  String publisherID = (String) session.getAttribute("publisherID");
 
+
+                
         int pID = (Integer) session.getAttribute("publisherID");
         String publisherID = (String) Integer.toString(pID);
 

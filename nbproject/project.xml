@@ -50,6 +50,14 @@
                     <file>${file.reference.poi-scratchpad-3.16.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
+                <library dirs="200">
+                    <file>${file.reference.netbeans-8.2-dynamicreports-5.1.0}</file>
+                    <path-in-war>WEB-INF/classes</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.netbeans-8.2-jasperreports-6.5.1}</file>
+                    <path-in-war>WEB-INF/classes</path-in-war>
+                </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>

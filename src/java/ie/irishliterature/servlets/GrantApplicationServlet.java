@@ -30,6 +30,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -54,7 +55,7 @@ public class GrantApplicationServlet extends HttpServlet {
     private String rootPath;
     private final int maxFileSize = 50 * 1024;
     private final int maxMemSize = 4 * 1024;
-    private File file;
+  //  private File file;
     private String tempPath = "";
 
     ////////////////////////////////////////////////////////////////////////////
@@ -220,9 +221,10 @@ public class GrantApplicationServlet extends HttpServlet {
     private String Sales_figures;
     private String Anthology; //Array of Author/Title
 
+    @Override
     public void init() {
 
-        // Get the file location where it would be stored.
+        // Get the file location where they would be stored.
         tempPath = "/home/markus/test/tempDir";
         rootPath = "/home/markus/public_html/test";
 
@@ -232,36 +234,52 @@ public class GrantApplicationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String task = "Start New Application";
+        HttpSession session = request.getSession();
 
+        //       String task = "Start New Application";
 //        String[] authorArray;
         //   String task = request.getParameter("AssignExpertReader");
         //  String task = request.getParameter("task");
-        String name = request.getParameter("name");
-        String value = request.getParameter("value");
+        //  String name = request.getParameter("name");
+        //   String value = request.getParameter("value");
+        String task = String.valueOf(request.getSession().getAttribute("task"));
 
-        String sess = String.valueOf(request.getSession().getAttribute("task"));
-
-        String testingTheTask = request.getParameter("task");
+        //String testingTheTask = request.getParameter("task");
         //    String TasktestingTheTask = request.getAttribute(task).toString();
+        System.out.println("HttpSession session :: sess: " + task);
 
-        System.out.println("sess " + sess);
-
-        System.out.println("testingTheTask:: 1 " + testingTheTask);
-
-        switch (sess) {
+        //System.out.println("testingTheTask:: 1 " + testingTheTask);
+        switch (task) {
             case "Start New Application":
+
+                //set Status
                 Status = "new";
+                int translatorArrayLength = 0;
+                //set Timestamp and format
                 String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                 Calendar now = Calendar.getInstance();
+
+                //set Year used in filePath
                 int year = now.get(Calendar.YEAR);
                 String yearInString = String.valueOf(year);
 
                 java.sql.Timestamp timestamp = getcurrentTimeStamp();
+//Adjust
+//                String[] fileNames = new String[10];
+//                String[] justFiles = new String[10];
+                String[] fileNames = new String[6];
+                String[] justFiles = new String[6];
+                //String[] folderNames = {"Cover", "Agreement", "Contract", "Addendum", "ProofPayment", "BankDetails", "SignedLIContract", "Translator_CV", "Original", "TranslationSample"};
+                String[] folderNames = {
+                    "Agreement",
+                    "Contract",
+                    "Addendum",
+                    //                    "BankDetails", 
+                    //                    "SignedLIContract",
 
-                String[] fileNames = new String[10];
-                String[] justFiles = new String[10];
-                String[] folderNames = {"Cover", "Agreement", "Contract", "Addendum", "ProofPayment", "BankDetails", "SignedLIContract", "Translator_CV", "Original", "TranslationSample"};
+                    "Translator_CV",
+                    "Original",
+                    "TranslationSample"};
                 String message = "";
 
                 int idxFolderNames = 0;
@@ -378,7 +396,8 @@ public class GrantApplicationServlet extends HttpServlet {
                                     proposedDateOfPublication = fieldvalue;
                                     break;
                                 case "proposedPrintRun":
-                                    proposedPrintRun = Integer.parseInt(fieldvalue);
+                                    String propPrintRun = fieldvalue.replaceAll("[^0-9]", "");
+                                    proposedPrintRun = Integer.parseInt(propPrintRun);
                                     break;
                                 case "plannedPageExtent":
                                     plannedPageExtent = fieldvalue;
@@ -462,9 +481,12 @@ public class GrantApplicationServlet extends HttpServlet {
                                     translationPublisherYear = fieldvalue;
                                     break;
                                 case "translatorArray":
-                                    translatorArray = fieldvalue.split(","); //split string by ,
+                                    translatorArray = fieldvalue.split(","); //split string by ","
+                                    translatorArrayLength = translatorArray.length;
                                     for (String individualValue : translatorArray) {
-                                        System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue);
+
+                                        System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue + "  translatorArrayLength::  " + translatorArrayLength);
+
                                     }
                                     break;
                                 case "languages":
@@ -526,18 +548,30 @@ public class GrantApplicationServlet extends HttpServlet {
 
                         } else {
 
-                            // Process form file field (input type="file").
+                            //////////////////////////////////////////////////////////////
+                            //  Process Application Form file field (input type="file") //
+                            //////////////////////////////////////////////////////////////
                             String fieldname = item.getFieldName();
                             String filename = FilenameUtils.getName(item.getName());
-                            System.out.println("folderNames[" + idxFolderNames + "] " + folderNames[idxFolderNames] + " fieldname " + fieldname + " filename " + filename);
+//                            System.out.println("folderNames[" + idxFolderNames + "] " + folderNames[idxFolderNames] + " fieldname " + fieldname + " filename " + filename);
 
-                            // Create path components to save the file
-                            // temporary Directory = rootPath + Year + Publisher
+                            /* 
+                               Create path components to save the file
+                               temporary Directory = rootPath + Year + Publisher
+                             */
                             filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator + folderNames[idxFolderNames] + File.separator;
+
+                            System.out.println("folderNames[" + idxFolderNames + "] " + folderNames[idxFolderNames] + " fieldname " + fieldname + " filename " + filename);
 
                             justFiles[idxFolderNames] = filename;
                             fileNames[idxFolderNames] = filePath + filename;
-
+                            System.out.println("FolderNames >>>>>>>>>>>   " + folderNames[idxFolderNames]);
+//
+//if translatorArray > 1 loop through 
+//                            if(!"Translator_CV".equals(folderNames[idxFolderNames]) && ghy > 0){
+//                            ghy--;
+//                            System.out.println("ghy::  " +  ghy);
+//                            }
                             idxFolderNames++;
 
                             // create temporary Directory if it does not exist
@@ -594,7 +628,9 @@ public class GrantApplicationServlet extends HttpServlet {
 
                     }  // for (FileItem item : items)
 
-                    // INSERT new application
+                    ////////////////////////////////////////////////////////////
+                    //  Process Application
+                    ////////////////////////////////////////////////////////////
                     GrantApplication application = new GrantApplication();
 
                     application.setApplicationYear(yearInString);
@@ -680,7 +716,9 @@ public class GrantApplicationServlet extends HttpServlet {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                //Process Translators
+                ////////////////////////////////////////////////////////////
+                //  Process Application Translators
+                ////////////////////////////////////////////////////////////
                 String[] processingTranslatorArray = new String[1];
                 System.out.println("translatorArray.length: " + translatorArray.length);
                 //convert processingArray to ArrayList Translator
@@ -711,7 +749,9 @@ public class GrantApplicationServlet extends HttpServlet {
                     //  idx++;
                 }
 
-                // Update new publisher
+                ////////////////////////////////////////////////////////////
+                //  Process Publisher
+                ////////////////////////////////////////////////////////////
                 Publisher publisher = new Publisher();
 
                 publisher.setCompany(company);
@@ -768,8 +808,10 @@ public class GrantApplicationServlet extends HttpServlet {
                 // upload to temp dir then move to final directory
                 for (int i = 0; i < folderNames.length; i++) {
                     final String destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator + ApplicationNumber + File.separator + folderNames[i] + File.separator;
+                    System.out.println("folderNames.length::" + folderNames.length);
 
-                    // create final directory if it does not exist
+                    //          I have 6 files not 8 !!!!!!!
+// create final directory if it does not exist
                     File file = new File(destinationDirectory);
                     if (!file.exists()) {
                         file.mkdirs();
@@ -786,7 +828,9 @@ public class GrantApplicationServlet extends HttpServlet {
                     System.out.println("fileNames[" + i + "]  :: " + fileNames[i]);
                 }
 
-                // Update library
+                ////////////////////////////////////////////////////////////
+                //  Process Library
+                ////////////////////////////////////////////////////////////
                 Library library = new Library();
 
                 library.setReferenceNumber(ReferenceNumber);
@@ -818,25 +862,39 @@ public class GrantApplicationServlet extends HttpServlet {
                     }
                 }
 
+                ////////////////////////////////////////////////////////////
+                //  Process Application Uploads
+                ////////////////////////////////////////////////////////////
                 //Update  GrantApplication to contain the filePaths
                 GrantApplication application = new GrantApplication();
-
+                /* 
+                folderNames = {
+                  1  "Agreement", 
+                  2  "Contract", 
+                  3  "Addendum", 
+                  4  "Translator_CV", 
+                  5  "Original", 
+                  6  "TranslationSample"};
+                 */
+//Adjust
+                /*
                 fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setCover(fn);
                 application.setCoverName(justFiles[0]);
+                 */
+
+                fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                application.setAgreement(fn);
+                application.setAgreementDocName(justFiles[0]);
 
                 fn = fileNames[1].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setAgreement(fn);
-                application.setAgreementDocName(justFiles[1]);
+                application.setContract(fn);
+                application.setContractDocName(justFiles[1]);
 
                 fn = fileNames[2].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setContract(fn);
-                application.setContractDocName(justFiles[2]);
-
-                fn = fileNames[3].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setAddendumRightsAgreement(fn);
-                application.setAddendumRightsAgreementName(justFiles[3]);
-
+                application.setAddendumRightsAgreementName(justFiles[2]);
+                /*
                 fn = fileNames[4].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setProofOfPaymentToTranslator(fn);
                 application.setProofOfPaymentToTranslatorName(justFiles[4]);
@@ -848,18 +906,18 @@ public class GrantApplicationServlet extends HttpServlet {
                 fn = fileNames[6].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setSignedLIContract(fn);
                 application.setSignedLIContractName(justFiles[6]);
-
-                fn = fileNames[7].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                 */
+                fn = fileNames[3].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setTranslatorCV(fn);
-                application.setTranslatorCVDocName(justFiles[7]);
+                application.setTranslatorCVDocName(justFiles[3]);
 
-                fn = fileNames[8].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+                fn = fileNames[4].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setOriginal(fn);
-                application.setOriginalName(justFiles[8]);
+                application.setOriginalName(justFiles[4]);
 
-                fn = fileNames[9].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"                            
+                fn = fileNames[5].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"                            
                 application.setCopiesTranslationSample(fn);
-                application.setCopiesTranslationSampleDocName(justFiles[9]);
+                application.setCopiesTranslationSampleDocName(justFiles[5]);
 
 //                String[] tpe = {"Cover", "Agreement", "Contract", "Addendum", "ProofPayment", "BankDetails", 
 //                    "SignedLIContract", "Translator_CV", "Original", "TranslationSample"};
@@ -876,7 +934,9 @@ public class GrantApplicationServlet extends HttpServlet {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                //Process Languages
+                ////////////////////////////////////////////////////////////
+                //  Process Application Languages
+                ////////////////////////////////////////////////////////////
                 if (languageArray.length != 0) {
                     String[] processingLanguagesArray = new String[languageArray.length - 1];
 
@@ -924,6 +984,8 @@ public class GrantApplicationServlet extends HttpServlet {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                //reset session
+                session.removeAttribute("task");
 
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
@@ -933,7 +995,7 @@ public class GrantApplicationServlet extends HttpServlet {
             case "New Applications":
                 request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
                 break;
-                
+
             case "Open Applications":
                 request.getRequestDispatcher("/WEB-INF/views/openApplications.jsp").forward(request, response);
                 break;
@@ -972,7 +1034,9 @@ public class GrantApplicationServlet extends HttpServlet {
                 String translationPath;
                 String translationName = "";
 
-                // INSERT new ExpertReader
+                ////////////////////////////////////////////////////////////
+                //  Process Application - INSERT new ExpertReader
+                ////////////////////////////////////////////////////////////
                 ExpertReader expertReader = new ExpertReader();
 
                 expertReader.setExpertReaderUserID(expertReaderUserID);
@@ -1021,6 +1085,426 @@ public class GrantApplicationServlet extends HttpServlet {
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
 
+                break;
+
+            ////////////////////////////////////////////////////////////
+            //  Process openApplications
+            ////////////////////////////////////////////////////////////
+            case "openApplications":
+
+                System.out.println("openApplications ");
+                Status = "open";
+                timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+                now = Calendar.getInstance();
+                year = now.get(Calendar.YEAR);
+                yearInString = String.valueOf(year);
+
+                timestamp = getcurrentTimeStamp();
+
+                fileNames = new String[10];
+                justFiles = new String[10];
+                //folderNames = {"Cover", "Agreement", "Contract", "Addendum", "ProofPayment", "BankDetails", "SignedLIContract", "Translator_CV", "Original", "TranslationSample"};
+                message = "";
+
+                idxFolderNames = 0;
+
+                //   try {
+                // Check that we have a file upload request
+                isMultipart = ServletFileUpload.isMultipartContent(request);
+                System.out.println("isMultipart:: " + isMultipart);
+                response.setContentType("text/html;charset=UTF-8");
+
+                DiskFileItemFactory factory = new DiskFileItemFactory();
+                // maximum size that will be stored in memory
+                factory.setSizeThreshold(maxMemSize);
+                // Location to save data that is larger than maxMemSize.
+                factory.setRepository(new File(tempPath));
+
+                // Create a new file upload handler
+                ServletFileUpload upload = new ServletFileUpload(factory);
+                // maximum file size to be uploaded.
+                //  upload.setSizeMax(maxFileSize);
+
+                // Parse the request to get file items.
+                List<FileItem> items = null;
+                try {
+                    items = upload.parseRequest(request);
+                } catch (FileUploadException ex) {
+                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                for (FileItem item : items) {
+                    if (item.isFormField()) {
+
+                        // Process regular form field (input type="text|radio|checkbox|etc", select, etc).
+                        //collect all data input from input fileds
+                        String fieldname = item.getFieldName();
+                        String fieldvalue = item.getString();
+                        System.out.println("fieldname :: " + fieldname + " fieldvalue " + fieldvalue);
+
+                        //Info:   fieldname :: Address1 fieldvalue
+                        //Info:   fieldname :: postCode fieldvalue
+                        //Info:   fieldname :: City fieldvalue
+                        //Info:   fieldname :: Address2 fieldvalue
+                        //Info:   fieldname :: Country fieldvalue
+                        //Info:   fieldname :: Address3 fieldvalue
+                        //Info:   fieldname :: Address4 fieldvalue
+                        //Info:   fieldname :: Telephone fieldvalue
+                        //Info:   fieldname :: Fax fieldvalue
+                        //Info:   fieldname :: Email fieldvalue
+                        //Info:   fieldname :: WWW fieldvalue
+                        //Info:   fieldname :: doNotMail fieldvalue
+                        //Info:   fieldname :: companyNotes fieldvalue
+                        //Info:   fieldname :: translationPublicationYear fieldvalue
+                        //Info:   fieldname :: appDateOfPublicationOriginal fieldvalue 1/09/2017
+                        //Info:   fieldname :: copies fieldvalue
+                        //Info:   fieldname :: pageExtentOfTheOriginal fieldvalue
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: destination fieldvalue Agreement
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: destination fieldvalue Contract
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: destination fieldvalue Addendum
+                        //Info:   fieldname :: proposedDateOfPublication fieldvalue
+                        //Info:   fieldname :: appForeignPublisher fieldvalue Trada
+                        //Info:   fieldname :: plannedPageExtent fieldvalue
+                        //Info:   fieldname :: appForeignCountry fieldvalue Iceland
+                        //Info:   fieldname :: proposedPrintRun fieldvalue
+                        //Info:   fieldname :: appTargetLanguage fieldvalue English
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: destination fieldvalue Translator_CV
+                        //Info:   fieldname :: userID fieldvalue
+                        //Info:   fieldname :: translatorFee fieldvalue
+                        //Info:   fieldname :: BreakDownOfTranslatorFee fieldvalue
+                        //Info:   fieldname :: image-file fieldvalue Cover
+                        //Info:   fieldname :: isbn fieldvalue
+                        //Info:   fieldname :: issn fieldvalue
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: destination fieldvalue proofPayment
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: destination fieldvalue proofPayment
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: destination fieldvalue proofPayment
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: dateCopiesWereSent fieldvalue
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: destination fieldvalue originalSample
+                        //Info:   fieldname :: userID fieldvalue 85
+                        //Info:   fieldname :: publisherID fieldvalue 2790
+                        //Info:   fieldname :: Company fieldvalue
+                        //Info:   fieldname :: destination fieldvalue translationSample
+//                            switch (fieldname) {
+//                                case "Company":
+//                                    company = fieldvalue;
+//                                    break;
+//                                case "Company_Number":
+//                                    publisherID = Integer.parseInt(fieldvalue);
+//                                    break;
+//                                case "firstname":
+//                                    firstname = fieldvalue;
+//                                    break;
+//                                case "lastname":
+//                                    lastname = fieldvalue;
+//                                    break;
+//                                case "Address1":
+//                                    Address1 = fieldvalue;
+//                                    break;
+//                                case "Address2":
+//                                    Address2 = fieldvalue;
+//                                    break;
+//                                case "Address3":
+//                                    Address3 = fieldvalue;
+//                                    break;
+//                                case "Address4":
+//                                    Address4 = fieldvalue;
+//                                    break;
+//                                case "City":
+//                                    City = fieldvalue;
+//                                    break;
+//                                case "postCode":
+//                                    postCode = fieldvalue;
+//                                    break;
+//                                case "Country":
+//                                    country = fieldvalue;
+//                                    break;
+//                                case "Country_Code":
+//                                    countryCode = fieldvalue;
+//                                    break;
+//                                case "Email":
+//                                    Email = fieldvalue;
+//                                    break;
+//                                case "Telephone":
+//                                    Telephone = fieldvalue;
+//                                    break;
+//                                case "Fax":
+//                                    Fax = fieldvalue;
+//                                    break;
+//                                case "WWW":
+//                                    WWW = fieldvalue;
+//                                    break;
+//                                case "doNotMail":
+//                                    DoNotMail = fieldvalue;
+//                                    break;
+//                                case "Bursaries":
+//                                    Bursaries = fieldvalue;
+//                                    break;
+//                                case "Founded":
+//                                    Founded = fieldvalue;
+//                                    break;
+//                                case "NumberOfTitles":
+//                                    NumberOfTitles = fieldvalue;
+//                                    break;
+//                                case "companyNotes":
+//                                    companyNotes = fieldvalue;
+//                                    break;
+//                                case "destination":
+//                                    Type = fieldvalue;
+//                                    break;
+//                                case "userID":
+//                                    userID = fieldvalue;
+//                                    break;
+//                                case "publisherID":
+//                                    publisherID = Integer.parseInt(fieldvalue);
+//                                    break;
+//                                case "proposedDateOfPublication":
+//                                    proposedDateOfPublication = fieldvalue;
+//                                    break;
+//                                case "proposedPrintRun":
+//                                    proposedPrintRun = Integer.parseInt(fieldvalue);
+//                                    break;
+//                                case "plannedPageExtent":
+//                                    plannedPageExtent = fieldvalue;
+//                                    break;
+//                                case "BreakDownOfTranslatorFee":
+//                                    breakDownTranslatorFee = fieldvalue;
+//                                    break;
+//                                case "translatorName":
+//                                    translatorName = fieldvalue;
+//                                    break;
+//                                case "translatorFee":
+//                                    translatorFee = fieldvalue;
+//                                    break;
+//                                case "translatorNotes":
+//                                    translatorNotes = fieldvalue;
+//                                    break;
+//                                case "copiesSent":
+//                                    copySent = fieldvalue;
+//                                    if ("ticked".equals(copySent)) {
+//                                        copiesSent = 1;
+//                                    } else {
+//                                        copiesSent = 0;
+//                                    }
+//                                    break;
+//                                case "dateCopiesWereSent":
+//                                    dateCopiesWereSent = fieldvalue;
+//                                    break;
+//                                case "TCACCEPTED":
+//                                    TCACCEPTED = fieldvalue;
+//                                    if ("ticked".equals(TCACCEPTED)) {
+//                                        TC_ACCEPTED = 1;
+//                                    } else {
+//                                        TC_ACCEPTED = 0;
+//                                    }
+//                                    break;
+//                                case "APPROVED":
+//                                    ieAPPROVED = fieldvalue;
+//                                    if ("ticked".equals(ieAPPROVED)) {
+//                                        APPROVED = 1;
+//                                    } else {
+//                                        APPROVED = 0;
+//                                    }
+//                                    break;
+//                                case "authorArray":
+//                                    authorArray = fieldvalue.split(","); //split string by ,
+//                                    for (String individualValue : authorArray) {
+//                                        System.out.println("authorArray  GrantApplicationServlet:: " + individualValue);
+//                                    }
+//                                    break;
+//                                case "title":
+//                                    Title = fieldvalue;
+//                                    break;
+//                                case "copies":
+//                                    Copies = fieldvalue;
+//                                    break;
+//                                case "publicationYear":
+//                                    Publisheryear = fieldvalue;
+//                                    break;
+//                                case "genre":
+//                                    Genre = fieldvalue;
+//                                    break;
+//                                case "addendum":
+//                                    Addendum = fieldvalue;
+//                                    break;
+//                                case "proofPayment":
+//                                    ProofPayment = fieldvalue;
+//                                    break;
+//                                case "bankDetailForm":
+//                                    BankDetails = fieldvalue;
+//                                    break;
+//                                case "signedLIcontract":
+//                                    SignedLIContract = fieldvalue;
+//                                    break;
+//                                case "originalSample":
+//                                    Original = fieldvalue;
+//                                    break;
+//                                case "translationTitle":
+//                                    translationTitle = fieldvalue;
+//                                    break;
+//                                case "translationPublicationYear":
+//                                    translationPublisherYear = fieldvalue;
+//                                    break;
+//                                case "translatorArray":
+//                                    translatorArray = fieldvalue.split(","); //split string by ,
+//                                    for (String individualValue : translatorArray) {
+//                                        System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue);
+//                                    }
+//                                    break;
+//                                case "languages":
+//                                    languageArray = fieldvalue.split(","); //split string by ,
+//                                    for (String individualValue : languageArray) {
+//                                        System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
+//                                    }
+//                                    break;
+//                                case "physicalDescription":
+//                                    physicalDescription = fieldvalue;
+//                                    break;
+//                                case "duplicates":
+//                                    if ("".equals(fieldvalue)) {
+//                                        fieldvalue = "0";
+//                                    }
+//                                    Duplicates = Integer.parseInt(fieldvalue);
+//                                    break;
+//                                case "translationPublisher":
+//                                    translationPublisher = fieldvalue;
+//                                    break;
+//                                case "bookNotes":
+//                                    bookNotes = fieldvalue;
+//                                    break;
+//                                case "series":
+//                                    Series = fieldvalue;
+//                                    break;
+//                                case "isbn":
+//                                    ISBN = fieldvalue;
+//                                    break;
+//                                case "issn":
+//                                    ISSN = fieldvalue;
+//                                    break;
+//                                case "languageOfTheOriginal":
+//                                    originalLanguage = fieldvalue;
+//                                    break;
+//                                case "pageExtentOfTheOriginal":
+//                                    originalPageExtent = fieldvalue;
+//                                    break;
+//                                case "countryOfPublication":
+//                                    countryOfPublication = fieldvalue;
+//                                    break;
+//                                case "amountRequested":
+//                                    amountRequested = fieldvalue;
+//                                    break;
+//                                case "appTargetLanguage":
+//                                    targetLanguage = fieldvalue;
+//                                    break;
+//                                case "appForeignCountry":
+//                                    countryOfPublication = fieldvalue;
+//                                    break;
+//                                case "appForeignPublisher":
+//                                    foreignPublisher = fieldvalue;
+//                                    break;
+//                                case "DateOfPublicationOriginal":
+//                                    originalDateOfPublication = fieldvalue;
+//                                    break;
+//
+//                            } // end switch
+//
+                    } else {
+//
+//                            ////////////////////////////////////////////////////////////
+//                            //  Process Application Form file field (input type="file").
+//                            ////////////////////////////////////////////////////////////
+//                            String fieldname = item.getFieldName();
+//                            String filename = FilenameUtils.getName(item.getName());
+//                            System.out.println("folderNames[" + idxFolderNames + "] " + folderNames[idxFolderNames] + " fieldname " + fieldname + " filename " + filename);
+//
+//                            // Create path components to save the file
+//                            // temporary Directory = rootPath + Year + Publisher
+//                            filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator + folderNames[idxFolderNames] + File.separator;
+//
+//                            justFiles[idxFolderNames] = filename;
+//                            fileNames[idxFolderNames] = filePath + filename;
+//
+//                            idxFolderNames++;
+//
+//                            // create temporary Directory if it does not exist
+//                            File file = new File(filePath);
+//                            if (!file.exists()) {
+//                                file.mkdirs();
+//                            }
+//
+//                            OutputStream outS = null;
+//                            InputStream filecontent = null;
+//
+//                            //      final PrintWriter writer = response.getWriter();
+//                            try {
+//                                outS = new FileOutputStream(new File(filePath + filename));
+//                                filecontent = item.getInputStream();
+//
+//                                message = message + " '" + filename + "' has been uploaded <br/>";
+//
+//                                int read;
+//                                final byte[] bytes = new byte[1024];
+//
+//                                while ((read = filecontent.read(bytes)) != -1) {
+//                                    outS.write(bytes, 0, read);
+//
+//                                }
+//
+//                            } catch (FileNotFoundException fne) {
+//
+//                                String errMsg = "<br/><br/>You either did not specify a file to upload or are "
+//                                        + "trying to upload a file to a protected or nonexistent "
+//                                        + "location.<br/> <br/><strong> ERROR:<strong> '" + fne.getMessage() + "' ";
+//
+//                                request.setAttribute("message", " '<strong>" + filename + "</strong>" + errMsg);
+//                                request.getRequestDispatcher("/WEB-INF/views/uploadErrorResponse.jsp").forward(request, response);
+//                                LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}",
+//                                        new Object[]{fne.getMessage()});
+//
+//                            } finally {
+//
+//                                if (outS != null) {
+//                                    outS.close();
+//                                }
+//
+//                                if (filecontent != null) {
+//                                    filecontent.close();
+//                                }
+//
+////                        if (writer != null) {
+////                            writer.close();
+////                        }
+//                            }
+//
+                    } // else
+
+                }  // for (FileItem item : items)
                 break;
         }
     }

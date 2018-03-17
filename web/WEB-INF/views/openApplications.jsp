@@ -20,21 +20,40 @@
 
         <title>Translation Grant Application System</title>
 
+        <%
+            response.setHeader("Cache-Control", "no-cache"); //forces caches to obtain a new copy of the page from the origin server
+            response.setHeader("Cache-Control", "no-store"); //directs caches not to store the page under any circumstance
+            response.setDateHeader("Expires", 0); //causes the proxy cache to see the page as "stale"
+            response.setHeader("Pragma", "no-cache"); //HTTP 1.0 backward compatibility
+
+            String userName = (String) session.getAttribute("username");
+            if (null == userName) {
+                System.out.println("userName: " + userName + " not found");
+                request.setAttribute("Error", "Session has ended.  Please login.");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
+                rd.forward(request, response);
+            }
+        %>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+
         <!-- Bootstrap -->
 
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.dataTables.min.css">
 
         <link rel="stylesheet" type="text/css" href="css/irishLiterature.css">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
@@ -46,7 +65,36 @@
         <script src="js/dataTables.bootstrap.min.js"></script>
         <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
 
+        <script type="text/javascript"  src="js/pdf.js"></script>
+        <script type="text/javascript"  src="js/pdf.worker.js"></script>
+        <!--
+                <style>
+                    .ui-state-highlight, 
+                    .ui-widget-content .ui-state-highlight, 
+                    .ui-widget-header .ui-state-highlight {
+                        border: 1px solid #003399;
+                        background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
+                    }
+        
+        
+                    .ui-datepicker { 
+                        width: 17em; 
+                        padding: .2em .2em 0; 
+                        display: none; 
+                        z-index: 2000 !important;
+                    }
+        
+                    /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
+                    .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
+                    .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
+                    .ui-datepicker-calendar a.ui-state-active { background: red; } 
+        
+                </style>-->
+
+
         <script>
+
+
             var translatorArray = [];
             var authorArray = [];
             var languageArray = [];
@@ -59,8 +107,30 @@
             var translatorCounter = 0;
             var translatorCounter1 = 0;
             var translatorName876 = "";
-            $.datepicker.setDefaults({dateFormat: 'dd/mm/yy'});
-//            PDFJS.workerSrc = 'js/pdf.worker.js';
+            $.datepicker.setDefaults({
+                dateFormat: 'dd/mm/yy',
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                autoclose: true,
+                changeMonth: true,
+                changeYear: true,
+                gotoCurrent: true,
+                orientation: "bottom" // <-- and add this
+            });
+            PDFJS.workerSrc = 'js/pdf.worker.js';
+              localStorage.clear();
+
+            var i;
+
+            console.log("local storage - openApplication.jsp");
+            for (i = 0; i < localStorage.length; i++) {
+                console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
+            }
+
+            console.log("session storage");
+            for (i = 0; i < sessionStorage.length; i++) {
+                console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
+            }
         </script>
 
         <script type="text/javascript">
@@ -820,6 +890,152 @@
                 });
             });
         </script>
+        
+                <!--add more Add another Press Cutting-->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                pressCuttingCounter = 1;
+                $("#pressCutting").click(function (event) {
+                    pressCuttingCounter++;
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + pressCuttingCounter + ". Press Cutting  </div>");
+                    var $newInput = $("<input placeholder='Press Cutting' type='text'> ");
+                    $newInput
+                            .attr("name", "pressCutting" + pressCuttingCounter)
+                            .attr("id", "pressCutting" + pressCuttingCounter)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#addPressCuttingForm"));
+                });
+            });
+        </script>
+
+        <script>
+            function backToMisc() {
+                var upload_number = 2;
+                for (var i = 2; i <= pressCuttingCounter; i++) {
+
+                    var nr = "name" + i;
+                    var item = document.getElementById(nr);
+                    var itemValue = item.value;
+
+                    pressCuttingArray.push(itemValue);
+
+                    var moreUploadTag = '';
+
+                    moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+                    moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
+                    moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
+                    moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
+                    moreUploadTag += 'Select file ';
+                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
+                    moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
+                    moreUploadTag += '</label>';
+                    moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
+                    moreUploadTag += '</div>';
+                    moreUploadTag += '</div>';
+
+                    $(moreUploadTag).appendTo('#additionalTranslator');
+
+                    upload_number++;
+                }
+
+                $('#bs-example-navbar-collapse-1 a[href="#Misc"]').tab('show');
+                var arrayLength = pressCuttingArray.length;
+                for (var i = 0; i < arrayLength; i++) {
+                }
+                $("#pressCuttingArray").val(pressCuttingArray);
+            }
+        </script>
+        
+                <script>
+            var fileTypes = [
+                'image/jpeg',
+                'image/pjpeg',
+                'image/png',
+                'image/*',
+                'application/pdf',
+                '.doc,.docx,.xml,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
+            ];
+
+            function validFileType(file) {
+                for (var i = 0; i < fileTypes.length; i++) {
+                    if (file.type === fileTypes[i]) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        </script>
+        
+          <script>
+            $(document).ready(function () {
+                //Check File API support
+                if (window.File && window.FileList && window.FileReader)
+                {
+                    $('#files').on("change", function (event) {
+                        var files = event.target.files; //FileList object
+                        var output = document.getElementById("result");
+                        for (var i = 0; i < files.length; i++)
+                        {
+                            var file = files[i];
+                            var fileName = files[i].name;
+                            console.log("fileName  " + fileName);
+
+//                            if (file.type.match('image.*')) {
+                            if (validFileType(files[i])) {
+                                if (this.files[0].size < 2097152) {
+
+                                    var picReader = new FileReader();
+                                    picReader.addEventListener("load", function (event) {
+                                        var picFile = event.target;
+                                        var div = document.createElement("div");
+                                        div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
+                                                "title='preview image'/>";
+                                        output.insertBefore(div, null);
+                                    });
+                                    //Read the image
+                                    $('#clear, #result').show();
+                                    picReader.readAsDataURL(file);
+
+                                } else {
+                                    alert("Image Size is too big.Minimum size is 2MB.");
+                                    $(this).val("");
+                                }
+                            } else {
+                                alert("You can only upload image file.");
+                                $(this).val("");
+                            }
+                        }
+
+                    });
+                } else
+                {
+                    console.log("Your browser does not support File API");
+                }
+            });
+
+            $(document).on("click", "#files", function () {
+                $('.thumbnail').parent().remove();
+                $('result').hide();
+                $(this).val("");
+            });
+
+            $(document).on("click", "#clear", function () {
+                $('.thumbnail').parent().remove();
+                $('#result').hide();
+                $('#files').val("");
+                $(this).hide();
+            });
+
+        </script>
+        
     </head>
 
     <body style="height: 100%">
@@ -857,6 +1073,7 @@
                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
                     <h3 align="center" style="align-content: center">Display open applications</h3>
 
+                    <input value="${companyDetails.Address1}" /> 
                     <input value="${applicationDetails.Address1}" /> 
                     <!--Application-->
                     <div class="tab-pane fade  active in" id="Application">
@@ -1059,7 +1276,7 @@
                                             </div><!-- /.navbar-collapse -->
 
                                             <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/GrantApplicationServlet" enctype="multipart/form-data">
-
+                                            <%request.getSession().setAttribute("task", "openApplications");%>
                                             <div id="applicationEditForm-tab-content" class="tab-content"  style="background-color: #E8F6FF">
 
 
@@ -1085,16 +1302,16 @@
                                                                         >
                                                             </div>
 
-                                                            <div class="col-sm-4">        
-                                                                <input id="Company_Number"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Company_Number"                                
-                                                                       value="${publisherID}"                                   
-                                                                       placeholder="internal Company Number"
-                                                                       disabled
-                                                                       >
-                                                            </div>
+                                                            <!--                                                            <div class="col-sm-4">        
+                                                                                                                            <input id="Company_Number"                                
+                                                                                                                                   type="text"                                
+                                                                                                                                   class="form-control"                                
+                                                                                                                                   name="Company_Number"                                
+                                                                                                                                   value="${publisherID}"                                   
+                                                                                                                                   placeholder="internal Company Number"
+                                                                                                                                   disabled
+                                                                                                                                   >
+                                                                                                                        </div>-->
                                                         </div> <!--row-->
 
                                                         <!--second row-->
@@ -1245,7 +1462,7 @@
 
                                                         <!--eighth row-->
                                                         <div class="row" style="margin-bottom: 10px;margin-top: 20px">
-                                                            <div class="col-sm-3"> 
+                                                            <div class="col-sm-4"> 
                                                                 <div class="well well-sm">
                                                                     <div class="checkbox">                                                        
                                                                         <input id="doNotMail" 
@@ -1254,50 +1471,50 @@
                                                                                value="${companyDetails.doNotMail}" 
                                                                                checked =""
                                                                                >  
-                                                                        <label for="doNotMail"> DO NOT MAIL </label>
+                                                                        <label for="doNotMail">Do not add to newsletter</label>
                                                                     </div><!--checkbox-->
                                                                 </div> <!--well-->
                                                             </div> <!--<div class="col-sm-3">-->   
 
-                                                            <div class="col-sm-3">
-                                                                <div class="well well-sm">
-                                                                    <div class="checkbox">
-                                                                        <input id="Bursaries" 
-                                                                               type="checkbox"  
-                                                                               name="Bursaries" 
-                                                                               value="${companyDetails.Bursaries}"
-                                                                               checked =""
-                                                                               > 
-                                                                        <label for="Bursaries"> Bursaries </label> 
-                                                                    </div><!--checkbox-->
-                                                                </div> <!--well-->
-                                                            </div><!--<div class="col-sm-3">-->   
+                                                            <!--                                                            <div class="col-sm-3">
+                                                                                                                            <div class="well well-sm">
+                                                                                                                                <div class="checkbox">
+                                                                                                                                    <input id="Bursaries" 
+                                                                                                                                           type="checkbox"  
+                                                                                                                                           name="Bursaries" 
+                                                                                                                                           value="${companyDetails.Bursaries}"
+                                                                                                                                           checked =""
+                                                                                                                                           > 
+                                                                                                                                    <label for="Bursaries"> Do not add to newsletter </label> 
+                                                                                                                                </div>checkbox
+                                                                                                                            </div> well
+                                                                                                                        </div><div class="col-sm-3">   -->
                                                         </div> <!--row-->
 
                                                         <!--ninth row-->
                                                         <div class="row" style="margin-bottom: 10px">
-                                                            <div class="col-sm-3">   
-                                                                <label class="pull-left">Founded</label>
-                                                                <input id="Founded"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Founded"                                
-                                                                       value="${companyDetails.Founded}"                                                                  
-                                                                       placeholder="Founded"
-                                                                       disabled
-                                                                       >
-
-                                                            </div>
-                                                            <div class="col-sm-3">    
-                                                                <label class="pull-left">Number of Titles</label>
-                                                                <input id="NumberOfTitles"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="NumberOfTitles"                                
-                                                                       value="${companyDetails.NumberOfTitles}"                       
-                                                                       placeholder="Number of Titles"
-                                                                       >      
-                                                            </div>
+                                                            <!--                                                            <div class="col-sm-3">   
+                                                                                                                            <label class="pull-left">Founded</label>
+                                                                                                                            <input id="Founded"                                
+                                                                                                                                   type="text"                                
+                                                                                                                                   class="form-control"                                
+                                                                                                                                   name="Founded"                                
+                                                                                                                                   value="${companyDetails.Founded}"                                                                  
+                                                                                                                                   placeholder="Founded"
+                                                                                                                                   disabled
+                                                                                                                                   >
+                                                            
+                                                                                                                        </div>
+                                                                                                                        <div class="col-sm-3">    
+                                                                                                                            <label class="pull-left">Number of Titles</label>
+                                                                                                                            <input id="NumberOfTitles"                                
+                                                                                                                                   type="text"                                
+                                                                                                                                   class="form-control"                                
+                                                                                                                                   name="NumberOfTitles"                                
+                                                                                                                                   value="${companyDetails.NumberOfTitles}"                       
+                                                                                                                                   placeholder="Number of Titles"
+                                                                                                                                   >      
+                                                                                                                        </div>-->
                                                         </div> <!--row-->
 
                                                         <!--keep in one line otherwise placeholder doesn't show-->
@@ -1328,39 +1545,39 @@
                                                                             <div class="form-group">
 
                                                                                 <textarea class="form-control" id="authors" disabled name="authors" ></textarea>
-                                                                        <!--        <input id="aFirstName"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="AuthorFirstName"                                
-                                                                               value=""    
-                                                                               placeholder="Author First Name"
-                                                                               >
-                                                                        <i class="glyphicon glyphicon-search form-control-feedback"></i>-->
+                                                                                <!--        <input id="aFirstName"                                
+                                                                                       type="text"                                
+                                                                                       class="form-control"                                
+                                                                                       name="AuthorFirstName"                                
+                                                                                       value=""    
+                                                                                       placeholder="Author First Name"
+                                                                                       >
+                                                                                <i class="glyphicon glyphicon-search form-control-feedback"></i>-->
                                                                             </div>  <!-- input-group -->
                                                                         </div>
 
-                                                               <!-- <div class="col-sm-4">    
-                                                                    <div class="form-group has-feedback">
-                                                                        <label for="aLastName" class="pull-left">&nbsp;</label>
-                                                                        <input id="aLastName"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="AuthorLastName"                                
-                                                                               value=""    
-                                                                               placeholder="Author Last Name"
-                                                                               >
-                                                                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-sm-4" style="margin-top: 30px; ">  
-                                                                    <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                                       data-toggle="modal" 
-                                                                       data-target="#addAuthorModal"
-                                                                       onclick="copyFirstRow2();"
-                                                                       >add more Authors</a>
-
-                                                                </div>-->
+                                                                        <!-- <div class="col-sm-4">    
+                                                                             <div class="form-group has-feedback">
+                                                                                 <label for="aLastName" class="pull-left">&nbsp;</label>
+                                                                                 <input id="aLastName"                                
+                                                                                        type="text"                                
+                                                                                        class="form-control"                                
+                                                                                        name="AuthorLastName"                                
+                                                                                        value=""    
+                                                                                        placeholder="Author Last Name"
+                                                                                        >
+                                                                                 <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                                             </div>
+                                                                         </div>
+         
+                                                                         <div class="col-sm-4" style="margin-top: 30px; ">  
+                                                                             <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                                                data-toggle="modal" 
+                                                                                data-target="#addAuthorModal"
+                                                                                onclick="copyFirstRow2();"
+                                                                                >add more Authors</a>
+         
+                                                                         </div>-->
 
                                                                     </div> <!--row-->
 
@@ -1428,47 +1645,47 @@
                                                                         </div>
 
 
-                                                                        <div class="col-sm-5" style="margin-left: 65px">    
-                                                                            <label for="translationTitle" class="pull-left">Translation Title</label>
-                                                                            <input id="translationTitle"                                
-                                                                                   type="text"                                
-                                                                                   class="form-control"                                
-                                                                                   name="translationTitle"                                
-                                                                                   value=""    
-                                                                                   placeholder="Translation Title"
-                                                                                   disabled=""
-                                                                                   >
-                                                                        </div>
+                                                                        <!--                                                                        <div class="col-sm-5" style="margin-left: 65px">    
+                                                                                                                                                    <label for="translationTitle" class="pull-left">Translation Title</label>
+                                                                                                                                                    <input id="translationTitle"                                
+                                                                                                                                                           type="text"                                
+                                                                                                                                                           class="form-control"                                
+                                                                                                                                                           name="translationTitle"                                
+                                                                                                                                                           value=""    
+                                                                                                                                                           placeholder="Translation Title"
+                                                                                                                                                           disabled=""
+                                                                                                                                                           >
+                                                                                                                                                </div>-->
                                                                     </div>
 
                                                                     <!--Fourth row-->
                                                                     <div class="row" style="margin-bottom: 10px">
-                                                                        <div class="col-sm-4"> 
-                                                                            <div class="form-group has-feedback">
-                                                                                <label for="translatorName" class="pull-left">Translator</label>
-                                                                                <input id="translatorName"                                
-                                                                                       type="text"                                
-                                                                                       class="form-control"                                
-                                                                                       name="translatorName"                                
-                                                                                       value=""    
-                                                                                       onblur="myFunction();"
-                                                                                       placeholder="Translator Name"
-                                                                                       disabled=""
-                                                                                       >
-                                                                                <!--<i class="glyphicon glyphicon-search form-control-feedback"></i>-->
-                                                                            </div>
-                                                                        </div>
+                                                                        <!--                                                                        <div class="col-sm-4"> 
+                                                                                                                                                    <div class="form-group has-feedback">
+                                                                                                                                                        <label for="translatorName" class="pull-left">Translator</label>
+                                                                                                                                                        <input id="translatorName"                                
+                                                                                                                                                               type="text"                                
+                                                                                                                                                               class="form-control"                                
+                                                                                                                                                               name="translatorName"                                
+                                                                                                                                                               value=""    
+                                                                                                                                                               onblur="myFunction();"
+                                                                                                                                                               placeholder="Translator Name"
+                                                                                                                                                               disabled=""
+                                                                                                                                                               >
+                                                                                                                                                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>-->
 
-                                                                     <!--   <div class="col-sm-4" style="margin-top: 30px;">    
-                                                        <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                           data-toggle="modal" 
-                                                           data-target="#addTranslatorModal"
-                                                           onclick="copyFirstRow();"
-                                                           >add more Translators</a>
-
-                                                    </div>                                                    
-
-                                                    <input type="hidden" id="translatorArray" name="translatorArray" >-->
+                                                                        <!--   <div class="col-sm-4" style="margin-top: 30px;">    
+                                                           <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                              data-toggle="modal" 
+                                                              data-target="#addTranslatorModal"
+                                                              onclick="copyFirstRow();"
+                                                              >add more Translators</a>
+   
+                                                       </div>                                                    
+   
+                                                       <input type="hidden" id="translatorArray" name="translatorArray" >-->
 
                                                                     </div> <!--row-->
 
@@ -1479,7 +1696,7 @@
 
                                                                             <div class="row">
 
-                                                                                <div class="col-xs-6">
+                                                                                <!--<div class="col-xs-6">
                                                                                     <div class="mini-box"   style="margin-bottom: 20px">
                                                                                         <label for="translationPublisher" class="pull-left">Translation Publisher</label>
                                                                                         <input id="translationPublisher"                                
@@ -1489,10 +1706,10 @@
                                                                                                value=""    
                                                                                                placeholder="Translation Publisher"
                                                                                                disabled=""
-
+                
                                                                                                >
                                                                                     </div>
-                                                                                </div> <!--col-xs-6-->
+                                                                                </div> col-xs-6-->
 
                                                                                 <div class="col-xs-6">
                                                                                     <div class="mini-box" style="margin-bottom: 20px">
@@ -1504,7 +1721,6 @@
                                                                                                name="translationPublicationYear"                                
                                                                                                value=""    
                                                                                                placeholder="Translation Publication Year"
-                                                                                               disabled=""
                                                                                                >
                                                                                     </div>
                                                                                 </div> <!--col-xs-6-->
@@ -1526,29 +1742,31 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div> <!--col-xs-6-->
+                                                                            </div> <!--row-->
 
-                                                                                <div class="col-xs-6">
+                                                                            <div class="row">
+                                                                                <!--  <div class="col-xs-6">
+                                                                                      <div class="mini-box">
+                                                                                          <div class="form-group has-feedback">
+                                                                                              <label for="languages" class="pull-left" >Languages</label>
+                                                                                              <input id="languages"                                
+                                                                                                     type="text"                                
+                                                                                                     class="form-control"                                
+                                                                                                     name="languages"                                
+                                                                                                     value=""    
+                                                                                                     placeholder="Languages"
+                                                                                                     disabled=""
+                                                                                                     >
+                                                                                              <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                                                          </div>
+                                                                                      </div>
+                                                                                  </div> col-xs-6
+              
+                                                                                  <input type="hidden" id="language_Array" name="languageArray" >-->
+
+                                                                                <div class="col-xs-6" style="margin-bottom: 20px">
                                                                                     <div class="mini-box">
-                                                                                        <div class="form-group has-feedback">
-                                                                                            <label for="languages" class="pull-left" >Languages</label>
-                                                                                            <input id="languages"                                
-                                                                                                   type="text"                                
-                                                                                                   class="form-control"                                
-                                                                                                   name="languages"                                
-                                                                                                   value=""    
-                                                                                                   placeholder="Languages"
-                                                                                                   disabled=""
-                                                                                                   >
-                                                                                            <!--<i class="glyphicon glyphicon-search form-control-feedback"></i>-->
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div> <!--col-xs-6-->
-
-                                                                                <!--<input type="hidden" id="language_Array" name="languageArray" >-->
-
-                                                                                <div class="col-xs-6">
-                                                                                    <div class="mini-box">
-                                                                                        <label for="appCountryOfPublication" class="pull-left" >Country of Publication (of the original):</label>
+                                                                                        <label for="appCountryOfPublication" class="control-label pull-left" >Country of Publication <br/>(of the original):</label>
                                                                                         <input id="appCountryOfPublication"                                
                                                                                                type="text"                                
                                                                                                class="form-control"                                
@@ -1561,55 +1779,31 @@
                                                                                 </div> <!--col-xs-6-->
 
                                                                                 <div class="col-xs-6">
-                                                                                    <div class="mini-box">
-                                                                                        <label for="appDateOfPublicationOriginal" class="control-label pull-left">Date of Publication (of the original): </label>
-                                                                                        <div class="input-group pull-left"   style="margin-bottom: 40px;">
-                                                                                            <input type="text" name="DateOfPublicationOriginal" id="appDateOfPublicationOriginal" class="form-control" placeholder="DD/MM/YYYY"/>    
+                                                                                    <div class="mini-box" style="margin-bottom: 20px">
+                                                                                        <label for="appDateOfPublicationOriginal" class="control-label pull-left">Date of Publication<br/> (of the original): </label>
+                                                                                        <div class="input-group pull-left">
+                                                                                            <input type="text" 
+                                                                                                   name="appDateOfPublicationOriginal" 
+                                                                                                   id="appDateOfPublicationOriginal" 
+                                                                                                   class="form-control" 
+                                                                                                   placeholder="DD/MM/YYYY"
+                                                                                                   />    
                                                                                             <label class="input-group-addon" for="appDateOfPublicationOriginal">
                                                                                                 <span class="glyphicon glyphicon-calendar"></span>
-                                                                                            </label>
+                                                                                            </label>   
                                                                                         </div>
                                                                                     </div>
                                                                                     <script>
-                                                                                        $("#appDateOfPublicationOriginal").datepicker({
-                                                                                            showWeekDays: true,
-                                                                                            todayHighlight: true,
-                                                                                            autoclose: true
-                                                                                        });
+                                                                                        $("#appDateOfPublicationOriginal").datepicker();
                                                                                     </script>
-                                                                                </div> <!--col-xs-6-->
-
-                                                                                <div class="col-xs-6">
-                                                                                    <div class="mini-box">
-                                                                                        <label for="physicalDescription" class="pull-left" >Physical Description</label>
-                                                                                        <input id="physicalDescription"                                
-                                                                                               type="text"                                
-                                                                                               class="form-control"                                
-                                                                                               name="physicalDescription"                                
-                                                                                               value=""    
-                                                                                               placeholder="Physical Description"
-                                                                                               >
-                                                                                    </div>
                                                                                 </div> <!--col-xs-6-->
                                                                             </div> <!--row-->
 
                                                                             <div class="row">
-                                                                                <div class="col-xs-6">
-                                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                                        <label for="duplicates" class="pull-left" style="margin-top: 10px">Duplicates</label>
-                                                                                        <input id="duplicates"                                
-                                                                                               type="text"                                
-                                                                                               class="form-control"                                
-                                                                                               name="duplicates"                                
-                                                                                               value=""    
-                                                                                               placeholder="Duplicates"
-                                                                                               >
-                                                                                    </div>
-                                                                                </div> <!--col-xs-6-->
 
                                                                                 <div class="col-xs-6">
                                                                                     <div class="mini-box" style="margin-bottom: 20px">
-                                                                                        <label for="duplicates" class="pull-left" style="margin-top: 10px">Copies</label>
+                                                                                        <label for="copies" class="pull-left" style="margin-top: 10px">Copies</label>
                                                                                         <input id="copies"                                
                                                                                                type="text"                                
                                                                                                class="form-control"                                
@@ -1621,19 +1815,19 @@
                                                                                 </div> <!--col-xs-6-->
 
 
-                                                                                <div class="col-xs-6">
-                                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                                        <label for="series" class="pull-left" style="margin-top: 10px">Series</label>
-                                                                                        <input id="series"                                
-                                                                                               type="text"                                
-                                                                                               class="form-control"                                
-                                                                                               name="series"                                
-                                                                                               value=""    
-                                                                                               placeholder="Series"
-                                                                                               disabled=""
-                                                                                               >
-                                                                                    </div>
-                                                                                </div> <!--col-xs-6-->
+                                                                                <!--                                                                                <div class="col-xs-6">
+                                                                                                                                                                    <div class="mini-box" style="margin-bottom: 20px">
+                                                                                                                                                                        <label for="series" class="pull-left" style="margin-top: 10px">Series</label>
+                                                                                                                                                                        <input id="series"                                
+                                                                                                                                                                               type="text"                                
+                                                                                                                                                                               class="form-control"                                
+                                                                                                                                                                               name="series"                                
+                                                                                                                                                                               value=""    
+                                                                                                                                                                               placeholder="Series"
+                                                                                                                                                                               disabled=""
+                                                                                                                                                                               >
+                                                                                                                                                                    </div>
+                                                                                                                                                                </div> col-xs-6-->
                                                                                 <div class='col-sm-6'  style="margin-bottom: 40px;">                                                
                                                                                     <label for="pageExtentOfTheOriginal" class="control-label pull-left">Page extent of the <br/> (of the original): </label>
                                                                                     <div class="input-group pull-left"  style="margin-bottom: 40px;">
@@ -1644,61 +1838,61 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div> <!--row-->
-
-                                                                            <div class="row">
-                                                                                <div class="col-sm-5">
-                                                                                    <!--<div class="mini-box">-->   
-                                                                                    <label for="isbn" class="pull-left">ISBN</label>
-                                                                                    <input id="isbn"                                
-                                                                                           type="text"                                
-                                                                                           class="form-control"                                
-                                                                                           name="isbn"                                
-                                                                                           value=""    
-                                                                                           placeholder="ISBN"
-                                                                                           >
-
-                                                                                    <!--</div>-->
-                                                                                </div> <!--col-xs-6-->
-
-                                                                                <div class="col-sm-5" style="margin-left: 45px">  
-                                                                                    <!--<div class="mini-box">-->
-                                                                                    <label for="isnn" class="pull-left">ISSN</label>
-                                                                                    <input id="isnn"                                
-                                                                                           type="text"                                
-                                                                                           class="form-control"                                
-                                                                                           name="issn"                                
-                                                                                           value=""    
-                                                                                           placeholder="ISSN"
-                                                                                           >
-                                                                                    <!--</div>-->                                                                                    
-                                                                                </div> <!--col-xs-6-->
-                                                                            </div> <!--row-->
+                                                                            <!--
+                                                                                                                                                        <div class="row">
+                                                                                                                                                            <div class="col-sm-5">
+                                                                                                                                                                <div class="mini-box">   
+                                                                                                                                                                <label for="isbn" class="pull-left">ISBN</label>
+                                                                                                                                                                <input id="isbn"                                
+                                                                                                                                                                       type="text"                                
+                                                                                                                                                                       class="form-control"                                
+                                                                                                                                                                       name="isbn"                                
+                                                                                                                                                                       value=""    
+                                                                                                                                                                       placeholder="ISBN"
+                                                                                                                                                                       >
+                                                                            
+                                                                                                                                                                </div>
+                                                                                                                                                            </div> col-xs-6
+                                                                            
+                                                                                                                                                            <div class="col-sm-5" style="margin-left: 45px">  
+                                                                                                                                                                <div class="mini-box">
+                                                                                                                                                                <label for="isnn" class="pull-left">ISSN</label>
+                                                                                                                                                                <input id="isnn"                                
+                                                                                                                                                                       type="text"                                
+                                                                                                                                                                       class="form-control"                                
+                                                                                                                                                                       name="issn"                                
+                                                                                                                                                                       value=""    
+                                                                                                                                                                       placeholder="ISSN"
+                                                                                                                                                                       >
+                                                                                                                                                                </div>                                                                                    
+                                                                                                                                                            </div> col-xs-6
+                                                                                                                                                        </div> row-->
                                                                         </div><!--col-xs-8-->
 
-
-                                                                        <strong >Book Cover</strong>
-                                                                        <div id="showUploadCover" class="col-sm-4">
-                                                                            <div class="imageupload">
-                                                                                <div class="file-tab panel-body cover">                                                                   
-                                                                                    <label class="btn btn-default btn-file">
-                                                                                        <span>Browse</span>
-                                                                                        <!-- The file is stored here. -->
-                                                                                        <input type="file" name="image-file">
-                                                                                        <i class="glyphicon glyphicon-picture"></i>
-                                                                                    </label>
-                                                                                    <button type="button" class="btn btn-default pull-left">Remove
-                                                                                        <i class="glyphicon glyphicon-picture"></i></button>
-                                                                                </div>
-                                                                                <input type="hidden" value="Cover" name="image-file" id="label_cover"/>
-                                                                            </div>
-                                                                        </div>             
-
-
-                                                                        <!--<div></div>-->
-                                                                        <div  id="showCover" class="col-sm-4">        
-                                                                            <!--<label class="control-label">Book Cover</label>-->                                                               
-                                                                            <img id="cover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
-                                                                        </div>
+                                                                        <!--
+                                                                                                                                                <strong >Book Cover</strong>
+                                                                                                                                                <div id="showUploadCover" class="col-sm-4">
+                                                                                                                                                    <div class="imageupload">
+                                                                                                                                                        <div class="file-tab panel-body cover">                                                                   
+                                                                                                                                                            <label class="btn btn-default btn-file">
+                                                                                                                                                                <span>Browse</span>
+                                                                                                                                                                 The file is stored here. 
+                                                                                                                                                                <input type="file" name="image-file">
+                                                                                                                                                                <i class="glyphicon glyphicon-picture"></i>
+                                                                                                                                                            </label>
+                                                                                                                                                            <button type="button" class="btn btn-default pull-left">Remove
+                                                                                                                                                                <i class="glyphicon glyphicon-picture"></i></button>
+                                                                                                                                                        </div>
+                                                                                                                                                        <input type="hidden" value="Cover" name="image-file" id="label_cover"/>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>             
+                                                                        
+                                                                        
+                                                                                                                                                <div></div>
+                                                                                                                                                <div  id="showCover" class="col-sm-4">        
+                                                                                                                                                    <label class="control-label">Book Cover</label>                                                               
+                                                                                                                                                    <img id="cover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
+                                                                                                                                                </div>-->
 
                                                                     </div> <!-- row-->
 
@@ -1769,8 +1963,7 @@
                                                                     <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                                     <input id="label_contract" disabled class="pull-left"/>
                                                                     <br/>
-                                                                    <br/> 
-                                                                    <label>Destination:</label>
+                                                                    <br/>                                                      
                                                                     <input type="hidden" value="Contract" name="destination" id="contract_upload"/>
                                                                     ${requestScope.message}
                                                                 </div>
@@ -1820,6 +2013,9 @@
                                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                                         </label>
                                                                     </div>
+                                                                    <script>
+                                                                        $("#proposedDateOfPublication").datepicker();
+                                                                    </script>
                                                                 </div>
 
                                                                 <div class="col-sm-4">
@@ -1853,21 +2049,6 @@
                                                                             >
                                                                 </div>
 
-                                                                <script>
-                                                                    $("#DateOfPublicationOriginal").datepicker({
-                                                                        showWeekDays: true,
-                                                                        todayHighlight: true,
-                                                                        autoclose: true
-                                                                    });
-                                                                </script>
-
-                                                                <script>
-                                                                    $("#proposedDateOfPublication").datepicker({
-                                                                        showWeekDays: true,
-                                                                        todayHighlight: true,
-                                                                        autoclose: true
-                                                                    });
-                                                                </script>
                                                             </div>  <!-- row -->
 
                                                             <div class="row">
@@ -1890,6 +2071,94 @@
                                                                            >
                                                                 </div>
                                                             </div> <!-- row -->
+
+                                                            <div class="row">
+
+                                                                <div class="col-sm-5">    
+                                                                    <label for="translationTitle" class="pull-left">Translation Title</label>
+                                                                    <input id="translationTitle"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="translationTitle"                                
+                                                                           value=""    
+                                                                           placeholder="Translation Title"
+                                                                           disabled=""
+                                                                           >
+                                                                </div>
+
+                                                                <div class="col-sm-4"> 
+                                                                    <div class="form-group has-feedback">
+                                                                        <label for="translatorName" class="pull-left">Translator</label>
+                                                                        <input id="translatorName"                                
+                                                                               type="text"                                
+                                                                               class="form-control"                                
+                                                                               name="translatorName"                                
+                                                                               value=""    
+                                                                               onblur="myFunction();"
+                                                                               placeholder="Translator Name"
+                                                                               disabled=""
+                                                                               >
+                                                                        <!--<i class="glyphicon glyphicon-search form-control-feedback"></i>-->
+                                                                    </div>
+                                                                </div>
+
+                                                            </div> <!-- row -->
+
+
+                                                            <div class="row">
+
+                                                                <div class="col-xs-5">
+                                                                    <div class="mini-box"   style="margin-bottom: 20px">
+                                                                        <label for="translationPublisher" class="pull-left">Translation Publisher</label>
+                                                                        <input id="translationPublisher"                                
+                                                                               type="text"                                
+                                                                               class="form-control"                                
+                                                                               name="translationPublisher"                                
+                                                                               value=""    
+                                                                               placeholder="Translation Publisher"
+                                                                               disabled=""
+
+                                                                               >
+                                                                    </div>
+                                                                </div> <!--col-xs-6-->
+
+                                                                <div class="col-xs-4">
+                                                                    <div class="mini-box">
+                                                                        <div class="form-group has-feedback">
+                                                                            <label for="languages" class="pull-left" >Languages</label>
+                                                                            <input id="languages"                                
+                                                                                   type="text"                                
+                                                                                   class="form-control"                                
+                                                                                   name="languages"                                
+                                                                                   value=""    
+                                                                                   placeholder="Languages"
+                                                                                   disabled=""
+                                                                                   >
+                                                                            <!--<i class="glyphicon glyphicon-search form-control-feedback"></i>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div> <!--col-xs-6-->
+
+                                                                <!--<input type="hidden" id="language_Array" name="languageArray" >-->
+
+                                                            </div> <!-- row -->
+                                                            <div class="row">
+                                                                <div class="col-xs-4">
+                                                                    <div class="mini-box" style="margin-bottom: 20px">
+                                                                        <label for="series" class="pull-left" style="margin-top: 10px">Series</label>
+                                                                        <input id="series"                                
+                                                                               type="text"                                
+                                                                               class="form-control"                                
+                                                                               name="series"                                
+                                                                               value=""    
+                                                                               placeholder="Series"
+                                                                               disabled=""
+                                                                               >
+                                                                    </div>
+                                                                </div> <!--col-xs-6-->
+
+                                                            </div> <!-- row -->
+
                                                         </div>
                                                     </div> <!-- container-fluid -->
                                                 </div> <!-- tab-pane Publication -->
@@ -1961,7 +2230,68 @@
                                                         Miscellaneous
                                                     </p>
 
+
                                                     <div class="container-fluid">
+
+                                                        <div class="row">
+                                                            <div class="col-sm-4"></div>
+
+                                                            <div id="showUploadCover" class="col-sm-4" style="margin-bottom:  40px">      
+                                                                <strong >Book Cover</strong>
+                                                                <div class="imageupload">
+                                                                    <div class="file-tab panel-body cover">                                                                   
+                                                                        <label class="btn btn-default btn-file">
+                                                                            <span>Browse</span>
+                                                                            <!-- The file is stored here. -->
+                                                                            <input type="file" name="image-file">
+                                                                            <i class="glyphicon glyphicon-picture"></i>
+                                                                        </label>
+                                                                        <button type="button" class="btn btn-default pull-left">Remove
+                                                                            <i class="glyphicon glyphicon-picture"></i></button>
+                                                                    </div>
+                                                                    <input type="hidden" value="Cover" name="image-file" id="label_cover"/>
+                                                                </div>
+                                                            </div>             
+
+
+                                                            <!--<div></div>-->
+                                                            <div  id="showCover" class="col-sm-4" style="margin-bottom:  40px">        
+                                                                <strong >Book Cover</strong>                                                    
+                                                                <img id="cover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
+                                                            </div>
+                                                            <div class="col-sm-4"></div>
+                                                        </div> <!--row-->
+
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <!--<div class="mini-box">-->   
+                                                                <label for="isbn" class="pull-left">ISBN</label>
+                                                                <input id="isbn"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="isbn"                                
+                                                                       value=""    
+                                                                       placeholder="ISBN"
+                                                                       >
+
+                                                                <!--</div>-->
+                                                            </div> <!--col-xs-6-->
+                                                            <div class="col-sm-3"></div>
+                                                            <div class="col-sm-3">
+                                                                <!--<div class="mini-box">-->
+                                                                <label for="isnn" class="pull-left">ISSN</label>
+                                                                <input id="isnn"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="issn"                                
+                                                                       value=""    
+                                                                       placeholder="ISSN"
+                                                                       >
+                                                                <!--</div>-->                                                                                    
+                                                            </div> <!--col-xs-6-->
+                                                        </div> <!--row-->
+
+
 
                                                         <div class="row">
 
@@ -2029,7 +2359,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3"   style="margin-top: 40px; margin-bottom: 40px">
+                                                            <div class="col-md-3"   style="margin-top: 5px; margin-bottom: 40px">
                                                                 <strong class="pull-left">&nbsp;</strong>                                                 
                                                                 <label class="btn btn-default pull-left" onclick = "pressCuttingsModal();">
                                                                     <img src="images/Press_Cutting.png" width="20" alt="Press_Cutting.png" /> 
@@ -2117,11 +2447,7 @@
 
                                                                     <!--datepicker  mail-sent-->
                                                                     <script>
-                                                                        $("#dateCopiesWereSent").datepicker({
-                                                                            showWeekDays: true,
-                                                                            todayHighlight: true,
-                                                                            autoclose: true
-                                                                        });
+                                                                        $("#dateCopiesWereSent").datepicker();
                                                                     </script>
 
                                                                 </div> <!--panel--body-->
@@ -2238,7 +2564,7 @@
 
                                         <div class="modal-footer"  style="background-color: #c3bcbc">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                                         </div>
                                     </div> <!-- container-fluid -->  
                                 </nav>    
@@ -2246,6 +2572,45 @@
                         </div> <!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
+                
+                
+   <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: #c3bcbc">
+                                            <button type="button" class="close" data-dismiss="modal"  onclick="backToMisc();"  aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="pressCuttingsModalLabel">add Press Cuttings</h4>
+                                        </div>
+
+
+                                        <div class="modal-body" style="background-color: #d9d1d1">
+                                            <div class="row" style="margin-bottom: 10px">
+
+                                                <output id="result">Press Cuttings</output>
+                                                <!--<button type="button" id="clear">Clear</button>-->
+                                            </div>
+
+
+                                            <div class="row" style="margin-bottom: 10px">
+                                                <div class='col-sm-12'>
+                                                    <button type="button" id="clear">Clear</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer"  style="background-color: #c3bcbc">
+                                            <!--<button id="pressCutting" type="button" value="Add another Press Cutting"  class="btn btn-group-sm  button teal pull-left">Add Press Cuttings</button>-->
+                                            <label class="btn btn-default btn-file">
+                                                Add Press Cuttings<input type="file" id="files" multiple  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
+                                            </label>
+                                            <!--<button type="button" id="clear">Clear</button>-->
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToMisc();">Done</button>
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                        </div> <!--modal footer -->
+                                    </div> <!--modal content-->          
+                                </div> <!--modal dialog-->
+                            </div> <!--modal fade-->
+                            <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
 
                 <form class="form-horizontal" 
                       role="form"  
@@ -2307,38 +2672,39 @@
             &copy; 2017 mgr Software
         </div>
         <script src="js/bootstrap-imageupload.js"></script>
+        
         <script>
-                                                                        var $imageupload = $('.imageupload');
-                                                                        $imageupload.imageupload();
-                                                                        $('#imageupload-disable').on('click', function () {
-                                                                            alert("imageupload-disable");
-                                                                            $imageupload.imageupload('disable');
-                                                                            $(this).blur();
-                                                                        });
+                var $imageupload = $('.imageupload');
+                $imageupload.imageupload();
+                $('#imageupload-disable').on('click', function () {
+                    alert("imageupload-disable");
+                    $imageupload.imageupload('disable');
+                    $(this).blur();
+                });
 
-                                                                        $('#imageupload-enable').on('click', function () {
-                                                                            alert("imageupload-enable");
-                                                                            $imageupload.imageupload('enable');
-                                                                            $(this).blur();
-                                                                        });
+                $('#imageupload-enable').on('click', function () {
+                    alert("imageupload-enable");
+                    $imageupload.imageupload('enable');
+                    $(this).blur();
+                });
 
-                                                                        $('#imageupload-reset').on('click', function () {
-                                                                            alert("imageupload-reset");
-                                                                            $imageupload.imageupload('reset');
-                                                                            $(this).blur();
-                                                                        });
+                $('#imageupload-reset').on('click', function () {
+                    alert("imageupload-reset");
+                    $imageupload.imageupload('reset');
+                    $(this).blur();
+                });
 
-                                                                        function pressCuttingsModal() {
-                                                                            $("#pressCuttingsModal").modal("show");
-                                                                        }
+                function pressCuttingsModal() {
+                    $("#pressCuttingsModal").modal("show");
+                }
 
-                                                                        var pressCuttingsUpload = $('.pressCuttingsUpload');
-                                                                        pressCuttingsUpload.imageupload();
-//                                                $('#pressCuttingsUpload-disable').on('click', function () {
-//                                                     alert("imageupload-disable");
-//                                                    pressCuttingsUpload.imageupload('disable');
-//                                                    $(this).blur();
-//                                                });
+                var pressCuttingsUpload = $('.pressCuttingsUpload');
+                pressCuttingsUpload.imageupload();
+    //                                                $('#pressCuttingsUpload-disable').on('click', function () {
+    //                                                     alert("imageupload-disable");
+    //                                                    pressCuttingsUpload.imageupload('disable');
+    //                                                    $(this).blur();
+    //                                                });
 
         </script>
     </body>

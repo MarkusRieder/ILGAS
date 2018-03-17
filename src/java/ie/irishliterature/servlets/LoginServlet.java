@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,26 +38,32 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        request.setAttribute("username", request.getParameter("username"));
-        request.setAttribute("password", request.getParameter("password"));
-        request.setAttribute("firstname", request.getParameter("firstname"));
-        request.setAttribute("lastname", request.getParameter("lastname"));
-        request.setAttribute("email", request.getParameter("email"));
+//        request.setAttribute("username", request.getParameter("username"));
+//        request.setAttribute("password", request.getParameter("password"));
+//        request.setAttribute("firstname", request.getParameter("firstname"));
+//        request.setAttribute("lastname", request.getParameter("lastname"));
+//        request.setAttribute("email", request.getParameter("email"));
+
+
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
+        String lastLogon = request.getParameter("lastLogon");
+        long lastLogonForm = Long.parseLong(lastLogon);
+        
         System.out.println("username: " + username);
         System.out.println("password: " + password);
+        System.out.println("lastLogonForm: " + lastLogonForm);
 
         password = BCrypt.hashpw(request.getParameter("password"), GlobalConstants.SALT);
         System.out.println("password: 2 " + password);
 
-        String[] replied = service.loginCheck(username, password);
+        String[] replied = service.loginCheck(username, password, lastLogonForm);
 
         boolean isValidUser = Boolean.parseBoolean(replied[0]);
+        boolean LogonPassed = Boolean.parseBoolean(replied[8]);
 
-        if (isValidUser) {
+        if (isValidUser && LogonPassed) {
 
             String role = replied[1];
             String function = replied[2];
@@ -65,6 +72,7 @@ public class LoginServlet extends HttpServlet {
             String name = replied[5];
             String email = replied[6];
             int userID = Integer.parseInt(replied[7]);
+            
 
             request.setAttribute("username", username);
             request.setAttribute("password", password);
@@ -80,9 +88,9 @@ public class LoginServlet extends HttpServlet {
             System.out.println("function: " + function);
             System.out.println("full name: " + name);
 
+            // Setting user session
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
-
             session.setAttribute("firstname", firstname);
             session.setAttribute("lastname", lastname);
             session.setAttribute("email", email);
@@ -95,6 +103,15 @@ public class LoginServlet extends HttpServlet {
 
             // set full name
             session.setAttribute("name", name);
+
+            System.out.println("###################################################################");
+            System.out.println("Enumeration keys   ");
+            Enumeration keys = session.getAttributeNames();
+            while (keys.hasMoreElements()) {
+                String key = (String) keys.nextElement();
+                System.out.println("key  :" + key + ": " + session.getValue(key));
+            }
+            System.out.println("###################################################################");
 
             if ("Literature Ireland Staff".equals(function)) {
 
@@ -136,13 +153,13 @@ public class LoginServlet extends HttpServlet {
 
                             System.out.println("Publisher isNew:2: " + isNew);
 
-                            //        if new Publisher go here (Status = "new")
-                            //        here update Status to complete
+                            // if new Publisher go here (Status = "new")
+                            // here update Status to complete
                             request.getRequestDispatcher("/WEB-INF/views/publisherRegistration.jsp").forward(request, response);
 
                         } else {
                             System.out.println("Im here :1: ");
-                             session.setAttribute("publisherID", publisherID);
+                            session.setAttribute("publisherID", publisherID);
                             request.getRequestDispatcher("/WEB-INF/views/welcome_Publisher.jsp").forward(request, response);
                         }
 

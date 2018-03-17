@@ -16,8 +16,9 @@
 
 
         <!--JQuery-->
-
-        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!--<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>-->
 
 
         <!-- Bootstrap -->
@@ -55,14 +56,14 @@
         <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>       
         <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
         <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-        <script src="//cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
+        <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
         <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
         <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
         <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
         <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js "></script>
         <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
-        <script src="js/bootstrap-datepicker.js"></script>
-        <script src="js/jquery-ui.js"></script>
+        <script type="text/javascript" language="javascript"  src="js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" language="javascript"  src="js/jquery-ui.js"></script>
 
         <!--http://jschr.github.io/bootstrap-modal/bs3.html-->
 
@@ -71,8 +72,29 @@
 
 
         <script>
+            $.datepicker.setDefaults({
+                dateFormat: 'dd/mm/yy',
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                autoclose: true,
+                changeMonth: true,
+                changeYear: true,
+                gotoCurrent: true,
+                orientation: "bottom" // <-- and add this
+            });
 
-            $.datepicker.setDefaults({dateFormat: 'dd/mm/yy'});
+            var i;
+
+            console.log("local storage - welcome_staff.jsp");
+            for (i = 0; i < localStorage.length; i++) {
+                console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
+            }
+
+            console.log("session storage");
+            for (i = 0; i < sessionStorage.length; i++) {
+                console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
+            }
+
         </script>
 
 
@@ -363,8 +385,8 @@
                                 return data;
                             }},
                         {"data": "Language"},
-                        {"data": "physicalDescription"},
-                        {"data": "Duplicates"},
+//                        {"data": "physicalDescription"},
+//                        {"data": "Duplicates"},
                         {"data": "Copies"},
                         {"data": "Notes"},
                         {"data": "ISBN"},
@@ -1004,6 +1026,8 @@
                         var tr = document.createElement('TR');
                         for (j = 0; j < translatorTrack[i].length; j++) {
                             var td = document.createElement('TD');
+
+                            console.log("translatorTrack[" + i + " ][ " + j + " ]" + translatorTrack[i][j]);
                             if (i === 0) {
                                 td.className = 'someClass';
                             }
@@ -1273,8 +1297,14 @@
                 width: 17em; 
                 padding: .2em .2em 0; 
                 display: none; 
-                z-index: 2000 !important;
+                position: relative; z-index: 100000 !important;
+                /*z-index: 2000 !important;*/
             }
+
+            /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
+            .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
+            .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
+            .ui-datepicker-calendar a.ui-state-active { background: red; } 
 
             .someClass {
                 background:yellow;
@@ -1740,14 +1770,14 @@
                                                         </div> <!--row-->
 
                                                         <!--second row-->
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-1"></div>
-                                                            <div class="col-sm-8">        
-                                                                <label class="control-label">Book Cover</label>                                                               
-                                                                <img id="cover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
-                                                            </div>
-
-                                                        </div> <!--row-->
+                                                        <!--                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                                                                                    <div class="col-sm-1"></div>
+                                                                                                                    <div class="col-sm-8">        
+                                                                                                                        <label class="control-label">Book Cover</label>                                                               
+                                                                                                                        <img id="cover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
+                                                                                                                    </div>
+                                                        
+                                                                                                                </div> row-->
 
                                                         <!--second row-->
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
@@ -1851,8 +1881,8 @@
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
-                                                            <div class="col-sm-3">        
-                                                                <label for="appCountryOfPublication" class="control-label pull-left">Country of Publication</label>
+                                                            <div class="col-sm-4">        
+                                                                <label for="appCountryOfPublication" class="control-label pull-left">Country of Publication <br/>(of the original)</label>
                                                                 <input id="appCountryOfPublication"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -1861,7 +1891,7 @@
                                                             </div>
 
                                                             <div class="col-sm-4">
-                                                                <label for="appLanguageOriginal" class="control-label pull-left">Language <br/>(of the original)</label>
+                                                                <label for="appLanguageOriginal" class="control-label pull-left">&nbsp;<br/>Language <br/>(of the original)</label>
                                                                 <input  id="appLanguageOriginal" 
                                                                         name="appLanguageOriginal" 
                                                                         type="text"                                                                
@@ -1871,7 +1901,7 @@
 
 
                                                             <div class="col-sm-4">        
-                                                                <label for="appGenre" class="control-label pull-left">&nbsp;<br/> Genre</label>
+                                                                <label for="appGenre" class="control-label pull-left">&nbsp;<br/> Genre<br/>&nbsp;</label>
                                                                 <input id="appGenre"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -2062,6 +2092,16 @@
                                                                     <input type="text" class="form-control" name="apptranslatorFee" id="apptranslatorFee" placeholder="fee">    
                                                                 </div>
                                                             </div>
+                                                        </div> <!--row-->
+
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
+
+                                                            <div class="col-sm-12">
+                                                                <label for="previousGrantAid" class="control-label pull-left"> Previous Grant Aid</label>
+                                                                <textarea id="previousGrantAid" class="form-control" name="previousGrantAid" style="height: 183px" placeholder="author name, title, application year, amount awarded. " ></textarea>
+                                                            </div>
+
                                                         </div> <!--row-->
 
                                                     </div> <!--tab-pane" id="page 2" -->
@@ -2335,6 +2375,14 @@
 
                                                         <!--Contract -->
 
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-1"></div>
+                                                            <div class="col-sm-8">        
+                                                                <label class="control-label">Book Cover</label>                                                               
+                                                                <img id="cover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
+                                                            </div>
+
+                                                        </div> <!--row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
@@ -2507,15 +2555,15 @@
                                                             </div>
 
                                                         </div> <!--row-->
-
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
-
-                                                            <div class="col-sm-12">
-                                                                <label for="previousGrantAid" class="control-label pull-left"> Previous Grant Aid</label>
-                                                                <textarea id="previousGrantAid" class="form-control" name="previousGrantAid" style="height: 183px" placeholder="author name, title, application year, amount awarded. " ></textarea>
-                                                            </div>
-
-                                                        </div> <!--row-->
+                                                        <!--
+                                                                                                                <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
+                                                        
+                                                                                                                    <div class="col-sm-12">
+                                                                                                                        <label for="previousGrantAid" class="control-label pull-left"> Previous Grant Aid</label>
+                                                                                                                        <textarea id="previousGrantAid" class="form-control" name="previousGrantAid" style="height: 183px" placeholder="author name, title, application year, amount awarded. " ></textarea>
+                                                                                                                    </div>
+                                                        
+                                                                                                                </div> row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
 
@@ -2808,8 +2856,8 @@
                                                         <th class="all">Translation<br/>Publisher Year</th>
                                                         <th class="all">Translator</th>
                                                         <th class="all">Language</th>
-                                                        <th class="all">Physical<br/>Description</th>
-                                                        <th class="all">Duplicates</th>
+                                                        <!--                                                        <th class="all">Physical<br/>Description</th>
+                                                                                                                <th class="all">Duplicates</th>-->
                                                         <th class="all">Copies</th>
                                                         <th class="all">Notes</th>
                                                         <th class="all">ISBN</th>
@@ -2833,8 +2881,8 @@
                                                         <th class="all">Translation<br/>Publisher Year</th>
                                                         <th class="all">Translator</th>
                                                         <th class="all">Language</th>
-                                                        <th class="all">Physical<br/>Description</th>
-                                                        <th class="all">Duplicates</th>
+                                                        <!--                                                        <th class="all">Physical<br/>Description</th>
+                                                                                                                <th class="all">Duplicates</th>-->
                                                         <th class="all">Copies</th>
                                                         <th class="all">Notes</th>
                                                         <th class="all">ISBN</th>
@@ -2982,9 +3030,6 @@
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
-
-
-
                                     </div>
                                 </div> <!--Library-->
 

@@ -27,20 +27,24 @@
 
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
         <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-
+        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
 
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-        <script src="js/moment.js"></script>
+        <script type="text/javascript"  src="js/moment.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
-        <script src="js/bootstrap-datepicker.js"></script>
-        <script src="js/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/pdf.js"></script>
-        <script src="js/pdf.worker.js"></script>
+        <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript"  src="js/jquery-ui.js"></script>
+        <script type="text/javascript"  src="js/pdf.js"></script>
+        <script type="text/javascript"  src="js/pdf.worker.js"></script>
 
         <script>
+            //Global Variables
             var translatorArray = [];
             var authorArray = [];
             var languageArray = [];
@@ -51,11 +55,27 @@
             var Authorcounter = 0;
             var pressCuttingCounter = 0;
             var translatorCounter = 0;
-            var translatorCounter1 = 0;
+//            var translatorCounter1 = 0;
             var translatorName876 = "";
-            $.datepicker.setDefaults({dateFormat: 'dd/mm/yy'});
+            var itemValue = "";
+
+            $.datepicker.setDefaults({
+                dateFormat: 'dd/mm/yy',
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                autoclose: true,
+                changeMonth: true,
+                changeYear: true,
+                gotoCurrent: true,
+                orientation: "bottom" // <-- and add this
+            });
+
+            localStorage.clear();
+
             PDFJS.workerSrc = 'js/pdf.worker.js';
         </script>
+
+        <!-- Section AutoComplete -->
 
         <!--AutoComplete_Genres-->
         <script type="text/javascript">
@@ -400,6 +420,19 @@
                 background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
             }
 
+            .ui-datepicker { 
+                width: 17em; 
+                padding: .2em .2em 0; 
+                display: none; 
+                position: relative; z-index: 100000 !important;
+                /*z-index: 2000 !important;*/
+            }
+
+            /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
+            .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
+            .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
+            .ui-datepicker-calendar a.ui-state-active { background: red; } 
+
             /* Set whitespace between the generated input fields*/
             input.wsp{
 
@@ -435,7 +468,7 @@
             });
         </script>
 
-
+        <!--https://www.experts-exchange.com/questions/28687200/how-to-load-extrenal-url-in-bootstrap-tabs.html-->
         <script type="text/javascript">
             $(function () {
                 $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -461,6 +494,8 @@
         </script>
 
 
+        <!-- the following functions will copy
+         the selected file name (for upload) to the label input-->
         <script>
 
             $(function () {
@@ -481,7 +516,6 @@
                     document.getElementById("label_contract").value = label;
                 });
             });
-
             $(function () {
                 $('div.addendum').on('change', ':file', function () {
                     var input = $(this),
@@ -491,9 +525,7 @@
                     document.getElementById("label_addendum").value = label;
                 });
             });
-
             $(function () {
-
                 $('div.translator_cv').on('change', ':file', function () {
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
@@ -503,8 +535,6 @@
                     document.getElementById("label_translator0").value = label;
                 });
             });
-
-
             $(function () {
                 $(document).on('change', 'div.translatorcv :file', function () {
 
@@ -611,11 +641,12 @@
         <script>
             function backToBooks() {
                 var upload_number = 2;
+
                 for (var i = 2; i <= counter; i++) {
 
                     var nr = "name" + i;
                     var item = document.getElementById(nr);
-                    var itemValue = item.value;
+                    itemValue = item.value;
 
                     translatorArray.push(itemValue);
 
@@ -1038,8 +1069,8 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  style="background-color: #d9d1d1">
                             <ul class="nav navbar-nav nav-tabs two-lines">
-                                <li class="active"><a href="#info" data-toggle="tab">Info</a></li>
-                                <li><a href="#Contact" data-toggle="tab">Contact details</a></li>
+                                <!--<li class="active"><a href="#info" data-toggle="tab">Info</a></li>-->
+                                <li class="active"><a href="#Contact" data-toggle="tab">Contact details</a></li>
                                 <li><a href="#books" data-toggle="tab">Book<br/> details</a></li>
                                 <li><a href="#Rights" data-toggle="tab">Rights<br/>  Agreement</a></li>
                                 <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
@@ -1047,119 +1078,14 @@
                                 <li><a href="#Misc" data-toggle="tab">Misc</a></li>
                                 <li><a href="#Original" data-toggle="tab"><span>Original Work &<br/> Sample Translation</span></a></li>
                             </ul>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Info"><i class="material-icons" onclick="showInfoModal()();">info_outline</i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Notes"><i class="material-icons" onclick="showNotesModal()();">note</i></a>
                         </div><!-- /.navbar-collapse -->
 
                         <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/GrantApplicationServlet" enctype="multipart/form-data">
-
+                            <%request.getSession().setAttribute("task", "Start New Application");%>
                             <div id="my-tab-content" class="tab-content"  style="background-color: #E8F6FF">
-                                <!-- Info -->
-                                <div class="tab-pane active" id="info">       
-                                    <br/>
-                                    <br/>
-                                    <img style="margin:0px auto;display:block" src="images/favicon.png" alt="favicon" width="50" height="50"/>
-                                    <p class="header1" style="margin-bottom: 40px; margin-top: 60px"> 
-                                        <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span> 
-                                        Information - Please read!
-                                        <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span> 
-                                    </p>
-                                    <!--<p>-->   
-                                    <h2><strong>Translation Grant Programme Application Checklist</strong></h2>
-                                    <br/>
-                                    <br/>
-                                    <strong>Your application to the Literature Ireland Translation Grant Programme should include the following:</strong>
-                                    <br/>
-                                    <br/>
-                                    <h3> Contact Details</h3>
-                                    <ul class="dashed">
-                                        <li>The name, address, email and phone number of the applicant</li>
-                                    </ul>
 
-                                    <h3> Contracts</h3>
-                                    <ul class="dashed">
-                                        <li>A copy of the agreement with the translation rights holder (where applicable)<br/>
-                                        <li> A copy of the contract with the translator </li>
-                                    </ul>
-
-                                    <h3> Publication Details</h3>
-                                    <ul class="dashed">
-                                        <li>The proposed date of publication<br/>
-                                        <li>The proposed print run<br/></li>
-                                        <li>The planned page extent of the published translation </li>
-                                    </ul>
-
-                                    <h3> Translator's Details</h3>
-                                    <ul class="dashed">
-                                        <li>A copy of the translator's CV, including a list of previous published literary translations</li>
-                                        <li>Details of the fee to be paid to the translator (this should include the total sum in Euro and a breakdown of the rate according to which this sum has been calculated)</li>
-                                    </ul>
-
-                                    <h3> Original Work & Sample Translation</h3>
-                                    <ul class="dashed">
-                                        <li>Two copies of the original work* </li>
-                                        <li>Two copies of a translation sample** consisting of 10 to 12 pages of prose or six poems</li>
-                                    </ul>
-
-                                    <br/>
-                                    <p> <i> * &nbsp; Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
-                                            ** If more than one translator is involved, a translation sample must be submitted for each translator.
-                                        </i> </p>
-
-
-                                    <!--in Panel-->
-                                    <div class = "panel panel-default">
-                                        <div class = "panel-body">
-
-                                            <input type="checkbox" name="checkbox" value="check" id="agree" /> I have read and agree to the Terms and Conditions and Privacy Policy
-                                            <input type="submit" name="submit" value="submit" />
-
-                                            <br/>
-                                            <p class="header1" style="margin-bottom: 40px">
-                                                Terms and Conditions
-                                            </p>
-
-                                            <div class="checkbox">                                                             
-                                                <label style="margin-bottom: 30px" for="TC_ACCEPTED">By clicking on the "<i>I accept</i>" button, you are confirming that you have <strong>read</strong> and <strong>accepted</strong> <br/>the terms and conditions of use of this website (including disclaimer).</label>
-                                                <br/>
-                                                <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
-                                                    <input type="checkbox" 
-                                                           name="TC_ACCEPTED" 
-                                                           id="TC_ACCEPTED" 
-                                                           value="ticked" 
-                                                           class="form-control">
-                                                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                                </label>                                                          
-                                            </div>
-                                            <a href="${pageContext.request.contextPath}/termsConditions.jsp">read Terms and Conditions</a>
-                                        </div>  <!-- panel-body-->     
-                                    </div>  <!-- panel --> 
-                                    <br/>
-
-
-                                    All queries in relation to the Translation Grant Programme should be addressed to Deputy Director Rita McCann at rita[at]literatureireland[dot]com or Administrator Orla King at orla[at]literatureireland[dot]com.
-                                    <br/>
-                                    <br/>
-                                    <p class="header1"> 
-                                        NOTES
-                                    </p>
-                                    <br/>
-                                    <ol>
-                                        <li>The <strong>deadlines for application</strong> are available on the Literature Ireland website at <a href="http://www.literatureireland.com/programmes/translation-grant-programme/">http://www.literatureireland.com/programmes/translation-grant-programme/</a>. There are typically three deadlines per year.  </li>
-
-                                        <li>The deadline for application is the <strong>date by which applications should be received</strong> by Literature Ireland and not the date by which they should be posted. Allowance is made for postal delays but submissions received more than one week after the deadline may not be accepted.  </li>
-
-                                        <li><strong>Late applications</strong> may, in rare cases, be accepted at the discretion of Literature Ireland. However, late submission will affect the timeliness with which the applicant publisher can be informed of the outcome of his/her application. </li>
-
-                                        <li>It is recommended that the <strong>translation sample</strong> submitted be a final or near-final version which has been <strong>proofread and edited</strong>. If the sample submitted is an early or unedited draft, the applicant is requested to inform Literature Ireland of this fact.  </li>
-
-                                        <li>Literature Ireland maintains records of the <strong>average/typical rates paid to literary translators</strong> in different countries. If the rate being paid to the translator is substantially different from that which might be usual, the applicant is requested to include an explanation for this in his/her application. </li> 
-
-                                        <li> For each application, the <strong>translation sample is assessed by an independent expert</strong>, who provides a report which is made available to the board of Literature Ireland when it considers the request for funding (see note 7). </li>
-
-                                        <li>All applications are considered by the board of Literature Ireland at meeting held six to <strong>eight weeks after the deadline</strong>. Applications for translations due for publication before the date of the board meeting will be deemed ineligible.  </li>
-
-                                        <li>Applicants are informed of the <strong>outcome of the application</strong> within 10 days of the board meeting. Successful applicants will be issued with formal contracts and a letter of award within six weeks of grant approval.   </li> 
-                                    </ol>
-                                </div>
 
                                 <!--////////////////////////////////////////////////////////////////////////////
                                     ///
@@ -1168,7 +1094,7 @@
                                     ////////////////////////////////////////////////////////////////////////////-->
 
                                 <!-- Contact details -->
-                                <div class="tab-pane" id="Contact">
+                                <div class="tab-pane active" id="Contact">
 
                                     <!--wrapper for Contact tab pane-->
                                     <div class="container">
@@ -1349,7 +1275,7 @@
 
                                         <!--eighth row-->
                                         <div class="row" style="margin-bottom: 10px;margin-top: 20px">
-                                            <div class="col-sm-3"> 
+                                            <div class="col-sm-4"> 
                                                 <div class="well well-sm">
                                                     <div class="checkbox">                                                        
                                                         <input id="doNotMail" 
@@ -1358,49 +1284,11 @@
                                                                value="${companyDetails.doNotMail}" 
                                                                checked =""
                                                                >  
-                                                        <label for="doNotMail"> DO NOT MAIL </label>
+                                                        <label for="doNotMail">Do not add to newsletter</label>
                                                     </div><!--checkbox-->
                                                 </div> <!--well-->
                                             </div> <!--<div class="col-sm-3">-->   
 
-                                            <div class="col-sm-3">
-                                                <div class="well well-sm">
-                                                    <div class="checkbox">
-                                                        <input id="Bursaries" 
-                                                               type="checkbox"  
-                                                               name="Bursaries" 
-                                                               value="${companyDetails.Bursaries}"
-                                                               checked =""
-                                                               > 
-                                                        <label for="Bursaries"> Bursaries </label> 
-                                                    </div><!--checkbox-->
-                                                </div> <!--well-->
-                                            </div><!--<div class="col-sm-3">-->   
-                                        </div> <!--row-->
-
-                                        <!--ninth row-->
-                                        <div class="row" style="margin-bottom: 10px">
-                                            <div class="col-sm-3">   
-                                                <label class="pull-left">Founded</label>
-                                                <input id="Founded"                                
-                                                       type="text"                                
-                                                       class="form-control"                                
-                                                       name="Founded"                                
-                                                       value="${companyDetails.Founded}"                                                                  
-                                                       placeholder="Founded"
-                                                       >
-
-                                            </div>
-                                            <div class="col-sm-3">    
-                                                <label class="pull-left">Number of Titles</label>
-                                                <input id="NumberOfTitles"                                
-                                                       type="text"                                
-                                                       class="form-control"                                
-                                                       name="NumberOfTitles"                                
-                                                       value="${companyDetails.NumberOfTitles}"                       
-                                                       placeholder="Number of Titles"
-                                                       >      
-                                            </div>
                                         </div> <!--row-->
 
                                         <!--keep in one line otherwise placeholder doesn't show-->
@@ -1592,16 +1480,8 @@
                                                                 </div> <!--col-xs-6-->
 
                                                                 <div class="col-xs-6">
-                                                                    <div class="mini-box" style="margin-bottom: 20px">
-
-                                                                        <label for="translationPublicationYear" class="pull-left">Translation Publication Year</label>
-                                                                        <input id="translationPublicationYear"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="translationPublicationYear"                                
-                                                                               value=""    
-                                                                               placeholder="Translation Publication Year"
-                                                                               >
+                                                                    <div class="mini-box">
+                                                                        ??????????????
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
 
@@ -1661,47 +1541,9 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
-                                                                <!--                                                                <div class="col-xs-6">
-                                                                                                                                    <div class="mini-box">
-                                                                                                                                        <label for="physicalDescription" class="pull-left" >Physical Description</label>
-                                                                                                                                        <input id="physicalDescription"                                
-                                                                                                                                               type="text"                                
-                                                                                                                                               class="form-control"                                
-                                                                                                                                               name="physicalDescription"                                
-                                                                                                                                               value=""    
-                                                                                                                                               placeholder="Physical Description"
-                                                                                                                                               >
-                                                                                                                                    </div>
-                                                                                                                                </div> col-xs-6-->
                                                             </div> <!--row-->
 
                                                             <div class="row">
-
-                                                                <!--                                                                <div class="col-xs-6">
-                                                                                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                                                                                        <label for="duplicates" class="pull-left" style="margin-top: 10px">Duplicates</label>
-                                                                                                                                        <input id="duplicates"                                
-                                                                                                                                               type="text"                                
-                                                                                                                                               class="form-control"                                
-                                                                                                                                               name="duplicates"                                
-                                                                                                                                               value=""    
-                                                                                                                                               placeholder="Duplicates"
-                                                                                                                                               >
-                                                                                                                                    </div>
-                                                                                                                                </div> col-xs-6-->
-
-                                                                <!--                                                                <div class="col-xs-6">
-                                                                                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                                                                                        <label for="copies" class="pull-left" style="margin-top: 10px">Copies</label>
-                                                                                                                                        <input id="copies"                                
-                                                                                                                                               type="text"                                
-                                                                                                                                               class="form-control"                                
-                                                                                                                                               name="copies"                                
-                                                                                                                                               value=""    
-                                                                                                                                               placeholder="Copies"
-                                                                                                                                               >
-                                                                                                                                    </div>
-                                                                                                                                </div> col-xs-6-->
 
 
                                                                 <div class="col-xs-6">
@@ -1727,54 +1569,8 @@
                                                                 </div>
                                                             </div> <!--row-->
 
-                                                            <!--    <div class="row">
-                                                                                                                        <div class="col-sm-5">
-                                                                                                                                  <div class="mini-box">   
-                                                                                                                                  <label for="isbn" class="pull-left">ISBN</label>
-                                                                                                                                  <input id="isbn"                                
-                                                                                                                                         type="text"                                
-                                                                                                                                         class="form-control"                                
-                                                                                                                                         name="isbn"                                
-                                                                                                                                         value=""    
-                                                                                                                                         placeholder="ISBN"
-                                                                                                                                         >
-                                                              
-                                                                                                                                  </div>
-                                                                                                                              </div> col-xs-5-->
-
-                                                            <!--                                                                <div class="col-sm-5" style="margin-left: 45px">  
-                                                                                                                                <div class="mini-box">
-                                                                                                                                <label for="isnn" class="pull-left">ISSN</label>
-                                                                                                                                <input id="isnn"                                
-                                                                                                                                       type="text"                                
-                                                                                                                                       class="form-control"                                
-                                                                                                                                       name="issn"                                
-                                                                                                                                       value=""    
-                                                                                                                                       placeholder="ISSN"
-                                                                                                                                       >
-                                                                                                                                </div>                                                                                    
-                                                                                                                            </div> col-xs-6
-                                                        </div> -->
                                                         </div><!--col-xs-8-->
 
-
-                                                        <!--   <strong >Book Cover</strong>
-                                                               <div class="col-sm-4">
-                                                                   <div class="imageupload">
-                                                                       <div class="file-tab panel-body cover">                                                                   
-                                                                           <label class="btn btn-default btn-file">
-                                                                               <span>Browse</span>
-                                                                                The file is stored here. 
-                                                                               <input type="file" name="image-file">
-                                                                               <i class="glyphicon glyphicon-picture"></i>
-                                                                           </label>
-                                                                           <button type="button" class="btn btn-default pull-left">Remove
-                                                                               <i class="glyphicon glyphicon-picture"></i></button>
-                                                                       </div>
-               
-                                                                       <input type="hidden" value="Cover" name="image-file" id="label_cover"/>
-                                                                   </div>
-                                                               </div>                                                    -->
                                                     </div> <!-- row-->
 
 
@@ -1934,19 +1730,11 @@
                                                 </div>
 
                                                 <script>
-                                                    $("#DateOfPublicationOriginal").datepicker({
-                                                        showWeekDays: true,
-                                                        todayHighlight: true,
-                                                        autoclose: true
-                                                    });
+                                                    $("#DateOfPublicationOriginal").datepicker();
                                                 </script>
 
                                                 <script>
-                                                    $("#proposedDateOfPublication").datepicker({
-                                                        showWeekDays: true,
-                                                        todayHighlight: true,
-                                                        autoclose: true
-                                                    });
+                                                    $("#proposedDateOfPublication").datepicker();
                                                 </script>
 
                                             </div>
@@ -2071,7 +1859,7 @@
                                                     <!--copies of the original work-->
                                                     <div class="col-md-9" >
                                                         <div class="checkbox">                                                             
-                                                            <label for="copies" class=" pull-left"><strong>Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong></label>
+                                                            <label for="copiesSent" class=" pull-left"><strong>Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong></label>
                                                             <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
                                                                 <input type="checkbox" 
                                                                        name="copiesSent" 
@@ -2100,11 +1888,7 @@
 
                                                     <!--datepicker  mail-sent-->
                                                     <script>
-                                                        $("#dateCopiesWereSent").datepicker({
-                                                            showWeekDays: true,
-                                                            todayHighlight: true,
-                                                            autoclose: true
-                                                        });
+                                                        $("#dateCopiesWereSent").datepicker();
                                                     </script>
                                                 </div> <!--panel--body-->
                                             </div> <!--panel-default-->
@@ -2311,6 +2095,115 @@
                                 </div> <!--modal dialog-->
                             </div> <!-- addAuthorModal -->
 
+
+                            <div class="modal fade" id="showInfoModal" tabindex="-1" role="dialog" aria-labelledby="showInfoModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: #c3bcbc">
+                                            <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="showInfoModalLabel">Info</h4>
+                                        </div>
+
+
+                                        <div class="modal-body" style="background-color: #d9d1d1">
+
+                                            <h2><strong>Translation Grant Programme Application Checklist</strong></h2>
+                                            <br/>
+                                            <br/>
+                                            <strong>Your application to the Literature Ireland Translation Grant Programme should include the following:</strong>
+                                            <br/>
+                                            <br/>
+                                            <h3> Contact Details</h3>
+                                            <ul class="dashed">
+                                                <li>The name, address, email and phone number of the applicant</li>
+                                            </ul>
+
+                                            <h3> Contracts</h3>
+                                            <ul class="dashed">
+                                                <li>A copy of the agreement with the translation rights holder (where applicable)<br/>
+                                                <li> A copy of the contract with the translator </li>
+                                            </ul>
+
+                                            <h3> Publication Details</h3>
+                                            <ul class="dashed">
+                                                <li>The proposed date of publication<br/>
+                                                <li>The proposed print run<br/></li>
+                                                <li>The planned page extent of the published translation </li>
+                                            </ul>
+
+                                            <h3> Translator's Details</h3>
+                                            <ul class="dashed">
+                                                <li>A copy of the translator's CV, including a list of previous published literary translations</li>
+                                                <li>Details of the fee to be paid to the translator (this should include the total sum in Euro and a breakdown of the rate according to which this sum has been calculated)</li>
+                                            </ul>
+
+                                            <h3> Original Work & Sample Translation</h3>
+                                            <ul class="dashed">
+                                                <li>Two copies of the original work* </li>
+                                                <li>Two copies of a translation sample** consisting of 10 to 12 pages of prose or six poems</li>
+                                            </ul>
+
+                                            <br/>
+                                            <p> <i> * &nbsp; Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
+                                                    ** If more than one translator is involved, a translation sample must be submitted for each translator.
+                                                </i> </p>
+                                            All queries in relation to the Translation Grant Programme should be addressed to Deputy Director Rita McCann at rita[at]literatureireland[dot]com or Administrator Orla King at orla[at]literatureireland[dot]com.
+                                            <br/>
+                                        </div>
+
+                                        <div class="modal-footer"  style="background-color: #c3bcbc">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                        </div> <!--modal footer -->
+                                    </div> <!--modal content-->          
+                                </div> <!--modal dialog-->
+                            </div> <!--modal fade-->
+
+                            <div class="modal fade" id="showNotesModal" tabindex="-1" role="dialog" aria-labelledby="showNotesModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: #c3bcbc">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="showNotesModalLabel">Notes</h4>
+                                        </div>
+
+
+                                        <div class="modal-body" style="background-color: #d9d1d1">
+                                            <div class="row" style="margin-bottom: 10px">
+
+                                                <p class="header1"> 
+                                                    NOTES
+                                                </p>
+                                                <br/>
+                                                <ol>
+                                                    <li>The <strong>deadlines for application</strong> are available on the Literature Ireland website at <a href="http://www.literatureireland.com/programmes/translation-grant-programme/">http://www.literatureireland.com/programmes/translation-grant-programme/</a>. There are typically three deadlines per year.  </li>
+
+                                                    <li>The deadline for application is the <strong>date by which applications should be received</strong> by Literature Ireland and not the date by which they should be posted. Allowance is made for postal delays but submissions received more than one week after the deadline may not be accepted.  </li>
+
+                                                    <li><strong>Late applications</strong> may, in rare cases, be accepted at the discretion of Literature Ireland. However, late submission will affect the timeliness with which the applicant publisher can be informed of the outcome of his/her application. </li>
+
+                                                    <li>It is recommended that the <strong>translation sample</strong> submitted be a final or near-final version which has been <strong>proofread and edited</strong>. If the sample submitted is an early or unedited draft, the applicant is requested to inform Literature Ireland of this fact.  </li>
+
+                                                    <li>Literature Ireland maintains records of the <strong>average/typical rates paid to literary translators</strong> in different countries. If the rate being paid to the translator is substantially different from that which might be usual, the applicant is requested to include an explanation for this in his/her application. </li> 
+
+                                                    <li> For each application, the <strong>translation sample is assessed by an independent expert</strong>, who provides a report which is made available to the board of Literature Ireland when it considers the request for funding (see note 7). </li>
+
+                                                    <li>All applications are considered by the board of Literature Ireland at meeting held six to <strong>eight weeks after the deadline</strong>. Applications for translations due for publication before the date of the board meeting will be deemed ineligible.  </li>
+
+                                                    <li>Applicants are informed of the <strong>outcome of the application</strong> within 10 days of the board meeting. Successful applicants will be issued with formal contracts and a letter of award within six weeks of grant approval.   </li> 
+                                                </ol>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer"  style="background-color: #c3bcbc">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                        </div> <!--modal footer -->
+                                    </div> <!--modal content-->          
+                                </div> <!--modal dialog-->
+                            </div> <!--modal fade-->
+
                         </form> 
                     </div><!-- container-fluid -->
                 </nav>
@@ -2409,6 +2302,12 @@
 //                                                    $(this).blur();
 //                                                });
 
+                                                function  showInfoModal() {
+                                                    $("#showInfoModal").modal("show");
+                                                }
+                                                function  showNotesModal() {
+                                                    $("#showNotesModal").modal("show");
+                                                }
         </script>
     </body>
 </html>

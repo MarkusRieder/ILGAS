@@ -207,7 +207,7 @@ public class openApplicationDAO {
             
             translatorTracker = new TranslatorTracker();
             
-            ps = conn.prepareStatement("SELECT Translator.Name, TranslatorTrack.Title FROM Translator, TranslatorTrack WHERE TranslatorTrack.idTranslator = Translator.idTranslator AND TranslatorTrack.idTranslator = ?");
+            ps = conn.prepareStatement("SELECT Translator.Name, TranslatorTrack.Title, TranslatorTrack.ReferenceNumber FROM Translator, TranslatorTrack WHERE TranslatorTrack.idTranslator = Translator.idTranslator AND TranslatorTrack.idTranslator = ?");
             ps.setString(1, TranslatorTrackId);
             
             res = ps.executeQuery();
@@ -223,12 +223,21 @@ public class openApplicationDAO {
                         
                         translatorTracker.setTranslatorName(res.getString(1));
                         testList.add(res.getString(1));
+                        
+                        System.out.println("Application dao getTranslatorTrack  setTranslatorName: " + res.getString(1));
                     }
                     
                     idx++;
-                    
+                    ArrayList<String> auth = new ArrayList<>();
+                    auth = getAuthors(res.getString(3));
+                    testList.add(auth);
                     titleList.add(res.getString(2));
                     testList.add(res.getString(2));
+                    
+                    System.out.println("Application dao testlist: " + testList);
+                          System.out.println("Application dao getTranslatorTrack  titleList: " + res.getString(2) + " RefNo:  " + res.getString(3));
+                          
+                          
                 }
                 
             }

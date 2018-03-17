@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="13" cy="13" r="13"></circle>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <g id="b-link" fill-rule="nonzero" fill="#EAEAEA">
+                <circle id="b" cx="13" cy="13" r="13"></circle>
+            </g>
+            <g id="Clipped">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="b"></g>
+                <g id="Group" mask="url(#mask-2)" stroke="#FFFFFF" fill-rule="nonzero" fill="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+                    <g transform="translate(3.000000, 7.000000)" id="Shape">
+                        <path d="M10,8 C12.209139,8 14,6.209139 14,4 C14,1.790861 12.209139,0 10,0 C7.790861,0 6,1.790861 6,4 C6,6.209139 7.790861,8 10,8 Z" stroke-width="1.267"></path>
+                        <path d="M18,18.455 C17.83,15.645 16.104,10.652 9.326,10.652 C2.548,10.652 0.574,15.645 0.404,18.455 L18,18.455 Z" stroke-width="1.5"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -183,8 +183,22 @@ input[type="text"]:focus + .glyphicon-search{
 .ui-widget-content .ui-state-highlight, 
 .ui-widget-header .ui-state-highlight {
     border: 1px solid #003399;
-    background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
+    background: #003399 url("images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
+
 }
+
+.ui-datepicker { 
+    width: 17em; 
+    padding: .2em .2em 0; 
+    display: none; 
+    position: relative; z-index: 100000 !important;
+    /*z-index: 2000 !important;*/
+}
+
+/*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
+.ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
+.ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
+.ui-datepicker-calendar a.ui-state-active { background: red; } 
 
 /* Set whitespace between the generated input fields*/
 input.wsp{
@@ -270,12 +284,20 @@ h1 {
     font-size: 16px;
 }
 
-/* Changing the background color of a disabled input field 
-https://stackoverflow.com/questions/13780327/changing-the-background-color-of-a-disabled-input-field*/
+/* 
+Changing the background color of a disabled input field 
+https://stackoverflow.com/questions/13780327/changing-the-background-color-of-a-disabled-input-field
+*/
 
-input[type="text"]:disabled{background-color:red;}
+/*input[type="text"]:disabled{background-color:red;}*/
 
 <!--increase size of show entries--
 select.input-sm {
     height: 33px;
 }
+
+/*Give div's a border for debugging purpose*/
+/*div{
+    border: 3px coral solid;
+}*/
+

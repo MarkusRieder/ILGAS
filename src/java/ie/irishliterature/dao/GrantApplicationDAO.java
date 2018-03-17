@@ -972,6 +972,8 @@ public class GrantApplicationDAO {
             throw new DBException("getNextApplicationNumber :: Exception while accessing database");
         }
 
+        if(nextApplicationNumber == 0){nextApplicationNumber++;}
+        
         return nextApplicationNumber;
     }
 

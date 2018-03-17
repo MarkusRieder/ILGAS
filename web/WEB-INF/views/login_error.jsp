@@ -34,7 +34,8 @@
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                                 <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
                             </div>
-
+                                    <!--https://www.javaworld.com/article/2072937/java-web-development/solving-the-logout-problem-properly-and-elegantly.html?page=2-->
+                                    <input name="lastLogon" type="hidden" value="<%= new java.lang.Long(System.currentTimeMillis()).toString()%>"/>
                             <div style="margin-top:10px" class="form-group">
                                 <!-- Button -->
 

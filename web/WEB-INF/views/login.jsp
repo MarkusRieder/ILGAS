@@ -41,6 +41,13 @@
         <script src="js/jquery-ui.js"></script>
 
 
+        <!--clear localStorage and sessionStorage-->
+        <script type="text/javascript">
+            localStorage.clear();
+            sessionStorage.clear();
+        </script>
+
+
         <!--if Publisher selected display publisherBox-->
         <script type="text/javascript">
             function changeFunc() {
@@ -276,7 +283,8 @@
                                                >
 
                                     </div>
-
+                                    <!--https://www.javaworld.com/article/2072937/java-web-development/solving-the-logout-problem-properly-and-elegantly.html?page=2-->
+                                    <input name="lastLogon" type="hidden" value="<%= new java.lang.Long(System.currentTimeMillis()).toString()%>"/>
                                     <div class="help-block with-errors"></div>
 
                                     <div style="margin-top:10px" class="form-group">

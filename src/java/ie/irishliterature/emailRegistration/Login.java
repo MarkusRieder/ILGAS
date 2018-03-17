@@ -51,15 +51,17 @@ public class Login extends HttpServlet {
 		String inputPassword = BCrypt.hashpw(request.getParameter("inputPassword"), GlobalConstants.SALT);
 		Status sp = new Status();
 		LOGGER.debug(inputEmail);
+                 System.out.println("Login: doPost:: " + inputEmail);
 		try {
-			User up = ApplicationDAO.verifyLogin(inputEmail, inputPassword);
-			if(up != null) {
-				if(up.getSTATUS().equals(GlobalConstants.ACTIVE) || up.getSTATUS().equals(GlobalConstants.IN_RESET_PASSWORD)) {
-					request.getSession().setAttribute(GlobalConstants.USER, up.getUSERNAME());
-					request.getSession().setAttribute(GlobalConstants.USER_NAME, up.getFIRST_NAME()+" "+up.getLAST_NAME());
+			User user = ApplicationDAO.verifyLogin(inputEmail, inputPassword);
+			if(user != null) {
+				if(user.getSTATUS().equals(GlobalConstants.ACTIVE) || user.getSTATUS().equals(GlobalConstants.IN_RESET_PASSWORD)) {
+					request.getSession().setAttribute(GlobalConstants.USER, user.getUSERNAME());                                     
+					request.getSession().setAttribute(GlobalConstants.USER_NAME, user.getFIRST_NAME() + " " + user.getLAST_NAME());
+                                        System.out.println("Login: SUCCESS:: " + user);
 					sp.setCode(0);
 					sp.setMessage("Success");	
-				} else if(up.getSTATUS().equals(GlobalConstants.NEW)){
+				} else if(user.getSTATUS().equals(GlobalConstants.NEW)){
 					sp.setCode(-1);
 					sp.setMessage("Account activation is in pending");
 				} else {
