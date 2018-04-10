@@ -733,7 +733,7 @@
                         for (j = 0; j < translatorTrack[i].length; j++) {
                             var td = document.createElement('TD');
                             if (i === 0) {
-                                td.className = 'someClass';
+                                td.className = 'highlightHeader';
                             }
                             // remove "undefined" cells
                             if (typeof (translatorTrack[i][j]) === "undefined") {
@@ -800,7 +800,7 @@
                 z-index: 2000 !important;
             }
 
-            .someClass {
+            .highlightHeader {
                 background:yellow;
             }
             table#translatorTrackTable{

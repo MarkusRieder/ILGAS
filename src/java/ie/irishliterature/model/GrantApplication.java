@@ -79,8 +79,9 @@ public class GrantApplication {
 
     private String paymentStatus;
 
-    private ArrayList<ArrayList<String>> previousGrantAid;
-
+//    private ArrayList<ArrayList<String>> previousGrantAid;
+    
+    private ArrayList<String> previousGrantAid;
     private int award;
 
     private int salesFigures;
@@ -130,7 +131,8 @@ public class GrantApplication {
 
     private ArrayList<String> TranslatorName;
 
-    private ArrayList<String> TranslatorTrack;
+    //  private ArrayList<String> TranslatorTrack;
+    private ArrayList<ArrayList<String>> TranslatorTrack;
 
     private ArrayList<ArrayList<String>> translatorTitles;
 
@@ -676,14 +678,14 @@ public class GrantApplication {
     /**
      * @return the previousGrantAid
      */
-    public ArrayList<ArrayList<String>> getPreviousGrantAid() {
+    public ArrayList<String> getPreviousGrantAid() {
         return previousGrantAid;
     }
 
     /**
      * @param previousGrantAid the previousGrantAid to set
      */
-    public void setPreviousGrantAid(ArrayList<ArrayList<String>> previousGrantAid) {
+    public void setPreviousGrantAid(ArrayList<String> previousGrantAid) {
         this.previousGrantAid = previousGrantAid;
     }
 
@@ -985,14 +987,14 @@ public class GrantApplication {
     /**
      * @return the TranslatorTrack
      */
-    public ArrayList<String> getTranslatorTrack() {
+    public ArrayList<ArrayList<String>> getTranslatorTrack() {
         return TranslatorTrack;
     }
 
     /**
      * @param TranslatorTrack the TranslatorTrack to set
      */
-    public void setTranslatorTrack(ArrayList<String> TranslatorTrack) {
+    public void setTranslatorTrack(ArrayList<ArrayList<String>> TranslatorTrack) {
         this.TranslatorTrack = TranslatorTrack;
     }
 

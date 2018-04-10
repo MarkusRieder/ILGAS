@@ -7,10 +7,12 @@ package ie.irishliterature.model;
 
 import java.util.ArrayList;
 
+
 /**
  *
  * @author markus
  */
+
 public class TranslatorTracker {
 
     private String translatorID;
@@ -20,11 +22,11 @@ public class TranslatorTracker {
     private String ReferenceNumber;
 
     private ArrayList<String> titles;
-    
+
     private ArrayList<String> authorName;
 
     private ArrayList<String> yuppydoo;
-            
+
     /**
      * @return the translatorID
      */
@@ -94,6 +96,9 @@ public class TranslatorTracker {
     public void setAuthorName(ArrayList<String> authorName) {
         this.authorName = authorName;
     }
-
-
+    
+    
+  @Override public String toString() {
+    return "ToStringExample(" + this.getTranslatorID() + ", " + this.getTranslatorName() + ", " + this.getTitles() + ", " + this.getReferenceNumber() + ", " + this.getAuthorName() + ")";
+  }
 }

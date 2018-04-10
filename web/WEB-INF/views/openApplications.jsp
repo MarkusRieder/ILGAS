@@ -20,19 +20,24 @@
 
         <title>Translation Grant Application System</title>
 
+         <!--
+            https://www.javaworld.com/article/2072937/java-web-development/solving-the-logout-problem-properly-and-elegantly.html?page=2
+            Solving the logout problem properly and elegantly
+         -->
+         
         <%
-            response.setHeader("Cache-Control", "no-cache"); //forces caches to obtain a new copy of the page from the origin server
-            response.setHeader("Cache-Control", "no-store"); //directs caches not to store the page under any circumstance
-            response.setDateHeader("Expires", 0); //causes the proxy cache to see the page as "stale"
-            response.setHeader("Pragma", "no-cache"); //HTTP 1.0 backward compatibility
+//            response.setHeader("Cache-Control", "no-cache"); //forces caches to obtain a new copy of the page from the origin server
+//            response.setHeader("Cache-Control", "no-store"); //directs caches not to store the page under any circumstance
+//            response.setDateHeader("Expires", 0); //causes the proxy cache to see the page as "stale"
+//            response.setHeader("Pragma", "no-cache"); //HTTP 1.0 backward compatibility
 
-            String userName = (String) session.getAttribute("username");
-            if (null == userName) {
-                System.out.println("userName: " + userName + " not found");
-                request.setAttribute("Error", "Session has ended.  Please login.");
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
-                rd.forward(request, response);
-            }
+//            String userName = (String) session.getAttribute("username");
+//            if (null == userName) {
+//                System.out.println("userName: " + userName + " not found");
+//                request.setAttribute("Error", "Session has ended.  Please login.");
+//                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
+//                rd.forward(request, response);
+//            }
         %>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -357,7 +362,6 @@
                         {"data": "idTranslator"},
                         {"data": "originalDateOfPublication",
                             "render": function (data) {
-
                                 if (typeof (data) === "undefined") {
                                     return "n/a";
                                 } else
@@ -797,7 +801,7 @@
 //                        for (j = 0; j < translatorTrack[i].length; j++) {
 //                            var td = document.createElement('TD');
 //                            if (i === 0) {
-//                                td.className = 'someClass';
+//                                td.className = 'highlightHeader';
 //                            }
 //                            // remove "undefined" cells
 //                            if (typeof (translatorTrack[i][j]) === "undefined") {

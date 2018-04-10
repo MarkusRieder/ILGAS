@@ -7,6 +7,9 @@ package ie.irishliterature.servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import ie.irishliterature.DataTables.DataTableUser;
+import ie.irishliterature.dao.UserDAO;
+import ie.irishliterature.db.DBException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -17,10 +20,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ie.irishliterature.dao.UserDAO;
-import ie.irishliterature.db.DBException;
-import ie.irishliterature.DataTables.DataTableUser;
 
 /**
  *
@@ -37,7 +36,7 @@ public class UserDataServlet extends HttpServlet {
           super();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -100,6 +99,6 @@ public class UserDataServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

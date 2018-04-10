@@ -82,9 +82,7 @@
                 gotoCurrent: true,
                 orientation: "bottom" // <-- and add this
             });
-
             var i;
-
             console.log("local storage - welcome_staff.jsp");
             for (i = 0; i < localStorage.length; i++) {
                 console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
@@ -223,6 +221,15 @@
             $(document).ready(function () {
                 var table = $('#expReader').DataTable({
 
+                    /**
+                     B - Buttons
+                     f - filtering input
+                     r - processing display element
+                     t - The table!
+                     p - pagination control
+                     
+                     **/
+
                     dom: 'Bfrtip',
                     buttons: [
                         {
@@ -295,7 +302,6 @@
                     dom: 'Bfrtip',
                     buttons: [
                         {
-
                             text: '<i class="fa fa-files-o"></i>',
                             titleAttr: 'email',
                             exportOptions: {
@@ -469,7 +475,6 @@
             });
         </script>
 
-
         <script type="text/javascript">
             var cntr = 0;
             $(document).ready(function () {
@@ -565,8 +570,8 @@
                             "data": null,
                             "defaultContent": ""
                         },
-                        {"data": "ApplicationNumber"},
-                        {"data": "ApplicationYear"},
+                        //                {"data": "ApplicationNumber"},
+                        //                {"data": "ApplicationYear"},
                         {"data": "ReferenceNumber"},
                         //    {"data": "ReferenceNumber"},
 
@@ -655,7 +660,8 @@
                         {"data": "TranslatorName"},
                         {"data": "expertReaderName"},
                         {"data": "bookTitle"},
-                        {"data": "translatorTitles"},
+                        //     {"data": "translatorTitles"},
+                        {"data": "TranslatorTrack"},
                         {"data": "Titles"},
                         {"data": "translatorCVDocName"},
                         {"data": "cover"},
@@ -837,15 +843,13 @@
                                 return (data === 1) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
                             }
                         },
-
                         {"data": "salesFigures"},
-
                         {"data": "original",
                             "render": function (data, type, row) {
                                 return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
                         {"data": "originalName"},
-
+                        {"data": "Author"},
                         {"data": "idTranslator"}
 
 
@@ -889,7 +893,6 @@
                     $('#additionalExpertReaderModal').empty(); // empty the div before fetching and adding new data
 
                     cntr++;
-
                     var agreemnt = "";
                     var contr = "";
                     var transSamp = "";
@@ -900,8 +903,6 @@
                     var proofOfPaymentToTrans = "";
                     var bankDetailsFrm = "";
                     var signedLIContr = "";
-
-
                     var TranslName = "";
                     var bookTitles = "";
                     var TranslTitles = "";
@@ -910,7 +911,6 @@
                     var row = table.row(tr);
                     var rowdata = (table.row(tr).data());
                     var expertReaderName = "";
-
                     var awardValue = rowdata.award;
                     console.log("awardValue:  " + awardValue);
                     if (awardValue === 1) {
@@ -939,28 +939,21 @@
                     var agreemnt = 'http://localhost' + rowdata.agreement + '';
                     $("#appAgreement").val(agreemnt);
                     document.getElementById("agreement").href = agreemnt;
-
-
                     var orig = 'http://localhost' + rowdata.original + '';
                     $("#appOriginal").val(orig);
                     document.getElementById("original").href = orig;
-
                     var addendumRightsAgreemnt = 'http://localhost' + rowdata.addendumRightsAgreement + '';
                     $("#appAddendumRightsAgreement").val(addendumRightsAgreemnt);
                     document.getElementById("addendumRightsAgreement").href = addendumRightsAgreemnt;
-
                     var proofOfPaymentToTrans = 'http://localhost' + rowdata.proofOfPaymentToTranslator + '';
                     $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
                     document.getElementById("proofPaymentToTranslator").href = proofOfPaymentToTrans;
-
                     var bankDetailsFrm = 'http://localhost' + rowdata.bankDetailsForm + '';
                     $("#appBankDetailsForm").val(bankDetailsFrm);
                     document.getElementById("bankDetailsForm").href = bankDetailsFrm;
-
                     var signedLIContr = 'http://localhost' + rowdata.SignedLIContract + '';
                     $("#appSignedLIContract").val(signedLIContr);
                     document.getElementById("signedLIContract").href = signedLIContr;
-
                     if (typeof (rowdata.cover) === "undefined") {
                         var cver = 'images/not-available.jpg';
                     } else {
@@ -979,22 +972,22 @@
                     $('#applications').DataTable().ajax.reload();
                     $("#appApplicationNumber").val($(this).closest('tr').children()[1].textContent);
                     $("#appApplicationYear").val($(this).closest('tr').children()[2].textContent);
-                    $("#appReferenceNumber").val($(this).closest('tr').children()[3].textContent);
-                    $("#appCompany").val($(this).closest('tr').children()[4].textContent);
+                    $("#appReferenceNumber").val($(this).closest('tr').children()[1].textContent);  //ok
+                    $("#appCompany").val($(this).closest('tr').children()[2].textContent);  //ok
 //                    $("#appAgreement").val($(this).closest('tr').children()[5].textContent);
 
                     var appReferenceNumber = rowdata.ReferenceNumber;
-                    //                 console.log("appReferenceNumber " + appReferenceNumber);
+                    // console.log("appReferenceNumber " + appReferenceNumber);
                     $("#unassignedERRefNo").val(appReferenceNumber);
                     var TranslName = rowdata.TranslatorName;
                     $("#TranslatorName").val(TranslName);
                     var bookTitles = rowdata.Titles;
                     $("#currentItem").val(bookTitles.join(""));
-                    //console.log("bookTitles: " + bookTitles);
+                    //        console.log("bookTitles: " + bookTitles);
 
                     // Generate table translatorTrackTable
-                    var TranslTitles = rowdata.translatorTitles;
-                    //console.log("TranslTitles: " + TranslTitles);
+                    var TranslTitles = rowdata.TranslatorTrack;
+                    //            console.log("TranslTitles:  TranslatorTrack::   " + TranslTitles);
 
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                     $('#translTrackDiv').empty(); // empty the div before fetching and adding new data
@@ -1003,13 +996,19 @@
                     var tble = document.createElement('TABLE');
                     tble.id = 'translatorTrackTable';
                     tble.border = '1';
+                    tble.width = '100%';
                     tble.title = 'translatorTrackTable';
                     tble.className = "table table-striped table-condensed small";
-                    tble.style = 'overflow-x: auto';
+                    tble.style = 'overflow-x: auto;';
                     var tableBody = document.createElement('TBODY');
                     var translatorTrack = [];
+
                     for (var i = 0; i < TranslTitles.length; ++i) {
                         for (var j = 0; j < TranslTitles[i].length; ++j) {
+
+                            //           console.log("before TranslTitles[" + i + "][" + j + "] " + TranslTitles[i][j]);
+
+
                             // skip undefined values to preserve sparse array
                             if (TranslTitles[i][j] === undefined)
                                 continue;
@@ -1018,54 +1017,115 @@
                                 translatorTrack[j] = [];
                             // swap the x and y coords for the copy
                             translatorTrack[j][i] = TranslTitles[i][j];
+
+                            //   console.log("after --- transformation translatorTrack[" + i + "][" + j + "] " + translatorTrack[i][j]);
                         }
+
                     }
 
+                    var idx = 0;
                     //TABLE ROWS
-                    for (i = 0; i < translatorTrack.length; i++) {
+                    for (i = 0; i < TranslTitles.length; i++) {
                         var tr = document.createElement('TR');
-                        for (j = 0; j < translatorTrack[i].length; j++) {
+                        for (j = 0; j < TranslTitles[i].length; j++) {
                             var td = document.createElement('TD');
+                            var td2 = document.createElement('TD');
 
-                            console.log("translatorTrack[" + i + " ][ " + j + " ]" + translatorTrack[i][j]);
-                            if (i === 0) {
-                                td.className = 'someClass';
+
+                            td.width = '50%';
+                            td2.width = '50%';
+
+                            //       console.log("546466666666666476   TranslTitles[" + i + "][" + j + "] " + TranslTitles[i][j]);
+
+                            if (j === 0) {
+
+                                var th = document.createElement('TH');
+                                th.style = 'text-align:center';
+                                th.className = 'highlightHeader';
+                                th.colspan = '2';
+                                th.appendChild(document.createTextNode(TranslTitles[i][j]));
+                                tr.appendChild(th);
+
+                                var th = document.createElement('TH');
+                                th.className = 'highlightHeader';
+                                th.appendChild(document.createTextNode(''));
+                                tr.appendChild(th);
+
+                                tableBody.appendChild(tr);
+
+
+                                var heading = ["Author(s)", "Title(s)"];
+                                var tr = document.createElement('TR');
+                                for (var col = 0; col < heading.length; col++)
+                                {
+                                    var th2 = document.createElement('TH');
+                                    th2.style = 'text-align:center';
+                                    th2.width = '50%';
+                                    th2.appendChild(document.createTextNode(heading[col]));
+                                    tr.appendChild(th2);
+                                }
+                                tableBody.appendChild(tr);
+                                continue;
                             }
                             // remove "undefined" cells
-                            if (typeof (translatorTrack[i][j]) === "undefined") {
-                                translatorTrack[i][j] = '';
+                            if (typeof (TranslTitles[i][j]) === "undefined") {
+                                TranslTitles[i][j] = '';
                             }
-                            td.appendChild(document.createTextNode(translatorTrack[i][j]));
+
+                            var tr = document.createElement('TR');
+
+                            td.width = '50%';
+                            td2.width = '50%';
+                            td.style = 'text-align:left';
+                            td2.style = 'text-align: left';
+
+                            var record = TranslTitles[i][j];
+                            var Author = record[0];
+                            var Title = record[1];
+                            //      console.log("Author  :  " + Author);
+                            //      console.log("Title  :  " + Title);
+                            //       console.log("idx " + idx);
+                            idx++;
+
+                            td.appendChild(document.createTextNode(Author));
+                            td2.appendChild(document.createTextNode(Title));
+
                             tr.appendChild(td);
+                            tr.appendChild(td2);
+
+                            tableBody.appendChild(tr);
                         }
-                        tableBody.appendChild(tr);
+
                     }
 
                     tble.appendChild(tableBody);
                     myTableDiv.appendChild(tble);
-//                    for (i = 0; i < translatorTrack.length; i++) {
-//                        for (j = 0; j < translatorTrack[i].length; j++) {
-//
-//                            // get translators
-//                            if (i === 0) {
-//                                var newdiv = $('<div>', {class: 'text-left', text: translatorTrack[i][j]});
-//                                var a = document.createElement('a');
-//                                var linkText = document.createTextNode("  see Trackrecord");
-//                                //       console.log("translators:  " + translatorTrack[i][j]);
-//                                a.appendChild(linkText);
-//                                a.title = "see Trackrecord";
-//                                a.class = "button";
-//                                a.href = "#stack2";
-//                                newdiv.append(a);
-//                            }
-//                            $('#testcontainer').find('a').attr('data-toggle', 'modal');
-//                            $('#testcontainer').append(newdiv);
-//                            //print track record
-//                            if (i !== 0) {
-//                                //    console.log("translatorTrack[i][j]:  " + translatorTrack[i][j]);
-//                            }
-//                        }
-//                    }
+
+
+
+                    for (i = 0; i < translatorTrack.length; i++) {
+                        for (j = 0; j < translatorTrack[i].length; j++) {
+
+                            // get translators
+                            if (i === 0) {
+                                var newdiv = $('<div>', {class: 'text-left', text: translatorTrack[i][j]});
+                                var a = document.createElement('a');
+                                var linkText = document.createTextNode("  see Trackrecord");
+                                //        console.log("translators:  " + translatorTrack[i][j]);
+                                a.appendChild(linkText);
+                                a.title = "see Trackrecord";
+                                a.class = "button";
+                                a.href = "#stack2";
+                                newdiv.append(a);
+                            }
+                            $('#testcontainer').find('a').attr('data-toggle', 'modal');
+                            $('#testcontainer').append(newdiv);
+                            //print track record
+                            if (i !== 0) {
+                                //            console.log("translatorTrack[" + i + " ][ " + j + " ] :  " + translatorTrack[i][j]);
+                            }
+                        }
+                    }
 
                     var expertReaderName = rowdata.expertReaderList;
 //                    console.log("expertReaderName:  " + expertReaderName);
@@ -1227,38 +1287,40 @@
                     }
 
                     $("#appcontract").val(contr);
-                    $("#appproposedDateOfPublication").val($(this).closest('tr').children()[7].textContent);
-                    $("#appproposedPrintRun").val($(this).closest('tr').children()[8].textContent);
-                    $("#appplannedPageExtent").val($(this).closest('tr').children()[9].textContent);
+                    $("#appproposedDateOfPublication").val($(this).closest('tr').children()[5].textContent);
+                    $("#appproposedPrintRun").val($(this).closest('tr').children()[6].textContent);
+                    $("#appplannedPageExtent").val($(this).closest('tr').children()[7].textContent);
                     $("#appnumberOfPages").val($(this).closest('tr').children()[11].textContent);
-                    $("#appfeePerPage").val($(this).closest('tr').children()[12].textContent);
-                    $("#apptranslatorFee").val($(this).closest('tr').children()[13].textContent);
-                    $("#appNotes").val($(this).closest('tr').children()[14].textContent);
-                    $("#appStatus").val($(this).closest('tr').children()[15].textContent);
-                    $("#appcopiesSent").val($(this).closest('tr').children()[16].textContent);
-                    $("#appdateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
-                    $("#appTC_ACCEPTED").val($(this).closest('tr').children()[19].textContent);
-                    $("#appAPPROVED").val($(this).closest('tr').children()[20].textContent);
-                    $("#appGenre").val($(this).closest('tr').children()[21].textContent);
-                    $("#appExpertReader").val($(this).closest('tr').children()[23].textContent);
-                    $("#appBookTitle").val($(this).closest('tr').children()[24].textContent);
+                    $("#appfeePerPage").val($(this).closest('tr').children()[10].textContent);
+                    $("#apptranslatorFee").val($(this).closest('tr').children()[11].textContent);   //ok
+                    $("#appNotes").val($(this).closest('tr').children()[12].textContent);
+                    $("#appStatus").val($(this).closest('tr').children()[13].textContent);  //ok
+                    $("#appcopiesSent").val($(this).closest('tr').children()[14].textContent);
+                    $("#appdateCopiesWereSent").val($(this).closest('tr').children()[15].textContent);
+                    $("#appTC_ACCEPTED").val($(this).closest('tr').children()[17].textContent);
+                    $("#appAPPROVED").val($(this).closest('tr').children()[18].textContent);
+                    $("#appGenre").val($(this).closest('tr').children()[19].textContent);
+                    $("#appExpertReader").val($(this).closest('tr').children()[21].textContent);
+                    $("#appBookTitle").val($(this).closest('tr').children()[22].textContent);   //ok
                     $("#expertReaderName").val($(this).closest('tr').children()[22].textContent);
-                    $("#sampleSentOut").val($(this).closest('tr').children()[29].textContent);
-                    $("#sampleReturned").val($(this).closest('tr').children()[30].textContent);
-                    $("#appReadersReport").val($(this).closest('tr').children()[31].textContent);
+                    $("#sampleSentOut").val($(this).closest('tr').children()[27].textContent);
+                    $("#sampleReturned").val($(this).closest('tr').children()[28].textContent);
+                    $("#appReadersReport").val($(this).closest('tr').children()[29].textContent);
 //                    $("#readerReportSummary").val($(this).closest('tr').children()[32].textContent);
 
-                    $("#appDateOfPublicationOriginal").val($(this).closest('tr').children()[35].textContent);
-                    $("#appLanguageOriginal").val($(this).closest('tr').children()[36].textContent);
-                    $("#appPageExtentOriginal").val($(this).closest('tr').children()[37].textContent);
-                    $("#appCountryOfPublication").val($(this).closest('tr').children()[38].textContent);
-                    $("#appForeignPublisher").val($(this).closest('tr').children()[39].textContent);
-                    $("#appForeignCountry").val($(this).closest('tr').children()[40].textContent);
-                    $("#appTargetLanguage").val($(this).closest('tr').children()[41].textContent);
-                    $("#amountRequested").val($(this).closest('tr').children()[43].textContent);
-                    $("#award").val($(this).closest('tr').children()[62].textContent);
-                    $("#salesFigures").val($(this).closest('tr').children()[63].textContent);
-
+                    $("#appDateOfPublicationOriginal").val($(this).closest('tr').children()[33].textContent);
+                    $("#appLanguageOriginal").val($(this).closest('tr').children()[34].textContent);
+                    $("#appPageExtentOriginal").val($(this).closest('tr').children()[35].textContent);
+                    $("#appCountryOfPublication").val($(this).closest('tr').children()[36].textContent);
+                    $("#appForeignPublisher").val($(this).closest('tr').children()[37].textContent);
+                    $("#appForeignCountry").val($(this).closest('tr').children()[38].textContent);
+                    $("#appTargetLanguage").val($(this).closest('tr').children()[39].textContent);
+                    $("#amountRequested").val($(this).closest('tr').children()[41].textContent);
+                    $("#previousGrantAid").val($(this).closest('tr').children()[59].textContent);
+                    
+                    $("#award").val($(this).closest('tr').children()[60].textContent);
+                    $("#salesFigures").val($(this).closest('tr').children()[61].textContent);
+                    $("#authorList").val($(this).closest('tr').children()[64].textContent);
                     console.log(table.row(this).data());
                 });
             });
@@ -1306,8 +1368,9 @@
             .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
             .ui-datepicker-calendar a.ui-state-active { background: red; } 
 
-            .someClass {
+            .highlightHeader {
                 background:yellow;
+                /*      background-color:#d9d1d1;*/
             }
             table#translatorTrackTable{
                 border: 1px solid black;
@@ -1536,7 +1599,8 @@
                                 <li role="tab" ><a href="#Contracts" data-toggle="tab">Contracts</a></li>
                                 <li role="tab" ><a href="#ExpertReader" data-toggle="tab">Expert Reader</a></li>
                                 <li role="tab" ><a href="#Library" data-toggle="tab">Library</a></li>
-                                <li role="tab" ><a href="#Misc" data-toggle="tab">Genre</a></li>
+                                <li role="tab" ><a href="#Genres" data-toggle="tab">Genres</a></li>
+                                <li role="tab" ><a href="#Queries" data-toggle="tab">Queries</a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                         <!-- Tab panes -->
@@ -1551,8 +1615,8 @@
                                             <thead>
                                                 <tr>
                                                     <th class="details-control"></th>   
-                                                    <th class="all">Application<br/>  Nr</th>
-                                                    <th class="all">Application<br/>  Year</th>
+                                                    <!-- <th class="all">Application<br/>  Nr</th>
+                                                     <th class="all">Application<br/>  Year</th>-->
                                                     <th class="all">Reference<br/>  Nr</th>
                                                     <th class="all">Publisher</th>       
 
@@ -1593,7 +1657,7 @@
                                                     <th class="all"></th>
                                                     <th class="all"></th>    
                                                     <th class="all"></th>
-
+                                                    <th class="all"></th>
                                                     <th class="all"></th>
                                                     <th class="all"></th>
                                                     <th class="all"></th>
@@ -1627,45 +1691,45 @@
                                             <tfoot>
                                                 <tr>
                                                     <th class="details-control"></th>   
-                                                    <th class="all">1<br/>  Nr</th>
-                                                    <th class="all">2<br/>  Year</th>
-                                                    <th class="all">3<br/>  Nr</th>
-                                                    <th class="all">4</th>              
+                                                    <!-- <th class="all">Application<br/>  Nr</th>
+                                                     <th class="all">Application<br/>  Year</th>-->
+                                                    <th class="all">3 Reference<br/>  Nr</th>
+                                                    <th class="all">4 Publisher</th>              
 
                                                     <!--<th class="all">PublisherID</th>-->
                                                     <!--<th class="all">userID</th>-->
-                                                    <th class="all">4</th>
-                                                    <th class="all">5</th>
-                                                    <th class="all">6<br/> Date of <br/> Publication</th>
-                                                    <th class="all">7<br/> Print Run</th>
-                                                    <th class="all">8 Page <br/>  Extent</th>
-                                                    <th class="all">9 <br/> Translator<br/> CV</th>
-                                                    <th class="all">Number<br/> Pages</th>
-                                                    <th class="all">Break-down of <br/> Translator fee</th>
-                                                    <th class="all">Translator  <br/> Fee</th>
-                                                    <th class="all">Notes</th>
-                                                    <th class="all select-filter">Status</th>
-                                                    <th class="all">15 <br/> Sent</th>
-                                                    <th class="all">16 Copies  <br/> Were Sent</th>
-                                                    <th class="all">17 of  <br/> Translation Sample</th>
-                                                    <th class="all">18 has been <br/> Accepted</th>
-                                                    <th class="all">Approved</th>
-                                                    <th class="all">20 Genre</th>    
-                                                    <th class="all">TranslatorName</th>
-                                                    <th class="all">expertReaderName</th>
-                                                    <th class="all">bookTitle</th>
-                                                    <th class="all">translatorTitles</th>
-                                                    <th class="all">Titles</th>
-                                                    <th class="all">translatorCVDocName</th>
-                                                    <th class="all">cover</th>
-                                                    <th class="all">sampleSentOut</th>
-                                                    <th class="all">sampleReturned</th>
+                                                    <th class="all">5 Agreement</th>
+                                                    <th class="all">6 Contract</th>
+                                                    <th class="all">7<br/> Date of <br/> Publication</th>
+                                                    <th class="all">8<br/> Print Run</th>
+                                                    <th class="all">9 Page <br/>  Extent</th>
+                                                    <th class="all">10 <br/> Translator<br/> CV</th>
+                                                    <th class="all">11 Number<br/> Pages</th>
+                                                    <th class="all">12 Break-down of <br/> Translator fee</th>
+                                                    <th class="all">13 Translator  <br/> Fee</th>
+                                                    <th class="all">14 Notes</th>
+                                                    <th class="all select-filter">15 Status</th>
+                                                    <th class="all">16 <br/> Sent</th>
+                                                    <th class="all">17 Copies  <br/> Were Sent</th>
+                                                    <th class="all">18 of  <br/> Translation Sample</th>
+                                                    <th class="all">19 has been <br/> Accepted</th>
+                                                    <th class="all">20 Approved</th>
+                                                    <th class="all">21 Genre</th>    
+                                                    <th class="all">22 TranslatorName</th>
+                                                    <th class="all">23 expertReaderName</th>
+                                                    <th class="all">24 bookTitle</th>
+                                                    <th class="all">25 translatorTitles</th>
+                                                    <th class="all">26 Titles</th>
+                                                    <th class="all">27 translatorCVDocName</th>
+                                                    <th class="all">28 cover</th>
+                                                    <th class="all">29 sampleSentOut</th>
+                                                    <th class="all">30 sampleReturned</th>
                                                     <th class="all">readerReport</th>
                                                     <th class="all">expertReaderList</th>
                                                     <th class="all">unassignedExpertReaderList</th>    
                                                     <th class="all">idTranslator</th>
                                                     <th class="all">originalDateOfPublication</th>
-                                                    <th class="all">?originalLanguage?</th>
+                                                    <th class="all">originalLanguage</th>
                                                     <th class="all">Page Extent <br/>(of the original)</th>
                                                     <th class="all">countryOfPublication</th>    
                                                     <th class="all">Foreign Publisher</th>
@@ -1694,7 +1758,8 @@
                                                     <th class="all">62 - award</th>    
                                                     <th class="all">63 - salesFigures</th>
                                                     <th class="all">Original</th>
-                                                    <th class="all">OriginalName</th>
+                                                    <th class="all">OriginalName</th>                                                    
+                                                    <th class="all">Author(s)</th>
                                                     <th class="all">64 - dummy</th>
                                                 </tr>
                                             </tfoot>
@@ -1748,7 +1813,7 @@
                                                                         name="appReferenceNumber"    
                                                                         >
                                                             </div>
-                                                            <div class="col-sm-3">
+                                                            <div class="col-sm-4">
                                                                 <label for="appStatus" class="control-label pull-left">Status</label>
                                                                 <input id="appStatus"                                
                                                                        type="text"                                
@@ -1769,15 +1834,17 @@
                                                             </div>
                                                         </div> <!--row-->
 
-                                                        <!--second row-->
-                                                        <!--                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                                                                                    <div class="col-sm-1"></div>
-                                                                                                                    <div class="col-sm-8">        
-                                                                                                                        <label class="control-label">Book Cover</label>                                                               
-                                                                                                                        <img id="cover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
-                                                                                                                    </div>
-                                                        
-                                                                                                                </div> row-->
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px">
+                                                            <div class="col-sm-8">
+                                                                <label for="authorList" class="control-label pull-left">Author(s)</label>
+                                                                <input  id="authorList" 
+                                                                        type="text"                                                  
+                                                                        class="form-control"    
+                                                                        name="authorList"    
+                                                                        >
+                                                            </div>
+                                                        </div> <!--row-->
+
 
                                                         <!--second row-->
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
@@ -1911,41 +1978,7 @@
 
                                                         </div> <!--row-->
 
-                                                        <!--                                                        We’ll need the following fields:
-                                                                                                                1. Foreign Publisher
-                                                                                                                2. Foreign Country 
-                                                                                                                3. Target Language
-                                                                                                                4. Translator’s name
-                                                                                                                5. Translator’s track record
-                                                                                                                6. Translation Sample (as is!)
-                                                                                                                7. Original (Like the attachment one for translation sample)
-                                                                                                                8. T&Cs Accepted (great!)
-                                                                                                                9. Application Approved (also great!)
-                                                        
-                                                                                                                1. Expert Reader
-                                                                                                                2. Sample Sent Out
-                                                                                                                3. Sample Returned
-                                                                                                                4. Reader’s Report
-                                                                                                                5. Reader’s Report Summary (this goes into the document for the board – staff can add this)
-                                                        
-                                                                                                                1. Board Meeting
-                                                                                                                2. Amount Requested 
-                                                                                                                3. Fee Calculation (see below)
-                                                                                                                4. Proposed Publication Date
-                                                                                                                5. Planned Page Extent
-                                                                                                                6. Planned Print Run
-                                                                                                                7. Award (checkbox)
-                                                                                                                8. Amount Approved 
-                                                                                                                9. Publisher Informed of Outcome 
-                                                                                                                10. Board Comments/Instructions
-                                                        
-                                                                                                                ###############################
-                                                                                                                We should have fields for ‘Date of Publication’ (of the original) and ‘Page Extent’ (of the original), as well as ‘Country of Publication’, ‘Language’ (i.e. the language of the original) and ‘Genre’.
-                                                                                                                Notes about Application-->
-
-
-
-                                                        <!--second row-->
+                                                        <!--third row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-3">
@@ -1956,7 +1989,7 @@
                                                                        name="appcopiesSent"                                
                                                                        >
                                                             </div>
-                                                            <div class="col-sm-3">
+                                                            <div class="col-sm-4">
                                                                 <label for="appdateCopiesWereSent" class="control-label pull-left">Date copies were sent</label>
                                                                 <input id="appdateCopiesWereSent"                                
                                                                        type="text"                                
@@ -2006,20 +2039,6 @@
 
                                                         <!--Publisher and Translation-->
 
-
-                                                        <!--                                                        1. Foreign Publisher
-                                                                                                                2. Foreign Country 
-                                                                                                                3. Target Language
-                                                        
-                                                                                                                4. Translator’s name
-                                                                                                                5. Translator’s track record
-                                                                                                                6. Translation Sample (as is!)
-                                                        
-                                                                                                                7. Original (Like the attachment one for translation sample)
-                                                        
-                                                                                                                8. T&Cs Accepted (great!)
-                                                                                                                9. Application Approved (also great!)-->
-
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">
                                                                 <label for="appForeignPublisher" class="control-label pull-left">Foreign Publisher</label>
@@ -2056,7 +2075,6 @@
                                                                             <h4 class="marginLeft">                                                                                
                                                                                 Track record for Translator(s):  
                                                                             </h4>
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2099,7 +2117,7 @@
 
                                                             <div class="col-sm-12">
                                                                 <label for="previousGrantAid" class="control-label pull-left"> Previous Grant Aid</label>
-                                                                <textarea id="previousGrantAid" class="form-control" name="previousGrantAid" style="height: 183px" placeholder="author name, title, application year, amount awarded. " ></textarea>
+                                                                <textarea id="previousGrantAid" class="form-control" name="previousGrantAid" style="height: 183px" placeholder="author name, title, application year, amount awarded, etc " ></textarea>
                                                             </div>
 
                                                         </div> <!--row-->
@@ -2110,15 +2128,6 @@
                                                     <div class="tab-pane" id="page3">
 
                                                         <!-- Reader’s  Report -->
-
-                                                        <!--
-                                                                                                                I think the Reader info should be in a separate tab called ‘Reader’s Report’, with the following fields:
-                                                                                                                1. Expert Reader
-                                                                                                                2. Sample Sent Out
-                                                                                                                3. Sample Returned
-                                                                                                                4. Reader’s Report
-                                                                                                                5. Reader’s Report Summary (this goes into the document for the board – staff can add this)-->
-
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 20px"> 
 
@@ -2133,83 +2142,9 @@
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
-                                                            <!--                                                            <div class='col-sm-6'>
-                                                            
-                                                                                                                            <button class="btn btn-success btn-xs pull-left" style="margin-bottom: 20px;" data-toggle="modal" data-target="#listAssignedEReadermodal">
-                                                                                                                                List assigned Expert Reader
-                                                                                                                            </button>
-                                                            
-                                                                                                                        </div>-->
 
                                                             <div id="additionalExpertReader"></div>
                                                         </div> <!--row-->          
-
-                                                        <!--                                                        <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
-                                                                                                                    
-                                                                                                                    <div class='col-sm-6'>
-                                                                                                                        <strong class=" pull-left">Expert Reader</strong>
-                                                                                                                        <div class="input-group pull-left">
-                                                                                                                            <input type="text" name="appExpertReader" 
-                                                                                                                                   id="appExpertReader" 
-                                                                                                                                   class="form-control" 
-                                                                                                                                   />    
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                        
-                                                                                                                </div> row                                                      
-                                                        
-                                                                                                                <div class="row" style="margin-top: 30px;margin-bottom: 10px">
-                                                                                                                    <div class='col-sm-4'>
-                                                                                                                        <strong class=" pull-left"> Sample sent out</strong>
-                                                                                                                        <div class="input-group pull-left">
-                                                                                                                            <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                                                                            <label class="input-group-addon" for="sampleSentOut">
-                                                                                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                                                                                            </label>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                        
-                                                                                                                    <script>
-                                                                                                                        $("#sampleSentOut").datepicker({
-                                                                                                                            showWeekDays: true,
-                                                                                                                            todayHighlight: true,
-                                                                                                                            autoclose: true
-                                                                                                                        });
-                                                                                                                    </script>
-                                                        
-                                                                                                                    <div class='col-sm-4'>
-                                                                                                                        <strong class=" pull-left"> Sample returned</strong>
-                                                                                                                        <div class="input-group pull-left">
-                                                                                                                            <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                        
-                                                                                                                </div> row
-                                                        
-                                                                                                                <div class="row" style="margin-bottom: 20px;">
-                                                        
-                                                                                                                    <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
-                                                                                                                        <div class="col-sm-2">
-                                                                                                                            <input id="ReadersReport"                                
-                                                                                                                                   type="hidden"                                                            
-                                                                                                                                   name="ReadersReport"                                
-                                                                                                                                   >
-                                                                                                                        </div>
-                                                                                                                        <a class="btn btn-info" role="button" id="appReadersReport" >
-                                                                                                                            <span class="glyphicon glyphicon-file"></span>
-                                                                                                                            Reader’s Report</a>
-                                                                                                                    </div>
-                                                        
-                                                                                                                    <div class="col-sm-10">
-                                                                                                                        <label for="readerReport" class="control-label pull-left"> Reader’s Report Summary</label>
-                                                                                                                        <textarea id="readerReport" 
-                                                                                                                                  class="form-control"                                               
-                                                                                                                                  name="readerReport"    
-                                                                                                                                  style="height: 98px"
-                                                                                                                                  >                 
-                                                                                                                        </textarea>
-                                                                                                                    </div>
-                                                                                                                </div> row-->
 
                                                     </div> <!--tab-pane" id="page 3" -->
 
@@ -2233,9 +2168,9 @@
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px">   
 
-                                                            <div class='col-sm-4'>
+                                                            <div class='col-sm-5'>
                                                                 <strong class="pull-left">Board meeting<br/>&nbsp;</strong>
-                                                                <div class="input-group date datepicker" >
+                                                                <div class="input-group  pull-left date datepicker" >
                                                                     <input type="text" name="appDateOfBoardMeeting" id="appDateOfBoardMeeting" class="form-control" placeholder="DD/MM/YYYY" />    
                                                                     <label class="input-group-addon" for="appDateOfBoardMeeting">
                                                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -2276,7 +2211,10 @@
                                                             <div class='col-sm-6'>
                                                                 <strong class="pull-left">Proposed  Publication Date &nbsp;&nbsp;&nbsp; </strong>
                                                                 <div class="input-group pull-left" >
-                                                                    <input type="text" name="proposedPublicationDate" id="proposedPublicationDate" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <input type="text" name="appproposedDateOfPublication" 
+                                                                           id="appproposedDateOfPublication" 
+                                                                           class="form-control" 
+                                                                           placeholder="DD/MM/YYYY" />    
                                                                 </div> 
                                                             </div>
 
@@ -2352,12 +2290,7 @@
 
                                                             <div class="col-sm-12">
                                                                 <label for="commentsAboutMeeting" class="control-label pull-left">Board Comments/Instructions </label>
-                                                                <textarea id="commentsAboutMeeting" 
-                                                                          class="form-control"                                               
-                                                                          name="commentsAboutMeeting"    
-                                                                          style="height: 98px"
-                                                                          >                 
-                                                                </textarea>
+                                                                <textarea id="commentsAboutMeeting" class="form-control" name="commentsAboutMeeting" style="height: 98px" placeholder="Refuse funding’,‘Award €1,000’, ‘Postpone to next round’, ‘Request revised sample"></textarea>
                                                             </div>
 
                                                             <div class="row"> 
@@ -2555,15 +2488,6 @@
                                                             </div>
 
                                                         </div> <!--row-->
-                                                        <!--
-                                                                                                                <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
-                                                        
-                                                                                                                    <div class="col-sm-12">
-                                                                                                                        <label for="previousGrantAid" class="control-label pull-left"> Previous Grant Aid</label>
-                                                                                                                        <textarea id="previousGrantAid" class="form-control" name="previousGrantAid" style="height: 183px" placeholder="author name, title, application year, amount awarded. " ></textarea>
-                                                                                                                    </div>
-                                                        
-                                                                                                                </div> row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
 
@@ -3034,8 +2958,11 @@
                                 </div> <!--Library-->
 
                                 <!--Misc-->
-                                <div class="tab-pane fade" id="Misc">
-                                    <h2>Misc Content Goes Here</h2>
+                                <div class="tab-pane fade" id="Genres">
+                                    <h2>Genre Content Goes Here</h2>
+                                </div>
+                                <div class="tab-pane fade" id="Queries">
+                                    <h2>Queries Go Here</h2>
                                 </div>
                             </div>
                         </div>

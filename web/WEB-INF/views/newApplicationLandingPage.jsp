@@ -225,7 +225,7 @@
                                         </div>
 
                                         <div style="margin-left: 40px " >   
-                                             <a data-target="#tcModal" data-toggle="modal" href="#tcModal">read Terms and Conditions</a>                                            
+                                            <a data-target="#tcModal" data-toggle="modal" href="#tcModal">read Terms and Conditions</a>                                            
                                         </div>
 
                                         <div class="form-group">
@@ -758,42 +758,40 @@
                                             and submit an application, the user acknowledges and agrees to the
                                             terms and conditions described above.  </b></font>
                                     </p>
+                                </div> 
+                            </div><!--modal body--> 
 
+                            <div class="modal-footer"  style="background-color: #c3bcbc">                           
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+                            </div> <!--modal footer -->
+                        </div> <!--modal content-->          
+                    </div> <!--modal dialog-->
+                </div> <!-- tcModal -->
 
+                <!--footer start-->
+                <div id="base">  
 
-                                </div><!--modal body--> 
+                    <div class="basetext">  
+                        <h2>Literature Ireland</h2>
+                        <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
+                    </div><!-- end of BaseText div -->
 
-                                <div class="modal-footer"  style="background-color: #c3bcbc">                           
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
-                                </div> <!--modal footer -->
-                            </div> <!--modal content-->          
-                        </div> <!--modal dialog-->
-                    </div> <!-- tcModal -->
+                    <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
+                    <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
+                    <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
 
-                    <!--footer start-->
-                    <div id="base">  
-
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
-                        </div><!-- end of BaseText div -->
-
-                        <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
-                        <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                        <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
-
-                        <div class="mobile-baselogos visible-phone"> 
-                            <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
-                            <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                            <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
-                        </div>
-                    </div><!-- end of Base div -->
-                </div>
-                <!-- end of container div -->
-                <div class="shadowbase"> </div>
-            </div><!-- end of Shadow container div -->
-            <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                &copy; 2017 mgr Software
+                    <div class="mobile-baselogos visible-phone"> 
+                        <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
+                        <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
+                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                    </div>
+                </div><!-- end of Base div -->
             </div>
+            <!-- end of container div -->
+            <div class="shadowbase"> </div>
+        </div><!-- end of Shadow container div -->
+        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+            &copy; 2017 mgr Software
+        </div>
     </body>
 </html>

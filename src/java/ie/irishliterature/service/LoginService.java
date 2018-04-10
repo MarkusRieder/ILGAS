@@ -46,19 +46,22 @@ public class LoginService {
             boolean loginSuccess = login;
 //            System.out.println("SUCCESS " + Boolean.toString(loginSuccess));
             
-            
+            LogonPassed = true;
 
-            long lastLogonDB = rs.getLong("lastLogon");
-            if ((lastLogonForm > lastLogonDB) && (login == true)) {
-                // set LogonPassed = true and update lastLogon in users table
-                LogonPassed = true;
-                String updateTableSQL = ("update users set lastLogon= " + lastLogonForm + " where uname = '" + username + "'");
-                pst = conn.prepareStatement(updateTableSQL);
-                pst.executeUpdate();
+//            https://www.javaworld.com/article/2072937/java-web-development/solving-the-logout-problem-properly-and-elegantly.html?page=2
+//            Solving the logout problem properly and elegantly
 
-            } else {
-                LogonPassed = false;
-            }
+//            long lastLogonDB = rs.getLong("lastLogon");
+//            if ((lastLogonForm > lastLogonDB) && (login == true)) {
+//                // set LogonPassed = true and update lastLogon in users table
+//                LogonPassed = true;
+//                String updateTableSQL = ("update users set lastLogon= " + lastLogonForm + " where uname = '" + username + "'");
+//                pst = conn.prepareStatement(updateTableSQL);
+//                pst.executeUpdate();
+//
+//            } else {
+//                LogonPassed = false;
+//            }
             
             //We send reply back to LoginServlet
             //There the redirects will be performed
