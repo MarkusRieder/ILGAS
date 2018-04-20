@@ -125,7 +125,7 @@
 
                 </div>
 
-                <h1 style="background-color: red">Make sure they can only see their own applications</h1>
+        <!--         <h1 style="background-color: red">Make sure they can only see their own applications</h1>  -->
                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
                     <h3 align="center" style="align-content: center">Display closed applications</h3>
 
@@ -194,21 +194,25 @@
                     method="POST" 
                     name="regF"
                     >
+                        
+                        
                     <div class="container col-sm-12" style="margin-bottom: 40px">
                         <button type="submit" class = "btn btn-default btn-sm" name="New Application">
                             New Application
                         </button>
-
+ <!--
                         <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
                             List New Applications
                         </button>
-                        <button type = "submit" class = "btn btn-default btn-sm active"  name="List Open Applications">
+-->
+                        <button type = "submit" class = "btn btn-default btn-sm" name="List Open Applications">
                             List Open Applications
                         </button>
+ <!--
                         <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
                             List Pending Applications
                         </button>
-
+-->
                         <button type = "submit" class = "btn btn-default btn-sm active"  name="List Closed Applications">
                             List Closed Applications
                         </button>

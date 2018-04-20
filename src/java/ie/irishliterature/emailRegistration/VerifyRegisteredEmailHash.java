@@ -1,17 +1,5 @@
 package ie.irishliterature.emailRegistration;
 
-import java.io.IOException;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-
 import ie.irishliterature.dao.ApplicationDAO;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.User;
@@ -19,6 +7,15 @@ import ie.irishliterature.util.BCrypt;
 import ie.irishliterature.util.GlobalConstants;
 import ie.irishliterature.util.MailUtil;
 import ie.irishliterature.util.Utils;
+import java.io.IOException;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class VerifyRegisteredEmailHash
@@ -60,7 +57,7 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
 
                 System.out.println("VerifyRegisteredEmailHash doGet username 2 : " + uname);
 
-                ApplicationDAO.updateStaus(uname, "active");
+                ApplicationDAO.updateStatus(uname, "active");
 
                 message = "Email verified successfully. Account was activated. Click <a href=\"index.jsp\">here</a> to login";
         
@@ -68,7 +65,7 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
 
             } else if (ApplicationDAO.verifyEmailHash(uname, hash) && scope.equals(GlobalConstants.RESET_PASSWORD)) {
                 //update status as active
-                ApplicationDAO.updateStaus(uname, "active");
+                ApplicationDAO.updateStatus(uname, "active");
                 //put some session for user
                 request.getSession().setAttribute(GlobalConstants.USER, uname);
                 request.getSession().setAttribute(GlobalConstants.IS_RESET_PASSWORD_VERIFIED, GlobalConstants.YES);

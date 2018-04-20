@@ -876,6 +876,13 @@
 //                            render: function (data) {
 //                                return moment(data).format('MM DD, YYYY','DD/MM/YYYY');
 //                            }},
+
+
+//                        {
+//                            
+//                           targets: [5,6],
+//                           visible: false
+                           //},
                         {className: "dt-left", "targets": [2, 7, 8]}
                     ]
 
@@ -1035,8 +1042,6 @@
                             td.width = '50%';
                             td2.width = '50%';
 
-                            //       console.log("546466666666666476   TranslTitles[" + i + "][" + j + "] " + TranslTitles[i][j]);
-
                             if (j === 0) {
 
                                 var th = document.createElement('TH');
@@ -1111,7 +1116,7 @@
                                 var newdiv = $('<div>', {class: 'text-left', text: translatorTrack[i][j]});
                                 var a = document.createElement('a');
                                 var linkText = document.createTextNode("  see Trackrecord");
-                                //        console.log("translators:  " + translatorTrack[i][j]);
+
                                 a.appendChild(linkText);
                                 a.title = "see Trackrecord";
                                 a.class = "button";
@@ -1120,6 +1125,7 @@
                             }
                             $('#testcontainer').find('a').attr('data-toggle', 'modal');
                             $('#testcontainer').append(newdiv);
+                            
                             //print track record
                             if (i !== 0) {
                                 //            console.log("translatorTrack[" + i + " ][ " + j + " ] :  " + translatorTrack[i][j]);
@@ -1128,8 +1134,6 @@
                     }
 
                     var expertReaderName = rowdata.expertReaderList;
-//                    console.log("expertReaderName:  " + expertReaderName);
-//                    console.log("expertReaderName length:  " + expertReaderName.length);
 
                     document.getElementById("unassignedERRefNo").value = appReferenceNumber;
                     document.getElementById("NewAssignedERRefNo").value = appReferenceNumber;
@@ -1142,7 +1146,6 @@
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                     $('#additionalExpertReader').empty(); // empty the div before fetching and adding new data
 
-//                    if (expertReaderName.length !== 0) {
                     if (cntr === 1) {
 
 
@@ -1238,7 +1241,6 @@
                             addExpertReaderModal += '</div>';
                             addExpertReaderModal += '</div>';
                             addExpertReaderModal += '</div>';
-                            //     console.log(addExpertReaderModal);
 
                             $(addExpertReaderModal).appendTo('#additionalExpertReaderModal');
                             /* 
@@ -1246,7 +1248,6 @@
                              */
 
                             for (var j = 0; j <= 6; ++j) {
-                                //         console.log("expertReaderName[" + i + "]  [" + j + "]   " + expertReaderName[i][j]);
 
                                 var ExpReader = expertReaderName[i][6];
                                 var expertReaderlElementID = "appExpertReader" + i;
@@ -1266,13 +1267,10 @@
                             }
                         }
                     }
-//                    }
 
 
                     //Get all Expert Readers that are not assigned at the moment
                     var unassignedExpertReaderList = rowdata.unassignedExpertReaderList;
-                    //           console.log(unassignedExpertReaderList.length);
-
 
                     var select = document.getElementById("selectUnassignedER");
                     // Optional: Clear all existing options first:

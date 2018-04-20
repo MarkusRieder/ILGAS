@@ -191,7 +191,7 @@ public class GrantApplicationServlet extends HttpServlet {
 
     private String ISSN;
 
-    private String Series;
+    private String Series = "";
 
     ////////////////////////////////////////////////////////////////////////////
     ///
@@ -237,7 +237,7 @@ public class GrantApplicationServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         //       String task = "Start New Application";
-//        String[] authorArray;
+        //        String[] authorArray;
         //   String task = request.getParameter("AssignExpertReader");
         //  String task = request.getParameter("task");
         //  String name = request.getParameter("name");
@@ -843,6 +843,7 @@ public class GrantApplicationServlet extends HttpServlet {
                 library.setPublisher(company);
                 library.setPublisheryear(Publisheryear);
                 library.setGenre(Genre);
+                library.setSeries(Series);
                 library.setTranslationPublisher(translationPublisher);
                 library.setTranslationTitle(translationTitle);
                 library.setTranslationPublisherYear(translationPublisherYear);

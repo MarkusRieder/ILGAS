@@ -45,7 +45,7 @@ public class ApplicationServlet extends HttpServlet {
 //        if publisherID = null ==> have we been logged out???
         HttpSession session = request.getSession();
         int publisherID = (Integer) session.getAttribute("publisherID");
-
+        System.out.println("/Application  --->  publisherID "  + publisherID );
         //  String publisherID = (String) Integer.toString(xxx);
         // String publisherID = (String) session.getAttribute("publisherID");
         //   String publisherID = (String) Integer.toString(xxx);

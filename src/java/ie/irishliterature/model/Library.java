@@ -21,6 +21,8 @@ public class Library {
     private String Publisheryear;
 
     private String Genre;
+    
+    private String Series;
 
     private String translationTitle;
 
@@ -343,6 +345,20 @@ public class Library {
      */
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    /**
+     * @return the Series
+     */
+    public String getSeries() {
+        return Series;
+    }
+
+    /**
+     * @param Series the Series to set
+     */
+    public void setSeries(String Series) {
+        this.Series = Series;
     }
 
 }

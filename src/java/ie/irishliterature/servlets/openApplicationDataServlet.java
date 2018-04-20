@@ -44,10 +44,7 @@ public class openApplicationDataServlet extends HttpServlet {
         System.out.println("openApplicationDataServlet:  ");
 
         HttpSession session = request.getSession();
-        //  String publisherID = (String) session.getAttribute("publisherID");
-
-
-                
+     
         int pID = (Integer) session.getAttribute("publisherID");
         String publisherID = (String) Integer.toString(pID);
 
@@ -64,7 +61,7 @@ public class openApplicationDataServlet extends HttpServlet {
 
             listApplications = openApplicationDAO.getAllApplications(publisherID);
 
-            System.out.println("ApplicationDataServlet listApplications: " + listApplications);
+            System.out.println("ApplicationDataServlet listApplications: " + listApplications + " publisherID  "  + publisherID);
 
         } catch (ClassNotFoundException | DBException ex) {
             Logger.getLogger(UserDataServlet.class.getName()).log(Level.SEVERE, null, ex);

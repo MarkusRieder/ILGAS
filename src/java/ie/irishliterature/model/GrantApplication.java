@@ -78,10 +78,9 @@ public class GrantApplication {
     private String SignedLIContractName; //filename
 
     private String paymentStatus;
-
-//    private ArrayList<ArrayList<String>> previousGrantAid;
     
     private ArrayList<String> previousGrantAid;
+    
     private int award;
 
     private int salesFigures;
@@ -90,7 +89,6 @@ public class GrantApplication {
 
     private int plannedPageExtent;
 
-//     a copy of the Translator's CV
     private String translatorCV;//path + filename
 
     private String translatorCVDocName; //filename
@@ -131,10 +129,11 @@ public class GrantApplication {
 
     private ArrayList<String> TranslatorName;
 
-    //  private ArrayList<String> TranslatorTrack;
     private ArrayList<ArrayList<String>> TranslatorTrack;
 
     private ArrayList<ArrayList<String>> translatorTitles;
+    
+    private String translationTitle;
 
     private String AuthorName;
 
@@ -149,9 +148,12 @@ public class GrantApplication {
     private String foreignCountry;
 
     private String targetLanguage;
-//4. Translator’s name
-//5. Translator’s track record
-//6. Translation Sample (as is!)
+    
+    private String Languages;
+    
+    private String Series;
+    
+    private String publicationYear;
 
     private String expertReaderName;
 
@@ -169,21 +171,9 @@ public class GrantApplication {
 
     private java.sql.Timestamp LASTUPDATED;
 
-//
-//1. Board Meeting
-//2. Amount Requested 
-//3. Fee Calculation (see below)
-//4. Proposed Publication Date
-//5. Planned Page Extent
-//6. Planned Print Run
-//7. Award (checkbox)
-//8. Amount Approved 
-//9. Publisher Informed of Outcome 
-//10. Board Comments/Instructions
-//    
-//Foreign Publisher
-//Foreign Country
-//Target Language
+    private java.sql.Timestamp Created;
+    
+
     /**
      * @return the ApplicationNumber
      */
@@ -1248,6 +1238,76 @@ public class GrantApplication {
      */
     public void setOriginalName(String originalName) {
         this.originalName = originalName;
+    }
+
+    /**
+     * @return the publicationYear
+     */
+    public String getPublicationYear() {
+        return publicationYear;
+    }
+
+    /**
+     * @param publicationYear the publicationYear to set
+     */
+    public void setPublicationYear(String publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
+    /**
+     * @return the Languages
+     */
+    public String getLanguages() {
+        return Languages;
+    }
+
+    /**
+     * @param Languages the Languages to set
+     */
+    public void setLanguages(String Languages) {
+        this.Languages = Languages;
+    }
+
+    /**
+     * @return the Series
+     */
+    public String getSeries() {
+        return Series;
+    }
+
+    /**
+     * @param Series the Series to set
+     */
+    public void setSeries(String Series) {
+        this.Series = Series;
+    }
+
+    /**
+     * @return the Created
+     */
+    public java.sql.Timestamp getCreated() {
+        return Created;
+    }
+
+    /**
+     * @param Created the Created to set
+     */
+    public void setCreated(java.sql.Timestamp Created) {
+        this.Created = Created;
+    }
+
+    /**
+     * @return the translationTitle
+     */
+    public String getTranslationTitle() {
+        return translationTitle;
+    }
+
+    /**
+     * @param translationTitle the translationTitle to set
+     */
+    public void setTranslationTitle(String translationTitle) {
+        this.translationTitle = translationTitle;
     }
 
 }

@@ -176,7 +176,7 @@ public class ApplicationDAO {
         }
     }
 
-    public static void updateStaus(String uname, String status) throws DBException {
+    public static void updateStatus(String uname, String status) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
 

@@ -61,5 +61,5 @@
                         {"data": "salesFigures"},
                         {"data": "original",
                         {"data": "originalName"},
-                         {"data": "authorList"},
+                        {"data": "authorList"},
                         {"data": "idTranslator"}

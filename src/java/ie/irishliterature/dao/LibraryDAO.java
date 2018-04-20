@@ -44,8 +44,8 @@ public class LibraryDAO {
         PreparedStatement ps2 = null;
         int id = 0;
         ResultSet res = null;
-        
-         java.sql.Timestamp timestamp = getcurrentTimeStamp();
+
+        java.sql.Timestamp timestamp = getcurrentTimeStamp();
 
         try {
 
@@ -54,8 +54,8 @@ public class LibraryDAO {
 
             ps1 = conn.prepareStatement("INSERT INTO library ( referenceNumber, Title, Publisher, publishingYear, Genre, "
                     + "translationTitle, translationPublisher, translationPublisherYear, Cover, CoverName, physicalDescription, "
-                    + "Duplicates, Copies, Notes, ISBN, ISSN, LASTUPDATED) "
-                    + "VALUES( ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?, ?, ?, ?)");
+                    + "Duplicates, Copies, Notes, ISBN, ISSN, LASTUPDATED, Series) "
+                    + "VALUES( ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?, ?, ?, ?,?)");
 
             ps1.setString(1, library.getReferenceNumber());
             ps1.setString(2, library.getTitle());
@@ -75,6 +75,7 @@ public class LibraryDAO {
             ps1.setString(15, library.getISBN());
             ps1.setString(16, library.getISSN());
             ps1.setTimestamp(17, timestamp);
+            ps1.setString(18, library.getSeries());
 
             ps1.executeUpdate();
 
@@ -135,7 +136,7 @@ public class LibraryDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        ArrayList listLibrary = new ArrayList();        
+        ArrayList listLibrary = new ArrayList();
         ArrayList<String> authorList;
         ArrayList<String> translatorList;
         ArrayList<String> languageList;
@@ -167,12 +168,12 @@ public class LibraryDAO {
                     publishingYear = "n/a";
 
                 }
-                
+
                 library.setPublisheryear(publishingYear);
                 library.setGenre(rs.getString("Genre"));
                 library.setTranslationTitle(rs.getString("translationTitle"));
                 library.setTranslationPublisher(rs.getString("translationPublisher"));
-                
+
                 // checking full null value
                 String translationPublisherYear = rs.getString("translationPublisherYear");
 
