@@ -992,7 +992,7 @@
             });
         </script>
 
-        <!--add more Add another Press Cutting-->
+        <!-- add Press Cuttings -->
         <script type="text/javascript">
             $(document).ready(function () {
                 pressCuttingCounter = 1;
@@ -1024,7 +1024,7 @@
                     var moreUploadTag = '';
 
                     moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
-                    moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
+                    moreUploadTag += '<label for="label_pressCuttings' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
                     moreUploadTag += '<br>';
                     moreUploadTag += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
                     moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
@@ -1033,10 +1033,10 @@
                     moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
                     moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
                     moreUploadTag += '</label>';
-                    moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
+                    moreUploadTag += '<input id="label_pressCuttings' + upload_number + '" class="pull-left">';
                     moreUploadTag += '<br>';
                     moreUploadTag += '<br>';
-                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
+                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="pressCuttings" name="destination" type="hidden">';
                     moreUploadTag += '</div>';
                     moreUploadTag += '</div>';
 
