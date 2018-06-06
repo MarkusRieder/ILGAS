@@ -119,7 +119,7 @@
 
                 </div> <!--  End of topbar div -->
 
-                <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid" style="margin-bottom: 20px">
 
@@ -200,19 +200,15 @@
                         <button type="submit" class = "btn btn-default btn-sm" name="New Application">
                             New Application
                         </button>
- <!--
-                        <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
-                            List New Applications
-                        </button>
--->
+
                         <button type = "submit" class = "btn btn-default btn-sm" name="List Open Applications">
                             List Open Applications
                         </button>
- <!--
+ 
                         <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
                             List Pending Applications
                         </button>
--->
+
                         <button type = "submit" class = "btn btn-default btn-sm active"  name="List Closed Applications">
                             List Closed Applications
                         </button>

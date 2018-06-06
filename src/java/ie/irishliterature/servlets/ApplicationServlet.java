@@ -60,9 +60,9 @@ public class ApplicationServlet extends HttpServlet {
         if (request.getParameter("New Application") != null) {
             task = "Start New Application";
             request.getSession().setAttribute("task", "Start New Application");
-        } else if (request.getParameter("List New Applications") != null) {
-            task = "List New Applications";
-            request.getSession().setAttribute("task", "List New Applications");
+//        } else if (request.getParameter("List New Applications") != null) {
+//            task = "List New Applications";
+//            request.getSession().setAttribute("task", "List New Applications");
         } else if (request.getParameter("List Open Applications") != null) {
             task = "List Open Applications";
             request.getSession().setAttribute("task", "List Open Applications");

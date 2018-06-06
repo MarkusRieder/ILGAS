@@ -174,7 +174,7 @@
                     </div>
                 </div> <!--container for welcome/logout-->
 
-                <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid" style="margin-top: 10px; margin-bottom: 60px">
 
@@ -207,10 +207,10 @@
 
                                         <div class="checkbox">                                                             
                                             <label style="margin-bottom: 10px; margin-left: 20px" for="tcACCEPTED">
-                                                By clicking on the "<i>I accept</i>" 
+                                                By clicking on the "<i>Continue</i>" 
                                                 button, you are confirming that you have 
                                                 <strong>read</strong> and <strong>accepted</strong> 
-                                                <br/>the terms and conditions of use of this website 
+                                                <br/>the terms and conditions of use of this system 
                                                 (including disclaimer).</label>
                                             <br/>
                                             <label style="font-size: 2.0em; margin-left: 20px " class="checkbox-inline  no_indent">
@@ -225,7 +225,7 @@
                                         </div>
 
                                         <div style="margin-left: 40px " >   
-                                            <a data-target="#tcModal" data-toggle="modal" href="#tcModal">read Terms and Conditions</a>                                            
+                                            <a data-target="#tcModal" data-toggle="modal" href="#tcModal">Read Terms and Conditions</a>                                            
                                         </div>
 
                                         <div class="form-group">
@@ -235,7 +235,7 @@
                                             </div>
                                             <div class="col-xs-2 pull-left" style="margin-top:3px;">
                                                 <button type="submit"  name="task" class="btn btn-success" id="nxtBtn" style="visibility:hidden" >                           
-                                                    <span class="glyphicon glyphicon-thumbs-up"></span> Continue...
+                                                    <span class="glyphicon glyphicon-thumbs-up"></span> Continue
                                                 </button>
                                             </div>
                                         </div> <!-- form-group-->    

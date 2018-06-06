@@ -117,11 +117,10 @@
                     </div> <!--container for welcome/logout-->
                 </div> <!--  End of topbar div -->
 
-                <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid" style="margin-bottom: 20px"></div>
-
-                <h1 style="background-color: red">Make sure they can only see their own applications</h1>
+           
                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
                     <h3 align="center" style="align-content: center">Display pending applications</h3>
 
@@ -134,7 +133,7 @@
                         <table id="pending" class="table table-striped table-bordered  dt-responsive nowrap" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th class="all">Application<br/>  Nr</th>
+                                    <th class="all">Application<br/>  No</th>
                                     <th class="all">Company</th>
                                     <th class="all">Agreement</th>
                                     <th class="all">Contract</th>
@@ -149,7 +148,7 @@
 
                             <tfoot>
                                 <tr>
-                                    <th class="all">Application<br/>  Nr</th>
+                                    <th class="all">Application<br/>  No</th>
                                     <th class="all">Company</th>
                                     <th class="all">Agreement</th>
                                     <th class="all">Contract</th>
@@ -195,12 +194,10 @@
                             New Application
                         </button>
 
-                        <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
-                            List New Applications
-                        </button>
-                        <button type = "submit" class = "btn btn-default btn-sm active"  name="List Open Applications">
+                        <button type = "submit" class = "btn btn-default btn-sm"  name="List Open Applications">
                             List Open Applications
                         </button>
+                        
                         <button type = "submit" class = "btn btn-default btn-sm active" name="List Pending Applications">
                             List Pending Applications
                         </button>

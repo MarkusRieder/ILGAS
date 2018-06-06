@@ -461,11 +461,11 @@
                             }},
                         {"data": "amountRequested",
                             "render": function (data, type, row) {
-                                var mValue = parseFloat(0.00);
-                                mValue = parseFloat(data);
+                                var mValue;// = parseFloat(0.00);
+                                mValue = data; //parseFloat(data);
                                 if (mValue > 0) {
                                     //mValue = Math.round(mValue);                                             
-                                    return mValue.toFixed(2);
+                                    return mValue; //.toFixed(2);
                                 } else
                                     return '-';
                                 return data;
@@ -624,6 +624,7 @@
                             targets: -1,
                             visible: false
                         },
+
                         {
                             "targets": [-1, 0],
                             "orderable": false
@@ -745,8 +746,8 @@
                         var cver = 'http://localhost' + rowdata.cover + '';
 
                         $("#cover").val(cver);
-                        
-                         document.getElementById("cover").src = cver;
+
+                        document.getElementById("cover").src = cver;
                     }
 //                    var contr = 'http://localhost' + rowdata.contract + '';
 //                    document.getElementById("contract").href = contr;
@@ -767,7 +768,8 @@
 //                    $("#appAgreement").val($(this).closest('tr').children()[5].textContent);
 
                     var appReferenceNumber = rowdata.ReferenceNumber;
-                    // console.log("appReferenceNumber " + appReferenceNumber);
+                    document.getElementById("appReferenceNumber").innerHTML = appReferenceNumber;
+                    //          console.log("appReferenceNumber " + appReferenceNumber);
                     $("#unassignedERRefNo").val(appReferenceNumber);
                     var TranslName = rowdata.TranslatorName;
                     console.log("TranslName " + TranslName);
@@ -777,6 +779,7 @@
                     console.log("currentItem " + $(bookTitles.join("")));
                     console.log("bookTitles: " + bookTitles);
                     var Authors = rowdata.Author;
+                    document.getElementById("authors").value = rowdata.Author;
                     console.log("Authors " + Authors);
                     // Generate table translatorTrackTable
                     var TranslTitles = rowdata.translatorTitles;
@@ -1014,7 +1017,7 @@
             function backToMisc() {
                 var upload_number = 2;
                 for (var i = 2; i <= pressCuttingCounter; i++) {
-
+                    console.log("backToMisc()   ");
                     var nr = "name" + i;
                     var item = document.getElementById(nr);
                     var itemValue = item.value;
@@ -1183,194 +1186,194 @@
                     </div> <!--container for welcome/logout-->
                 </div> <!--  End of topbar div -->
 
-                <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid" style="margin-bottom: 20px"></div>
 
-                <!--         <h1 style="background-color: red">Make sure they can only see their own applications</h1>  -->
+                <!-- Main Grid Container -->  
                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
-                    <h3 align="center" style="align-content: center">Display open applications</h3>
 
-                    <input value="${companyDetails.Address1}" /> 
-                    <input value="${applicationDetails.Address1}" /> 
+                    <h3 align="center" style="align-content: center">Display open applications</h3>
+                    <br/>
+
                     <!--Application-->
                     <div class="tab-pane fade  active in" id="Application">
                         <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
 
+                            <!-- Main Grid -->  
                             <div class="table-responsive">
                                 <table id="applications" class="table display table-striped table-bordered  dt-responsive nowrap" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th class="details-control"></th>   
-                                            <th class="all">Application<br/>  Nr</th>
-                                            <th class="all">Application<br/>  Year</th>
-                                            <th class="all">Reference<br/>  Nr</th>
-                                            <th class="all">Publisher</th>       
-
-                                            <!--<th class="all">PublisherID</th>-->
-                                            <!--<th class="all">userID</th>-->
-                                            <th class="all">Agreement</th>
-                                            <th class="all">Contract</th>
-                                            <th class="all">Proposed<br/> Date of <br/> Publication</th>
-                                            <th class="all">Proposed<br/> Print Run</th>
-                                            <th class="all">Planned Page <br/>  Extent</th>
-                                            <th class="all">Translator<br/> CV</th>
-                                            <th class="all">Number<br/> Pages</th>
-                                            <th class="all">Break-down of <br/> Translator fee</th>
-                                            <th class="all">Translator  <br/> Fee</th>
-                                            <th class="all">Notes</th>
-                                            <th class="all select-filter">Status</th>
-                                            <th class="all">Copies <br/> Sent</th>
-                                            <th class="all">Date Copies  <br/> Were Sent</th>
-                                            <th class="all">Copies of  <br/> Translation Sample</th>
-                                            <th class="all">T&C has been <br/> Accepted</th>
-                                            <th class="all">Approved</th> 
-                                            <th class="all">Genre</th>   
-                                            <th class="all"></th>
-                                            <th class="all">Expert Reader</th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>    
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>    
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>    
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>    
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>    
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>    
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
+                                            <th class="never">Application<br/>  No</th>
+                                            <th class="never">Application<br/>  Year</th>
+                                            <th class="all">Reference<br/>  No</th>
+                                            <th class="never">Publisher</th>       
+                                            <th class="never">Agreement</th>
+                                            <th class="never">Contract</th>
+                                            <th class="never">Proposed<br/> Date of <br/> Publication</th>
+                                            <th class="never">Proposed<br/> Print Run</th>
+                                            <th class="never">Planned Page <br/>  Extent</th>
+                                            <th class="never">Translator<br/> CV</th>
+                                            <th class="never">Number<br/> Pages</th>
+                                            <th class="never">Break-down of <br/> Translator fee</th>
+                                            <th class="never">Translator  <br/> Fee</th>
+                                            <th class="never">Notes</th>
+                                            <th class="never">Status</th>
+                                            <th class="never">Copies <br/> Sent</th>
+                                            <th class="never">Date Copies  <br/> Were Sent</th>
+                                            <th class="never">Copies of  <br/> Translation Sample</th>
+                                            <th class="never">T&C has been <br/> Accepted</th>
+                                            <th class="never">Approved</th> 
+                                            <th class="never">Genre</th>   
+                                            <th class="never"></th>
+                                            <th class="never">Expert Reader</th>
+                                            <th class="all">Book Title</th>
+                                            <th class="never">24Translator Titles</th>
+                                            <th class="never">25 Titles</th>
+                                            <th class="never">26 Translator CV Doc Name</th>
+                                            <th class="never">27 Cover</th>
+                                            <th class="never">28 Sample Sent Out</th>
+                                            <th class="never">29 Sample Returned</th>
+                                            <th class="never">30 Reader Report</th>
+                                            <th class="never">31 Expert Reader List</th>
+                                            <th class="never">32 Unassigned Expert Reader List</th>    
+                                            <th class="never">33 idTranslator</th>
+                                            <th class="never">34 Original Date of Publication</th>
+                                            <th class="never">35 Original Language</th>
+                                            <th class="never">36 Page Extent <br/>(of the original)</th>
+                                            <th class="never">37 Country of Publication</th>    
+                                            <th class="never">38 Foreign Publisher</th>
+                                            <th class="never">39 Foreign Country</th>
+                                            <th class="never">Target Language</th>
+                                            <th class="never">Board Meeting</th>
+                                            <th class="never">Amount Requested</th>
+                                            <th class="never">Amount Approved</th>
+                                            <th class="never">Publisher informed of Meeting</th>
+                                            <th class="never">Board Comments/Instructions</th>
+                                            <th class="never">Contract Sent to Publisher</th>
+                                            <th class="never">Acknowledgement Approved</th>
+                                            <th class="never">Date Published Books Received</th>    
+                                            <th class="never">Date Payment made to Publisher</th>
+                                            <th class="never">Payment Reference Number</th>
+                                            <th class="never">Addendum</th>
+                                            <th class="never">Addendum Name</th>
+                                            <th class="never">Proof of Payment</th>    
+                                            <th class="never">Proof of Payment Name</th>
+                                            <th class="never">Bank Details</th>
+                                            <th class="never">Bank Details Name</th>    
+                                            <th class="never">Signed LI Contract</th>
+                                            <th class="never">Signed LI ContractName</th>
+                                            <th class="never">Payment Status</th>
+                                            <th class="never">Previous Grant Aid</th>
+                                            <th class="never">Award</th>    
+                                            <th class="never">Sales Figures</th>
+                                            <th class="never">Original</th>
+                                            <th class="never">Original Name</th>
+                                            <th class="all">Author(s)</th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
                                         </tr>
                                     </thead>
-
+                                   
                                     <tfoot>
                                         <tr>
                                             <th class="details-control"></th>   
-                                            <th class="all">1<br/>  Nr</th>
-                                            <th class="all">2<br/>  Year</th>
-                                            <th class="all">3<br/>  Nr</th>
-                                            <th class="all">4</th>              
-
-                                            <!--<th class="all">PublisherID</th>-->
-                                            <!--<th class="all">userID</th>-->
-                                            <th class="all">4</th>
-                                            <th class="all">5</th>
-                                            <th class="all">6<br/> Date of <br/> Publication</th>
-                                            <th class="all">7<br/> Print Run</th>
-                                            <th class="all">8 Page <br/>  Extent</th>
-                                            <th class="all">9 <br/> Translator<br/> CV</th>
-                                            <th class="all">Number<br/> Pages</th>
-                                            <th class="all">Break-down of <br/> Translator fee</th>
-                                            <th class="all">Translator  <br/> Fee</th>
-                                            <th class="all">Notes</th>
-                                            <th class="all select-filter">Status</th>
-                                            <th class="all">15 <br/> Sent</th>
-                                            <th class="all">16 Copies  <br/> Were Sent</th>
-                                            <th class="all">17 of  <br/> Translation Sample</th>
-                                            <th class="all">18 has been <br/> Accepted</th>
-                                            <th class="all">Approved</th>
-                                            <th class="all">Genre</th>    
-                                            <th class="all">Translator Name</th>
-                                            <th class="all">Expert Reader Name</th>
+                                            <th class="never">Application<br/>  No</th>
+                                            <th class="never">Application<br/>  Year</th>
+                                            <th class="all">Reference<br/>  No</th>
+                                            <th class="never">Publisher</th>       
+                                            <th class="never">Agreement</th>
+                                            <th class="never">Contract</th>
+                                            <th class="never">Proposed<br/> Date of <br/> Publication</th>
+                                            <th class="never">Proposed<br/> Print Run</th>
+                                            <th class="never">Planned Page <br/>  Extent</th>
+                                            <th class="never">Translator<br/> CV</th>
+                                            <th class="never">Number<br/> Pages</th>
+                                            <th class="never">Break-down of <br/> Translator fee</th>
+                                            <th class="never">Translator  <br/> Fee</th>
+                                            <th class="never">Notes</th>
+                                            <th class="never">Status</th>
+                                            <th class="never">Copies <br/> Sent</th>
+                                            <th class="never">Date Copies  <br/> Were Sent</th>
+                                            <th class="never">Copies of  <br/> Translation Sample</th>
+                                            <th class="never">T&C has been <br/> Accepted</th>
+                                            <th class="never">Approved</th> 
+                                            <th class="never">Genre</th>   
+                                            <th class="never"></th>
+                                            <th class="never">Expert Reader</th>
                                             <th class="all">Book Title</th>
-                                            <th class="all">Translator Titles</th>
-                                            <th class="all">Titles</th>
-                                            <th class="all">Translator CV Doc Name</th>
-                                            <th class="all">Cover</th>
-                                            <th class="all">Sample Sent Out</th>
-                                            <th class="all">Sample Returned</th>
-                                            <th class="all">Reader Report</th>
-                                            <th class="all">Expert Reader List</th>
-                                            <th class="all">Unassigned Expert Reader List</th>    
-                                            <th class="all">idTranslator</th>
-                                            <th class="all">Original Date of Publication</th>
-                                            <th class="all">Original Language</th>
-                                            <th class="all">Page Extent <br/>(of the original)</th>
-                                            <th class="all">Country of Publication</th>    
-                                            <th class="all">Foreign Publisher</th>
-                                            <th class="all">Foreign Country</th>
-                                            <th class="all">Target Language</th>
-                                            <th class="all">Board Meeting</th>
-                                            <th class="all">Amount Requested</th>
-                                            <th class="all">Amount Approved</th>
-                                            <th class="all">Publisher informed of Meeting</th>
-                                            <th class="all">Board Comments/Instructions</th>
-                                            <th class="all">Contract Sent to Publisher</th>
-                                            <th class="all">Acknowledgement Approved</th>
-                                            <th class="all">Date Published Books Received</th>    
-                                            <th class="all">Date Payment made to Publisher</th>
-                                            <th class="all">Payment Reference Number</th>
-                                            <th class="all">Addendum</th>
-                                            <th class="all">Addendum Name</th>
-                                            <th class="all">Proof of Payment</th>    
-                                            <th class="all">Proof of Payment Name</th>
-                                            <th class="all">Bank Details</th>
-                                            <th class="all">Bank Details Name</th>    
-                                            <th class="all">Signed LI Contract</th>
-                                            <th class="all">Signed LI ContractName</th>
-                                            <th class="all">Payment Status</th>
-                                            <th class="all">Previous Grant Aid</th>
-                                            <th class="all">Award</th>    
-                                            <th class="all">Sales Figures</th>
-                                            <th class="all">Original</th>
-                                            <th class="all">Original Name</th>
-                                            <th class="all">Authors</th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all"></th>
-                                            <th class="all">64 - dummy</th>
+                                            <th class="never">24Translator Titles</th>
+                                            <th class="never">25 Titles</th>
+                                            <th class="never">26 Translator CV Doc Name</th>
+                                            <th class="never">27 Cover</th>
+                                            <th class="never">28 Sample Sent Out</th>
+                                            <th class="never">29 Sample Returned</th>
+                                            <th class="never">30 Reader Report</th>
+                                            <th class="never">31 Expert Reader List</th>
+                                            <th class="never">32 Unassigned Expert Reader List</th>    
+                                            <th class="never">33 idTranslator</th>
+                                            <th class="never">34 Original Date of Publication</th>
+                                            <th class="never">35 Original Language</th>
+                                            <th class="never">36 Page Extent <br/>(of the original)</th>
+                                            <th class="never">37 Country of Publication</th>    
+                                            <th class="never">38 Foreign Publisher</th>
+                                            <th class="never">39 Foreign Country</th>
+                                            <th class="never">Target Language</th>
+                                            <th class="never">Board Meeting</th>
+                                            <th class="never">Amount Requested</th>
+                                            <th class="never">Amount Approved</th>
+                                            <th class="never">Publisher informed of Meeting</th>
+                                            <th class="never">Board Comments/Instructions</th>
+                                            <th class="never">Contract Sent to Publisher</th>
+                                            <th class="never">Acknowledgement Approved</th>
+                                            <th class="never">Date Published Books Received</th>    
+                                            <th class="never">Date Payment made to Publisher</th>
+                                            <th class="never">Payment Reference Number</th>
+                                            <th class="never">Addendum</th>
+                                            <th class="never">Addendum Name</th>
+                                            <th class="never">Proof of Payment</th>    
+                                            <th class="never">Proof of Payment Name</th>
+                                            <th class="never">Bank Details</th>
+                                            <th class="never">Bank Details Name</th>    
+                                            <th class="never">Signed LI Contract</th>
+                                            <th class="never">Signed LI ContractName</th>
+                                            <th class="never">Payment Status</th>
+                                            <th class="never">Previous Grant Aid</th>
+                                            <th class="never">Award</th>    
+                                            <th class="never">Sales Figures</th>
+                                            <th class="never">Original</th>
+                                            <th class="never">Original Name</th>
+                                            <th class="all">Author(s)</th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                         <!-- Main Grid -->   
                                     </tbody>
                                 </table>
-                            </div>                   
+                            </div> <!-- Main Grid -->       
+
                         </div> <!-- container-fluid -->  
-                    </div>             
+                    </div> <!-- tab-pane "Application" -->     
+
                     <c:if test="${not empty error}">Error: ${error}</c:if>
-                    </div> <!-- /container-fluid -->
+
+                    </div> <!-- container-fluid -->
 
                     <div class="modal fade" id="applicationsModal" data-modal-index="1">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #c3bcbc">
                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title">Add details to open Application</h4>
+                                    <h4 class="modal-title">Add details to application <span id="appReferenceNumber"></span></h4>
+
                                 </div>
                                 <div class="modal-body" style="background-color: #d9d1d1">
 
@@ -1390,12 +1393,12 @@
                                             <!-- Collect the nav links, forms, and other content for toggling -->
                                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  style="font-size: 0.8em !important;  background-color: #d9d1d1">
                                                 <ul class="nav navbar-nav nav-tabs two-lines">
-                                                    <li class="active"><a href="#Contact" data-toggle="tab">Contact <br/>details</a></li>
-                                                    <li><a href="#books" data-toggle="tab">Book<br/> details</a></li>
-                                                    <li><a href="#Rights" data-toggle="tab">Rights<br/>  Agreement</a></li>
+                                                    <li class="active"><a href="#Contact" data-toggle="tab">Contact <br/>Details</a></li>
+                                                    <li><a href="#books" data-toggle="tab">Book<br/> Details</a></li>
+                                                    <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/> & Contracts </a></li>
                                                     <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
                                                     <li><a href="#Translator" data-toggle="tab">Translator's <br/> Details</a></li>
-                                                    <li><a href="#Misc" data-toggle="tab">Misc</a></li>
+                                                    <!--              <li><a href="#Misc" data-toggle="tab">Misc</a></li>  -->
                                                     <li><a href="#Original" data-toggle="tab"><span>Original Work<br/>& Sample Translation</span></a></li>
                                                 </ul>
                                             </div><!-- /.navbar-collapse -->
@@ -1426,6 +1429,17 @@
                                                                         disabled
                                                                         >
                                                             </div>
+
+                                                            <div class="col-sm-4">        
+                                                                <input id="Company_Number"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="Company_Number"                                
+                                                                       value="${publisherID}"                                   
+                                                                       placeholder="internal Company Number"
+                                                                       disabled
+                                                                       >
+                                                            </div>
                                                         </div> <!--row-->
 
                                                         <!--second row-->
@@ -1441,7 +1455,7 @@
                                                                        >
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                <label class="pull-left">Post Code</label>
+                                                                <label class="pull-left">Post code</label>
                                                                 <input id="postCode"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -1539,7 +1553,7 @@
                                                         <div class="row" style="margin-bottom: 10px">
                                                             <div class="col-sm-6"></div>
                                                             <div class="col-sm-3">
-                                                                <label class="pull-left">Fax Number</label>
+                                                                <label class="pull-left">Fax number</label>
                                                                 <input id="Fax"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -1563,7 +1577,7 @@
                                                                        >
                                                             </div>
                                                             <div class="col-sm-4">
-                                                                <label class="pull-left">Web site</label>
+                                                                <label class="pull-left">Website</label>
                                                                 <input id="WWW"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -1594,7 +1608,7 @@
                                                         <!--keep in one line otherwise placeholder doesn't show-->
                                                         <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
                                                     </div> <!--container-->
-                                                </div> <!--tab contact-->
+                                                </div> <!-- tab-pane "Contact" -->
 
                                                 <!-- Book Details -->
                                                 <div class="tab-pane fade" id="books">
@@ -1615,18 +1629,17 @@
                                                                         <div class="col-sm-8">    
 
                                                                             <label for="authors" class="pull-left">Author(s)</label><br/>
-                                                                            <!--<strong>Author(s)</strong>--> 
                                                                             <div class="form-group">
 
                                                                                 <textarea class="form-control" id="authors" disabled name="authors" ></textarea>
-                                                                                <!--        <input id="aFirstName"                                
-                                                                                       type="text"                                
-                                                                                       class="form-control"                                
-                                                                                       name="AuthorFirstName"                                
-                                                                                       value=""    
-                                                                                       placeholder="Author First Name"
-                                                                                       >
-                                                                                <i class="glyphicon glyphicon-search form-control-feedback"></i>-->
+                                                                                <!--       <input id="aFirstName"                                
+                                                                                      type="text"                                
+                                                                                      class="form-control"                                
+                                                                                      name="AuthorFirstName"                                
+                                                                                      value=""    
+                                                                                      placeholder="Author First Name"
+                                                                                      >
+                                                                               <i class="glyphicon glyphicon-search form-control-feedback"></i>-->
                                                                             </div>  <!-- input-group -->
                                                                         </div>
                                                                     </div> <!--row-->
@@ -1650,11 +1663,11 @@
                                                                         </div>
 
                                                                         <div class="col-sm-4">          
-                                                                            <label for="appCompany" class="pull-left">Publisher</label>                                                           
-                                                                            <input id="appCompany"                                
+                                                                            <label for="appForeignPublisher" class="pull-left">Publisher (of the original)</label>                                                           
+                                                                            <input id="appForeignPublisher"                                
                                                                                    type="text"                                
                                                                                    class="form-control"                                
-                                                                                   name="publisher"                                
+                                                                                   name="appForeignPublisher"                                
                                                                                    value="${companyDetails.Company}"    
                                                                                    placeholder="Publisher"
                                                                                    disabled=""
@@ -1662,7 +1675,7 @@
                                                                         </div>
 
                                                                         <div class="col-sm-3">    
-                                                                            <label for="publicationYear" class="pull-left">Publication Year</label>
+                                                                            <label for="publicationYear" class="pull-left">Publication year</label>
                                                                             <input id="publicationYear"                                
                                                                                    type="text"                                
                                                                                    class="form-control"                                
@@ -1701,25 +1714,25 @@
 
                                                                             <div class="row">
 
-                                                                                <div class="col-xs-6">
-                                                                                    <div class="mini-box" style="margin-bottom: 20px">
-
-                                                                                        <label for="translationPublicationYear" class="pull-left">Translation Publication Year</label>
-                                                                                        <input id="translationPublicationYear"                                
-                                                                                               type="text"                                
-                                                                                               class="form-control"                                
-                                                                                               name="translationPublicationYear"                                
-                                                                                               value=""    
-                                                                                               placeholder="Translation Publication Year"
-                                                                                               >
-                                                                                    </div>
-                                                                                </div> <!--col-xs-6-->
+                                                                                <!--                                    <div class="col-xs-6">
+                                                                                                                        <div class="mini-box" style="margin-bottom: 20px">
+                                    
+                                                                                                                            <label for="translationPublicationYear" class="pull-left">Translation Publication Year</label>
+                                                                                                                            <input id="translationPublicationYear"                                
+                                                                                                                                   type="text"                                
+                                                                                                                                   class="form-control"                                
+                                                                                                                                   name="translationPublicationYear"                                
+                                                                                                                                   value=""    
+                                                                                                                                   placeholder="Translation Publication Year"
+                                                                                                                                   >
+                                                                                                                        </div>
+                                                                                                                    </div> --> <!--col-xs-6-->
 
 
                                                                                 <div class="col-xs-6">
                                                                                     <div class="mini-box">
                                                                                         <div class="form-group has-feedback">
-                                                                                            <label for="appLanguageOriginal" class="pull-left" >Language (of the original)</label>
+                                                                                            <label for="appLanguageOriginal" class="pull-left" >Language <br/>(of the original)</label>
                                                                                             <input id="appLanguageOriginal"                                
                                                                                                    type="text"                                
                                                                                                    class="form-control"                                
@@ -1728,17 +1741,14 @@
                                                                                                    placeholder="Language"
                                                                                                    disabled=""
                                                                                                    >
-                                                                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+
                                                                                         </div>
                                                                                     </div>
                                                                                 </div> <!--col-xs-6-->
-                                                                            </div> <!--row-->
-
-                                                                            <div class="row">
 
                                                                                 <div class="col-xs-6" style="margin-bottom: 20px">
                                                                                     <div class="mini-box">
-                                                                                        <label for="appCountryOfPublication" class="control-label pull-left" >Country of Publication <br/>(of the original):</label>
+                                                                                        <label for="appCountryOfPublication" class="control-label pull-left" >Country of publication <br/>(of the original)</label>
                                                                                         <input id="appCountryOfPublication"                                
                                                                                                type="text"                                
                                                                                                class="form-control"                                
@@ -1750,41 +1760,9 @@
                                                                                     </div>
                                                                                 </div> <!--col-xs-6-->
 
-                                                                                <div class="col-xs-6">
-                                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                                        <label for="appDateOfPublicationOriginal" class="control-label pull-left">Date of Publication<br/> (of the original): </label>
-                                                                                        <div class="input-group pull-left">
-                                                                                            <input type="text" 
-                                                                                                   name="appDateOfPublicationOriginal" 
-                                                                                                   id="appDateOfPublicationOriginal" 
-                                                                                                   class="form-control" 
-                                                                                                   placeholder="DD/MM/YYYY"
-                                                                                                   />    
-                                                                                            <label class="input-group-addon" for="appDateOfPublicationOriginal">
-                                                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                                                            </label>   
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <script>
-                                                                                        $("#appDateOfPublicationOriginal").datepicker();
-                                                                                    </script>
-                                                                                </div> <!--col-xs-6-->
                                                                             </div> <!--row-->
 
                                                                             <div class="row">
-
-                                                                                <div class="col-xs-6">
-                                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                                        <label for="copies" class="pull-left" style="margin-top: 10px">Copies</label>
-                                                                                        <input id="copies"                                
-                                                                                               type="text"                                
-                                                                                               class="form-control"                                
-                                                                                               name="copies"                                
-                                                                                               value=""    
-                                                                                               placeholder="Copies"
-                                                                                               >
-                                                                                    </div>
-                                                                                </div> <!--col-xs-6-->
 
                                                                                 <div class='col-sm-6'  style="margin-bottom: 40px;">                                                
                                                                                     <label for="pageExtentOfTheOriginal" class="control-label pull-left">Page extent of the <br/> (of the original): </label>
@@ -1816,12 +1794,12 @@
                                                             </div>  <!-- panel --> 
                                                         </div> <!-- row  -->
                                                     </div>  <!-- container-fluid  -->
-                                                </div><!-- class="tab-pane" id="books" -->
+                                                </div><!-- tab-pane "Book" -->
 
                                                 <!-- Rights Agreement -->
                                                 <div class="tab-pane" id="Rights">
                                                     <p class="header1" style="margin-bottom: 40px">
-                                                        Rights Agreement
+                                                        Rights Agreement & Contracts
                                                     </p>
 
                                                     <div class="container-fluid">
@@ -1832,7 +1810,7 @@
                                                             <!--Upload form for agreement-->
 
                                                             <div class="col-md-12"   style="margin-bottom: 20px">                                                
-                                                                <strong class="pull-left">Upload a copy of the agreement with the translation rights holder</strong> <br/>(where applicable)
+                                                                <div  style="margin-bottom: 20px"> <strong class="pull-left">Upload a copy of the agreement with the translation rights holder</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>
                                                                 <div class="margin-bottom: 60px"></div>   
                                                                 <br/>
                                                                 <div class="input-group agreement"  style="margin-bottom: 40px;">                                      
@@ -1874,7 +1852,7 @@
                                                             </div>
 
                                                             <div class="col-md-12"   style="margin-bottom: 20px">                          
-                                                                <strong class="pull-left">Upload a copy of the Addendum to rights agreement</strong> <br/>
+                                                                <strong class="pull-left">Upload a copy of the addendum to the rights agreement</strong> <small class="pull-left"> &nbsp;  (where applicable)</small><br/>
                                                                 <div class="margin-bottom: 60px"></div>
                                                                 <br/>
                                                                 <div class="input-group addendum"  style="margin-bottom: 40px;">
@@ -1895,7 +1873,7 @@
                                                             </div>
                                                         </div> <!-- row -->
                                                     </div> <!-- container-fluid  -->
-                                                </div> <!-- class="tab-pane" id="Rights Agreement" -->
+                                                </div> <!-- tab-pane "Rights Agreement -->
 
                                                 <!-- Publication Details -->
                                                 <div class="tab-pane" id="Publication">
@@ -1910,7 +1888,7 @@
 
 
                                                                 <div class='col-sm-4'>
-                                                                    <label for="proposedDateOfPublication" class="control-label pull-left">Proposed date of publication:<br/> &nbsp;</label>
+                                                                    <label for="proposedDateOfPublication" class="control-label pull-left">Proposed date of publication</label>
                                                                     <div class="input-group pull-left"   style="margin-bottom: 40px;">
                                                                         <input type="text" name="proposedDateOfPublication" id="proposedDateOfPublication" class="form-control" placeholder="DD/MM/YYYY" />    
                                                                         <label class="input-group-addon" for="proposedDateOfPublication">
@@ -1922,20 +1900,32 @@
                                                                     </script>
                                                                 </div>
 
-                                                                <div class="col-sm-4">
+                                                                <!--               <div class="col-sm-4">
                                                                     <label for="appForeignPublisher" class="control-label pull-left">Foreign Publisher<br/> &nbsp;</label>
                                                                     <input id="appForeignPublisher"                                
                                                                            type="text"                                
                                                                            class="form-control"                                
                                                                            name="appForeignPublisher"                                
                                                                            >
+                                                                </div> -->
+
+                                                                <div class="col-sm-4">          
+                                                                    <label for="appCompany" class="pull-left">Publisher (of the original)</label>                                                           
+                                                                    <input id="appCompany"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="publisher"                                
+                                                                           value="${companyDetails.Company}"    
+                                                                           placeholder="Publisher"
+                                                                           disabled=""
+                                                                           >                                                     
                                                                 </div>
                                                             </div> <!-- row -->
 
                                                             <div class="row">
 
                                                                 <div class='col-sm-4'  style="margin-bottom: 40px;">                                                
-                                                                    <label for="plannedPageExtent" class="control-label pull-left">Planned page extent of the <br/>  published translation: </label>
+                                                                    <label for="plannedPageExtent" class="control-label pull-left">Planned page extent of the <br/>  published translation </label>
                                                                     <div class="input-group pull-left"  style="margin-bottom: 40px;">
                                                                         <span class="input-group-addon" id="sizing-addon2">  
                                                                             <span class="glyphicon glyphicon-book"></span>                                                            
@@ -1957,7 +1947,7 @@
 
                                                             <div class="row">
                                                                 <div class='col-sm-4'>
-                                                                    <label for="proposedPrintRun" class="control-label pull-left">Proposed print run: </label>
+                                                                    <label for="proposedPrintRun" class="control-label pull-left">Proposed print run </label>
                                                                     <div class="input-group pull-left"  style="margin-bottom: 40px;">
                                                                         <span class="input-group-addon" id="sizing-addon1">  
                                                                             <span class="glyphicon glyphicon-book"></span>                                                            
@@ -1978,8 +1968,8 @@
 
                                                             <div class="row">
 
-                                                                <div class="col-sm-5">    
-                                                                    <label for="translationTitle" class="pull-left">Translation Title</label>
+                                                                <div class="col-sm-5" style="margin-bottom: 20px">
+                                                                    <label for="translationTitle" class="pull-left">Translation Title<br/> &nbsp;</label>
                                                                     <input id="translationTitle"                                
                                                                            type="text"                                
                                                                            class="form-control"                                
@@ -1990,21 +1980,26 @@
                                                                            >
                                                                 </div>
 
-                                                                <div class="col-sm-4"> 
-                                                                    <div class="form-group has-feedback">
-                                                                        <label for="translatorName" class="pull-left">Translator</label>
-                                                                        <input id="translatorName"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="translatorName"                                
-                                                                               value=""    
-                                                                               onblur="myFunction();"
-                                                                               placeholder="Translator Name"
-                                                                               disabled=""
-                                                                               >
-                                                                        <!--<i class="glyphicon glyphicon-search form-control-feedback"></i>-->
+                                                                <div class="col-xs-5">
+                                                                    <div class="mini-box" style="margin-bottom: 20px">
+                                                                        <label for="appDateOfPublicationOriginal" class="control-label pull-left">Date of Publication<br/> (of the original) </label>
+                                                                        <div class="input-group pull-left">
+                                                                            <input type="text" 
+                                                                                   name="appDateOfPublicationOriginal" 
+                                                                                   id="appDateOfPublicationOriginal" 
+                                                                                   class="form-control" 
+                                                                                   placeholder="DD/MM/YYYY"
+                                                                                   disabled=""
+                                                                                   />    
+                                                                   <!--          <label class="input-group-addon" for="appDateOfPublicationOriginal">
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                            </label>    -->
+                                                                        </div>
                                                                     </div>
-                                                                </div>
+                                                                    <script>
+                                                                        $("#appDateOfPublicationOriginal").datepicker();
+                                                                    </script>
+                                                                </div> <!--col-xs-6-->
 
                                                             </div> <!-- row -->
 
@@ -2026,7 +2021,7 @@
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
 
-                                                                <div class="col-xs-4">
+                                                                <div class="col-xs-5">
                                                                     <div class="mini-box">
                                                                         <div class="form-group has-feedback">
                                                                             <label for="languages" class="pull-left" >Languages</label>
@@ -2060,12 +2055,11 @@
                                                                                >
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
-
                                                             </div> <!-- row -->
 
-                                                        </div>
+                                                        </div>  <!-- col-xs-12 content -->
                                                     </div> <!-- container-fluid -->
-                                                </div> <!-- tab-pane Publication -->
+                                                </div> <!-- tab-pane "Publication Details" -->
 
                                                 <!-- Translator's Details -->
                                                 <div class="tab-pane" id="Translator"> 
@@ -2078,10 +2072,26 @@
                                                         <div class="row">
                                                             <div class="panel panel-default">
                                                                 <div class="panel-body">
+
+                                                                    <div class="col-sm-4"> 
+                                                                        <div class="form-group has-feedback">
+                                                                            <label for="translatorName" class="pull-left">Translator</label>
+                                                                            <input id="translatorName"                                
+                                                                                   type="text"                                
+                                                                                   class="form-control"                                
+                                                                                   name="translatorName"                                
+                                                                                   value=""    
+                                                                                   onblur="myFunction();"
+                                                                                   placeholder="Translator Name"
+                                                                                   disabled=""
+                                                                                   >
+                                                                        </div>
+                                                                    </div>
+
                                                                     <div class="col-md-8"   style="margin-bottom: 20px">
                                                                         <label for="translator_cv0" class="control-label pull-left" id="123"></label>
                                                                         <br/>
-                                                                        <label for="translator_cv0" class="control-label pull-left">this should include a list of previous published literary translations</label>  
+                                                                        <label for="translator_cv0" class="control-label pull-left">This should include a list of previously published literary translations</label>  
                                                                         <!--  <small class="pull-left"   style="margin-bottom: 10px">this should include a list of previous published literary translations</small> -->
                                                                         <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
                                                                             <label class="btn btn-default btn-file pull-left">
@@ -2108,7 +2118,7 @@
 
                                                         <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">                                              
 
-                                                            <label for="translatorFee" class="control-label pull-left">Translator fee:</label>                                                                        
+                                                            <label for="translatorFee" class="control-label pull-left">Translator(s)'s fee</label>                                                                        
                                                             <div class="input-group pull-left" style="margin-bottom: 20px">
                                                                 <label class="input-group-addon" for="translatorFee">
                                                                     <span class="glyphicon glyphicon-euro"></span>                                     
@@ -2118,7 +2128,7 @@
                                                         </div>
 
                                                         <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">  
-                                                            <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator fee:</label>                                                  
+                                                            <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                  
                                                             <div class="form-group">
                                                                 <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee'
                                                                           style="width: 280px; height: 196px;"></textarea>
@@ -2126,7 +2136,7 @@
                                                         </div>
 
                                                     </div> <!-- container-fluid -->
-                                                </div> <!-- tab-pane Translator -->            
+                                                </div> <!-- tab-pane "Translator Details" -->            
 
                                                 <!-- Miscellaneous -->
                                                 <div class="tab-pane" id="Misc">
@@ -2202,7 +2212,8 @@
 
                                                             <div class="col-md-6"   style="margin-top: 40px; margin-bottom: 40px">
                                                                 <!--<label for="label_proofPayment" class="control-label pull-left">Proof of Payment to the translator</label>-->
-                                                                <strong class="pull-left">Proof of Payment to the translator</strong> <br/>
+
+                                                                <strong class="pull-left">Proof of Payment to the translator</strong> 
                                                                 <div class="input-group proofPayment pull-left"  
                                                                      data-toggle="tooltip"
                                                                      title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
@@ -2264,11 +2275,11 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3"   style="margin-top: 5px; margin-bottom: 40px">
+                                                            <div class="col-md-4"   style="margin-top: 5px; margin-bottom: 40px">
                                                                 <strong class="pull-left">&nbsp;</strong>                                                 
                                                                 <label class="btn btn-default pull-left" onclick = "pressCuttingsModal();">
                                                                     <img src="images/Press_Cutting.png" width="20" alt="Press_Cutting.png" /> 
-                                                                    Upload Press cuttings
+                                                                    Upload coverage cuttings
                                                                     <!--<span class="glyphicon glyphicon-upload"></span>-->
                                                                 </label>
                                                             </div>
@@ -2305,7 +2316,7 @@
                                                         </div> <!--row-->
 
                                                     </div> <!-- container-fluid -->
-                                                </div> <!-- tab-pane Misc -->                    
+                                                </div> <!-- tab-pane "Miscellaneous" -->                    
 
                                                 <!-- Original Work & Sample Translation -->
                                                 <div class="tab-pane" id="Original">
@@ -2322,8 +2333,8 @@
 
                                                                     <!--copies of the original work-->
                                                                     <div class="col-md-9" >
-                                                                        <div class="checkbox">                                                             
-                                                                            <label for="copies" class=" pull-left"><strong>Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong></label>
+                                                                        <div class="checkbox pull-left">                                                             
+                                                                            <label for="copiesSent" class="pull-left"><strong>One copy of the original work<sup>*</sup> sent to Literature Ireland by post</strong></label>
                                                                             <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
                                                                                 <input type="checkbox" 
                                                                                        name="copiesSent" 
@@ -2332,17 +2343,16 @@
                                                                                        class="form-control">
                                                                                 <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                                                             </label>
-                                                                            <!--<input type="text" name="ApplicationNumber" value="${ApplicationNumber}">-->
                                                                             <input type="hidden" name="userID" value="${userID}">
                                                                             <input type="hidden" name="publisherID" value="${publisherID}">
                                                                             <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                                         </div>
-                                                                    </div> <!-- col-md-9 -->
+                                                                    </div> <!-- col-md-7 -->
 
                                                                     <!--Date copies were sent:-->
                                                                     <div class="col-md-3" >
-                                                                        <strong>Date copies were sent:</strong> 
-                                                                        <div class="input-group">
+                                                                        <label for="copiesSent" class="pull-left"><strong>Date copies were sent</strong> </label>
+                                                                        <div class="input-group pull-left" >
                                                                             <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
                                                                             <label class="input-group-addon" for="dateCopiesWereSent">
                                                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -2378,9 +2388,11 @@
                                                                         </div>
 
                                                                         <div class="row">
-                                                                            <div class="col-md-8"   style="margin-bottom: 40px">
-                                                                                <label for="label_originalSample" class="control-label pull-left">Upload electronic copy of original work</label>
-                                                                                <div class="input-group originalSample pull-left"  
+                                                                            <div class="col-md-6"   style="margin-bottom: 40px">
+                                                                                <label for="originalSample" class="control-label pull-left">Upload electronic copy of original work   
+                                                                                </label>
+
+                                                                                <div class="input-group originalSample0 pull-left"  
                                                                                      data-toggle="tooltip"
                                                                                      title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
                                                                                      data-placement="bottom" >
@@ -2404,8 +2416,8 @@
                                                                         </div> <!--row-->
 
                                                                         <div class="row">
-                                                                            <div class="col-md-8">
-                                                                                <label for="translationSample" class="control-label longLabel pull-left">Upload two copies of a translation sample<sup>**</sup> <br/>consisting of 10 to 12 pages of prose or six poems</label>
+                                                                            <div class="col-md-6">
+                                                                                <label for="translationSample" class="control-label pull-left">Upload copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
                                                                                 <div class="input-group translationSample pull-left" >
                                                                                     <label class="btn btn-default btn-file pull-left">
                                                                                         Select file 
@@ -2457,11 +2469,11 @@
 
                                                         <hr/>
                                                         <div class="col-md-10">
-                                                            <i class="pull-left"><strong>*</strong> Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
+                                                            <i class="pull-left"><strong>*</strong> Please contact Literature Ireland if a hard copy of the original work cannot be obtained.<br/>
                                                                 &nbsp;  <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
                                                         </div>    
                                                     </div>  <!-- container-fluid -->
-                                                </div> <!-- tab-pane Original --> 
+                                                </div> <!-- tab-pane "Original Work & Sample Translation" --> 
 
                                             </div> <!-- applicationEditForm-tab-content -->
 
@@ -2515,6 +2527,7 @@
                         </div> <!--modal content-->          
                     </div> <!--modal dialog-->
                 </div> <!--modal fade-->
+
                 <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
 
                 <form class="form-horizontal" 
@@ -2530,18 +2543,14 @@
                             New Application
                         </button>
 
-                        <!--             <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
-                                         List New Applications
-                                     </button>
-                        -->
                         <button type = "submit" class = "btn btn-default btn-sm active"  name="List Open Applications">
                             List Open Applications
                         </button>
-                        <!--  
-                                               <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
-                                                   List Pending Applications
-                                               </button>
-                        -->
+
+                        <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
+                            List Pending Applications
+                        </button>
+
                         <button type = "submit" class = "btn btn-default btn-sm"  name="List Closed Applications">
                             List Closed Applications
                         </button>

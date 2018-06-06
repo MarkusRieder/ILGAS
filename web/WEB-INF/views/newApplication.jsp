@@ -705,7 +705,7 @@
             function backToMisc() {
                 var upload_number = 2;
                 for (var i = 2; i <= pressCuttingCounter; i++) {
-
+                    console.log("backToMisc()   ");
                     var nr = "name" + i;
                     var item = document.getElementById(nr);
                     var itemValue = item.value;
@@ -1016,6 +1016,23 @@
                 float: right;
                 margin:0 auto;
                 width: 511px;
+
+                .hovering i::before {
+                    display: none;
+                }
+
+                .hovering:hover i::before {
+                    display: block;
+                }
+            }
+
+            .zoom {
+                transition: transform .2s; /* Animation */
+                margin: 0 auto;
+            }
+
+            .zoom:hover {
+                transform: scale(2.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
             }
         </style>
 
@@ -1072,511 +1089,436 @@
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  style="background-color: #d9d1d1">
                             <ul class="nav navbar-nav nav-tabs two-lines">
                                 <!--<li class="active"><a href="#info" data-toggle="tab">Info</a></li>-->
-                                <li class="active"><a href="#Contact" data-toggle="tab">Contact details</a></li>
-                                <li><a href="#books" data-toggle="tab">Book<br/> details</a></li>
+                                <li class="active"><a href="#Contact" data-toggle="tab">Contact Details</a></li>
+                                <li><a href="#books" data-toggle="tab">Book<br/> Details</a></li>
                                 <li><a href="#Rights" data-toggle="tab">Rights<br/>  Agreement</a></li>
                                 <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
-                                <li><a href="#Translator" data-toggle="tab">Translator's <br/> Details</a></li>
-                                <li><a href="#Misc" data-toggle="tab">Misc</a></li>
+                                <li><a href="#Translator" data-toggle="tab">Translator <br/> Details</a></li>
+                                <!--         <li><a href="#Misc" data-toggle="tab">Misc</a></li>    -->
                                 <li><a href="#Original" data-toggle="tab"><span>Original Work &<br/> Sample Translation</span></a></li>
                             </ul>
                             <div style="margin: 20px; text-align: center">
-                                <a href="#" data-toggle="tooltip" data-placement="top" title="Info" ><i class="material-icons" onclick="showInfoModal()();">info_outline</i></a>
-                                <a href="#" data-toggle="tooltip" data-placement="top" title="Notes" ><i class="material-icons" onclick="showNotesModal()();">note</i></a>
+                                <a href="#" data-toggle="tooltip" data-placement="top" title="Info" ><i class="material-icons zoom" onclick="showInfoModal()();">info_outline</i></a>
+                                <a href="#" data-toggle="tooltip" data-placement="top" title="Notes" ><i class="material-icons zoom" onclick="showNotesModal()();">note</i></a>                           
                             </div>
-                        
-                    </div><!-- /.navbar-collapse -->
 
-                    <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/GrantApplicationServlet" enctype="multipart/form-data">
-                        <%request.getSession().setAttribute("task", "Start New Application");%>
-                        <div id="my-tab-content" class="tab-content"  style="background-color: #E8F6FF">
+                        </div><!-- /.navbar-collapse -->
 
-
-                            <!--////////////////////////////////////////////////////////////////////////////
-                                ///
-                                ///  For Publisher Contact details Update
-                                ///
-                                ////////////////////////////////////////////////////////////////////////////-->
-
-                            <!-- Contact details -->
-                            <div class="tab-pane active" id="Contact">
-
-                                <!--wrapper for Contact tab pane-->
-                                <div class="container">
-
-                                    <!--first row-->
-                                    <!--get Company and Company_Number via autocomplete-->
-                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                        <div class="col-sm-4">
-                                            <input  id="company" 
-                                                    name="company" 
-                                                    type="text" 
-                                                    value="${publisherName}"
-                                                    data-toggle="tooltip"
-                                                    title="Please Enter your Company's Name - if it does not show up please fill in the form"
-                                                    class="form-control"
-                                                    placeholder="Company Name"
-                                                    disabled
-                                                    >
-                                        </div>
-
-                                        <div class="col-sm-4">        
-                                            <input id="Company_Number"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Company_Number"                                
-                                                   value="${publisherID}"                                   
-                                                   placeholder="internal Company Number"
-                                                   disabled
-                                                   >
-                                        </div>
-                                    </div> <!--row-->
-
-                                    <!--second row-->
-                                    <div class="row" style="margin-bottom: 10px">
-                                        <div class="col-sm-4">
-                                            <label class="pull-left">Address1</label>
-                                            <input id="Address1"
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Address1"                                
-                                                   value="${companyDetails.Address1}"                                
-                                                   placeholder="Address1"
-                                                   >
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <label class="pull-left">Post Code</label>
-                                            <input id="postCode"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="postCode"                                
-                                                   value="${companyDetails.postCode}"                                
-                                                   placeholder="Post Code"
-                                                   >
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="pull-left">City</label>
-                                            <input id="City"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="City"                                
-                                                   value="${companyDetails.City}"                                
-                                                   placeholder="City"
-                                                   >
-                                        </div>
-                                    </div> <!--row-->
-
-                                    <!--third row-->
-                                    <div class="row" style="margin-bottom: 10px">
-                                        <div class="col-sm-4">
-                                            <label class="pull-left">Address2</label>
-                                            <input id="Address2"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Address2"                                
-                                                   value="${companyDetails.Address2}"                                
-                                                   placeholder="Address2"
-                                                   >
-                                        </div>
-
-                                        <div class="col-sm-4">
-                                            <label class="pull-left">Country</label>
-                                            <input id="country"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Country"                                
-                                                   value="${companyDetails.Country}"                                
-                                                   placeholder="Country"
-                                                   >
-                                        </div>
-                                    </div> <!--row-->
-
-                                    <!--fourth row-->
-                                    <div class="row" style="margin-bottom: 10px">
-                                        <div class="col-sm-4">
-                                            <label class="pull-left">Address3</label>
-                                            <input id="Address3"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Address3"                                
-                                                   value="${companyDetails.Address3}"                                
-                                                   placeholder="Address3"
-                                                   >
-                                        </div>
-                                        <div class="col-sm-2">   
-                                            <label class="pull-left">&nbsp;</label>
-                                            <input id="countryCode"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Country_Code"                                
-                                                   value="${companyDetails.CountryCode}"                               
-                                                   readonly
-                                                   placeholder="Country Code"
-                                                   >
-                                        </div>
-                                    </div> <!--row-->
-
-                                    <!--fifth row-->
-                                    <div class="row" style="margin-bottom: 10px">
-                                        <div class="col-sm-4">      
-                                            <label class="pull-left">Address4</label>
-                                            <input id="Address4"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Address4"                                
-                                                   value="${companyDetails.Address4}"                                
-                                                   placeholder="Address4"
-                                                   >
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="pull-left">Telephone</label>
-                                            <input id="Telephone"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Telephone"                                
-                                                   value="${companyDetails.Telephone}"                                
-                                                   >
-                                        </div>
-                                    </div> <!--row-->
-
-                                    <!--sixth row-->
-                                    <div class="row" style="margin-bottom: 10px">
-                                        <div class="col-sm-4"></div>
-                                        <div class="col-sm-3">
-                                            <label class="pull-left">Fax Number</label>
-                                            <input id="Fax"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Fax"                                
-                                                   value="${companyDetails.Fax}"
-                                                   >
-                                        </div>
-                                    </div> <!--row-->
+                        <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/GrantApplicationServlet" enctype="multipart/form-data">
+                            <%request.getSession().setAttribute("task", "Start New Application");%>
+                            <div id="my-tab-content" class="tab-content"  style="background-color: #E8F6FF">
 
 
-                                    <!--seventh row-->
-                                    <div class="row" style="margin-bottom: 10px">
-                                        <div class="col-sm-4">
-                                            <label class="pull-left">Email</label>
-                                            <input id="Email"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="Email"                                
-                                                   value="${companyDetails.Email}"                                
-                                                   placeholder="Main Email"
-                                                   >
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label class="pull-left">Web site</label>
-                                            <input id="WWW"                                
-                                                   type="text"                                
-                                                   class="form-control"                                
-                                                   name="WWW"                                
-                                                   value="${companyDetails.WWW}"                                
-                                                   placeholder="Web Address"
-                                                   >
-                                        </div>
-                                    </div> <!--row-->
+                                <!--////////////////////////////////////////////////////////////////////////////
+                                    ///
+                                    ///  For Publisher Contact details Update
+                                    ///
+                                    ////////////////////////////////////////////////////////////////////////////-->
 
-                                    <!--eighth row-->
-                                    <div class="row" style="margin-bottom: 10px;margin-top: 20px">
-                                        <div class="col-sm-4"> 
-                                            <div class="well well-sm">
-                                                <div class="checkbox">                                                        
-                                                    <input id="doNotMail" 
-                                                           type="checkbox" 
-                                                           name="doNotMail" 
-                                                           value="${companyDetails.doNotMail}" 
-                                                           checked =""
-                                                           >  
-                                                    <label for="doNotMail">Do not add to newsletter</label>
-                                                </div><!--checkbox-->
-                                            </div> <!--well-->
-                                        </div> <!--<div class="col-sm-3">-->   
+                                <!-- Contact details -->
+                                <div class="tab-pane active" id="Contact">
 
-                                    </div> <!--row-->
+                                    <!--wrapper for Contact tab pane-->
+                                    <div class="container">
 
-                                    <!--keep in one line otherwise placeholder doesn't show-->
-                                    <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
-                                </div> <!--container-->
-                            </div> <!--tab contact-->
+                                        <!--first row-->
+                                        <!--get Company and Company_Number via autocomplete-->
+                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                            <div class="col-sm-4">
+                                                <input  id="company" 
+                                                        name="company" 
+                                                        type="text" 
+                                                        value="${publisherName}"
+                                                        data-toggle="tooltip"
+                                                        title="Please Enter your Company's Name - if it does not show up please fill in the form"
+                                                        class="form-control"
+                                                        placeholder="Company Name"
+                                                        disabled
+                                                        >
+                                            </div>
 
-                            <!--////////////////////////////////////////////////////////////////////////////
-                                ///
-                                ///  For Book details
-                                ///
-                                ////////////////////////////////////////////////////////////////////////////-->
+                                            <div class="col-sm-4">        
+                                                <input id="Company_Number"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Company_Number"                                
+                                                       value="${publisherID}"                                   
+                                                       placeholder="internal Company Number"
+                                                       disabled
+                                                       >
+                                            </div>
+                                        </div> <!--row-->
 
-                            <!-- Book Details -->
-                            <div class="tab-pane fade" id="books">
-                                <p class="header1">
-                                    Book Details
-                                </p>
-                                <div class="container-fluid">
-                                    <div class="row"  style="display: block;
-                                         margin-right: auto;
-                                         margin-left: auto;">
+                                        <!--second row-->
+                                        <div class="row" style="margin-bottom: 10px">
+                                            <div class="col-sm-4">
+                                                <label class="pull-left">Address1</label>
+                                                <input id="Address1"
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Address1"                                
+                                                       value="${companyDetails.Address1}"                                
+                                                       placeholder="Address1"
+                                                       >
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <label class="pull-left">Post code</label>
+                                                <input id="postCode"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="postCode"                                
+                                                       value="${companyDetails.postCode}"                                
+                                                       placeholder="Post Code"
+                                                       >
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="pull-left">City</label>
+                                                <input id="City"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="City"                                
+                                                       value="${companyDetails.City}"                                
+                                                       placeholder="City"
+                                                       >
+                                            </div>
+                                        </div> <!--row-->
 
-                                        <!--First row-->
-                                        <!--in Panel-->
-                                        <div class = "panel panel-default">
-                                            <div class = "panel-body">
+                                        <!--third row-->
+                                        <div class="row" style="margin-bottom: 10px">
+                                            <div class="col-sm-4">
+                                                <label class="pull-left">Address2</label>
+                                                <input id="Address2"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Address2"                                
+                                                       value="${companyDetails.Address2}"                                
+                                                       placeholder="Address2"
+                                                       >
+                                            </div>
 
-                                                <div class="row" style="margin-bottom: 10px">
-                                                    <div class="col-sm-4">    
-                                                        <div class="form-group has-feedback">
-                                                            <label for="aFirstName" class="pull-left">Author</label>
-                                                            <input id="aFirstName"                                
+                                            <div class="col-sm-4">
+                                                <label class="pull-left">Country</label>
+                                                <input id="country"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Country"                                
+                                                       value="${companyDetails.Country}"                                
+                                                       placeholder="Country"
+                                                       >
+                                            </div>
+                                        </div> <!--row-->
+
+                                        <!--fourth row-->
+                                        <div class="row" style="margin-bottom: 10px">
+                                            <div class="col-sm-4">
+                                                <label class="pull-left">Address3</label>
+                                                <input id="Address3"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Address3"                                
+                                                       value="${companyDetails.Address3}"                                
+                                                       placeholder="Address3"
+                                                       >
+                                            </div>
+                                            <div class="col-sm-2">   
+                                                <label class="pull-left">&nbsp;</label>
+                                                <input id="countryCode"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Country_Code"                                
+                                                       value="${companyDetails.CountryCode}"                               
+                                                       readonly
+                                                       placeholder="Country Code"
+                                                       >
+                                            </div>
+                                        </div> <!--row-->
+
+                                        <!--fifth row-->
+                                        <div class="row" style="margin-bottom: 10px">
+                                            <div class="col-sm-4">      
+                                                <label class="pull-left">Address4</label>
+                                                <input id="Address4"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Address4"                                
+                                                       value="${companyDetails.Address4}"                                
+                                                       placeholder="Address4"
+                                                       >
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="pull-left">Telephone</label>
+                                                <input id="Telephone"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Telephone"                                
+                                                       value="${companyDetails.Telephone}"                                
+                                                       >
+                                            </div>
+                                        </div> <!--row-->
+
+                                        <!--sixth row-->
+                                        <div class="row" style="margin-bottom: 10px">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-3">
+                                                <label class="pull-left">Fax number</label>
+                                                <input id="Fax"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Fax"                                
+                                                       value="${companyDetails.Fax}"
+                                                       >
+                                            </div>
+                                        </div> <!--row-->
+
+
+                                        <!--seventh row-->
+                                        <div class="row" style="margin-bottom: 10px">
+                                            <div class="col-sm-4">
+                                                <label class="pull-left">Email</label>
+                                                <input id="Email"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="Email"                                
+                                                       value="${companyDetails.Email}"                                
+                                                       placeholder="Main Email"
+                                                       >
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="pull-left">Website</label>
+                                                <input id="WWW"                                
+                                                       type="text"                                
+                                                       class="form-control"                                
+                                                       name="WWW"                                
+                                                       value="${companyDetails.WWW}"                                
+                                                       placeholder="Web Address"
+                                                       >
+                                            </div>
+                                        </div> <!--row-->
+
+                                        <!--eighth row-->
+                                        <div class="row" style="margin-bottom: 10px;margin-top: 20px">
+                                            <div class="col-sm-4"> 
+                                                <div class="well well-sm">
+                                                    <div class="checkbox">                                                        
+                                                        <input id="doNotMail" 
+                                                               type="checkbox" 
+                                                               name="doNotMail" 
+                                                               value="${companyDetails.doNotMail}" 
+                                                               checked =""
+                                                               >  
+                                                        <label for="doNotMail">Do not add to newsletter</label>
+                                                    </div><!--checkbox-->
+                                                </div> <!--well-->
+                                            </div> <!--<div class="col-sm-3">-->   
+
+                                        </div> <!--row-->
+
+                                        <!--keep in one line otherwise placeholder doesn't show-->
+                                        <label class="pull-left">Additional contact information (where applicable)</label>
+                                        <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
+                                    </div> <!--container-->
+                                </div> <!--tab contact-->
+
+                                <!--////////////////////////////////////////////////////////////////////////////
+                                    ///
+                                    ///  For Book details
+                                    ///
+                                    ////////////////////////////////////////////////////////////////////////////-->
+
+                                <!-- Book Details -->
+                                <div class="tab-pane fade" id="books">
+                                    <p class="header1">
+                                        Book Details
+                                    </p>
+                                    <div class="container-fluid">
+                                        <div class="row"  style="display: block;
+                                             margin-right: auto;
+                                             margin-left: auto;">
+
+                                            <!--First row-->
+                                            <!--in Panel-->
+                                            <div class = "panel panel-default">
+                                                <div class = "panel-body">
+
+                                                    <div class="row" style="margin-bottom: 10px">
+                                                        <div class="col-sm-4">    
+                                                            <div class="form-group has-feedback">
+                                                                <label for="aFirstName" class="pull-left">Author</label>
+                                                                <input id="aFirstName"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="AuthorFirstName"                                
+                                                                       value=""    
+                                                                       placeholder="Author First Name"
+                                                                       >
+                                                                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4">    
+                                                            <div class="form-group has-feedback">
+                                                                <label for="aLastName" class="pull-left">&nbsp;</label>
+                                                                <input id="aLastName"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="AuthorLastName"                                
+                                                                       value=""    
+                                                                       placeholder="Author Last Name"
+                                                                       >
+                                                                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4" style="margin-top: 30px; ">  
+                                                            <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                               data-toggle="modal" 
+                                                               data-target="#addAuthorModal"
+                                                               onclick="copyFirstRow2();"
+                                                               >Add more authors</a>
+
+                                                        </div>
+
+                                                    </div> <!--row-->
+
+
+                                                    <input type="hidden" id="author_array" name="authorArray" >
+
+                                                    <!--Second row-->
+                                                    <div class="row" style="margin-bottom: 15px">
+
+                                                        <div class="col-sm-4">    
+                                                            <label for="title" class="pull-left">Title</label> 
+                                                            <input id="title"                                
                                                                    type="text"                                
                                                                    class="form-control"                                
-                                                                   name="AuthorFirstName"                                
+                                                                   name="title"                                
                                                                    value=""    
-                                                                   placeholder="Author First Name"
+                                                                   placeholder="Title"
                                                                    >
-                                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="col-sm-4">    
-                                                        <div class="form-group has-feedback">
-                                                            <label for="aLastName" class="pull-left">&nbsp;</label>
-                                                            <input id="aLastName"                                
+                                                        <div class="col-sm-4">          
+                                                            <label for="appForeignPublisher" class="pull-left">Publisher (of the original work)</label>                                                           
+                                                            <input id="appForeignPublisher"                                
                                                                    type="text"                                
                                                                    class="form-control"                                
-                                                                   name="AuthorLastName"                                
-                                                                   value=""    
-                                                                   placeholder="Author Last Name"
-                                                                   >
-                                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                                   name="appForeignPublisher"                                
+                                                                   value="${companyDetails.Company}"    
+                                                                   placeholder="Publisher"
+                                                                   >                                                     
                                                         </div>
-                                                    </div>
 
-                                                    <div class="col-sm-4" style="margin-top: 30px; ">  
-                                                        <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                           data-toggle="modal" 
-                                                           data-target="#addAuthorModal"
-                                                           onclick="copyFirstRow2();"
-                                                           >add more Authors</a>
-
-                                                    </div>
-
-                                                </div> <!--row-->
-
-
-                                                <input type="hidden" id="author_array" name="authorArray" >
-
-                                                <!--Second row-->
-                                                <div class="row" style="margin-bottom: 15px">
-
-                                                    <div class="col-sm-5">    
-                                                        <label for="title" class="pull-left">Title</label> 
-                                                        <input id="title"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="title"                                
-                                                               value=""    
-                                                               placeholder="Title"
-                                                               >
-                                                    </div>
-
-                                                    <div class="col-sm-4">          
-                                                        <label for="publisher" class="pull-left">Publisher</label>                                                           
-                                                        <input id="publisher"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="publisher"                                
-                                                               value="${companyDetails.Company}"    
-                                                               placeholder="Publisher"
-                                                               >                                                     
-                                                    </div>
-
-                                                    <div class="col-sm-3">    
-                                                        <label for="publicationYear" class="pull-left">Publication Year</label>
-                                                        <input id="publicationYear"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="publicationYear"                                
-                                                               value=""    
-                                                               placeholder="Publication Year"
-                                                               >
-                                                    </div>
-                                                </div> <!--row-->
-
-
-                                                <!--Third row-->
-
-                                                <div class="row" style="margin-bottom: 10px">
-
-                                                    <div class="col-sm-4">    
-                                                        <div class="form-group has-feedback">
-                                                            <label for="genre" class="pull-left">Genre</label>
-                                                            <input id="genre"                                
+                                                        <div class="col-sm-3">    
+                                                            <label for="publicationYear" class="pull-left">Publication year</label>
+                                                            <input id="publicationYear"                                
                                                                    type="text"                                
                                                                    class="form-control"                                
-                                                                   name="genre"                                
+                                                                   name="publicationYear"                                
                                                                    value=""    
-                                                                   placeholder="Genre"
+                                                                   placeholder="Publication Year"
                                                                    >
-                                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                                         </div>
-                                                    </div>
+                                                    </div> <!--row-->
 
 
-                                                    <div class="col-sm-5" style="margin-left: 65px">    
-                                                        <label for="translationTitle" class="pull-left">Translation Title</label>
-                                                        <input id="translationTitle"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="translationTitle"                                
-                                                               value=""    
-                                                               placeholder="Translation Title"
-                                                               >
-                                                    </div>
-                                                </div>
+                                                    <!--Third row-->
 
-                                                <!--Fourth row-->
-                                                <div class="row" style="margin-bottom: 10px">
-                                                    <div class="col-sm-4"> 
-                                                        <div class="form-group has-feedback">
-                                                            <label for="translatorName" class="pull-left">Translator</label>
-                                                            <input id="translatorName"                                
+                                                    <div class="row" style="margin-bottom: 10px">
+
+                                                        <div class="col-sm-4">    
+                                                            <div class="form-group has-feedback">
+                                                                <label for="genre" class="pull-left">Genre</label>
+                                                                <input id="genre"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="genre"                                
+                                                                       value=""    
+                                                                       placeholder="Genre"
+                                                                       >
+                                                                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-sm-4">    
+                                                            <label for="translationTitle" class="pull-left">Translation title</label>
+                                                            <input id="translationTitle"                                
                                                                    type="text"                                
                                                                    class="form-control"                                
-                                                                   name="translatorName"                                
+                                                                   name="translationTitle"                                
                                                                    value=""    
-                                                                   onblur="myFunction();"
-                                                                   placeholder="Translator Name"
+                                                                   placeholder="Translation Title"
                                                                    >
-                                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                                         </div>
-                                                    </div>
+                                                    </div> <!--row-->
 
-                                                    <div class="col-sm-4" style="margin-top: 30px;">    
-                                                        <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                           data-toggle="modal" 
-                                                           data-target="#addTranslatorModal"
-                                                           onclick="copyFirstRow();"
-                                                           >add more Translators</a>
 
-                                                    </div>                                                    
-
-                                                    <input type="hidden" id="translatorArray" name="translatorArray" >
-
-                                                </div> <!--row-->
-
-                                                <!--Fifth row-->
-                                                <div class="row" style="margin-bottom: 10px">
-
-                                                    <div class="col-xs-8">
-
-                                                        <div class="row">
-
-                                                            <div class="col-xs-6">
-                                                                <div class="mini-box"   style="margin-bottom: 20px">
-                                                                    <label for="translationPublisher" class="pull-left">Translation Publisher</label>
-                                                                    <input id="translationPublisher"                                
+                                                    <div class="row" style="margin-bottom: 10px">
+                                                        <div class="col-xs-4">
+                                                            <div class="mini-box">
+                                                                <div class="form-group has-feedback">
+                                                                    <label for="languageOfTheOriginal" class="pull-left" >Language (of the original)</label>
+                                                                    <input id="languageOfTheOriginal"                                
                                                                            type="text"                                
                                                                            class="form-control"                                
-                                                                           name="translationPublisher"                                
+                                                                           name="languageOfTheOriginal"                                
                                                                            value=""    
-                                                                           placeholder="Translation Publisher"
+                                                                           placeholder="Language"
                                                                            >
-                                                                </div>
-                                                            </div> <!--col-xs-6-->
-
-                                                            <div class="col-xs-6">
-                                                                <div class="mini-box">
-                                                                    ??????????????
-                                                                </div>
-                                                            </div> <!--col-xs-6-->
-
-
-                                                            <div class="col-xs-6">
-                                                                <div class="mini-box">
-                                                                    <div class="form-group has-feedback">
-                                                                        <label for="languages" class="pull-left" >Language (of the original)</label>
-                                                                        <input id="languageOfTheOriginal"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="languageOfTheOriginal"                                
-                                                                               value=""    
-                                                                               placeholder="Language"
-                                                                               >
-                                                                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div> <!--col-xs-6-->
-
-                                                            <div class="col-xs-6">
-                                                                <div class="mini-box">
-                                                                    <div class="form-group has-feedback">
-                                                                        <label for="languages" class="pull-left" >Languages</label>
-                                                                        <input id="languages"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="languages"                                
-                                                                               value=""    
-                                                                               placeholder="Languages"
-                                                                               >
-                                                                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div> <!--col-xs-6-->
-
-                                                            <input type="hidden" id="language_Array" name="languageArray" >
-
-                                                            <div class="col-xs-6">
-                                                                <div class="mini-box">
-                                                                    <label for="countryOfPublication" class="pull-left" > &nbsp;<br/> Country of Publication</label>
-                                                                    <input id="countryOfPublication"                                
-                                                                           type="text"                                
-                                                                           class="form-control"                                
-                                                                           name="countryOfPublication"                                
-                                                                           value=""    
-                                                                           placeholder="Country of Publication"
-                                                                           >
-                                                                </div>
-                                                            </div> <!--col-xs-6-->
-                                                            <div class='col-sm-6'>
-                                                                <label for="DateOfPublicationOriginal" class="control-label pull-left">Date of Publication (of the original): </label>
-                                                                <div class="input-group pull-left"   style="margin-bottom: 40px;">
-                                                                    <input type="text" name="DateOfPublicationOriginal" id="DateOfPublicationOriginal" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="DateOfPublicationOriginal">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
+                                                                    <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                                                 </div>
                                                             </div>
-                                                        </div> <!--row-->
+                                                        </div> <!--col-xs-6-->
+             
 
-                                                        <div class="row">
+
+                                                    <input type="hidden" id="language_Array" name="languageArray" >
 
 
-                                                            <div class="col-xs-6">
-                                                                <div class="mini-box" style="margin-bottom: 20px">
-                                                                    <label for="series" class="pull-left"> &nbsp;<br/> Series</label>
-                                                                    <input id="series"                                
-                                                                           type="text"                                
-                                                                           class="form-control"                                
-                                                                           name="series"                                
-                                                                           value=""    
-                                                                           placeholder="Series"
-                                                                           >
-                                                                </div>
-                                                            </div> <!--col-xs-6-->
-                                                            <div class='col-sm-6'  style="margin-bottom: 40px;">                                                
-                                                                <label for="pageExtentOfTheOriginal" class="control-label pull-left">Page extent of the <br/> (of the original): </label>
-                                                                <div class="input-group pull-left"  style="margin-bottom: 40px;">
-                                                                    <span class="input-group-addon" id="sizing-addon3">  
-                                                                        <span class="glyphicon glyphicon-book"></span>                                                            
-                                                                    </span>
-                                                                    <input type="text" name="pageExtentOfTheOriginal" id="pageExtentOfTheOriginal" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon3">
-                                                                </div>
+                                            
+                                                        <div class="col-xs-4">
+                                                            <div class="mini-box">
+                                                                <label for="countryOfPublication" class="pull-left" > Country of publication</label>
+                                                                <input id="countryOfPublication"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="countryOfPublication"                                
+                                                                       value=""    
+                                                                       placeholder="Country of Publication"
+                                                                       >
                                                             </div>
-                                                        </div> <!--row-->
+                                                        </div> <!--col-xs-4-->         
+                                                </div> <!--row-->
 
-                                                    </div><!--col-xs-8-->
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            <div class="mini-box" style="margin-bottom: 20px">
+                                                                <label for="series" class="pull-left"> &nbsp;<br/> Series</label>
+                                                                <input id="series"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="series"                                
+                                                                       value=""    
+                                                                       placeholder="Series"
+                                                                       >
+                                                            </div>
+                                                        </div> <!--col-xs-6-->
 
-                                                </div> <!-- row-->
+
+                                                        <div class='col-sm-4'  style="margin-bottom: 40px;">                                                
+                                                            <label for="pageExtentOfTheOriginal" class="control-label pull-left">Page extent of the <br/> (of the original) </label>
+                                                            <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                                <span class="input-group-addon" id="sizing-addon3">  
+                                                                    <span class="glyphicon glyphicon-book"></span>                                                            
+                                                                </span>
+                                                                <input type="text" name="pageExtentOfTheOriginal" id="pageExtentOfTheOriginal" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon3">
+                                                            </div>
+                                                        </div>
+                                                    </div> <!--row-->
+
+                                              
+
+
 
 
                                                 <!--Eigthrow-->
@@ -1599,7 +1541,7 @@
                             <!-- Rights Agreement -->
                             <div class="tab-pane" id="Rights">
                                 <p class="header1" style="margin-bottom: 40px">
-                                    Rights Agreement
+                                     Rights Agreement & Contracts
                                 </p>
 
                                 <div class="container-fluid">
@@ -1610,7 +1552,7 @@
                                         <!--Upload form for agreement-->
 
                                         <div class="col-md-12"   style="margin-bottom: 20px">                                                
-                                            <strong class="pull-left">Upload a copy of the agreement with the translation rights holder</strong> <br/>(where applicable)
+                                      <div  style="margin-bottom: 20px"> <strong class="pull-left">Upload a copy of the agreement with the translation rights holder</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>
                                             <div class="margin-bottom: 60px"></div>   
                                             <br/>
                                             <div class="input-group agreement"  style="margin-bottom: 40px;">                                      
@@ -1656,7 +1598,7 @@
                                         </div>
 
                                         <div class="col-md-12"   style="margin-bottom: 20px">                          
-                                            <strong class="pull-left">Upload a copy of the Addendum to rights agreement</strong> <br/>
+                                         <strong class="pull-left">Upload a copy of the addendum to the rights agreement</strong> <small class="pull-left"> &nbsp;  (where applicable)</small><br/>
                                             <div class="margin-bottom: 60px"></div>
                                             <br/>
                                             <div class="input-group addendum"  style="margin-bottom: 40px;">
@@ -1679,7 +1621,7 @@
                                         </div>
                                     </div> <!-- row -->
                                 </div> <!-- container-fluid  -->
-                            </div> <!-- class="tab-pane" id="orange" -->
+                            </div> <!-- class="tab-pane" id="Rights" -->
 
                             <!-- Publication Details -->
                             <div class="tab-pane" id="Publication">
@@ -1693,45 +1635,27 @@
                                         <div class="row">
 
                                             <div class='col-sm-4'>
-                                                <label for="proposedDateOfPublication" class="control-label pull-left">Proposed date of publication:<br/> &nbsp;</label>
+                                                <label for="proposedDateOfPublication" class="control-label pull-left">Proposed date of publication<br/> &nbsp;</label>
                                                 <div class="input-group pull-left"   style="margin-bottom: 40px;">
                                                     <input type="text" name="proposedDateOfPublication" id="proposedDateOfPublication" class="form-control" placeholder="DD/MM/YYYY" />    
                                                     <label class="input-group-addon" for="proposedDateOfPublication">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </label>
                                                 </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <label for="appForeignPublisher" class="control-label pull-left">Foreign Publisher<br/> &nbsp;</label>
-                                                <input id="appForeignPublisher"                                
-                                                       type="text"                                
-                                                       class="form-control"                                
-                                                       name="appForeignPublisher"                                
-                                                       >
-                                            </div>
+                                            </div>    
 
                                         </div>
 
                                         <div class="row">
 
                                             <div class='col-sm-4'  style="margin-bottom: 40px;">                                                
-                                                <label for="plannedPageExtent" class="control-label pull-left">Planned page extent of the <br/>  published translation: </label>
+                                                <label for="plannedPageExtent" class="control-label pull-left">Planned page extent of the <br/>  published translation </label>
                                                 <div class="input-group pull-left"  style="margin-bottom: 40px;">
                                                     <span class="input-group-addon" id="sizing-addon2">  
                                                         <span class="glyphicon glyphicon-book"></span>                                                            
                                                     </span>
                                                     <input type="text" name="plannedPageExtent" id="plannedPageExtent" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon2">
                                                 </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <label for="appForeignCountry" class="control-label pull-left">Foreign Country <br/> &nbsp;</label>
-                                                <input  id="appForeignCountry" 
-                                                        name="appForeignCountry" 
-                                                        type="text"                                                                
-                                                        class="form-control"     
-                                                        >
                                             </div>
 
                                             <script>
@@ -1746,7 +1670,7 @@
 
                                         <div class="row">
                                             <div class='col-sm-4'>
-                                                <label for="proposedPrintRun" class="control-label pull-left">Proposed print run: </label>
+                                                <label for="proposedPrintRun" class="control-label pull-left">Proposed print run </label>
                                                 <div class="input-group pull-left"  style="margin-bottom: 40px;">
                                                     <span class="input-group-addon" id="sizing-addon1">  
                                                         <span class="glyphicon glyphicon-book"></span>                                                            
@@ -1756,7 +1680,7 @@
                                             </div>
 
                                             <div class="col-sm-4">        
-                                                <label for="appTargetLanguage" class="control-label pull-left"> Target Language</label>
+                                                <label for="appTargetLanguage" class="control-label pull-left"> Target language(s)</label>
                                                 <input id="appTargetLanguage"                                
                                                        type="text"                                
                                                        class="form-control"                                
@@ -1765,8 +1689,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                </div> <!-- container-fluid  -->
+                            </div> <!-- class="tab-pane" id="Publication" -->
 
 
                             <!-- Translator's Details -->
@@ -1784,7 +1708,7 @@
                                                 <div class="col-md-8"   style="margin-bottom: 20px">
                                                     <label for="translator_cv0" class="control-label pull-left" id="123"></label>
                                                     <br/>
-                                                    <small class="pull-left"   style="margin-bottom: 10px">this should include a list of previous published literary translations</small> 
+                                                    <small class="pull-left"   style="margin-bottom: 10px">This should include a list of previously published literary translations</small> 
                                                     <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
                                                         <label class="btn btn-default btn-file pull-left">
                                                             Select file 
@@ -1806,26 +1730,67 @@
                                             </div>
                                         </div>
                                     </div> 
-                                    <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">                                              
 
-                                        <label for="translatorFee" class="control-label pull-left">Translator fee:</label>                                                                        
-                                        <div class="input-group pull-left" style="margin-bottom: 20px">
-                                            <label class="input-group-addon" for="translatorFee">
-                                                <span class="glyphicon glyphicon-euro"></span>                                     
-                                            </label>
-                                            <input type="text" class="form-control pull-left" name="translatorFee" id="translatorFee" placeholder="fee">    
-                                        </div>
-                                    </div>
+                                    <div class="row" style="margin-bottom: 10px">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="col-sm-4"> 
+                                                    <div class="form-group has-feedback">
+                                                        <label for="translatorName" class="pull-left">Translator</label>
+                                                        <input id="translatorName"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="translatorName"                                
+                                                               value=""    
+                                                               onblur="myFunction();"
+                                                               placeholder="Translator Name"
+                                                               >
+                                                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                    </div>
+                                                </div>
 
-                                    <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">  
-                                        <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator fee:</label>                                                  
-                                        <div class="form-group">
-                                            <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee'
-                                                      style="width: 280px; height: 196px;"></textarea>
+                                                <div class="col-sm-4" style="margin-top: 30px;">    
+                                                    <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                       data-toggle="modal" 
+                                                       data-target="#addTranslatorModal"
+                                                       onclick="copyFirstRow();"
+                                                       >Add more translators</a>
+
+                                                </div>                                                    
+
+                                                <input type="hidden" id="translatorArray" name="translatorArray" >
+                                            </div>
                                         </div>
-                                    </div>
-                                </div> 
-                            </div>              
+                                    </div> <!--row-->
+
+
+                                    <div class="row" style="margin-bottom: 10px">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">                                              
+
+                                                    <label for="translatorFee" class="control-label pull-left">Translator(s)'s fee</label>                                                                        
+                                                    <div class="input-group pull-left" style="margin-bottom: 20px">
+                                                        <label class="input-group-addon" for="translatorFee">
+                                                            <span class="glyphicon glyphicon-euro"></span>                                     
+                                                        </label>
+                                                        <input type="text" class="form-control pull-left" name="translatorFee" id="translatorFee" placeholder="fee">    
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">  
+                                                    <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                  
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee'
+                                                                  style="width: 280px; height: 196px;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>  <!--panel--body-->
+                                        </div> <!--panel-default-->
+                                    </div> <!-- row -->
+                                </div> <!-- container-fluid  -->
+                            </div> <!-- class="tab-pane" id="Translator" -->
+
 
                             <!-- Miscellaneous -->
                             <div class="tab-pane" id="Misc">
@@ -1848,8 +1813,8 @@
                                             </div>
                                         </div>
                                     </div> <!--row-->
-                                </div> 
-                            </div>                         
+                                </div> <!-- container-fluid  -->
+                            </div> <!-- class="tab-pane" id="Misc" -->                
 
                             <!-- Original Work & Sample Translation -->
                             <div class="tab-pane" id="Original">
@@ -1864,7 +1829,7 @@
                                                 <!--copies of the original work-->
                                                 <div class="col-md-9" >
                                                     <div class="checkbox">                                                             
-                                                        <label for="copiesSent" class=" pull-left"><strong>Two copies of the original work<sup>*</sup> sent to Irish Literature by mail</strong></label>
+                                                        <label for="copiesSent" class=" pull-left"><strong>One copy of the original work<sup>*</sup> sent to Literature Ireland by post</strong></label>
                                                         <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
                                                             <input type="checkbox" 
                                                                    name="copiesSent" 
@@ -1943,7 +1908,7 @@
 
                                                     <div class="row">
                                                         <div class="col-md-8">
-                                                            <label for="translationSample" class="control-label longLabel pull-left">Upload two copies of a translation sample<sup>**</sup> <br/>consisting of 10 to 12 pages of prose or six poems</label>
+                                                        <label for="translationSample" class="control-label pull-left">Upload copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
                                                             <div class="input-group translationSample pull-left" >
                                                                 <label class="btn btn-default btn-file pull-left">
                                                                     Select file 
@@ -1973,7 +1938,7 @@
                                             <div class="panel-body">
 
                                                 <div class="col-md-9"   >
-                                                    <div class="input-group input-group-lg">Finally <br/>
+                                                    <div class="input-group input-group-lg">
                                                         <button type="submit"                                                                          
                                                                 data-toggle="tooltip" 
                                                                 class="btn btn-success"
@@ -1990,222 +1955,222 @@
                                     </div> <!-- row -->
                                     <hr/>
                                     <div class="col-md-10">
-                                        <i class="pull-left"><strong>*</strong> Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
+                                        <i class="pull-left"><strong>*</strong> Please contact Literature Ireland if a hard copy the original work cannot be obtained.<br/>
                                             &nbsp;  <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
                                     </div>    
                                 </div>  <!-- container-fluid -->
                             </div> <!-- tab-pane Original --> 
-                        </div> <!-- my-tab-content -->
+                    </div> <!-- my-tab-content -->
 
-                        <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="background-color: #c3bcbc">
-                                        <button type="button" class="close" data-dismiss="modal"  onclick="backToMisc();"  aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="pressCuttingsModalLabel">add Press Cuttings</h4>
-                                    </div>
-
-
-                                    <div class="modal-body" style="background-color: #d9d1d1">
-                                        <div class="row" style="margin-bottom: 10px">
-
-                                            <output id="result">Press Cuttings</output>
-                                            <!--<button type="button" id="clear">Clear</button>-->
-                                        </div>
+                    <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #c3bcbc">
+                                    <button type="button" class="close" data-dismiss="modal"  onclick="backToMisc();"  aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="pressCuttingsModalLabel">add Press Cuttings</h4>
+                                </div>
 
 
-                                        <div class="row" style="margin-bottom: 10px">
-                                            <div class='col-sm-12'>
-                                                <button type="button" id="clear">Clear</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="modal-body" style="background-color: #d9d1d1">
+                                    <div class="row" style="margin-bottom: 10px">
 
-                                    <div class="modal-footer"  style="background-color: #c3bcbc">
-                                        <!--<button id="pressCutting" type="button" value="Add another Press Cutting"  class="btn btn-group-sm  button teal pull-left">Add Press Cuttings</button>-->
-                                        <label class="btn btn-default btn-file">
-                                            Add Press Cuttings<input type="file" id="files" multiple  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
-                                        </label>
+                                        <output id="result">Press Cuttings</output>
                                         <!--<button type="button" id="clear">Clear</button>-->
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToMisc();">Done</button>
-                                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                                    </div> <!--modal footer -->
-                                </div> <!--modal content-->          
-                            </div> <!--modal dialog-->
-                        </div> <!--modal fade-->
-                        <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
-
-                        <div class="modal fade" id="addTranslatorModal" tabindex="-1" role="dialog" aria-labelledby="addTranslatorModalLabel">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="background-color: #c3bcbc">
-                                        <button type="button" class="close" data-dismiss="modal"  onclick="backToBooks();"  aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="addTranslatorModalLabel">add more Translators</h4>
                                     </div>
 
 
-                                    <div class="modal-body" style="background-color: #d9d1d1">
+                                    <div class="row" style="margin-bottom: 10px">
+                                        <div class='col-sm-12'>
+                                            <button type="button" id="clear">Clear</button>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                        <div class="row" style="margin-bottom: 10px">
+                                <div class="modal-footer"  style="background-color: #c3bcbc">
+                                    <!--<button id="pressCutting" type="button" value="Add another Press Cutting"  class="btn btn-group-sm  button teal pull-left">Add Press Cuttings</button>-->
+                                    <label class="btn btn-default btn-file">
+                                        Add Press Cuttings<input type="file" id="files" multiple  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
+                                    </label>
+                                    <!--<button type="button" id="clear">Clear</button>-->
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToMisc();">Done</button>
+                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                </div> <!--modal footer -->
+                            </div> <!--modal content-->          
+                        </div> <!--modal dialog-->
+                    </div> <!--modal fade-->
+                    <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
+
+                    <div class="modal fade" id="addTranslatorModal" tabindex="-1" role="dialog" aria-labelledby="addTranslatorModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #c3bcbc">
+                                    <button type="button" class="close" data-dismiss="modal"  onclick="backToBooks();"  aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="addTranslatorModalLabel">add more Translators</h4>
+                                </div>
+
+
+                                <div class="modal-body" style="background-color: #d9d1d1">
+
+                                    <div class="row" style="margin-bottom: 10px">
+                                        <div class='col-sm-12'>
+
+                                            <div  id="generatedForm" class="input-group" style='margin-bottom:2px'>
+                                                1. Translator <input type="text" id="first0" value="Name" style='margin-bottom:2px'>                                                         
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer"  style="background-color: #c3bcbc">
+                                    <button id="addElement" type="button" value="Add another Translator"  class="btn btn-group-sm  button teal pull-left">Add another Translator</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToBooks();">Done</button>
+                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                </div> <!--modal footer -->
+                            </div> <!--modal content-->          
+                        </div> <!--modal dialog-->
+                    </div> <!--modal fade-->
+
+                    <div class="modal fade" id="addAuthorModal" tabindex="-1" role="dialog" aria-labelledby="addAuthorModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #c3bcbc">
+                                    <button type="button" class="close" data-dismiss="modal"  onclick="backToBooks();"  aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="addAuthorModalLabel">add more Authors</h4>
+                                </div>
+
+
+                                <div class="modal-body" style="background-color: #d9d1d1">
+
+                                    <div class="row" style="margin-bottom: 10px">
+
+
+                                        <div  id="generatedFormAuthors" class="input-group" style='margin-bottom:2px'>
                                             <div class='col-sm-12'>
-
-                                                <div  id="generatedForm" class="input-group" style='margin-bottom:2px'>
-                                                    1. Translator <input type="text" id="first0" value="Name" style='margin-bottom:2px'>                                                         
-                                                </div>
+                                                1. Author <input type="text" id="firstAuthor0" value="Name" style='margin-bottom:2px'> <input type="text" id="lastAuthor0" value="Name" style='margin-bottom:2px'>                                                         
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="modal-footer"  style="background-color: #c3bcbc">
-                                        <button id="addElement" type="button" value="Add another Translator"  class="btn btn-group-sm  button teal pull-left">Add another Translator</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToBooks();">Done</button>
-                                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                                    </div> <!--modal footer -->
-                                </div> <!--modal content-->          
-                            </div> <!--modal dialog-->
-                        </div> <!--modal fade-->
+                                <div class="modal-footer"  style="background-color: #c3bcbc">
+                                    <button id="addAuthor" type="button" value="Add another Author"  class="btn btn-group-sm  button teal pull-left">Add another Author</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToBooks2();">Done</button>
+                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                </div> <!--modal footer -->
+                            </div> <!--modal content-->          
+                        </div> <!--modal dialog-->
+                    </div> <!-- addAuthorModal -->
 
-                        <div class="modal fade" id="addAuthorModal" tabindex="-1" role="dialog" aria-labelledby="addAuthorModalLabel">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="background-color: #c3bcbc">
-                                        <button type="button" class="close" data-dismiss="modal"  onclick="backToBooks();"  aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="addAuthorModalLabel">add more Authors</h4>
-                                    </div>
-
-
-                                    <div class="modal-body" style="background-color: #d9d1d1">
-
-                                        <div class="row" style="margin-bottom: 10px">
+                    <div class="modal fade" id="showInfoModal" tabindex="-1" role="dialog" aria-labelledby="showInfoModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #c3bcbc">
+                                    <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="showInfoModalLabel">Info</h4>
+                                </div>
 
 
-                                            <div  id="generatedFormAuthors" class="input-group" style='margin-bottom:2px'>
-                                                <div class='col-sm-12'>
-                                                    1. Author <input type="text" id="firstAuthor0" value="Name" style='margin-bottom:2px'> <input type="text" id="lastAuthor0" value="Name" style='margin-bottom:2px'>                                                         
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="modal-body" style="background-color: #d9d1d1">
 
-                                    <div class="modal-footer"  style="background-color: #c3bcbc">
-                                        <button id="addAuthor" type="button" value="Add another Author"  class="btn btn-group-sm  button teal pull-left">Add another Author</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToBooks2();">Done</button>
-                                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                                    </div> <!--modal footer -->
-                                </div> <!--modal content-->          
-                            </div> <!--modal dialog-->
-                        </div> <!-- addAuthorModal -->
+                                    <h2><strong>Translation Grant Programme Application Checklist</strong></h2>
+                                    <br/>
+                                    <br/>
+                                    <strong>Your application to the Literature Ireland Translation Grant Programme should include the following:</strong>
+                                    <br/>
+                                    <br/>
+                                    <h3> Contact Details</h3>
+                                    <ul class="dashed">
+                                        <li>The name, address, email and phone number of the applicant</li>
+                                    </ul>
 
-                        <div class="modal fade" id="showInfoModal" tabindex="-1" role="dialog" aria-labelledby="showInfoModal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="background-color: #c3bcbc">
-                                        <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="showInfoModalLabel">Info</h4>
-                                    </div>
+                                    <h3> Contracts</h3>
+                                    <ul class="dashed">
+                                        <li>A copy of the agreement with the translation rights holder (where applicable)<br/>
+                                        <li> A copy of the contract with the translator </li>
+                                    </ul>
+
+                                    <h3> Publication Details</h3>
+                                    <ul class="dashed">
+                                        <li>The proposed date of publication<br/>
+                                        <li>The proposed print run<br/></li>
+                                        <li>The planned page extent of the published translation </li>
+                                    </ul>
+
+                                    <h3> Translator's Details</h3>
+                                    <ul class="dashed">
+                                        <li>A copy of the translator's CV, including a list of previous published literary translations</li>
+                                        <li>Details of the fee to be paid to the translator (this should include the total sum in Euro and a breakdown of the rate according to which this sum has been calculated)</li>
+                                    </ul>
+
+                                    <h3> Original Work & Sample Translation</h3>
+                                    <ul class="dashed">
+                                        <li>Two copies of the original work* </li>
+                                        <li>Two copies of a translation sample** consisting of 10 to 12 pages of prose or six poems</li>
+                                    </ul>
+
+                                    <br/>
+                                    <p> <i> * &nbsp; Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
+                                            ** If more than one translator is involved, a translation sample must be submitted for each translator.
+                                        </i> </p>
+                                    All queries in relation to the Translation Grant Programme should be addressed to Deputy Director Rita McCann at rita[at]literatureireland[dot]com or Administrator Orla King at orla[at]literatureireland[dot]com.
+                                    <br/>
+                                </div>
+
+                                <div class="modal-footer"  style="background-color: #c3bcbc">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                </div> <!--modal footer -->
+                            </div> <!--modal content-->          
+                        </div> <!--modal dialog-->
+                    </div> <!--modal fade-->
+
+                    <div class="modal fade" id="showNotesModal" tabindex="-1" role="dialog" aria-labelledby="showNotesModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #c3bcbc">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="showNotesModalLabel">Notes</h4>
+                                </div>
 
 
-                                    <div class="modal-body" style="background-color: #d9d1d1">
+                                <div class="modal-body" style="background-color: #d9d1d1">
+                                    <div class="row" style="margin-bottom: 10px">
 
-                                        <h2><strong>Translation Grant Programme Application Checklist</strong></h2>
+                                        <p class="header1"> 
+                                            NOTES
+                                        </p>
                                         <br/>
-                                        <br/>
-                                        <strong>Your application to the Literature Ireland Translation Grant Programme should include the following:</strong>
-                                        <br/>
-                                        <br/>
-                                        <h3> Contact Details</h3>
-                                        <ul class="dashed">
-                                            <li>The name, address, email and phone number of the applicant</li>
-                                        </ul>
+                                        <ol>
+                                            <li>The <strong>deadlines for application</strong> are available on the Literature Ireland website at <a href="http://www.literatureireland.com/programmes/translation-grant-programme/">http://www.literatureireland.com/programmes/translation-grant-programme/</a>. There are typically three deadlines per year.  </li>
 
-                                        <h3> Contracts</h3>
-                                        <ul class="dashed">
-                                            <li>A copy of the agreement with the translation rights holder (where applicable)<br/>
-                                            <li> A copy of the contract with the translator </li>
-                                        </ul>
+                                            <li>The deadline for application is the <strong>date by which applications should be received</strong> by Literature Ireland and not the date by which they should be posted. Allowance is made for postal delays but submissions received more than one week after the deadline may not be accepted.  </li>
 
-                                        <h3> Publication Details</h3>
-                                        <ul class="dashed">
-                                            <li>The proposed date of publication<br/>
-                                            <li>The proposed print run<br/></li>
-                                            <li>The planned page extent of the published translation </li>
-                                        </ul>
+                                            <li><strong>Late applications</strong> may, in rare cases, be accepted at the discretion of Literature Ireland. However, late submission will affect the timeliness with which the applicant publisher can be informed of the outcome of his/her application. </li>
 
-                                        <h3> Translator's Details</h3>
-                                        <ul class="dashed">
-                                            <li>A copy of the translator's CV, including a list of previous published literary translations</li>
-                                            <li>Details of the fee to be paid to the translator (this should include the total sum in Euro and a breakdown of the rate according to which this sum has been calculated)</li>
-                                        </ul>
+                                            <li>It is recommended that the <strong>translation sample</strong> submitted be a final or near-final version which has been <strong>proofread and edited</strong>. If the sample submitted is an early or unedited draft, the applicant is requested to inform Literature Ireland of this fact.  </li>
 
-                                        <h3> Original Work & Sample Translation</h3>
-                                        <ul class="dashed">
-                                            <li>Two copies of the original work* </li>
-                                            <li>Two copies of a translation sample** consisting of 10 to 12 pages of prose or six poems</li>
-                                        </ul>
+                                            <li>Literature Ireland maintains records of the <strong>average/typical rates paid to literary translators</strong> in different countries. If the rate being paid to the translator is substantially different from that which might be usual, the applicant is requested to include an explanation for this in his/her application. </li> 
 
-                                        <br/>
-                                        <p> <i> * &nbsp; Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
-                                                ** If more than one translator is involved, a translation sample must be submitted for each translator.
-                                            </i> </p>
-                                        All queries in relation to the Translation Grant Programme should be addressed to Deputy Director Rita McCann at rita[at]literatureireland[dot]com or Administrator Orla King at orla[at]literatureireland[dot]com.
-                                        <br/>
+                                            <li> For each application, the <strong>translation sample is assessed by an independent expert</strong>, who provides a report which is made available to the board of Literature Ireland when it considers the request for funding (see note 7). </li>
+
+                                            <li>All applications are considered by the board of Literature Ireland at meeting held six to <strong>eight weeks after the deadline</strong>. Applications for translations due for publication before the date of the board meeting will be deemed ineligible.  </li>
+
+                                            <li>Applicants are informed of the <strong>outcome of the application</strong> within 10 days of the board meeting. Successful applicants will be issued with formal contracts and a letter of award within six weeks of grant approval.   </li> 
+                                        </ol>
+
                                     </div>
+                                </div>
 
-                                    <div class="modal-footer"  style="background-color: #c3bcbc">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-                                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                                    </div> <!--modal footer -->
-                                </div> <!--modal content-->          
-                            </div> <!--modal dialog-->
-                        </div> <!--modal fade-->
-
-                        <div class="modal fade" id="showNotesModal" tabindex="-1" role="dialog" aria-labelledby="showNotesModal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="background-color: #c3bcbc">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="showNotesModalLabel">Notes</h4>
-                                    </div>
-
-
-                                    <div class="modal-body" style="background-color: #d9d1d1">
-                                        <div class="row" style="margin-bottom: 10px">
-
-                                            <p class="header1"> 
-                                                NOTES
-                                            </p>
-                                            <br/>
-                                            <ol>
-                                                <li>The <strong>deadlines for application</strong> are available on the Literature Ireland website at <a href="http://www.literatureireland.com/programmes/translation-grant-programme/">http://www.literatureireland.com/programmes/translation-grant-programme/</a>. There are typically three deadlines per year.  </li>
-
-                                                <li>The deadline for application is the <strong>date by which applications should be received</strong> by Literature Ireland and not the date by which they should be posted. Allowance is made for postal delays but submissions received more than one week after the deadline may not be accepted.  </li>
-
-                                                <li><strong>Late applications</strong> may, in rare cases, be accepted at the discretion of Literature Ireland. However, late submission will affect the timeliness with which the applicant publisher can be informed of the outcome of his/her application. </li>
-
-                                                <li>It is recommended that the <strong>translation sample</strong> submitted be a final or near-final version which has been <strong>proofread and edited</strong>. If the sample submitted is an early or unedited draft, the applicant is requested to inform Literature Ireland of this fact.  </li>
-
-                                                <li>Literature Ireland maintains records of the <strong>average/typical rates paid to literary translators</strong> in different countries. If the rate being paid to the translator is substantially different from that which might be usual, the applicant is requested to include an explanation for this in his/her application. </li> 
-
-                                                <li> For each application, the <strong>translation sample is assessed by an independent expert</strong>, who provides a report which is made available to the board of Literature Ireland when it considers the request for funding (see note 7). </li>
-
-                                                <li>All applications are considered by the board of Literature Ireland at meeting held six to <strong>eight weeks after the deadline</strong>. Applications for translations due for publication before the date of the board meeting will be deemed ineligible.  </li>
-
-                                                <li>Applicants are informed of the <strong>outcome of the application</strong> within 10 days of the board meeting. Successful applicants will be issued with formal contracts and a letter of award within six weeks of grant approval.   </li> 
-                                            </ol>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-footer"  style="background-color: #c3bcbc">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-                                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                                    </div> <!--modal footer -->
-                                </div> <!--modal content-->          
-                            </div> <!--modal dialog-->
-                        </div> <!--modal fade-->
+                                <div class="modal-footer"  style="background-color: #c3bcbc">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                </div> <!--modal footer -->
+                            </div> <!--modal content-->          
+                        </div> <!--modal dialog-->
+                    </div> <!--modal fade-->
 
                     </form> 
-             </div>  <!-- container-fluid -->
+            </div>  <!-- container-fluid -->
         </nav>
 
         <form class="form-horizontal" 
@@ -2220,19 +2185,15 @@
                 <button type="submit" class = "btn btn-default btn-sm active" name="New Application">
                     New Application
                 </button>
-                <!--
-                                       <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
-                                           List New Applications
-                                       </button>
-                -->
+
                 <button type = "submit" class = "btn btn-default btn-sm" name="List Open Applications">
                     List Open Applications
                 </button>
-                <!--
-                                       <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
-                                           List Pending Applications
-                                       </button>
-                -->
+
+                <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
+                    List Pending Applications
+                </button>
+
                 <button type = "submit" class = "btn btn-default btn-sm"  name="List Closed Applications">
                     List Closed Applications
                 </button>
@@ -2270,44 +2231,44 @@
 <script src="js/bootstrap-imageupload.js"></script>
 
 <script>
-                                        var $imageupload = $('.imageupload');
-                                        $imageupload.imageupload();
-//                                                $('#imageupload-disable').on('click', function () {
-//                                                    alert("imageupload-disable");
-//                                                    $imageupload.imageupload('disable');
-//                                                    $(this).blur();
-//                                                });
-//
-//                                                $('#imageupload-enable').on('click', function () {
-//                                                    alert("imageupload-enable");
-//                                                    $imageupload.imageupload('enable');
-//                                                    $(this).blur();
-//                                                });
-//
-//                                                $('#imageupload-reset').on('click', function () {
-//                                                     alert("imageupload-reset");
-//                                                    $imageupload.imageupload('reset');
-//                                                    $(this).blur();
-//                                                });
+                                var $imageupload = $('.imageupload');
+                                $imageupload.imageupload();
+                                //                                                $('#imageupload-disable').on('click', function () {
+                                //                                                    alert("imageupload-disable");
+                                //                                                    $imageupload.imageupload('disable');
+                                //                                                    $(this).blur();
+                                //                                                });
+                                //
+                                //                                                $('#imageupload-enable').on('click', function () {
+                                //                                                    alert("imageupload-enable");
+                                //                                                    $imageupload.imageupload('enable');
+                                //                                                    $(this).blur();
+                                //                                                });
+                                //
+                                //                                                $('#imageupload-reset').on('click', function () {
+                                //                                                     alert("imageupload-reset");
+                                //                                                    $imageupload.imageupload('reset');
+                                //                                                    $(this).blur();
+                                //                                                });
 
-                                        function pressCuttingsModal() {
-                                            $("#pressCuttingsModal").modal("show");
-                                        }
+                                function pressCuttingsModal() {
+                                    $("#pressCuttingsModal").modal("show");
+                                }
 
-                                        var pressCuttingsUpload = $('.pressCuttingsUpload');
-                                        pressCuttingsUpload.imageupload();
-//                                                $('#pressCuttingsUpload-disable').on('click', function () {
-//                                                     alert("imageupload-disable");
-//                                                    pressCuttingsUpload.imageupload('disable');
-//                                                    $(this).blur();
-//                                                });
+                                var pressCuttingsUpload = $('.pressCuttingsUpload');
+                                pressCuttingsUpload.imageupload();
+                                //                                                $('#pressCuttingsUpload-disable').on('click', function () {
+                                //                                                     alert("imageupload-disable");
+                                //                                                    pressCuttingsUpload.imageupload('disable');
+                                //                                                    $(this).blur();
+                                //                                                });
 
-                                        function  showInfoModal() {
-                                            $("#showInfoModal").modal("show");
-                                        }
-                                        function  showNotesModal() {
-                                            $("#showNotesModal").modal("show");
-                                        }
+                                function  showInfoModal() {
+                                    $("#showInfoModal").modal("show");
+                                }
+                                function  showNotesModal() {
+                                    $("#showNotesModal").modal("show");
+                                }
 </script>
 </body>
 </html>

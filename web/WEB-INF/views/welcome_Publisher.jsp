@@ -107,7 +107,7 @@
                                             <option>Start New Application</option>
                                      <!--        <option>List New Applications</option> -->
                                             <option>List Open Applications</option>
-                                           <!--  <option>List Pending Applications</option> -->
+                                            <option>List Pending Applications</option>
                                             <option>List Closed Applications</option>
                                         </select>                                        
                                         <span class="help-block" id="error"></span> 

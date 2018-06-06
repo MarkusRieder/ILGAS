@@ -393,11 +393,11 @@
                         {"data": "Language"},
 //                        {"data": "physicalDescription"},
 //                        {"data": "Duplicates"},
-                        {"data": "Copies"},
+                        //{"data": "Copies"},
+                        {"data": "ISBN"}, //as dummy for Copies
                         {"data": "Notes"},
                         {"data": "ISBN"},
                         {"data": "ISSN"},
-//                        {"data": "Copies"},
                         {"data": "cover",
                             "render": function (data, type, row) {
                                 if (typeof (data) === "undefined") {
@@ -882,8 +882,8 @@
 //                            
 //                           targets: [5,6],
 //                           visible: false
-                           //},
-                        {className: "dt-left", "targets": [2, 7, 8]}
+                        //},
+                        {className: "dt-left", "targets": [2, 7, 8, 64]}
                     ]
 
                 });
@@ -1125,10 +1125,10 @@
                             }
                             $('#testcontainer').find('a').attr('data-toggle', 'modal');
                             $('#testcontainer').append(newdiv);
-                            
+
                             //print track record
                             if (i !== 0) {
-                                //            console.log("translatorTrack[" + i + " ][ " + j + " ] :  " + translatorTrack[i][j]);
+                                // console.log("translatorTrack[" + i + " ][ " + j + " ] :  " + translatorTrack[i][j]);
                             }
                         }
                     }
@@ -1141,7 +1141,7 @@
                      * get the whole List with the arrays  
                      * no of arrays = expertReaderName.length
                      */
-                    //          alert(cntr);
+                    // alert(cntr);
 
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                     $('#additionalExpertReader').empty(); // empty the div before fetching and adding new data
@@ -1315,11 +1315,93 @@
                     $("#appTargetLanguage").val($(this).closest('tr').children()[39].textContent);
                     $("#amountRequested").val($(this).closest('tr').children()[41].textContent);
                     $("#previousGrantAid").val($(this).closest('tr').children()[59].textContent);
-                    
+
                     $("#award").val($(this).closest('tr').children()[60].textContent);
                     $("#salesFigures").val($(this).closest('tr').children()[61].textContent);
                     $("#authorList").val($(this).closest('tr').children()[64].textContent);
                     console.log(table.row(this).data());
+
+                    console.log("12345 1 " + $(this).closest('tr').children()[1].textContent);
+                    console.log("12345 2 " + $(this).closest('tr').children()[2].textContent);
+                    console.log("12345 3 " + $(this).closest('tr').children()[3].textContent);
+                    console.log("12345 4 " + $(this).closest('tr').children()[4].textContent);
+                    console.log("12345 5 " + $(this).closest('tr').children()[5].textContent);
+                    console.log("12345 6 " + $(this).closest('tr').children()[6].textContent);
+                    console.log("12345 7 " + $(this).closest('tr').children()[7].textContent);
+                    console.log("12345 8 " + $(this).closest('tr').children()[8].textContent);
+                    console.log("12345 9 " + $(this).closest('tr').children()[9].textContent);
+                    console.log("12345 10 " + $(this).closest('tr').children()[10].textContent);
+
+                    console.log("12345 11 " + $(this).closest('tr').children()[11].textContent);
+                    console.log("12345 12 " + $(this).closest('tr').children()[12].textContent);
+                    console.log("12345 13 " + $(this).closest('tr').children()[13].textContent);
+                    console.log("12345 14 " + $(this).closest('tr').children()[14].textContent);
+                    console.log("12345 15 " + $(this).closest('tr').children()[15].textContent);
+                    console.log("12345 16 " + $(this).closest('tr').children()[16].textContent);
+                    console.log("12345 17 " + $(this).closest('tr').children()[17].textContent);
+                    console.log("12345 18 " + $(this).closest('tr').children()[18].textContent);
+                    console.log("12345 19 " + $(this).closest('tr').children()[19].textContent);
+                    console.log("12345 20 " + $(this).closest('tr').children()[20].textContent);
+
+                    console.log("12345 21 " + $(this).closest('tr').children()[21].textContent);
+                    console.log("12345 22 " + $(this).closest('tr').children()[22].textContent);
+                    console.log("12345 23 " + $(this).closest('tr').children()[23].textContent);
+                    console.log("12345 24 " + $(this).closest('tr').children()[24].textContent);
+                    console.log("12345 25 " + $(this).closest('tr').children()[25].textContent);
+                    console.log("12345 26 " + $(this).closest('tr').children()[26].textContent);
+                    console.log("12345 27 " + $(this).closest('tr').children()[27].textContent);
+                    console.log("12345 28 " + $(this).closest('tr').children()[28].textContent);
+                    console.log("12345 29 " + $(this).closest('tr').children()[29].textContent);
+                    console.log("12345 30 " + $(this).closest('tr').children()[30].textContent);
+
+                    console.log("12345 31 " + $(this).closest('tr').children()[31].textContent);
+                    console.log("12345 32 " + $(this).closest('tr').children()[32].textContent);
+                    console.log("12345 33 " + $(this).closest('tr').children()[33].textContent);
+                    console.log("12345 34 " + $(this).closest('tr').children()[34].textContent);
+                    console.log("12345 35 " + $(this).closest('tr').children()[35].textContent);
+                    console.log("12345 36 " + $(this).closest('tr').children()[36].textContent);
+                    console.log("12345 37 " + $(this).closest('tr').children()[37].textContent);
+                    console.log("12345 38 " + $(this).closest('tr').children()[38].textContent);
+                    console.log("12345 39 " + $(this).closest('tr').children()[39].textContent);
+                    console.log("12345 40 " + $(this).closest('tr').children()[40].textContent);
+
+
+                    console.log("12345 41 " + $(this).closest('tr').children()[41].textContent);
+                    console.log("12345 42 " + $(this).closest('tr').children()[42].textContent);
+                    console.log("12345 43 " + $(this).closest('tr').children()[43].textContent);
+                    console.log("12345 44 " + $(this).closest('tr').children()[44].textContent);
+                    console.log("12345 45 " + $(this).closest('tr').children()[45].textContent);
+                    console.log("12345 46 " + $(this).closest('tr').children()[46].textContent);
+                    console.log("12345 47 " + $(this).closest('tr').children()[47].textContent);
+                    console.log("12345 48 " + $(this).closest('tr').children()[48].textContent);
+                    console.log("12345 49 " + $(this).closest('tr').children()[49].textContent);
+                    console.log("12345 50 " + $(this).closest('tr').children()[50].textContent);
+
+                    console.log("12345 51 " + $(this).closest('tr').children()[51].textContent);
+                    console.log("12345 52 " + $(this).closest('tr').children()[52].textContent);
+                    console.log("12345 53 " + $(this).closest('tr').children()[53].textContent);
+                    console.log("12345 54 " + $(this).closest('tr').children()[54].textContent);
+                    console.log("12345 55 " + $(this).closest('tr').children()[55].textContent);
+                    console.log("12345 56 " + $(this).closest('tr').children()[56].textContent);
+                    console.log("12345 57 " + $(this).closest('tr').children()[57].textContent);
+                    console.log("12345 58 " + $(this).closest('tr').children()[58].textContent);
+                    console.log("12345 59 " + $(this).closest('tr').children()[59].textContent);
+                    console.log("12345 60 " + $(this).closest('tr').children()[60].textContent);
+
+                    console.log("12345 61 " + $(this).closest('tr').children()[61].textContent);
+                    console.log("12345 62 " + $(this).closest('tr').children()[62].textContent);
+                    console.log("12345 63 " + $(this).closest('tr').children()[63].textContent);
+                    console.log("12345 64 " + $(this).closest('tr').children()[64].textContent);
+                    console.log("12345 65 " + $(this).closest('tr').children()[65].textContent);
+                    console.log("12345 66 " + $(this).closest('tr').children()[66].textContent);
+                    console.log("12345 67 " + $(this).closest('tr').children()[67].textContent);
+                    console.log("12345 68 " + $(this).closest('tr').children()[68].textContent);
+                    console.log("12345 69 " + $(this).closest('tr').children()[69].textContent);
+                    console.log("12345 70 " + $(this).closest('tr').children()[70].textContent);
+
+
+
+
                 });
             });
         </script>
@@ -1497,6 +1579,8 @@
             .onlytableScroll{
                 overflow-x:scroll;
             }
+            
+
         </style>
 
         <script type="text/javascript">
@@ -1568,7 +1652,7 @@
                     </div>
                 </div> <!--container for welcome/logout-->
 
-                <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid" style="margin-bottom: 20px">
 
@@ -1591,9 +1675,8 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  style="background-color: #d9d1d1">
                             <ul class="nav navbar-nav nav-tabs two-lines" role="tablist">
-                                <!--<ul class="nav nav-tabs" role="tablist">-->
                                 <li role="tab" class="active"><a href="#Application" data-toggle="tab">Application Management</a></li>
-                                <li role="tab" ><a href="#User" data-toggle="tab">User management</a></li>
+                                <li role="tab" ><a href="#User" data-toggle="tab">User Management</a></li>
                                 <li role="tab" ><a href="#Contracts" data-toggle="tab">Contracts</a></li>
                                 <li role="tab" ><a href="#ExpertReader" data-toggle="tab">Expert Reader</a></li>
                                 <li role="tab" ><a href="#Library" data-toggle="tab">Library</a></li>
@@ -1609,80 +1692,79 @@
                                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
 
                                     <div class="table-responsive">
-                                        <table id="applications" class="table display table-striped table-bordered  dt-responsive nowrap" width="100%" cellspacing="0">
+                                        <table id="applications" class="table display table-striped table-bordered  dt-responsive " width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th class="details-control"></th>   
                                                     <!-- <th class="all">Application<br/>  Nr</th>
                                                      <th class="all">Application<br/>  Year</th>-->
-                                                    <th class="all">Reference<br/>  Nr</th>
+                                                    <th class="all">Reference<br/>  No</th>
                                                     <th class="all">Publisher</th>       
-
                                                     <!--<th class="all">PublisherID</th>-->
                                                     <!--<th class="all">userID</th>-->
-                                                    <th class="all">Agreement</th>
-                                                    <th class="all">Contract</th>
-                                                    <th class="all">Proposed<br/> Date of <br/> Publication</th>
-                                                    <th class="all">Proposed<br/> Print Run</th>
-                                                    <th class="all">Planned Page <br/>  Extent</th>
-                                                    <th class="all">Translator<br/> CV</th>
-                                                    <th class="all">Number<br/> Pages</th>
-                                                    <th class="all">Break-down of <br/> Translator fee</th>
-                                                    <th class="all">Translator  <br/> Fee</th>
-                                                    <th class="all">Notes</th>
+                                                    <th class="never">Agreement</th>
+                                                    <th class="never">Contract</th>
+                                                    <th class="never">Proposed<br/> Date of <br/> Publication</th>
+                                                    <th class="never">Proposed<br/> Print Run</th>
+                                                    <th class="never">Planned Page <br/>  Extent</th>
+                                                    <th class="never">Translator<br/> CV</th>
+                                                    <th class="never">Number<br/> Pages</th>
+                                                    <th class="never">Break-down of <br/> Translator fee</th>
+                                                    <th class="never">Translator  <br/> Fee</th>
+                                                    <th class="never">Notes</th>
                                                     <th class="all select-filter">Status</th>
-                                                    <th class="all">Copies <br/> Sent</th>
-                                                    <th class="all">Date Copies  <br/> Were Sent</th>
-                                                    <th class="all">Copies of  <br/> Translation Sample</th>
-                                                    <th class="all">T&C has been <br/> Accepted</th>
-                                                    <th class="all">Approved</th> 
-                                                    <th class="all">Genre</th>   
-                                                    <th class="all"></th>
-                                                    <th class="all">Expert Reader</th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>    
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>    
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>    
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>    
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>    
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>    
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
-                                                    <th class="all"></th>
+                                                    <th class="never">Copies <br/> Sent</th>
+                                                    <th class="never">Date Copies  <br/> Were Sent</th>
+                                                    <th class="never">Copies of  <br/> Translation Sample</th>
+                                                    <th class="never">T&C has been <br/> Accepted</th>
+                                                    <th class="never">Approved</th> 
+                                                    <th class="never">Genre</th>   
+                                                    <th class="never"></th>
+                                                    <th class="never">Expert Reader</th>
+                                                    <th class="all">Book title</th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="all">Author(s)</th>
+                                                    <th class="never"></th>
                                                 </tr>
                                             </thead>
 
@@ -1691,93 +1773,82 @@
                                                     <th class="details-control"></th>   
                                                     <!-- <th class="all">Application<br/>  Nr</th>
                                                      <th class="all">Application<br/>  Year</th>-->
-                                                    <th class="all">3 Reference<br/>  Nr</th>
-                                                    <th class="all">4 Publisher</th>              
-
+                                                    <th class="all">Reference<br/>  No</th>
+                                                    <th class="all">Publisher</th>       
                                                     <!--<th class="all">PublisherID</th>-->
                                                     <!--<th class="all">userID</th>-->
-                                                    <th class="all">5 Agreement</th>
-                                                    <th class="all">6 Contract</th>
-                                                    <th class="all">7<br/> Date of <br/> Publication</th>
-                                                    <th class="all">8<br/> Print Run</th>
-                                                    <th class="all">9 Page <br/>  Extent</th>
-                                                    <th class="all">10 <br/> Translator<br/> CV</th>
-                                                    <th class="all">11 Number<br/> Pages</th>
-                                                    <th class="all">12 Break-down of <br/> Translator fee</th>
-                                                    <th class="all">13 Translator  <br/> Fee</th>
-                                                    <th class="all">14 Notes</th>
-                                                    <th class="all select-filter">15 Status</th>
-                                                    <th class="all">16 <br/> Sent</th>
-                                                    <th class="all">17 Copies  <br/> Were Sent</th>
-                                                    <th class="all">18 of  <br/> Translation Sample</th>
-                                                    <th class="all">19 has been <br/> Accepted</th>
-                                                    <th class="all">20 Approved</th>
-                                                    <th class="all">21 Genre</th>    
-                                                    <th class="all">22 TranslatorName</th>
-                                                    <th class="all">23 expertReaderName</th>
-                                                    <th class="all">24 bookTitle</th>
-                                                    <th class="all">25 translatorTitles</th>
-                                                    <th class="all">26 Titles</th>
-                                                    <th class="all">27 translatorCVDocName</th>
-                                                    <th class="all">28 cover</th>
-                                                    <th class="all">29 sampleSentOut</th>
-                                                    <th class="all">30 sampleReturned</th>
-                                                    <th class="all">readerReport</th>
-                                                    <th class="all">expertReaderList</th>
-                                                    <th class="all">unassignedExpertReaderList</th>    
-                                                    <th class="all">idTranslator</th>
-                                                    <th class="all">originalDateOfPublication</th>
-                                                    <th class="all">originalLanguage</th>
-                                                    <th class="all">Page Extent <br/>(of the original)</th>
-                                                    <th class="all">countryOfPublication</th>    
-                                                    <th class="all">Foreign Publisher</th>
-                                                    <th class="all">foreignCountry</th>
-                                                    <th class="all">targetLanguage</th>
-                                                    <th class="all">?boardMeeting?</th>
-                                                    <th class="all">amountRequested</th>
-                                                    <th class="all">amountApproved</th>
-                                                    <th class="all">publisherInformedOfMeeting</th>
-                                                    <th class="all">?boardComments_Instructions?</th>
-                                                    <th class="all">contractSentToPublisher</th>
-                                                    <th class="all">acknowledgementApproved</th>
-                                                    <th class="all">datePublishedBooksReceived</th>    
-                                                    <th class="all">datePaymentMadeToPublisher</th>
-                                                    <th class="all">paymentReferenceNumber</th>
-                                                    <th class="all">Addendum</th>
-                                                    <th class="all">Addendum Name</th>
-                                                    <th class="all">Proof of Payment</th>    
-                                                    <th class="all">Proof of Payment Name</th>
-                                                    <th class="all">Bank Details</th>
-                                                    <th class="all">Bank Details Name</th>    
-                                                    <th class="all">SignedLIContract</th>
-                                                    <th class="all">SignedLIContractName</th>
-                                                    <th class="all">paymentStatus</th>
-                                                    <th class="all">previousGrantAid</th>
-                                                    <th class="all">62 - award</th>    
-                                                    <th class="all">63 - salesFigures</th>
-                                                    <th class="all">Original</th>
-                                                    <th class="all">OriginalName</th>                                                    
+                                                    <th class="never">Agreement</th>
+                                                    <th class="never">Contract</th>
+                                                    <th class="never">Proposed<br/> Date of <br/> Publication</th>
+                                                    <th class="never">Proposed<br/> Print Run</th>
+                                                    <th class="never">Planned Page <br/>  Extent</th>
+                                                    <th class="never">Translator<br/> CV</th>
+                                                    <th class="never">Number<br/> Pages</th>
+                                                    <th class="never">Break-down of <br/> Translator fee</th>
+                                                    <th class="never">Translator  <br/> Fee</th>
+                                                    <th class="never">Notes</th>
+                                                    <th class="all select-filter">Status</th>
+                                                    <th class="never">Copies <br/> Sent</th>
+                                                    <th class="never">Date Copies  <br/> Were Sent</th>
+                                                    <th class="never">Copies of  <br/> Translation Sample</th>
+                                                    <th class="never">T&C has been <br/> Accepted</th>
+                                                    <th class="never">Approved</th> 
+                                                    <th class="never">Genre</th>   
+                                                    <th class="never"></th>
+                                                    <th class="never">Expert Reader</th>
+                                                    <th class="all">Book title</th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>    
+                                                    <th class="never"></th>
+                                                    <th class="never"></th>
                                                     <th class="all">Author(s)</th>
-                                                    <th class="all">64 - dummy</th>
+                                                    <th class="never"></th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-
+                                                <!-- Main Grid -->  
                                             </tbody>
                                         </table>
                                     </div>                   
                                 </div> <!-- container-fluid -->  
 
-
-                                <!--userModal-->
-                                <!--                                <div id="applicationsModal" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-                                                                    <div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="applicationsModalLabel"  data-focus-on="input:first" style="display: none;">
-                                                                    <div class="modal-dialog" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header" style="background-color: #c3bcbc">
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                                <h4 class="modal-title" id="applicationsModalLabel">Applications</h4>
-                                                                            </div>-->
                                 <div class="modal fade" id="applicationsModal" data-modal-index="1">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -1926,7 +1997,7 @@
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">
-                                                                <label for="appDateOfPublicationOriginal" class="control-label pull-left">Date of Publication <br/>(of the original)</label>
+                                                                <label for="appDateOfPublicationOriginal" class="control-label pull-left">Year of publication <br/>(of the original)</label>
                                                                 <input id="appDateOfPublicationOriginal"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -1934,7 +2005,7 @@
                                                                        >
                                                             </div>
                                                             <div class="col-sm-4">
-                                                                <label for="appPageExtentOriginal" class="control-label pull-left">Page Extent <br/>(of the original)</label>
+                                                                <label for="appPageExtentOriginal" class="control-label pull-left">Page extent <br/>(of the original)</label>
                                                                 <input  id="appPageExtentOriginal" 
                                                                         name="appPageExtentOriginal" 
                                                                         type="text"                                                                
@@ -1947,7 +2018,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
                                                             <div class="col-sm-4">        
-                                                                <label for="appCountryOfPublication" class="control-label pull-left">Country of Publication <br/>(of the original)</label>
+                                                                <label for="appCountryOfPublication" class="control-label pull-left">Country of publication <br/>(of the original)</label>
                                                                 <input id="appCountryOfPublication"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -1979,8 +2050,8 @@
                                                         <!--third row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-3">
-                                                                <label for="appcopiesSent" class="control-label pull-left">Have copies been sent?</label>
+                                                            <div class="col-sm-4">
+                                                                <label for="appcopiesSent" class="control-label pull-left">Has copy been sent?</label>
                                                                 <input id="appcopiesSent"
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -1988,7 +2059,7 @@
                                                                        >
                                                             </div>
                                                             <div class="col-sm-4">
-                                                                <label for="appdateCopiesWereSent" class="control-label pull-left">Date copies were sent</label>
+                                                                <label for="appdateCopiesWereSent" class="control-label pull-left">Date copy was sent</label>
                                                                 <input id="appdateCopiesWereSent"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -2039,7 +2110,7 @@
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">
-                                                                <label for="appForeignPublisher" class="control-label pull-left">Foreign Publisher</label>
+                                                                <label for="appForeignPublisher" class="control-label pull-left">Target publisher</label>
                                                                 <input id="appForeignPublisher"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -2047,7 +2118,7 @@
                                                                        >
                                                             </div>
                                                             <div class="col-sm-4">
-                                                                <label for="appForeignCountry" class="control-label pull-left">Foreign Country </label>
+                                                                <label for="appForeignCountry" class="control-label pull-left">Target country </label>
                                                                 <input  id="appForeignCountry" 
                                                                         name="appForeignCountry" 
                                                                         type="text"                                                                
@@ -2056,7 +2127,7 @@
                                                             </div>
 
                                                             <div class="col-sm-4">        
-                                                                <label for="appTargetLanguage" class="control-label pull-left"> Target Language</label>
+                                                                <label for="appTargetLanguage" class="control-label pull-left"> Target language</label>
                                                                 <input id="appTargetLanguage"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -2085,14 +2156,10 @@
                                                             </div>
                                                         </div> <!--row-->
 
-                                                        <div id="testcontainer">
-
-                                                        </div>
-
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
                                                             <div class="col-sm-8">
-                                                                <label for="appfeePerPage" class="control-label pull-left">Break-down of translator fee:</label>
+                                                                <label for="appfeePerPage" class="control-label pull-left">Break-down of translator(s)'s fee</label>
                                                                 <!--<div class="input-group" style="margin-bottom: 40px">-->
                                                                 <textarea id="appfeePerPage"  class="form-control" name="appfeePerPage" style="height: 98px"></textarea>
                                                                 <!--</div>-->
@@ -2100,7 +2167,7 @@
 
 
                                                             <div class="col-sm-4">
-                                                                <label for="apptranslatorFee" class="control-label pull-left">Translator Fee</label>
+                                                                <label for="apptranslatorFee" class="control-label pull-left">Translator(s)'s fee</label>
                                                                 <div class="input-group" style="margin-bottom: 40px">                                                               
                                                                     <label class="input-group-addon" for="apptranslatorFee">                                                           
                                                                         <span class="glyphicon glyphicon-euro"></span>                                     
@@ -2114,7 +2181,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
                                                             <div class="col-sm-12">
-                                                                <label for="previousGrantAid" class="control-label pull-left"> Previous Grant Aid</label>
+                                                                <label for="previousGrantAid" class="control-label pull-left"> Previous grant aid</label>
                                                                 <textarea id="previousGrantAid" class="form-control" name="previousGrantAid" style="height: 183px" placeholder="author name, title, application year, amount awarded, etc " ></textarea>
                                                             </div>
 
@@ -2131,7 +2198,7 @@
 
                                                             <div class='col-sm-6'>
                                                                 <button class="btn btn-success btn-xs" style="margin-bottom: 20px;" onclick="getTodaysDate()" data-toggle="modal" data-target="#assignEReadermodal">
-                                                                    Assign Expert Reader to Reference Number
+                                                                    Assign expert reader to reference number
                                                                 </button>
                                                                 <!--<a class="btn" data-toggle="modal" href="#stack2">Launch modal</a>-->
                                                             </div>
@@ -2150,19 +2217,6 @@
                                                     <div class="tab-pane" id="page4">
 
                                                         <!--Board  Meeting-->
-
-                                                        <!--                                                  
-                                                        Let’s call this one ‘Board Meeting’. The tabs should be:
-                                                        1. Board Meeting
-                                                        2. Amount Requested 
-                                                        3. Fee Calculation (see below)
-                                                        4. Proposed Publication Date
-                                                        5. Planned Page Extent
-                                                        6. Planned Print Run
-                                                        7. Award (checkbox)
-                                                        8. Amount Approved 
-                                                        9. Publisher Informed of Outcome 
-                                                        10. Board Comments/Instructions-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px">   
 
@@ -2184,8 +2238,8 @@
                                                                 });
                                                             </script>
                                                             <div class="col-sm-4">
-                                                                <label for="directorChairDecision" class="control-label">Director/Chair Decision</label>
-                                                                <br/> <br/> 
+                                                                <label for="directorChairDecision" class="control-label">Director/Chair decision</label>
+                                                                <br/> 
                                                                 <input id="directorChairDecision"
                                                                        type="checkbox"                                
                                                                        class="form-control"                                
@@ -2197,7 +2251,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
 
                                                             <div class="col-sm-6">
-                                                                <strong class="pull-left">Amount Requested</strong> 
+                                                                <strong class="pull-left">Amount requested</strong> 
                                                                 <div class="input-group pull-left">
                                                                     <label class="input-group-addon" for="amountRequested">
                                                                         <span class="glyphicon glyphicon-euro"></span>                                     
@@ -2207,7 +2261,7 @@
                                                             </div>
 
                                                             <div class='col-sm-6'>
-                                                                <strong class="pull-left">Proposed  Publication Date &nbsp;&nbsp;&nbsp; </strong>
+                                                                <strong class="pull-left">Proposed  publication date &nbsp;&nbsp;&nbsp; </strong>
                                                                 <div class="input-group pull-left" >
                                                                     <input type="text" name="appproposedDateOfPublication" 
                                                                            id="appproposedDateOfPublication" 
@@ -2221,7 +2275,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
                                                             <div class="col-sm-3">        
-                                                                <label for="appplannedPageExtent" class="control-label pull-left">Planned Page<br/> Extend</label>
+                                                                <label for="appplannedPageExtent" class="control-label pull-left">Planned page<br/> extend</label>
                                                                 <input id="appplannedPageExtent"                                
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -2230,7 +2284,7 @@
                                                             </div>
 
                                                             <div class="col-sm-3">
-                                                                <label for="appproposedPrintRun" class="control-label pull-left">Proposed Print Run</label>
+                                                                <label for="appproposedPrintRun" class="control-label pull-left">Proposed print run</label>
                                                                 <input  id="appproposedPrintRun" 
                                                                         name="appproposedPrintRun" 
                                                                         type="text"                                                                
@@ -2239,8 +2293,8 @@
                                                             </div>
 
                                                             <div class="col-sm-4">
-                                                                <label for="award" class="control-label">Award &nbsp; &nbsp; &nbsp;</label>
-                                                                <br/> <br/> 
+                                                                <label for="award" class="control-label"> &nbsp;<br/>Award &nbsp; &nbsp; &nbsp;</label>
+                                                                <br/> 
                                                                 <input id="award"
                                                                        type="checkbox"                                
                                                                        class="form-control"                                
@@ -2254,7 +2308,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px">  
 
                                                             <div class="col-sm-6">
-                                                                <strong class="pull-left">Amount Approved</strong> 
+                                                                <strong class="pull-left">Amount approved</strong> 
                                                                 <div class="input-group pull-left">
                                                                     <label class="input-group-addon" for="amountApproved">
                                                                         <span class="glyphicon glyphicon-euro"></span>                                     
@@ -2272,8 +2326,7 @@
                                                                     </label>
                                                                 </div> 
                                                             </div>
-
-
+                                                            
                                                             <script>
                                                                 $("#datePublisherInformedOfMeeting").datepicker({
                                                                     showWeekDays: true,
@@ -2287,17 +2340,18 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
 
                                                             <div class="col-sm-12">
-                                                                <label for="commentsAboutMeeting" class="control-label pull-left">Board Comments/Instructions </label>
-                                                                <textarea id="commentsAboutMeeting" class="form-control" name="commentsAboutMeeting" style="height: 98px" placeholder="Refuse funding’,‘Award €1,000’, ‘Postpone to next round’, ‘Request revised sample"></textarea>
+                                                                <label for="commentsAboutMeeting" class="control-label pull-left">Board comments/instructions </label>
+                                                                <textarea id="commentsAboutMeeting" class="form-control" name="commentsAboutMeeting" style="height: 98px" placeholder="'Refuse funding’ , ‘Award €1,000’ , ‘Postpone to next round’ , ‘Request revised sample'"></textarea>
                                                             </div>
 
                                                             <div class="row"> 
-                                                                <div class="btn-group" style="margin-bottom: 20px;margin-top: 60px"> 
-                                                                    <button id="approve" type="button" class="btn btn-success">Approve</button>
-                                                                    <button  id="withdrawn" type="button" class="btn btn-warning">Withdrawn</button>
-                                                                    <button  id="reject" type="button" class="btn btn-danger">Reject</button>                                                        
+                                                                <div class='col-xs-12 button-wrapper' style="margin-bottom: 20px;margin-top: 60px"> 
+                                                                    <button class='btn btn-success'>Approve</button>
+                                                                    <button class='btn btn-warning'>Withdrawn</button>
+                                                                    <button class='btn btn-danger'>Reject</button>
                                                                 </div>
                                                             </div> <!--row-->
+                                                            
                                                         </div>
                                                     </div> <!--tab-pane" id="page 4" -->
 
@@ -2309,7 +2363,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-1"></div>
                                                             <div class="col-sm-8">        
-                                                                <label class="control-label">Book Cover</label>                                                               
+                                                                <label class="control-label">Book cover</label>                                                               
                                                                 <img id="cover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
                                                             </div>
 
@@ -2319,7 +2373,7 @@
 
 
                                                             <div class='col-sm-6'>
-                                                                <strong class=" pull-left">Contract Sent to Publisher</strong>
+                                                                <strong class=" pull-left">Contract sent to publisher</strong>
                                                                 <div class="input-group pull-left">
                                                                     <input type="text" name="dateContractSenttoPublisher" id="dateContractSenttoPublisher" class="form-control" placeholder="DD/MM/YYYY" />    
                                                                     <label class="input-group-addon" for="dateContractSenttoPublisher">
@@ -2337,7 +2391,7 @@
                                                             </script>
 
                                                             <div class='col-sm-6'>
-                                                                <strong class=" pull-left">Acknowledgement Approved</strong>
+                                                                <strong class=" pull-left">Acknowledgement approved</strong>
                                                                 <div class="input-group">
                                                                     <input type="text" name="dateILEAcknowledgementApproved" id="dateILEAcknowledgementApproved" class="form-control" placeholder="DD/MM/YYYY" />    
                                                                     <label class="input-group-addon" for="dateILEAcknowledgementApproved">
@@ -2359,7 +2413,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px"> 
 
                                                             <div class='col-sm-6'>
-                                                                <strong class=" pull-left"> Date Published Books Received</strong>
+                                                                <strong class=" pull-left"> Date published books received</strong>
                                                                 <div class="input-group">
                                                                     <input type="text" name="datePublishedBooksReceived" id="datePublishedBooksReceived" class="form-control" placeholder="DD/MM/YYYY" />    
                                                                     <label class="input-group-addon" for="datePublishedBooksReceived">
@@ -2399,7 +2453,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px"> 
 
                                                             <div class="col-sm-6">
-                                                                <label for="paymentReferenceNumber" class="control-label pull-left">Payment Reference Number</label>
+                                                                <label for="paymentReferenceNumber" class="control-label pull-left">Payment reference number</label>
                                                                 <input id="paymentReferenceNumber"
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -2441,7 +2495,6 @@
                                                                     Proof of payment <br/> to the translator</a>
                                                             </div>
 
-
                                                             <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
                                                                 <div class="col-sm-2">
                                                                     <input id="appBankDetailsForm"                                
@@ -2455,7 +2508,6 @@
                                                                     Completed bank <br/> details form</a>
                                                             </div>
 
-
                                                             <div style="margin-bottom: 20px;margin-top: 30px;">  
                                                                 <div class="col-sm-2">
                                                                     <input id="appSignedLIContract"                                
@@ -2464,7 +2516,7 @@
                                                                            >
                                                                 </div>
 
-                                                                <a class="btn btn-info" role="button" id="signedLIContract" >
+                                                                <a class="btn btn-info" role="button" id="signedLIContract">
                                                                     <span class="glyphicon glyphicon-file"></span>
                                                                     Signed Literature <br/> Ireland contract</a>
                                                             </div>
@@ -2474,7 +2526,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">  
 
                                                             <div class="form-group">
-                                                                <label for="paymentStatus" >Payment Status</label>
+                                                                <label for="paymentStatus" >Payment status</label>
                                                                 <div class="col-sm-12">
                                                                     <select class="selectpicker" id="paymentStatus">
                                                                         <option>Incomplete</option>
@@ -2493,12 +2545,14 @@
                                                                 <strong class="pull-left">&nbsp;</strong>                                                 
                                                                 <label class="btn btn-default pull-left" onclick = "pressCuttingsModal();">
                                                                     <img src="images/Press_Cutting.png" width="20" alt="Press_Cutting" /> 
-                                                                    Show Press cuttings                     
+                                                                    Show press coverage                     
                                                                 </label>
                                                             </div>
+                                                        </div> <!--row-->
 
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">  
                                                             <div class="col-sm-4">
-                                                                <label for="salesFigures" class="control-label pull-left">Sales Figures</label>
+                                                                <label for="salesFigures" class="control-label pull-left">Sales figures</label>
                                                                 <input id="salesFigures"
                                                                        type="text"                                
                                                                        class="form-control"                                
@@ -2507,6 +2561,24 @@
                                                                        title="Number of copies of the book that have been sold"
                                                                        >
                                                             </div>
+
+                                                            <div class='col-sm-4'>                                                       
+                                                                <label for="salesFigures" class="control-label pull-left">Date updated</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" name="dateUpdate" id="dateUpdate" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                    <label class="input-group-addon" for="dateUpdate">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </label>
+                                                                </div>   
+                                                            </div>
+
+                                                            <script>
+                                                                $("#dateUpdate").datepicker({
+                                                                    showWeekDays: true,
+                                                                    todayHighlight: true,
+                                                                    autoclose: true
+                                                                });
+                                                            </script>
                                                         </div> <!--row-->
                                                     </div> <!--page 5-->
                                                 </div> <!--tab content-->
@@ -2557,7 +2629,7 @@
                                             </tfoot>
 
                                             <tbody>
-
+                                                <!-- Main Grid -->   
                                             </tbody>
                                         </table>
                                     </div>             
@@ -2579,7 +2651,7 @@
 
                                                     <div class="row" style="margin-bottom: 5px;margin-top: 5px">
                                                         <div class="col-sm-4">
-                                                            <label for="userUname" class="control-label pull-left">Username:</label>
+                                                            <label for="userUname" class="control-label pull-left">Username</label>
                                                             <input  id="userUname" 
                                                                     type="text"                                                  
                                                                     class="form-control"    
@@ -2590,7 +2662,7 @@
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                         <div class="col-sm-4">
-                                                            <label for="userFirstName" class="control-label pull-left">First Name:</label>
+                                                            <label for="userFirstName" class="control-label pull-left">First name</label>
                                                             <input id="userFirstName"                                
                                                                    type="text"                                
                                                                    class="form-control"                                
@@ -2599,7 +2671,7 @@
                                                         </div>
 
                                                         <div class="col-sm-4">
-                                                            <label for="userLastName" class="control-label pull-left">Last Name:</label>
+                                                            <label for="userLastName" class="control-label pull-left">Last name</label>
                                                             <input id="userLastName"                                
                                                                    type="text"                                
                                                                    class="form-control"                                
@@ -2611,7 +2683,7 @@
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
                                                         <div class="col-sm-4">
-                                                            <label for="userFunction" class="control-label pull-left">Function: </label>
+                                                            <label for="userFunction" class="control-label pull-left">Function</label>
                                                             <input id="userFunction"                                
                                                                    type="text"                                
                                                                    class="form-control"                                
@@ -2620,7 +2692,7 @@
                                                         </div>
 
                                                         <div class="col-sm-4">
-                                                            <label for="userRole" class="control-label pull-left">Role:</label>
+                                                            <label for="userRole" class="control-label pull-left">Role</label>
                                                             <input id="userRole"                                
                                                                    type="text"                                
                                                                    class="form-control"                                
@@ -2657,7 +2729,7 @@
 
                                 <!--Contracts-->
                                 <div class="tab-pane fade" id="Contracts">
-                                    <h2>Contracts Content Goes Here</h2>
+                                    <h2>Contracts content goes here</h2>
 
                                 </div><!--Contracts-->
 
@@ -2686,7 +2758,7 @@
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
-
+                                                    <!-- Main Grid -->   
                                                 </tbody>
                                             </table>
                                         </div>             
@@ -2702,7 +2774,7 @@
 
                                                 <div class="modal-header" style="background-color: #c3bcbc">
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="expReaderModalLabel">Display Expert Readers</h4>
+                                                    <h4 class="modal-title" id="expReaderModalLabel">Display expert readers</h4>
                                                 </div>
 
                                                 <div class="modal-body" style="background-color: #d9d1d1">
@@ -2710,7 +2782,7 @@
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
                                                         <div class="col-sm-4">
-                                                            <label for="FirstNameExpReader" class="control-label pull-left">First Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                            <label for="FirstNameExpReader" class="control-label pull-left">First name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                             <input type="text" class="input-sm" id="FirstNameExpReader"/>
                                                         </div>
 
@@ -2726,14 +2798,14 @@
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                         <div class="col-sm-4">
-                                                            <label for="LastNameExpReader" class="control-label pull-left"> Last Name: </label>
+                                                            <label for="LastNameExpReader" class="control-label pull-left"> Last name</label>
                                                             <input type="text" class="input-sm" id="LastNameExpReader"/>
                                                         </div>
                                                     </div>
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                         <div class="col-sm-4">
-                                                            <label for="EmailExpReader" class="control-label pull-left">  Email: </label>
+                                                            <label for="EmailExpReader" class="control-label pull-left"> Email</label>
                                                             <input type="text" class="input-sm" id="EmailExpReader"/>
                                                         </div>
                                                     </div>
@@ -2771,15 +2843,12 @@
                                                         <th class="all">Reference <br/> Number</th>
                                                         <th class="all">Author(s)</th>
                                                         <th class="all">Title</th>
-                                                        <!-- <th class="all">Publisher</th>-->
                                                         <th class="all">Publisher <br/>Year</th>
                                                         <th class="all">Genre</th>
                                                         <th class="all">Translation<br/>Title</th>                                       
                                                         <th class="all">Translation<br/>Publisher Year</th>
                                                         <th class="all">Translator</th>
                                                         <th class="all">Language</th>
-                                                        <!--                                                        <th class="all">Physical<br/>Description</th>
-                                                                                                                <th class="all">Duplicates</th>-->
                                                         <th class="all">Copies</th>
                                                         <th class="all">Notes</th>
                                                         <th class="all">ISBN</th>
@@ -2796,15 +2865,12 @@
                                                         <th class="all">Reference <br/> Number</th>
                                                         <th class="all">Author(s)</th>
                                                         <th class="all">Title</th>
-                                                        <!--<th class="all">Publisher</th>-->
                                                         <th class="all">Publisher <br/>Year</th>
                                                         <th class="all">Genre</th>
                                                         <th class="all">Translation<br/>Title</th>                                       
                                                         <th class="all">Translation<br/>Publisher Year</th>
                                                         <th class="all">Translator</th>
                                                         <th class="all">Language</th>
-                                                        <!--                                                        <th class="all">Physical<br/>Description</th>
-                                                                                                                <th class="all">Duplicates</th>-->
                                                         <th class="all">Copies</th>
                                                         <th class="all">Notes</th>
                                                         <th class="all">ISBN</th>
@@ -2842,7 +2908,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-1"></div>
                                                             <div class="col-sm-8">        
-                                                                <label class="control-label">Book Cover</label>                                                               
+                                                                <label class="control-label">Book cover</label>                                                               
                                                                 <img id="bookCover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
                                                             </div>
 
@@ -2859,13 +2925,13 @@
                                                         </div>
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">
-                                                                <label class="pull-left" for="Title"> Title: </label>
+                                                                <label class="pull-left" for="Title"> Title</label>
                                                                 <p><input type="text" class="input-sm" id="Title"/></p>
                                                             </div>
                                                         </div>
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">
-                                                                <label class="pull-left"> Genre: </label>
+                                                                <label class="pull-left"> Genre</label>
                                                                 <p><input type="text" class="input-sm" id="Genre"/></p>
                                                             </div>
                                                         </div>
@@ -2898,7 +2964,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="editBooksModalLabel">Edit Books</h4>
+                                                        <h4 class="modal-title" id="editBooksModalLabel">Edit books</h4>
                                                     </div>
                                                     <div class="modal-body">
 
@@ -2906,7 +2972,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
                                                             <div class="col-sm-4">
-                                                                <label class="pull-left"> referenceNumber </label>
+                                                                <label class="pull-left"> Reference number </label>
                                                                 <p><input type="text" class="input-sm" id="referenceNumber2"/></p>
                                                             </div>
                                                         </div>
@@ -2921,13 +2987,13 @@
                                                         </div>
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">
-                                                                <label class="pull-left" for="Title2"> Title: </label>
+                                                                <label class="pull-left" for="Title2"> Title</label>
                                                                 <p><input type="text" class="input-sm" id="Title2"/></p>
                                                             </div>
                                                         </div>
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">
-                                                                <label class="pull-left"> Genre: </label>
+                                                                <label class="pull-left"> Genre</label>
                                                                 <p><input type="text" class="input-sm" id="Genre2"/></p>
                                                             </div>
                                                         </div>
@@ -2957,10 +3023,10 @@
 
                                 <!--Misc-->
                                 <div class="tab-pane fade" id="Genres">
-                                    <h2>Genre Content Goes Here</h2>
+                                    <h2>Genre content goes here</h2>
                                 </div>
                                 <div class="tab-pane fade" id="Queries">
-                                    <h2>Queries Go Here</h2>
+                                    <h2>Queries go here</h2>
                                 </div>
                             </div>
                         </div>
@@ -3006,7 +3072,7 @@
                         <input type="hidden" name="AssignExpertReader"  class="form-control" value="AssignExpertReader">
                         <div class="modal-header" style="background-color: #c3bcbc">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title">Assign Expert Reader to Reference Number</h4>
+                            <h4 class="modal-title">Assign expert reader to reference number</h4>
                         </div>
                         <div class="modal-body" style="background-color: #d9d1d1">
 
@@ -3053,7 +3119,7 @@
                             <input type="hidden" name="publisherID" value="${publisherID}">
                             <input type="hidden" name="Company" value="${companyDetails.Company}">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" >Assign Expert Reader</button>
+                            <button type="submit" class="btn btn-primary" >Assign expert reader</button>
                         </div>
                     </form>
                 </div><!-- /.modal-content -->
@@ -3065,13 +3131,13 @@
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #c3bcbc">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">List assigned Expert Reader</h4>
+                        <h4 class="modal-title">List assigned expert reader</h4>
                     </div>
                     <div class="modal-body" style="background-color: #d9d1d1">
                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
 
                             <div class='col-sm-6'>
-                                <strong class=" pull-left">Expert Reader</strong>
+                                <strong class=" pull-left">Expert reader</strong>
                                 <div class="input-group pull-left">
                                     <input type="text" name="appExpertReader" 
                                            id="appExpertReader" 
@@ -3127,7 +3193,7 @@
                             </div>
 
                             <div class="col-sm-10">
-                                <label for="readerReportSummary" class="control-label pull-left"> Reader’s Report Summary</label>
+                                <label for="readerReportSummary" class="control-label pull-left"> Reader’s report summary</label>
                                 <textarea id="readerReportSummary" 
                                           class="form-control"                                               
                                           name="readerReportSummary"    
@@ -3209,14 +3275,14 @@
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #c3bcbc">
                         <button type="button" class="close" data-dismiss="modal"  onclick="backToMisc();"  aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="pressCuttingsModalLabel">See Press Cuttings</h4>
+                        <h4 class="modal-title" id="pressCuttingsModalLabel">See press coverage</h4>
                     </div>
 
 
                     <div class="modal-body" style="background-color: #d9d1d1">
                         <div class="row" style="margin-bottom: 10px">
 
-                            <output id="result">Press Cuttings</output>
+                            <output id="result">Press coverage</output>
 
                         </div>
 
@@ -3230,7 +3296,7 @@
 
                     <div class="modal-footer"  style="background-color: #c3bcbc">                      
                         <label class="btn btn-default btn-file">
-                            Add Press Cuttings<input type="file" id="files" multiple  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
+                            Add press coverage<input type="file" id="files" multiple  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
                         </label>
                         <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToMisc();">Done</button>
                         <!--<button type="button" class="btn btn-primary">Save changes</button>-->
