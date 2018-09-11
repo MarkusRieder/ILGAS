@@ -37,7 +37,7 @@ public class openApplicationDAO {
         ArrayList<String> translatorList;// = new ArrayList<>();
 
         String searchQuery = "SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter + " ORDER BY ApplicationYear ";
-        System.out.println("parameter:  " + parameter);
+        System.out.println("SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = "  + parameter);
         try {
             //   add contact details 
             conn = DBConn.getConnection();
@@ -56,7 +56,7 @@ public class openApplicationDAO {
                         System.out.print(",  ");
                     }
                     String columnValue = res.getString(i);
-                    System.out.print(rsmd.getColumnName(i) + " :: " + columnValue);
+                    System.out.print("getAllApplications >> i: " + i + " " + rsmd.getColumnName(i) + " :: " + columnValue);
                 }
                 System.out.println("");
 
@@ -85,7 +85,13 @@ public class openApplicationDAO {
                 application.setTranslatorCVDocName(res.getString("translatorCVDocName"));
                 application.setBreakDownTranslatorFee(res.getString("breakDownTranslatorFee"));
                 application.setTranslatorFee(res.getBigDecimal("translatorFee"));
-                application.setNotes(res.getString("Notes"));
+                
+                String bNotes = getBookNotes(ReferenceNumber);
+                System.out.println("bNotes:  " + bNotes);                
+                application.setBookNotes(bNotes);
+           //     application.setTranslatorNotes("translatorNotes");
+           
+           
                 application.setCopiesSent(res.getInt("copiesSent"));
                 application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
                 application.setCopiesTranslationSample(res.getString("copiesTranslationSample"));
@@ -185,8 +191,6 @@ public class openApplicationDAO {
                 application.setStatus(res.getString("Status"));
 
                 listApplications.add(application);
-
-                System.out.println("Application dao listApplications: " + listApplications);
 
             }
 
@@ -702,6 +706,44 @@ public class openApplicationDAO {
         return publicationYear;
     }
 
+     @SuppressWarnings("unchecked")
+    public static String getBookNotes(String appRef) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        String bookNotes = "";
+
+        try {
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement("SELECT referenceNumber, Notes FROM library WHERE referenceNumber = ?");
+
+            ps.setString(1, appRef);
+
+            res = ps.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    bookNotes = res.getString(2);
+
+                }
+
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("12 Excepion while accessing database");
+        }
+
+        DBConn.close(conn, ps, res);
+         System.out.println("getBookNotes(String appRef)  "  + bookNotes + " referenceNumber " + appRef );
+        return bookNotes;
+    }
+    
     public static List<String> getUnassignedExpertReader() {
 
         Connection conn = null;

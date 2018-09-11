@@ -23,7 +23,7 @@
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
         <!--<link rel="stylesheet" type="text/css" href="css/font-awesome.css">-->
 
         <script src="js/jquery-1.11.3.min.js"></script>
@@ -37,20 +37,44 @@
 
         <!--<script src="js/bootstrap-select.min.js"></script>-->
 
+        <!--      <script>
+      
+                  function showtcACCEPTED(a)
+                  {
+                      if (a === true)
+                      {
+                          var s1 = document.getElementById("nxtBtn");
+                          s1.style.visibility = "visible";
+                      } else
+                      {
+                          var s1 = document.getElementById("nxtBtn");
+                          s1.style.visibility = "hidden";
+                      }
+                  }
+              </script>-->
+
+        <!--    
+        
+         Show continue button if TC and GDPR are both checked
+        
+        -->
+
         <script>
 
-            function showtcACCEPTED(a)
-            {
-                if (a === true)
-                {
-                    var s1 = document.getElementById("nxtBtn");
-                    s1.style.visibility = "visible";
-                } else
-                {
-                    var s1 = document.getElementById("nxtBtn");
-                    s1.style.visibility = "hidden";
-                }
-            }
+            $(function () {
+                $('input[type=checkbox].continueBtn').change(function () {
+
+                    if ($('input[type=checkbox].continueBtn:checked').size() > 1) {
+
+                        var s1 = document.getElementById("nxtBtn");
+                        s1.style.visibility = "visible";
+                    } else {
+
+                        var s1 = document.getElementById("nxtBtn");
+                        s1.style.visibility = "hidden";
+                    }
+                });
+            });
         </script>
 
         <style>
@@ -218,15 +242,47 @@
                                                        name="tcACCEPTED" 
                                                        id="tcACCEPTED" 
                                                        value="" 
-                                                       onclick="showtcACCEPTED(this.checked);"
-                                                       class="form-control">
+                                                       class="form-control continueBtn">
                                                 <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                            </label>                                                          
+                                            </label>   
+                                            <input type="hidden" name="TCACCEPTED" value=tcACCEPTED> 
+                                            <div style="margin-left: 40px; margin-top: 10px">   
+                                                <a data-target="#tcModal" data-toggle="modal" href="#tcModal">Read Terms and Conditions</a>                                            
+                                            </div>
                                         </div>
 
-                                        <div style="margin-left: 40px " >   
-                                            <a data-target="#tcModal" data-toggle="modal" href="#tcModal">Read Terms and Conditions</a>                                            
+                                        <p style="margin-bottom: 1px">
+                                            General Data Protection Regulation
+                                        </p>
+
+                                        <div class="checkbox">                                                             
+                                            <label style="margin-bottom: 10px; margin-left: 20px" for="gdprACCEPTED">
+                                                It is the responsibility of the applicant to ensure that they have obtained the necessary consent 
+                                                of the translator(s) for his/her/their personal data to be provided as part of this application 
+                                                #(in line with General Data Protection Regulation (EU) 2016/679). 
+                                                This data shall include but not necessarily be limited to the translator(s)’s name(s) and such personal data 
+                                                as is provided in the copy of the translator(s)’s CV/résumé (e.g. address, email address, telephone number, 
+                                                education, work experience). No personal data will be shared and the data shall be stored securely by 
+                                                Literature Ireland in line with the organisation’s Privacy Policy.
+                                            </label>
+                                            <label style="margin-bottom: 10px; margin-left: 20px" >
+                                                By checking this box, the applicant confirms that the consent of the translator(s) has been obtained 
+                                            </label>
+                                            <br/>
+                                            <label style="font-size: 2.0em; margin-left: 20px " class="checkbox-inline  no_indent">
+                                                <input type="checkbox" 
+                                                       name="gdprACCEPTED" 
+                                                       id="gdprACCEPTED" 
+                                                       value="" 
+                                                       class="form-control continueBtn">
+                                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                            </label>   
+                                            <input type="hidden" name="gdprACCEPTED" value="gdprACCEPTED"> 
+                                            <div style="margin-left: 40px; margin-top: 10px">   
+                                                <a target="_blank" href="http://www.literatureireland.com/privacy-policy/">Read Privacy Policy</a>                                          
+                                            </div>
                                         </div>
+
 
                                         <div class="form-group">
                                             <div class="col-xs-4">

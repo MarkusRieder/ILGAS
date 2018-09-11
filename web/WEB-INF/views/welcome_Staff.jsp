@@ -483,7 +483,7 @@
                     initComplete: function () {
                         this.api().columns('.select-filter').every(function () {
                             var column = this;
-                            var select = $('<select><option value=""></option></select>')
+                            var select = $('<select><option value="">Select status</option></select>')
                                     .appendTo($(column.footer()).empty())
                                     .on('change', function () {
                                         var val = $.fn.dataTable.util.escapeRegex(
@@ -570,11 +570,7 @@
                             "data": null,
                             "defaultContent": ""
                         },
-                        //                {"data": "ApplicationNumber"},
-                        //                {"data": "ApplicationYear"},
                         {"data": "ReferenceNumber"},
-                        //    {"data": "ReferenceNumber"},
-
                         {"data": "company"},
                         {"data": "agreement",
                             "render": function (data, type, row) {
@@ -660,7 +656,6 @@
                         {"data": "TranslatorName"},
                         {"data": "expertReaderName"},
                         {"data": "bookTitle"},
-                        //     {"data": "translatorTitles"},
                         {"data": "TranslatorTrack"},
                         {"data": "Titles"},
                         {"data": "translatorCVDocName"},
@@ -693,7 +688,6 @@
                             "render": function (data, type, row) {
                                 return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
-//                        {"data": "readerReportSummary"},
                         {"data": "expertReaderList"},
                         {"data": "unassignedExpertReaderList"},
                         {"data": "idTranslator"},
@@ -871,25 +865,10 @@
                                 }
                             }
                         },
-//                        {
-//                            targets: [7, 8],
-//                            render: function (data) {
-//                                return moment(data).format('MM DD, YYYY','DD/MM/YYYY');
-//                            }},
-
-
-//                        {
-//                            
-//                           targets: [5,6],
-//                           visible: false
-                        //},
                         {className: "dt-left", "targets": [2, 7, 8, 64]}
                     ]
 
                 });
-//                $("#applications tbody").off("click").on("click", 'tr td.details-control', function (e) {
-//                    alert("clicked");
-////                });
 
                 //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                 $('#additionalExpertReaderModal').empty(); // empty the div before fetching and adding new data
@@ -1100,7 +1079,6 @@
 
                             tableBody.appendChild(tr);
                         }
-
                     }
 
                     tble.appendChild(tableBody);
@@ -1767,7 +1745,6 @@
                                                     <th class="never"></th>
                                                 </tr>
                                             </thead>
-
                                             <tfoot>
                                                 <tr>
                                                     <th class="details-control"></th>   

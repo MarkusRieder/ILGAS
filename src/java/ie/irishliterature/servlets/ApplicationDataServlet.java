@@ -53,7 +53,7 @@ public class ApplicationDataServlet extends HttpServlet {
 
             listApplications = ApplicationDAO.getAllApplications();
             
-            System.out.println("ApplicationDataServlet listApplications: " + listApplications);
+    //        System.out.println("ApplicationDataServlet listApplications: " + listApplications);
 
         } catch (ClassNotFoundException | DBException ex) {
             Logger.getLogger(UserDataServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,7 +64,7 @@ public class ApplicationDataServlet extends HttpServlet {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(dta);
-        System.out.println("json:  " + json);
+     //   System.out.println("json:  " + json);
         out.print(json);
     }
 

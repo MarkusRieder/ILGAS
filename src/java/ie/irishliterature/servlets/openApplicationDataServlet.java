@@ -61,7 +61,7 @@ public class openApplicationDataServlet extends HttpServlet {
 
             listApplications = openApplicationDAO.getAllApplications(publisherID);
 
-            System.out.println("ApplicationDataServlet listApplications: " + listApplications + " publisherID  "  + publisherID);
+        //    System.out.println("ApplicationDataServlet listApplications: " + listApplications + " publisherID  "  + publisherID);
 
         } catch (ClassNotFoundException | DBException ex) {
             Logger.getLogger(UserDataServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,7 +72,7 @@ public class openApplicationDataServlet extends HttpServlet {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(dta);
-        System.out.println("json:  " + json);
+   //     System.out.println("json:  " + json);
         out.print(json);
     }
 

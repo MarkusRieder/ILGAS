@@ -1,5 +1,6 @@
 package ie.irishliterature.dao;
 
+import static ie.irishliterature.dao.openApplicationDAO.getBookNotes;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.GrantApplication;
@@ -442,7 +443,9 @@ public class ApplicationDAO1 {
                     application.setTranslatorCVDocName(res.getString("translatorCVDocName"));
                     application.setBreakDownTranslatorFee(res.getString("breakDownTranslatorFee"));
                     application.setTranslatorFee(res.getBigDecimal("translatorFee"));
-                    application.setNotes(res.getString("Notes"));
+                String Notes = getBookNotes(ReferenceNumber);
+                System.out.println("bNotes:  " + Notes);                
+                application.setBookNotes(Notes);
                     application.setCopiesSent(res.getInt("copiesSent"));
                     application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
                     application.setCopiesTranslationSample(res.getString("copiesTranslationSample"));

@@ -28,13 +28,13 @@ public class LoginServlet extends HttpServlet {
     private final LoginService service = new LoginService();
 
     // private LoginService userValidationService = new LoginService();
-    @Override
+    //@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 
-    @Override
+  //  @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 

@@ -443,7 +443,11 @@ public class ApplicationDAO {
                     application.setTranslatorCVDocName(res.getString("translatorCVDocName"));
                     application.setBreakDownTranslatorFee(res.getString("breakDownTranslatorFee"));
                     application.setTranslatorFee(res.getBigDecimal("translatorFee"));
-                    application.setNotes(res.getString("Notes"));
+                    
+                String Notes = getBookNotes(ReferenceNumber);
+                System.out.println("bNotes:  " + Notes);
+                
+                application.setBookNotes(res.getString("Notes"));
                     application.setCopiesSent(res.getInt("copiesSent"));
                     application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
                     application.setCopiesTranslationSample(res.getString("copiesTranslationSample"));
@@ -563,6 +567,45 @@ public class ApplicationDAO {
         return listApplications;
     }
 
+         @SuppressWarnings("unchecked")
+    public static String getBookNotes(String appRef) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        String bookNotes = "";
+
+        try {
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement("SELECT referenceNumber, Notes FROM library WHERE referenceNumber = ?");
+
+            ps.setString(1, appRef);
+
+            res = ps.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    bookNotes = res.getString(2);
+
+                }
+
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("12 Excepion while accessing database");
+        }
+
+        DBConn.close(conn, ps, res);
+         System.out.println("getBookNotes(String appRef)  "  + bookNotes + " referenceNumber " + appRef );
+        return bookNotes;
+    }
+    
+    
     @SuppressWarnings("unchecked")
     public static ArrayList<String> getPreviousGrantAid(String appRef) throws DBException {
         Connection conn = null;

@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-       <title>Translation Grant Application System</title>
+        <title>Translation Grant Application System</title>
 
         <!-- Bootstrap -->
 
@@ -304,8 +304,6 @@
 
                     <div class="container-fluid">
 
-
-
                         <div class="table-responsive">
                             <table id="jqueryDataTable" class="display jqueryDataTable table table-striped table-bordered  dt-responsive nowrap" width="100%" cellspacing="0">
                                 <thead>
@@ -360,7 +358,6 @@
                         </div>             
                     <c:if test="${not empty error}">Error: ${error}</c:if>
 
-
                     <!--<div class="modal-bootstrap fade bs-example-modal-sm" id="jqdtModal" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel" aria-hidden="true">-->
 
                     <!--<div id="jqdtModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="jqdtModalModalLabel" aria-hidden="true">-->
@@ -395,6 +392,7 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
+
                     <div id="base">  
 
                         <div class="basetext">  
@@ -413,14 +411,14 @@
                         </div>
 
                     </div><!-- end of Base div -->
+                    
+                </div>
+            </div><!-- end of container div -->
+            <div class="shadowbase"> </div>
+        </div><!-- end of Shadowholder container div -->
 
-                </div><!-- end of container div -->
-                <div class="shadowbase"> </div>
-            </div><!-- end of Shadowholder container div -->
-
-
-            <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                &copy; 2017 mgr Software
-            </div>
+        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+            &copy; 2017 mgr Software
+        </div>
     </body>
 </html>

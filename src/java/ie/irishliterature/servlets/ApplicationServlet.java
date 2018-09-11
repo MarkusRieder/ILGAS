@@ -24,7 +24,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "Application", urlPatterns = {"/Application"})
 public class ApplicationServlet extends HttpServlet {
 
-   
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -45,7 +44,7 @@ public class ApplicationServlet extends HttpServlet {
 //        if publisherID = null ==> have we been logged out???
         HttpSession session = request.getSession();
         int publisherID = (Integer) session.getAttribute("publisherID");
-        System.out.println("/Application  --->  publisherID "  + publisherID );
+        System.out.println("/Application  --->  publisherID " + publisherID);
         //  String publisherID = (String) Integer.toString(xxx);
         // String publisherID = (String) session.getAttribute("publisherID");
         //   String publisherID = (String) Integer.toString(xxx);
@@ -57,9 +56,31 @@ public class ApplicationServlet extends HttpServlet {
         request.setAttribute("task", task);
         request.setAttribute("publisherID", publisherID);
 
+        int tc_ACCEPTED = 0;
+        int gdpr_ACCEPTED = 0;
+
+        if (request.getParameter("tcACCEPTED") == null) {
+            System.out.println("doPost- tcACCEPTED not checked ");
+        } else {
+            System.out.println("doPost- tcACCEPTED IS checked ");
+            tc_ACCEPTED = 1;
+        }
+
+        if (request.getParameter("gdprACCEPTED") == null) {
+            System.out.println("doPost- gdprACCEPTED not checked ");
+        } else {
+            System.out.println("doPost- gdprACCEPTED IS checked ");
+            gdpr_ACCEPTED = 1;
+        }
+
+
+        System.out.println("doPost- TCACCEPTED   " + tc_ACCEPTED);
+        System.out.println("doPost - gdprACCEPTED " + gdpr_ACCEPTED);
+
         if (request.getParameter("New Application") != null) {
             task = "Start New Application";
             request.getSession().setAttribute("task", "Start New Application");
+
 //        } else if (request.getParameter("List New Applications") != null) {
 //            task = "List New Applications";
 //            request.getSession().setAttribute("task", "List New Applications");
@@ -88,12 +109,16 @@ public class ApplicationServlet extends HttpServlet {
 
             case "Start New Application": {
                 try {
-                    System.out.println("Start New Application - session.getAttribute" + session.getAttribute("publisherID"));
+
                     int ApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
                     //System.out.println("/Application::ApplicationNumber:  " + ApplicationNumber);
-
+                    //   request.getSession().setAttribute("TCACCEPTED", + tcACCEPTED);
+                    //     request.getSession().setAttribute("gdprACCEPTED", + gdprACCEPTED);
+                    System.out.println("Start New Application - TCACCEPTED " + tc_ACCEPTED + " gdprACCEPTED " + gdpr_ACCEPTED);
                     response.setContentType("text/html;charset=UTF-8");
                     request.setAttribute("ApplicationNumber", ApplicationNumber);
+//                    request.setAttribute("TCACCEPTED", tc_ACCEPTED);
+//                    request.setAttribute("gdprACCEPTED", gdpr_ACCEPTED);
 
                 } catch (DBException ex) {
                     Logger.getLogger(ApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,12 +131,16 @@ public class ApplicationServlet extends HttpServlet {
 
             case "NewApplicationTCconfirmed": {
                 try {
-                    System.out.println("Start New Application - session.getAttribute" + session.getAttribute("publisherID"));
+                    System.out.println("NewApplicationTCconfirmed - session.getAttribute" + session.getAttribute("publisherID"));
                     int ApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
-                    //System.out.println("/Application::ApplicationNumber:  " + ApplicationNumber);
 
+                    request.getSession().setAttribute("TCACCEPTED", tc_ACCEPTED);
+                    request.getSession().setAttribute("gdprACCEPTED", gdpr_ACCEPTED);
+                    System.out.println("TCACCEPTED " + tc_ACCEPTED + " gdprACCEPTED " + gdpr_ACCEPTED);
                     response.setContentType("text/html;charset=UTF-8");
                     request.setAttribute("ApplicationNumber", ApplicationNumber);
+                    request.setAttribute("TCACCEPTED", tc_ACCEPTED);
+                    request.setAttribute("gdprACCEPTED", gdpr_ACCEPTED);
 
                 } catch (DBException ex) {
                     Logger.getLogger(ApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);

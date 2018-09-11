@@ -7,6 +7,20 @@ import java.util.List;
 
 public class GrantApplication {
 
+    /**
+     * @return the bilingual_edition
+     */
+    public int getBilingual_edition() {
+        return bilingual_edition;
+    }
+
+    /**
+     * @param bilingual_edition the bilingual_edition to set
+     */
+    public void setBilingual_edition(int bilingual_edition) {
+        this.bilingual_edition = bilingual_edition;
+    }
+
     private int ApplicationNumber;
 
     private String ApplicationYear;
@@ -82,6 +96,8 @@ public class GrantApplication {
     private ArrayList<String> previousGrantAid;
     
     private int award;
+    
+    private int bilingual_edition;
 
     private int salesFigures;
 
@@ -103,7 +119,9 @@ public class GrantApplication {
 
     private BigDecimal translatorFee;
 
-    private String Notes;
+    private String bookNotes;
+    
+    private String translatorNotes;
 
     private String Status;
 
@@ -118,6 +136,8 @@ public class GrantApplication {
 
 //    General
     private int TC_ACCEPTED;
+    
+    private int gdprACCEPTED;
 
     private int APPROVED;
 
@@ -806,20 +826,6 @@ public class GrantApplication {
     }
 
     /**
-     * @return the Notes
-     */
-    public String getNotes() {
-        return Notes;
-    }
-
-    /**
-     * @param Notes the Notes to set
-     */
-    public void setNotes(String Notes) {
-        this.Notes = Notes;
-    }
-
-    /**
      * @return the Status
      */
     public String getStatus() {
@@ -1308,6 +1314,48 @@ public class GrantApplication {
      */
     public void setTranslationTitle(String translationTitle) {
         this.translationTitle = translationTitle;
+    }
+
+    /**
+     * @return the gdprACCEPTED
+     */
+    public int getGdprACCEPTED() {
+        return gdprACCEPTED;
+    }
+
+    /**
+     * @param gdprACCEPTED the gdprACCEPTED to set
+     */
+    public void setGdprACCEPTED(int gdprACCEPTED) {
+        this.gdprACCEPTED = gdprACCEPTED;
+    }
+
+    /**
+     * @return the bookNotes
+     */
+    public String getBookNotes() {
+        return bookNotes;
+    }
+
+    /**
+     * @param bookNotes the bookNotes to set
+     */
+    public void setBookNotes(String bookNotes) {
+        this.bookNotes = bookNotes;
+    }
+
+    /**
+     * @return the translatorNotes
+     */
+    public String getTranslatorNotes() {
+        return translatorNotes;
+    }
+
+    /**
+     * @param translatorNotes the translatorNotes to set
+     */
+    public void setTranslatorNotes(String translatorNotes) {
+        this.translatorNotes = translatorNotes;
     }
 
 }

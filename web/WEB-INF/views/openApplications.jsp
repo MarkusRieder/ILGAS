@@ -134,7 +134,7 @@
                 orientation: "bottom" // <-- and add this
             });
             PDFJS.workerSrc = 'js/pdf.worker.js';
-            localStorage.clear();
+      //      localStorage.clear();
 
             var i;
 
@@ -289,7 +289,16 @@
                                 return data;
                             }
                         },
-                        {"data": "Notes"},
+                        {"data": "bookNotes",
+                            "render": function (data) {
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+
+                                    return data;                            
+                                }
+                            }},
                         {"data": "Status"},
                         {"data": "copiesSent",
                             "render": function (data, type, row) {
@@ -394,7 +403,6 @@
                             }},
                         {"data": "originalPageExtent",
                             "render": function (data) {
-
                                 if (typeof (data) === "undefined") {
                                     return "n/a";
                                 } else
@@ -717,6 +725,8 @@
                     var addendumRightsAgreemnt = 'http://localhost' + rowdata.addendumRightsAgreement + '';
                     $("#appAddendumRightsAgreement").val(addendumRightsAgreemnt);
                     document.getElementById("addendum").href = addendumRightsAgreemnt;
+                    console.log("addendumRightsAgreemnt " + addendumRightsAgreemnt);
+                    
 
                     var proofOfPaymentToTrans = 'http://localhost' + rowdata.proofOfPaymentToTranslator + '';
                     $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
@@ -871,7 +881,7 @@
                     $("#appnumberOfPages").val($(this).closest('tr').children()[11].textContent);
                     $("#appfeePerPage").val($(this).closest('tr').children()[12].textContent);
                     $("#apptranslatorFee").val($(this).closest('tr').children()[13].textContent);
-                    $("#appNotes").val($(this).closest('tr').children()[14].textContent);
+                    $("#bookNotes").val($(this).closest('tr').children()[14].textContent);
                     $("#appStatus").val($(this).closest('tr').children()[15].textContent);
                     $("#appcopiesSent").val($(this).closest('tr').children()[16].textContent);
                     $("#appdateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
@@ -888,7 +898,7 @@
 
                     $("#appDateOfPublicationOriginal").val($(this).closest('tr').children()[35].textContent);
                     $("#appLanguageOriginal").val($(this).closest('tr').children()[36].textContent);
-                    $("#appPageExtentOriginal").val($(this).closest('tr').children()[37].textContent);
+                    $("#originalPageExtent").val($(this).closest('tr').children()[37].textContent);
                     $("#appCountryOfPublication").val($(this).closest('tr').children()[38].textContent);
                     $("#appForeignPublisher").val($(this).closest('tr').children()[39].textContent);
                     $("#appForeignCountry").val($(this).closest('tr').children()[40].textContent);
@@ -1765,12 +1775,12 @@
                                                                             <div class="row">
 
                                                                                 <div class='col-sm-6'  style="margin-bottom: 40px;">                                                
-                                                                                    <label for="pageExtentOfTheOriginal" class="control-label pull-left">Page extent of the <br/> (of the original): </label>
+                                                                                    <label for="originalPageExtent" class="control-label pull-left">Page extent of the <br/> (of the original): </label>
                                                                                     <div class="input-group pull-left"  style="margin-bottom: 40px;">
                                                                                         <span class="input-group-addon" id="sizing-addon3">  
                                                                                             <span class="glyphicon glyphicon-book"></span>                                                            
                                                                                         </span>
-                                                                                        <input type="text" name="pageExtentOfTheOriginal" id="pageExtentOfTheOriginal" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon3">
+                                                                                        <input type="text" name="originalPageExtent" id="originalPageExtent" class="form-control" placeholder="number of pages" aria-describedby="sizing-addon3">
                                                                                     </div>
                                                                                 </div>
                                                                             </div> <!--row-->
