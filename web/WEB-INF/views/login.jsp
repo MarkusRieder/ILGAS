@@ -246,7 +246,8 @@
                         <div class="panel panel-info" >
                             <div class="panel-heading">
                                 <div class="panel-title">Sign In</div>
-                                <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="forgotPassword.jsp">Forgot password ?</a></div>
+                                <div style="float:right; font-size: 80%; position: relative; top:-10px;"><a href="forgotPassword.jsp">Forgot password ?</a></div>
+                                <br/>    
                             </div>     
 
                             <div style="padding-top:30px" class="panel-body" >
@@ -255,23 +256,23 @@
 
                                 <form id="loginform" 
                                       class="form-horizontal" 
-                                      action="${pageContext.request.contextPath}/login.do" 
+                                      action="${pageContext.request.contextPath}/login" 
                                       method="POST"  
                                       role="form" 
                                       >
 
-                                    <div style="margin-bottom: 25px" class="input-group">
+                                    <div style="margin-bottom: 25px" class="input-group col-sm-9">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                         <input id="login-username" 
                                                type="text" 
                                                class="form-control" 
                                                name="username" 
                                                value="" 
-                                               placeholder="username"
+                                               placeholder="Enter your username"
                                                >   
                                     </div>
 
-                                    <div style="margin-bottom: 25px" class="input-group">
+                                    <div style="margin-bottom: 25px" class="input-group col-sm-9">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                                         <input id="lpassword" 
                                                type="password" 
@@ -279,7 +280,7 @@
                                                name="password" 
                                                data-toggle="password"  
                                                data-placement="after" 
-                                               placeholder="password"
+                                               placeholder="Enter your password"
                                                >
 
                                     </div>

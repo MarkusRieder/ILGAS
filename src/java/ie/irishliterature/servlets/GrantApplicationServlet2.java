@@ -249,6 +249,7 @@ public class GrantApplicationServlet2 extends HttpServlet {
 
         //String testingTheTask = request.getParameter("task");
         //    String TasktestingTheTask = request.getAttribute(task).toString();
+        System.out.println("GrantApplicationServlet 2:: ");
         System.out.println("HttpSession session :: sess: " + task);
 
         //System.out.println("testingTheTask:: 1 " + testingTheTask);
@@ -570,19 +571,15 @@ public class GrantApplicationServlet2 extends HttpServlet {
                             //////////////////////////////////////////////////////////////
                             //  Process Application Form file field (input type="file") //
                             //////////////////////////////////////////////////////////////
-                            
-                            
                             String fieldname = item.getFieldName();
                             String filename = FilenameUtils.getName(item.getName());
 //                            System.out.println("folderNames[" + idxFolderNames + "] " + folderNames[idxFolderNames] + " fieldname " + fieldname + " filename " + filename);
                             System.out.println("idxFolder" + idxFolderNames);
-                            System.out.println(" folderNames.length ------>  " +  folderNames.length);
-                           
-                            
-                            
-                            /* 
-                               Create path components to save the file
-                               temporary Directory = rootPath + Year + Publisher
+                            System.out.println(" folderNames.length ------>  " + folderNames.length);
+
+                            /*
+                             * Create path components to save the file
+                             * temporary Directory = rootPath + Year + Publisher
                              */
                             filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator + folderNames[idxFolderNames] + File.separator;
 
@@ -656,8 +653,6 @@ public class GrantApplicationServlet2 extends HttpServlet {
                     ////////////////////////////////////////////////////////////
                     //  Process Application
                     ////////////////////////////////////////////////////////////
-                    
-                    
                     GrantApplication application = new GrantApplication();
 
                     application.setApplicationYear(yearInString);
@@ -671,7 +666,7 @@ public class GrantApplicationServlet2 extends HttpServlet {
                     BigDecimal tf = new BigDecimal(translatorFee.replaceAll(",", ""));
                     application.setTranslatorFee(tf);
                     application.setTranslatorNotes(translatorNotes);
-                    application.setBookNotes(bookNotes);                    
+                    application.setBookNotes(bookNotes);
                     application.setCopiesSent(copiesSent);
                     application.setDateCopiesWereSent(convertDate(dateCopiesWereSent));
                     application.setTC_ACCEPTED(TC_ACCEPTED);
@@ -686,8 +681,8 @@ public class GrantApplicationServlet2 extends HttpServlet {
                     application.setTargetLanguage(targetLanguage);
                     application.setForeignCountry(countryOfPublication);
                     application.setForeignPublisher(foreignPublisher);
- //                   no originalDateOfPublication here
-                    application.setOriginalDateOfPublication(convertDate(originalDateOfPublication));
+                    //                   no originalDateOfPublication here
+//                    application.setOriginalDateOfPublication(convertDate(originalDateOfPublication));
 
                     try {
 
@@ -749,8 +744,6 @@ public class GrantApplicationServlet2 extends HttpServlet {
                 ////////////////////////////////////////////////////////////
                 //  Process Application Translators
                 ////////////////////////////////////////////////////////////
-                
-                
                 String[] processingTranslatorArray = new String[1];
                 System.out.println("translatorArray.length: " + translatorArray.length);
                 //convert processingArray to ArrayList Translator
@@ -770,8 +763,7 @@ public class GrantApplicationServlet2 extends HttpServlet {
                         int idTranslator = ifTranslatorExist(translatorName);
 
                         // insert them into the tables TranslatorTrack
-                        GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title);
-
+//                        GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title);
                         //reset index
                         //   idx = -1;
                     } catch (DBException ex) {
@@ -784,8 +776,6 @@ public class GrantApplicationServlet2 extends HttpServlet {
                 ////////////////////////////////////////////////////////////
                 //  Process Publisher
                 ////////////////////////////////////////////////////////////
-                
-                
                 Publisher publisher = new Publisher();
 
                 publisher.setCompany(company);
@@ -902,20 +892,22 @@ public class GrantApplicationServlet2 extends HttpServlet {
                 ////////////////////////////////////////////////////////////
                 //Update  GrantApplication to contain the filePaths
                 GrantApplication application = new GrantApplication();
-                /* 
-                folderNames = {
-                  1  "Agreement", 
-                  2  "Contract", 
-                  3  "Addendum", 
-                  4  "Translator_CV", 
-                  5  "Original", 
-                  6  "TranslationSample"};
+                /*
+                 * folderNames = {
+                 * 1 "Agreement",
+                 * 2 "Contract",
+                 * 3 "Addendum",
+                 * 4 "Translator_CV",
+                 * 5 "Original",
+                 * 6 "TranslationSample"};
                  */
 //Adjust
                 /*
-                fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setCover(fn);
-                application.setCoverName(justFiles[0]);
+                 * fn = fileNames[0].replace("/home/markus/public_html",
+                 * "/~markus");//replaces all occurrences of
+                 * "/home/markus","/~markus"
+                 * application.setCover(fn);
+                 * application.setCoverName(justFiles[0]);
                  */
 
                 fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
@@ -930,17 +922,23 @@ public class GrantApplicationServlet2 extends HttpServlet {
                 application.setAddendumRightsAgreement(fn);
                 application.setAddendumRightsAgreementName(justFiles[2]);
                 /*
-                fn = fileNames[4].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setProofOfPaymentToTranslator(fn);
-                application.setProofOfPaymentToTranslatorName(justFiles[4]);
-
-                fn = fileNames[5].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setBankDetailsForm(fn);
-                application.setBankDetailsFormName(justFiles[5]);
-
-                fn = fileNames[6].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setSignedLIContract(fn);
-                application.setSignedLIContractName(justFiles[6]);
+                 * fn = fileNames[4].replace("/home/markus/public_html",
+                 * "/~markus");//replaces all occurrences of
+                 * "/home/markus","/~markus"
+                 * application.setProofOfPaymentToTranslator(fn);
+                 * application.setProofOfPaymentToTranslatorName(justFiles[4]);
+                 *
+                 * fn = fileNames[5].replace("/home/markus/public_html",
+                 * "/~markus");//replaces all occurrences of
+                 * "/home/markus","/~markus"
+                 * application.setBankDetailsForm(fn);
+                 * application.setBankDetailsFormName(justFiles[5]);
+                 *
+                 * fn = fileNames[6].replace("/home/markus/public_html",
+                 * "/~markus");//replaces all occurrences of
+                 * "/home/markus","/~markus"
+                 * application.setSignedLIContract(fn);
+                 * application.setSignedLIContractName(justFiles[6]);
                  */
                 fn = fileNames[3].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
                 application.setTranslatorCV(fn);

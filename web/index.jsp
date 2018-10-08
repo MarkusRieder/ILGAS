@@ -245,7 +245,7 @@
 
                                 <form id="loginform" 
                                       class="form-horizontal" 
-                                      action="${pageContext.request.contextPath}/login.do" 
+                                      action="${pageContext.request.contextPath}/login" 
                                       method="POST"  
                                       role="form" 
                                       >

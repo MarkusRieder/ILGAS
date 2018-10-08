@@ -466,7 +466,8 @@ public class ApplicationDAO {
                     application.setBankDetailsFormName(res.getString("bankDetailsFormName"));
                     application.setSignedLIContract(res.getString("signedLIContract"));
                     application.setSignedLIContractName(res.getString("signedLIContractName"));
-                    application.setOriginalDateOfPublication(res.getDate("originalDateOfPublication"));
+              //      application.setOriginalDateOfPublication(res.getDate("originalDateOfPublication"));
+                     application.setPublicationYear(res.getString("publicationYear"));
                     application.setOriginalLanguage(res.getString("originalLanguage"));
                     application.setOriginalPageExtent(res.getInt("originalPageExtent"));
                     application.setCountryOfPublication(res.getString("countryOfPublication"));
@@ -490,7 +491,7 @@ public class ApplicationDAO {
                     translatorTrackId = getTranslatorTrackId(ReferenceNumber);
 
                     //    authorList = getAuthors(ReferenceNumber);
-                    System.out.println("translatorTrackId.size:  " + translatorTrackId.size());
+              //      System.out.println("translatorTrackId.size:  " + translatorTrackId.size());
 
                     ArrayList<ArrayList<String>> translatorList = new ArrayList<>();
 
@@ -543,11 +544,11 @@ public class ApplicationDAO {
                     application.setUnassignedExpertReaderList(unassignedExpertReaderList);
                     application.setTranslatorTitles(mixedList);
 
-                    System.out.println("==================================================================================>");
-                    System.out.println("ReferenceNumber   " + ReferenceNumber);
-                    System.out.println("mixedList         " + mixedList);
-                    System.out.println("titleList         " + titleList);
-                    System.out.println("<==================================================================================");
+//                    System.out.println("==================================================================================>");
+//                    System.out.println("ReferenceNumber   " + ReferenceNumber);
+//                    System.out.println("mixedList         " + mixedList);
+//                    System.out.println("titleList         " + titleList);
+//                    System.out.println("<==================================================================================");
 
                     application.setTitles(titleList);
                     application.setStatus(res.getString("Status"));
@@ -719,7 +720,7 @@ public class ApplicationDAO {
             ResultSetMetaData rsmd = res.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
 
-            System.out.println("columnsNumber:: " + columnsNumber + "\n ");
+     //       System.out.println("columnsNumber:: " + columnsNumber + "\n ");
 
             int idx = 0;
 
@@ -739,7 +740,7 @@ public class ApplicationDAO {
 
                     // testList = new ArrayList<>();
                     if (idx == 0) {
-                        System.out.println("Application dao getTranslatorTrack  idx: " + idx + " TranslatorName " + res.getString(1));
+             //           System.out.println("Application dao getTranslatorTrack  idx: " + idx + " TranslatorName " + res.getString(1));
                         translatorTracker.setTranslatorName(res.getString(1));
                         testList.add(res.getString(1));
 
@@ -747,14 +748,14 @@ public class ApplicationDAO {
                     }
 
                     idx++;
-                    System.out.println("Application dao getTranslatorTrack  idx: " + idx + " Author:  " + res.getString(2) + " title:  " + res.getString(3));
+            //        System.out.println("Application dao getTranslatorTrack  idx: " + idx + " Author:  " + res.getString(2) + " title:  " + res.getString(3));
 
                     ArrayList<String> auth = new ArrayList<>();
                     ArrayList<String> titles = new ArrayList<>();
                     String a = "";
                     String t = "";
 
-                    System.out.println("Application dao testlist: auth:: " + auth + "  : titles:: " + titles + "  String a:: " + auth + "  : String t:: " + t);
+              //      System.out.println("Application dao testlist: auth:: " + auth + "  : titles:: " + titles + "  String a:: " + auth + "  : String t:: " + t);
 
                     a = res.getString(2);
                     t = res.getString(3);
@@ -768,7 +769,7 @@ public class ApplicationDAO {
                     // testList.add(res.getString(2));
                     // testList.add(res.getString(3));
                     // System.out.println("Application dao titleList: " + titleList);
-                    System.out.println("Application dao testlist: ReturnList:: " + testList);
+        //getTranslatorTrack            System.out.println("Application dao testlist: ReturnList:: " + testList);
 
                     translatorTracker.setTitles(titleList);
 

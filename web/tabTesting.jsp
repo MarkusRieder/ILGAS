@@ -250,7 +250,7 @@ out.print("Hello User: You have entered the name: "+name);
                             <div class="tab-pane" id="red">
                                 <h1>Contact details</h1>
 
-                                <form id="Contactdetails" class="form-horizontal" action="${pageContext.request.contextPath}/login.do" method="POST"  role="form" >
+                                <form id="Contactdetails" class="form-horizontal" action="${pageContext.request.contextPath}/login" method="POST"  role="form" >
                                     <div class="col-md-9">
                                         <div style="margin-bottom: 25px" class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>

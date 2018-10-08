@@ -74,7 +74,7 @@
                 orientation: "bottom" // <-- and add this
             });
 
-            localStorage.clear();
+        //    localStorage.clear();
 
             PDFJS.workerSrc = 'js/pdf.worker.js';
         </script>
@@ -116,6 +116,7 @@
                     },
                     select: function (event, ui) { // What happens when an autocomplete result is selected
                         $("#publisher").val(ui.item.name);
+                        conslole.log("publisher :: ", ui.item.name);
                         $('#Company_Number').val(ui.item.id);
                         $('#Address1').val(ui.item.Address1);
                         $('#Address2').val(ui.item.Address2);
@@ -626,7 +627,7 @@
                 counter = 1;
                 $("#addElement").click(function (event) {
                     counter++;
-                    var $newDiv = $("<div class='input-group' style='mar gin-bottom :2px'>" + counter + ". Translator  </div>");
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counter + ". Translator  </div>");
                     var $newInput = $("<input placeholder='Translator Name' type='text'> ");
                     $newInput
                             .attr("name", "Name" + counter)
@@ -684,7 +685,7 @@
                     upload_number++;
                 }
 
-                $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
+                $('#bs-example-navbar-collapse-1 a[href="#Translator"]').tab('show');
                 var arrayLength = translatorArray.length;
                 for (var i = 0; i < arrayLength; i++) {
                 }
@@ -1101,7 +1102,7 @@
                                 <!--<li class="active"><a href="#info" data-toggle="tab">Info</a></li>-->
                                 <li class="active"><a href="#Contact" data-toggle="tab">Contact Details</a></li>
                                 <li><a href="#books" data-toggle="tab">Book<br/> Details</a></li>
-                                <li><a href="#Rights" data-toggle="tab">Rights<br/>  Agreement</a></li>
+                                <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/> & Contracts</a></li>
                                 <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
                                 <li><a href="#Translator" data-toggle="tab">Translator <br/> Details</a></li>
                                 <!--         <li><a href="#Misc" data-toggle="tab">Misc</a></li>    -->
@@ -1135,15 +1136,15 @@
                                         <!--get Company and Company_Number via autocomplete-->
                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                             <div class="col-sm-4">
-                                                <input  id="company" 
-                                                        name="company" 
+                                                <input  id="Company" 
+                                                        name="Company" 
                                                         type="text" 
-                                                        value="${publisherName}"
+                                                        value="${companyDetails.Company}"
                                                         data-toggle="tooltip"
                                                         title="Please Enter your Company's Name - if it does not show up please fill in the form"
                                                         class="form-control"
                                                         placeholder="Company Name"
-                                                        disabled
+                                                        
                                                         >
                                             </div>
 
@@ -1152,7 +1153,7 @@
                                                        type="text"                                
                                                        class="form-control"                                
                                                        name="Company_Number"                                
-                                                       value="${publisherID}"                                   
+                                                       value="${companyDetails.Company_Number}"                                   
                                                        placeholder="internal Company Number"
                                                        disabled
                                                        >

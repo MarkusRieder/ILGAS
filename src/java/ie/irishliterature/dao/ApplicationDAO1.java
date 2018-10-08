@@ -466,7 +466,7 @@ public class ApplicationDAO1 {
                     application.setBankDetailsFormName(res.getString("bankDetailsFormName"));
                     application.setSignedLIContract(res.getString("signedLIContract"));
                     application.setSignedLIContractName(res.getString("signedLIContractName"));
-                    application.setOriginalDateOfPublication(res.getDate("originalDateOfPublication"));
+//                    application.setOriginalDateOfPublication(res.getDate("originalDateOfPublication"));
                     application.setOriginalLanguage(res.getString("originalLanguage"));
                     application.setOriginalPageExtent(res.getInt("originalPageExtent"));
                     application.setCountryOfPublication(res.getString("countryOfPublication"));

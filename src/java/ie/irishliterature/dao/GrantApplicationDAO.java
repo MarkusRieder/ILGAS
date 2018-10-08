@@ -48,7 +48,7 @@ public class GrantApplicationDAO {
                     + "plannedPageExtent,\n"
                     + "translatorCV,\n"
                     + "translatorCVDocName,\n"
-//                    + "numberOfPages,\n"
+                    //                    + "numberOfPages,\n"
                     + "originalPageExtent,\n"
                     + "feePerPage,\n"
                     + "translatorFee,\n"
@@ -195,7 +195,7 @@ public class GrantApplicationDAO {
                     + "foreignPublisher,\n"
                     + "foreignCountry,\n"
                     + "targetLanguage,\n"
-         //           + "amountRequested,\n"
+                    //           + "amountRequested,\n"
                     + "paymentReferenceNumber,\n"
                     + "addendumRightsAgreement,\n"
                     + "addendumRightsAgreementName,\n"
@@ -210,7 +210,7 @@ public class GrantApplicationDAO {
                     + "created)  values  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             //                                              1                   2                   3                   4                   5                   6
             //                            1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0      
-                 //  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            //  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             //       (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?");"
             ps1.setString(1, ReferenceNumber);
             ps1.setString(2, yearInString);
@@ -238,7 +238,7 @@ public class GrantApplicationDAO {
             ps1.setString(24, application.getCopiesTranslationSample());
             ps1.setString(25, application.getCopiesTranslationSampleDocName());
             ps1.setInt(26, application.getTC_ACCEPTED());
-             ps1.setInt(27, application.getGdprACCEPTED());
+            ps1.setInt(27, application.getGdprACCEPTED());
             ps1.setInt(28, application.getAPPROVED());
             ps1.setString(29, application.getStatus());
             ps1.setString(30, application.getCover());
@@ -253,9 +253,8 @@ public class GrantApplicationDAO {
 
             //    System.out.println("getBoardMeeting:  " + application.getBoardMeeting());
             //  ps1.setDate(38, sqlDate(application.getBoardMeeting()));
-      //      ps1.setBigDecimal(37, application.getAmountRequested());
+            //      ps1.setBigDecimal(37, application.getAmountRequested());
             //      ps1.setBigDecimal(39, application.getAmountApproved());
-
             //        System.out.println("getPublisherInformedOfMeeting:  " + application.getPublisherInformedOfMeeting());
             //        ps1.setDate(41, sqlDate(application.getPublisherInformedOfMeeting()));
             //     ps1.setString(39, application.getBoardComments_Instructions());
@@ -277,7 +276,6 @@ public class GrantApplicationDAO {
             ps1.setInt(47, application.getAward());
             ps1.setInt(48, application.getSalesFigures());
             ps1.setTimestamp(49, getCurrentTimeStamp());
-           
 
             System.out.println("ps1:  1: " + ps1);
             ps1.executeUpdate();
@@ -314,38 +312,34 @@ public class GrantApplicationDAO {
         int id = 0;
         int idAuthor = 0;
         ResultSet res = null;
-        
-        System.out.println("insertAuthors --------------->>  ReferenceNumber " + ReferenceNumber + " Name " + Name +  " FirstName  " + FirstName + " LastName " +  LastName);
-      
+
+        System.out.println("insertAuthors --------------->>  ReferenceNumber " + ReferenceNumber + " Name " + Name + " FirstName  " + FirstName + " LastName " + LastName);
+
         try {
 
             /*
-                check if Author exists
-            */
-            
+             * check if Author exists
+             */
             idAuthor = ifAuthorExist(Name);
 
             /*
-                if not insert the new Author
-            */
-            
+             * if not insert the new Author
+             */
             if (idAuthor == 0) {
-                
+
                 /*
-                    Name, FirstName, LastName
-                */
-                
+                 * Name, FirstName, LastName
+                 */
                 idAuthor = insertNewAuthor(ReferenceNumber, Name, FirstName, LastName);
 
                 System.out.println(">>>>>>>>>>>>. Author: " + Name + " idAuthor: " + idAuthor);
 
             }
-            
-            /* 
-                then:
-                got idAuthor now insert into Application_Author         
-            */
-            
+
+            /*
+             * then:
+             * got idAuthor now insert into Application_Author
+             */
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
 
@@ -376,7 +370,7 @@ public class GrantApplicationDAO {
 
             DBConn.close(conn, ps1, ps2, res);
         } catch (ClassNotFoundException | SQLException e) {
-            
+
             LOGGER.debug(e.getMessage());
             DBConn.close(conn, ps1, ps2, res);
             throw new DBException("4 Excepion while accessing database");
@@ -385,7 +379,7 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    public static int insertTranslators(String ReferenceNumber, String Name, String Title) throws DBException {
+    public static int insertTranslators(String ReferenceNumber, String Name, String Title, String moveFile, String moveFileName, String copiesTranslationSample, String copiesTranslationSampleDocName) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -418,16 +412,27 @@ public class GrantApplicationDAO {
             System.out.println("ReferenceNumber: " + ReferenceNumber);
             System.out.println("translatorName: " + Name);
             System.out.println("Title: " + Title);
+            System.out.println("moveFile: " + moveFile);
+            System.out.println("moveFileName: " + moveFileName);
+            System.out.println("copiesTranslationSample: " + copiesTranslationSample);
+            System.out.println("copiesTranslationSampleDocName: " + copiesTranslationSampleDocName);
 
             ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
                     + "(idTranslator,\n"
                     + "Title,\n"
-                    + "ReferenceNumber) values (?,?,?)");
+                    + "ReferenceNumber,\n"
+                    + "translatorCV,\n"
+                    + "translatorCVDocName,\n"
+                    + "copiesTranslationSample,\n"
+                    + "copiesTranslationSampleDocName) values (?,?,?,?,?,?,?)");
 
             ps1.setInt(1, idTranslator);
             ps1.setString(2, Title);
             ps1.setString(3, ReferenceNumber);
-
+            ps1.setString(4, moveFile);
+            ps1.setString(5, moveFileName);
+            ps1.setString(6, copiesTranslationSample);
+            ps1.setString(7, copiesTranslationSampleDocName);
             ps1.executeUpdate();
 
             ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
@@ -560,7 +565,8 @@ public class GrantApplicationDAO {
             ps1.setString(28, application.getStatus());
             ps1.setString(29, application.getCover());
             ps1.setString(30, application.getCoverName());
-            ps1.setDate(31, sqlDate(application.getOriginalDateOfPublication()));
+//            ps1.setDate(31, sqlDate(application.getOriginalDateOfPublication()));
+            ps1.setString(31, (application.getPublicationYear()));
             ps1.setString(32, application.getOriginalLanguage());
             ps1.setInt(33, application.getOriginalPageExtent());
             ps1.setString(34, application.getCountryOfPublication());
@@ -853,7 +859,8 @@ public class GrantApplicationDAO {
 //                application.setApplicationYear(res.getString(27));
                 application.setCover(res.getString(29));
                 application.setCoverName(res.getString(30));
-                application.setOriginalDateOfPublication(res.getDate(31));
+//                application.setOriginalDateOfPublication(res.getDate(31));
+                application.setPublicationYear(res.getString(31));
                 application.setOriginalLanguage(res.getString(32));
                 application.setOriginalPageExtent(res.getInt(33));
                 application.setCountryOfPublication(res.getString(34));
@@ -983,8 +990,10 @@ public class GrantApplicationDAO {
             throw new DBException("getNextApplicationNumber :: Exception while accessing database");
         }
 
-        if(nextApplicationNumber == 0){nextApplicationNumber++;}
-        
+        if (nextApplicationNumber == 0) {
+            nextApplicationNumber++;
+        }
+
         return nextApplicationNumber;
     }
 
@@ -1199,7 +1208,7 @@ public class GrantApplicationDAO {
     }
 
     public static int insertLanguages_Library(int idLanguages, String lang, int bookID, String ReferenceNumber) throws DBException {
-System.out.println("GrantApplicationDAO.insertLanguages_Library(  " + idLanguages + " languages " + lang + " bookID " +bookID + " ReferenceNumber " + ReferenceNumber);
+        System.out.println("GrantApplicationDAO.insertLanguages_Library(  " + idLanguages + " languages " + lang + " bookID " + bookID + " ReferenceNumber " + ReferenceNumber);
         Connection conn = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;

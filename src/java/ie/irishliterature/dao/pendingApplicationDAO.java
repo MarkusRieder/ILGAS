@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
-public class openApplicationDAO {
+public class pendingApplicationDAO {
     
-    private static final Logger LOGGER = Logger.getLogger(openApplicationDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(pendingApplicationDAO.class.getName());
     private static String translatorName;
     private static String AuthorName = "";
     private static ArrayList titleList = new ArrayList<>();
@@ -42,8 +42,8 @@ public class openApplicationDAO {
 //        
 //        [TranslatorName1, TranslatorCVName,TranslatorCV]
 
-        String searchQuery = "SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter + " ORDER BY ApplicationYear ";
-        System.out.println("SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter);
+        String searchQuery = "SELECT * FROM GrantApplication WHERE Status = 'pending' AND publisherID = " + parameter + " ORDER BY ApplicationYear ";
+        System.out.println("SELECT * FROM GrantApplication WHERE Status = 'pending' AND publisherID = " + parameter);
 
 //        
 //        SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter
@@ -549,7 +549,7 @@ System.out.println("translatorList1 " + translatorList1);
             }
             
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pendingApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         DBConn.close(conn, ps, res);
@@ -599,7 +599,7 @@ System.out.println("translatorList1 " + translatorList1);
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pendingApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         DBConn.close(conn, ps, res);
@@ -641,7 +641,7 @@ System.out.println("translatorList1 " + translatorList1);
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pendingApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         DBConn.close(conn, ps, res);
@@ -682,7 +682,7 @@ System.out.println("translatorList1 " + translatorList1);
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pendingApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         DBConn.close(conn, ps, res);
@@ -725,7 +725,7 @@ System.out.println("translatorList1 " + translatorList1);
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pendingApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         DBConn.close(conn, ps, res);
@@ -779,7 +779,7 @@ System.out.println("translatorList1 " + translatorList1);
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pendingApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         DBConn.close(conn, ps, res);
@@ -901,7 +901,7 @@ System.out.println("translatorList1 " + translatorList1);
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pendingApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         DBConn.close(conn, ps, res);

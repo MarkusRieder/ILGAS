@@ -1,6 +1,6 @@
 <%-- 
-    Document   : openApplications
-    Created on : 07-Ma7-2017, 23:27:58
+    Document   : pendingApplications
+    Created on : 07-March-2017, 23:27:58
     Author     : markus
 --%>
 
@@ -138,7 +138,7 @@
 
             var i;
 
-            console.log("local storage - openApplication.jsp");
+            console.log("local storage - pendingApplications.jsp");
             for (i = 0; i < localStorage.length; i++) {
                 console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
             }
@@ -236,7 +236,7 @@
                     "bProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>',
                     //  "bProcessing":  "<img src='/images/progress.gif'>",
                     "bServerSide": false,
-                    "sAjaxSource": "./openApplicationDataServlet",
+                    "sAjaxSource": "./pendingApplicationDataServlet",
                     "columns": [
                         {
                             "targets": 0,
@@ -1401,8 +1401,12 @@
                                                 </ul>
                                             </div><!-- /.navbar-collapse -->
 
-                                            <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/GrantApplicationServlet" enctype="multipart/form-data">
-                                            <%request.getSession().setAttribute("task", "openApplications");%>
+                                            <form  method="POST" 
+                                                   id="applicationEditForm" 
+                                                   name="applicationForm" 
+                                                   action="${pageContext.request.contextPath}/GrantApplicationServlet" 
+                                            enctype="multipart/form-data">
+                                            <%request.getSession().setAttribute("task", "Pending Applications");%>
                                             <div id="applicationEditForm-tab-content" class="tab-content"  style="background-color: #E8F6FF">
 
 
@@ -2541,11 +2545,11 @@
                             New Application
                         </button>
 
-                        <button type = "submit" class = "btn btn-default btn-sm active"  name="List Open Applications">
+                        <button type = "submit" class = "btn btn-default btn-sm"  name="List Open Applications">
                             List Open Applications
                         </button>
 
-                        <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
+                        <button type = "submit" class = "btn btn-default btn-sm active" name="List Pending Applications">
                             List Pending Applications
                         </button>
 

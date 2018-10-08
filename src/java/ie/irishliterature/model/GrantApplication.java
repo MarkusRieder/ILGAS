@@ -47,7 +47,10 @@ public class GrantApplication {
 //    Publication Details
     private Date proposedDateOfPublication;
 
-    private Date originalDateOfPublication;
+//    private Date originalDateOfPublication;
+    
+    private String publicationYear;
+
 
     private int originalPageExtent;
 
@@ -172,8 +175,6 @@ public class GrantApplication {
     private String Languages;
     
     private String Series;
-    
-    private String publicationYear;
 
     private String expertReaderName;
 
@@ -188,6 +189,8 @@ public class GrantApplication {
     private List<String[]> expertReaderList;
 
     private List<String> unassignedExpertReaderList;
+    
+    private List<List<String>> transList;    
 
     private java.sql.Timestamp LASTUPDATED;
 
@@ -360,20 +363,6 @@ public class GrantApplication {
      */
     public void setProposedDateOfPublication(Date proposedDateOfPublication) {
         this.proposedDateOfPublication = proposedDateOfPublication;
-    }
-
-    /**
-     * @return the originalDateOfPublication
-     */
-    public Date getOriginalDateOfPublication() {
-        return originalDateOfPublication;
-    }
-
-    /**
-     * @param originalDateOfPublication the originalDateOfPublication to set
-     */
-    public void setOriginalDateOfPublication(Date originalDateOfPublication) {
-        this.originalDateOfPublication = originalDateOfPublication;
     }
 
     /**
@@ -1356,6 +1345,20 @@ public class GrantApplication {
      */
     public void setTranslatorNotes(String translatorNotes) {
         this.translatorNotes = translatorNotes;
+    }
+
+    /**
+     * @return the transList
+     */
+    public List<List<String>>getTransList() {
+        return transList;
+    }
+
+    /**
+     * @param transList the transList to set
+     */
+    public void setTransList(List<List<String>> transList) {
+        this.transList = transList;
     }
 
 }

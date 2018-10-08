@@ -146,7 +146,7 @@ public class GrantApplicationServlet extends HttpServlet {
 
     private String Publisher;
 
-    private String Publisheryear;
+    private String publicationYear;
 
     private String Genre;
 
@@ -230,6 +230,7 @@ public class GrantApplicationServlet extends HttpServlet {
     private String Press_cuttings;  //  boolean
     private String Sales_figures;
     private String Anthology; //Array of Author/Title
+    private String message = "";
 
     @Override
     public void init() {
@@ -256,12 +257,13 @@ public class GrantApplicationServlet extends HttpServlet {
 
         //String testingTheTask = request.getParameter("task");
         //    String TasktestingTheTask = request.getAttribute(task).toString();
+        System.out.println("GrantApplicationServlet :: ");
         System.out.println("HttpSession session :: sess: " + task);
 
         //System.out.println("testingTheTask:: 1 " + testingTheTask);
         switch (task) {
             case "Start New Application":
-
+                System.out.println("Start New Application :: ");
                 //set Status
                 Status = "open";
                 int translatorArrayLength = 0;
@@ -274,78 +276,74 @@ public class GrantApplicationServlet extends HttpServlet {
                 int year = now.get(Calendar.YEAR);
                 String yearInString = String.valueOf(year);
                 String fn;
-                String message = "";
+
                 int idxFolderNames = 0;
                 java.sql.Timestamp timestamp = getcurrentTimeStamp();
 
                 String[] fileNames = new String[6];
-                String[] justFiles = new String[6];
-            
+                //   String[] justFiles = new String[6];
+                List<String> filesToBeMoved = new ArrayList<>();
+                List<String> fileDir = new ArrayList<>();
+                List<String> listCopiesTranslationSample = new ArrayList<>();
+
+                int counter = 0;
+
                 String[] folderNames = {
                     "Agreement",
                     "Contract",
                     "Addendum",
                     "Translator_CV",
                     "Original",
-                    "TranslationSample"};
+                    "TranslationSample"
+                };
 
                 try {
 
                     /*
-                        Check that we have a file upload request
-                    */
-                    
+                     * Check that we have a file upload request
+                     */
                     isMultipart = ServletFileUpload.isMultipartContent(request);
                     System.out.println("isMultipart:: " + isMultipart);
                     response.setContentType("text/html;charset=UTF-8");
 
                     DiskFileItemFactory factory = new DiskFileItemFactory();
-                    
+
                     /*
-                        maximum size that will be stored in memory
-                    */
-                    
+                     * maximum size that will be stored in memory
+                     */
                     factory.setSizeThreshold(maxMemSize);
-                    
+
                     /*
-                        Location to save data that is larger than maxMemSize.
-                    */
-                    
+                     * Location to save data that is larger than maxMemSize.
+                     */
                     factory.setRepository(new File(tempPath));
 
                     /*
-                        Create a new file upload handler
-                    */
-                    
+                     * Create a new file upload handler
+                     */
                     ServletFileUpload upload = new ServletFileUpload(factory);
                     /*
-                        maximum file size to be uploaded.
-                    */                    
+                     * maximum file size to be uploaded.
+                     */
                     //  upload.setSizeMax(maxFileSize);
 
                     /*
-                        Parse the request to get file items.
-                    */
-                    
-                    List<FileItem> items = null;
-                    try {
-                        items = upload.parseRequest(request);
-                    } catch (FileUploadException ex) {
-                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                     * Parse the request to get file items.
+                     */
+                    List<FileItem> items = upload.parseRequest(request);
 
                     for (FileItem item : items) {
                         if (item.isFormField()) {
 
                             /*
-                                Process regular form field (input type="text|radio|checkbox|etc", select, etc).
-                                collect all data input from input fileds
-                            */
-                            
+                             * Process regular form field (input
+                             * type="text|radio|checkbox|etc", select, etc).
+                             * collect all data input from input fileds
+                             */
                             String fieldname = item.getFieldName();
                             String fieldvalue = item.getString();
-                            System.out.println("fieldname :: " + fieldname + " fieldvalue " + fieldvalue);
 
+                            //   System.out.println(fieldname + " >> " + fieldvalue);
                             switch (fieldname) {
                                 case "Company":
                                     company = fieldvalue;
@@ -434,7 +432,7 @@ public class GrantApplicationServlet extends HttpServlet {
                                     break;
                                 case "translatorName":
                                     translatorName = fieldvalue;
-                                    System.out.println("translatorName GrantApplicationServlet:: " + translatorName);
+                                    //                 System.out.println("translatorName:: " + translatorName);
                                     break;
                                 case "translatorFee":
                                     translatorFee = fieldvalue;
@@ -463,7 +461,7 @@ public class GrantApplicationServlet extends HttpServlet {
                                     break;
                                 case "gdprACCEPTED":
                                     gdprACCEPTED = fieldvalue;
-                                    System.out.println(" gdprACCEPTED  " + gdprACCEPTED);
+                                    //          System.out.println(" gdprACCEPTED  " + gdprACCEPTED);
                                     if ("ticked".equals(gdprACCEPTED)) {
                                         gdpr_ACCEPTED = 1;
                                     } else {
@@ -496,18 +494,18 @@ public class GrantApplicationServlet extends HttpServlet {
                                     break;
                                 case "authorArray":
                                     authorArray = fieldvalue.split(","); //split string by ,
-                                    System.out.println("authorArraylength  GrantApplicationServlet:: " + authorArray.length);
+                                    //                System.out.println("authorArraylength  GrantApplicationServlet:: " + authorArray.length);
                                     for (String individualValue : authorArray) {
-                                        System.out.println("authorArray  GrantApplicationServlet:: " + individualValue);
+                                        //                    System.out.println("authorArray  GrantApplicationServlet:: " + individualValue);
                                     }
                                     break;
                                 case "AuthorFirstName":
                                     AuthorFirstName = fieldvalue;
-                                    System.out.println("AuthorFirstName GrantApplicationServlet:: " + AuthorFirstName);
+                                    //                 System.out.println("AuthorFirstName GrantApplicationServlet:: " + AuthorFirstName);
                                     break;
                                 case "AuthorLastName":
                                     AuthorLastName = fieldvalue;
-                                    System.out.println("AuthorLastName GrantApplicationServlet:: " + AuthorLastName);
+                                    //              System.out.println("AuthorLastName GrantApplicationServlet:: " + AuthorLastName);
                                     break;
                                 case "title":
                                     Title = fieldvalue;
@@ -516,7 +514,7 @@ public class GrantApplicationServlet extends HttpServlet {
                                     Copies = fieldvalue;
                                     break;
                                 case "publicationYear":
-                                    Publisheryear = fieldvalue;
+                                    publicationYear = fieldvalue;
                                     break;
                                 case "genre":
                                     Genre = fieldvalue;
@@ -552,7 +550,7 @@ public class GrantApplicationServlet extends HttpServlet {
                                 case "languages":
                                     languageArray = fieldvalue.split(","); //split string by ,
                                     for (String individualValue : languageArray) {
-                                        System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
+                                        //                  System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
                                     }
                                     break;
                                 case "physicalDescription":
@@ -596,7 +594,7 @@ public class GrantApplicationServlet extends HttpServlet {
                                     languageArray = fieldvalue.split(","); //split string by ,
                                     languageArrayLength = languageArray.length;
                                     for (String individualValue : languageArray) {
-                                        System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
+                                        //                       System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
                                     }
                                     break;
                                 case "appForeignCountry":
@@ -619,41 +617,60 @@ public class GrantApplicationServlet extends HttpServlet {
                             String fieldname = item.getFieldName();
                             String filename = FilenameUtils.getName(item.getName());
 
-                            System.out.println("idxFolder" + idxFolderNames);
-                            System.out.println(" folderNames.length ------>  " + folderNames.length);
-
-                            /* 
-                               Create path components to save the file
-                               temporary Directory = rootPath + Year + Publisher
-                             */
-                            filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator + folderNames[idxFolderNames] + File.separator;
-
-                            System.out.println("folderNames[" + idxFolderNames + "] " + folderNames[idxFolderNames] + " fieldname " + fieldname + " filename " + filename);
-
-                            justFiles[idxFolderNames] = filename;
-                            fileNames[idxFolderNames] = filePath + filename;
-                            System.out.println("FolderNames >>>>>>>>>>>   " + folderNames[idxFolderNames]);
-
-                            idxFolderNames++;
 
                             /*
-                                create temporary Directory if it does not exist 
-                            */
-                            
-                            File file = new File(filePath);
-                            if (!file.exists()) {
-                                file.mkdirs();
+                             * Create path components to save the file
+                             * temporary Directory = rootPath + Year + Publisher
+                             */
+                            filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                    + folderNames[idxFolderNames] + File.separator;
+
+                            /*
+                             * if it is the translatorArray
+                             */
+                            if (idxFolderNames == 3) {
+
+                                /*
+                                 * Create path components to save the file
+                                 * temporary Directory = rootPath + Year +
+                                 * Publisher + translatorArray[counter]
+                                 */
+                                filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                        + folderNames[idxFolderNames] + File.separator + translatorArray[counter] + File.separator;
+
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add(fileNames[idxFolderNames]);
+
+//                                justFiles[idxFolderNames] = translatorArray[counter] + File.separator + filename;
+                                counter++;
+
+                                if (counter == translatorArrayLength) {
+                                    idxFolderNames++;
+                                }
+                            } else {
+
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add(fileNames[idxFolderNames]);
+//                                justFiles[idxFolderNames] = filename;
+                                idxFolderNames++;
                             }
 
+                            /*
+                             * create temporary Directory if it does not exist
+                             */
+                            File file = new File(filePath);
+                            if (!file.exists()) {
+
+                                file.mkdirs();
+                            }
+                            System.out.println("createTemporaryDirectory");
+                            System.out.println("filePath: " + filePath + " filename: " + filename);
                             OutputStream outS = null;
                             InputStream filecontent = null;
 
-                            /* 
-                                final PrintWriter writer = response.getWriter();
-                            */
-                            
                             try {
                                 outS = new FileOutputStream(new File(filePath + filename));
+
                                 filecontent = item.getInputStream();
 
                                 message = message + " '" + filename + "' has been uploaded <br/>";
@@ -686,16 +703,13 @@ public class GrantApplicationServlet extends HttpServlet {
                                 if (filecontent != null) {
                                     filecontent.close();
                                 }
-
-//                        if (writer != null) {
-//                            writer.close();
-//                        }
                             }
 
                         } // else
 
                     }  // for (FileItem item : items)
 
+                    //           }
                     ////////////////////////////////////////////////////////////
                     //  Process Application
                     ////////////////////////////////////////////////////////////
@@ -706,36 +720,38 @@ public class GrantApplicationServlet extends HttpServlet {
                     application.setPublisherID(publisherID);
                     application.setUserID(userID);
 
-                    /* 
-                       Book Details 
+                    /*
+                     * Book Details
                      */
                     application.setOriginalLanguage(originalLanguage);
                     application.setCountryOfPublication(countryOfPublication);
                     application.setOriginalPageExtent(Integer.parseInt(originalPageExtent));
+//                    application.setOriginalDateOfPublication(convertDate(originalDateOfPublication));
+                    application.setPublicationYear(publicationYear);
                     application.setForeignCountry(countryOfPublication);
                     application.setForeignPublisher(foreignPublisher);
 
-                    /* 
-                         Rights Agreement & Contracts 
+                    /*
+                     * Rights Agreement & Contracts
                      */
-                     /* 
-                          Publication Details 
+ /*
+                     * Publication Details
                      */
                     application.setProposedDateOfPublication(convertDate(proposedDateOfPublication));
                     application.setProposedPrintRun(proposedPrintRun);
                     application.setPlannedPageExtent(Integer.parseInt(plannedPageExtent));
-                    application.setTargetLanguage(targetLanguage);
+//                    application.setTargetLanguage(targetLanguage); // we get that from the Languages_Library table
                     application.setBilingual_edition(bilingual);
-                    /* 
-                         Translator Details 
+                    /*
+                     * Translator Details
                      */
 
                     application.setBreakDownTranslatorFee(breakDownTranslatorFee);
                     BigDecimal tf = new BigDecimal(translatorFee.replaceAll(",", ""));
                     application.setTranslatorFee(tf);
 
-                    /* 
-                         Original Work & Sample Translation 
+                    /*
+                     * Original Work & Sample Translation
                      */
                     application.setCopiesSent(copiesSent);
                     application.setDateCopiesWereSent(convertDate(dateCopiesWereSent));
@@ -743,42 +759,45 @@ public class GrantApplicationServlet extends HttpServlet {
                     application.setBookNotes(bookNotes);
                     application.setTC_ACCEPTED(TC_ACCEPTED);
                     application.setGdprACCEPTED(gdpr_ACCEPTED);
+
+                    System.out.println("application.setTC_ACCEPTED  ---->> " + TC_ACCEPTED);
+                    System.out.println("application.setGdprACCEPTED ---->> " + gdpr_ACCEPTED);
+
                     application.setAPPROVED(APPROVED);
                     application.setStatus(Status);
 
                     try {
 
-                        /* 
-                            ReferenceNumber = ApplicationNumber + "/" + yearInString;
+                        /*
+                         * ReferenceNumber = ApplicationNumber + "/" +
+                         * yearInString;
                          */
                         ReferenceNumber = GrantApplicationDAO.insertRow(application);
 
                         /*
-                             ReferenceNumber contains ApplicationNumber seperated by a "/"
-                             find the first occurrence of "/" 
+                         * ReferenceNumber contains ApplicationNumber seperated
+                         * by a "/"
+                         * find the first occurrence of "/"
                          */
                         int iend = ReferenceNumber.indexOf("/");
 
                         /*
-                           get ApplicationNumber from ReferenceNumber                        
+                         * get ApplicationNumber from ReferenceNumber
                          */
-                        
                         if (iend != -1) {
                             ApplicationNumber = Integer.parseInt(ReferenceNumber.substring(0, iend));
                             System.out.println("ApplicationNumber ---->> " + ApplicationNumber);
                         }
 
                         /*
-                            Process Authors                        
-                            String[3] => Name, FirstName, LastName
-                        */
-                        
+                         * Process Authors
+                         * String[3] => Name, FirstName, LastName
+                         */
                         String[] processingAuthorArray = new String[3];
 
                         /*
-                            convert processingArray to ArrayList Author
-                        */
-                        
+                         * convert processingArray to ArrayList Author
+                         */
                         Author = new ArrayList<>(Arrays.asList(processingAuthorArray));
 
                         if (authorArray.length > 1) {
@@ -786,26 +805,25 @@ public class GrantApplicationServlet extends HttpServlet {
                             int idx = 0;
 
                             /*
-                                loop through the Authors and insert each into Author table
-                            */
-                            
+                             * loop through the Authors and insert each into
+                             * Author table
+                             */
                             for (String individualValue : authorArray) {
 
                                 String AuthorName = individualValue;
                                 processingAuthorArray[idx] = AuthorName;
-                                
+
                                 System.out.println("AuthorName ---->> " + AuthorName);
-                                
+
                                 /*
-                                    when we have a complete set (FullName, FirstName, LastName) 
-                                */
-                                
+                                 * when we have a complete set (FullName,
+                                 * FirstName, LastName)
+                                 */
                                 if (idx == processingAuthorArray.length - 1) {
 
                                     /*
-                                        set the variables and
-                                    */
-                                    
+                                     * set the variables and
+                                     */
                                     String Name = processingAuthorArray[0];
                                     String FirstName = processingAuthorArray[1];
                                     String LastName = processingAuthorArray[2];
@@ -813,15 +831,14 @@ public class GrantApplicationServlet extends HttpServlet {
                                     authorName = Name;
 
                                     /*
-                                        insert them into the tables Application_Author 
-                                    */
-                                    
+                                     * insert them into the tables
+                                     * Application_Author
+                                     */
                                     GrantApplicationDAO.insertAuthors(ReferenceNumber, Name, FirstName, LastName);
 
                                     /*
-                                        reset index 
-                                    */
-                                    
+                                     * reset index
+                                     */
                                     idx = -1;
                                 }
 
@@ -831,9 +848,9 @@ public class GrantApplicationServlet extends HttpServlet {
                             authorName = AuthorFirstName + " " + AuthorLastName;
                             System.out.println("authorName ---->> :::: " + authorName);
                             /*
-                                insert them into the tables Application_Author 
-                            */
-                            
+                             * insert them into the tables Application_Author
+                             */
+
                             GrantApplicationDAO.insertAuthors(ReferenceNumber, authorName, AuthorFirstName, AuthorLastName);
                         }
 
@@ -843,63 +860,10 @@ public class GrantApplicationServlet extends HttpServlet {
 
                 } catch (ParseException ex) {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (FileUploadException ex) {
+                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                ////////////////////////////////////////////////////////////
-                //  Process Application Translators
-                ////////////////////////////////////////////////////////////
-                
-                if (translatorArray.length > 1) {
-
-                    System.out.println("translatorArray.length: -------------------------->>>> " + translatorArray.length);
-                    /*
-                        convert translatorArray to ArrayList Translator
-                    */
-                    
-                    Translator = new ArrayList<>(Arrays.asList(translatorArray));
-
-                    //loop through the Translators and insert each into TranslatorTrack
-                    for (String individualValue : translatorArray) {
-
-                        translatorName = individualValue;
-
-                        System.out.println("calling insertTranslators......................:  " + translatorName);
-
-                        try {
-
-                            /*
-                                set the variables and
-                                translatorName = processingTranslatorArray[0];
-                            */
-                            
-                            int idTranslator = ifTranslatorExist(translatorName);
-
-                            /*
-                                insert them into the tables TranslatorTrack
-                            */
-                            
-                            GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title);
-
-                            /*
-                                reset index
-                            */
-                            //   idx = -1;
-                        } catch (DBException ex) {
-                            Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
-                        //  idx++;
-                    }
-                } else {
-                    try {
-                        //    TranslatorName = translatorName;
-                        System.out.println("TranslatorName ---->> :::: " + translatorName);
-                        // insert them into the tables Application_Author
-                        GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title);
-                    } catch (DBException ex) {
-                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
                 ////////////////////////////////////////////////////////////
                 //  Process Publisher
                 ////////////////////////////////////////////////////////////
@@ -955,39 +919,185 @@ public class GrantApplicationServlet extends HttpServlet {
                 }
 
                 /*
-                    Update  GrantApplication to contain the filePaths
-                    path = path + File.separator + yearInString + File.separator + Company + File.separator + Type + ApplicationNumber;
-                    upload to temp dir then move to final directory
+                 * Update GrantApplication to contain the filePaths
+                 * =================================================
+                 * path = path + File.separator + yearInString + File.separator
+                 * + Company + File.separator + Type + ApplicationNumber;
+                 * upload to temp dir then move to final directory
                  */
-                 
-                for (int i = 0; i < folderNames.length; i++) {
-                    final String destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator + ApplicationNumber + File.separator + folderNames[i] + File.separator;
-                    System.out.println("folderNames.length::" + folderNames.length);
+                List<String> translatorFileDetails = new ArrayList<>();
 
-                    /*
-                        create directory if it does not exist
-                     */
-                    
-                    File file = new File(destinationDirectory);
-                    if (!file.exists()) {
-                        file.mkdirs();
+                for (int i = 0; i < filesToBeMoved.size(); i++) {
+
+                    String moveFile = "";
+                    String moveFileName = "";
+                    String destinationDirectory;
+
+                    String[] subDirs = filesToBeMoved.get(i).split("(?<!^)/");
+
+                    if (filesToBeMoved.get(i).contains("/Translator_CV/")) {
+
+                        String translatorDirectory = subDirs[6];      // Translator_CV
+                        String translatorNameDirectory = subDirs[7];  // Translator Name5
+                        moveFileName = subDirs[8];                    // translator cv 5.docx 
+
+                        destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
+                                + ApplicationNumber + File.separator + translatorDirectory + File.separator + translatorNameDirectory + File.separator;
+
+                        moveFile = destinationDirectory + moveFileName;
+                        translatorFileDetails.add(moveFile);
+                        translatorFileDetails.add(moveFileName);
+
+                        listCopiesTranslationSample.add(moveFile);
+
+                    } else {
+
+                        String Directory = subDirs[6];      // Agreement
+                        moveFileName = subDirs[7];          // agreement with the translation rights holder .txt
+
+                        destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
+                                + ApplicationNumber + File.separator + Directory + File.separator;
+
+                        moveFile = destinationDirectory + moveFileName;
                     }
 
-                    File sourceFile = new File(fileNames[i]);
+                    /*
+                     * create directory if it does not exist
+                     */
+                    File directory = new File(destinationDirectory);
+                    if (!directory.exists()) {
+                        directory.mkdirs();
+                    }
 
-                    File destinationDir = new File(destinationDirectory);
+                    File sFile = new File(filesToBeMoved.get(i));
+                    File destDir = new File(destinationDirectory);
+                    fileDir.add(moveFile);
+                    FileUtils.moveFileToDirectory(sFile, destDir, true);
+                }
 
-                    FileUtils.moveFileToDirectory(sourceFile, destinationDir, true);
+                ////////////////////////////////////////////////////////////
+                //  Process Application Translators
+                ////////////////////////////////////////////////////////////
+                int tfdCounter = 0;
 
-                    fileNames[i] = destinationDirectory + justFiles[i];
+                for (int i = 0; i < translatorFileDetails.size(); i++) {
 
-                    System.out.println("fileNames[" + i + "]  :: " + fileNames[i]);
+                    System.out.println("translatorFileDetails----->>>> " + translatorFileDetails.get(i));
+                }
+
+                String fname = "";
+
+//                /*
+//                 * Iterate through List fileDir
+//                 */
+//                for (int i = 0; i < listCopiesTranslationSample.size(); i++) {
+//
+//                    /*
+//                     * Split each fileDir items up and put them
+//                     * into an array subDirs
+//                     */
+//                    String[] subDirs = listCopiesTranslationSample.get(i).split("(?<!^)/");
+//
+//                    fname = subDirs[8];
+//                    /*
+//                     * replaces all occurrences of "/home/markus","/~markus"
+//                     */
+//                    fn = fileDir.get(i).replace("/home/markus/public_html", "/~markus");
+//
+//                    application.setCopiesTranslationSample(fn);
+//                    application.setCopiesTranslationSampleDocName(fname);
+//
+//                }
+                if (translatorArray.length > 1) {
+
+                    System.out.println("translatorArray.length: -------------------------->>>> " + translatorArray.length);
+                    /*
+                     * convert translatorArray to ArrayList Translator
+                     */
+
+ /*
+                     * loop through the Translators and insert each into
+                     * TranslatorTrack
+                     */
+                    for (String individualValue : translatorArray) {
+
+                        translatorName = individualValue;
+
+                        System.out.println("calling insertTranslators......................:  " + translatorName);
+
+                        /*
+                         * While iterating through the TranslatorTrack we add
+                         *
+                         * moveFile = the whole path including the file name
+                         * moveFileName = fille name
+                         * moveTheFileName = moveFile but with
+                         * replace("/home/markus/public_html", "/~markus")
+                         *
+                         */
+//                        String[] subDirs = listCopiesTranslationSample.get(tfdCounter).split("(?<!^)/");
+//                        fname = subDirs[8];
+                        fname = "";
+                        /*
+                         * replaces all occurrences of "/home/markus","/~markus"
+                         */
+//                        fn = fileDir.get(tfdCounter).replace("/home/markus/public_html", "/~markus");
+                        fn = "";
+                        String moveFile = translatorFileDetails.get(tfdCounter);
+                        tfdCounter++;
+                        String moveFileName = translatorFileDetails.get(tfdCounter);
+                        String moveTheFileName = moveFile.replace("/home/markus/public_html", "/~markus");
+                        tfdCounter++;
+                        try {
+
+                            /*
+                             * set the variables and
+                             * translatorName = processingTranslatorArray[0];
+                             */
+                            int idTranslator = ifTranslatorExist(translatorName);
+
+                            /*
+                             * insert them into the tables TranslatorTrack
+                             */
+                            GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title, moveTheFileName, moveFileName, fn, fname);
+
+                            /*
+                             * reset index
+                             */
+                            //   idx = -1;
+                        } catch (DBException ex) {
+                            Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        //  idx++;
+                    }
+                } else {
+                    try {
+                        //    TranslatorName = translatorName;
+                        System.out.println("TranslatorName ---->> :::: " + translatorName);
+                        // insert them into the tables Application_Author
+                        String moveFile = translatorFileDetails.get(tfdCounter);
+                        tfdCounter++;
+                        String moveFileName = translatorFileDetails.get(tfdCounter);
+                        String[] subDirs = listCopiesTranslationSample.get(tfdCounter).split("(?<!^)/");
+
+//                        fname = subDirs[8];
+                        fname = "";
+                        /*
+                         * replaces all occurrences of "/home/markus","/~markus"
+                         */
+//                        fn = fileDir.get(tfdCounter).replace("/home/markus/public_html", "/~markus");
+                        fn = "";
+                        String moveTheFileName = moveFileName.replace("/home/markus/public_html", "/~markus");
+                        GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title, moveTheFileName, moveFileName, fn, fname);
+
+                    } catch (DBException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
                 ////////////////////////////////////////////////////////////
                 //  Process Library
                 ////////////////////////////////////////////////////////////
-                
                 Library library = new Library();
                 System.out.println("Process library");
                 library.setReferenceNumber(ReferenceNumber);
@@ -998,7 +1108,7 @@ public class GrantApplicationServlet extends HttpServlet {
 //                library.setCoverName(justFiles[0]);
                 library.setTitle(Title);
                 library.setPublisher(company);
-                library.setPublisheryear(Publisheryear);
+                library.setPublisheryear(publicationYear);
                 library.setGenre(Genre);
                 library.setSeries(Series);
                 library.setTranslationPublisher(translationPublisher);
@@ -1023,43 +1133,65 @@ public class GrantApplicationServlet extends HttpServlet {
                 ////////////////////////////////////////////////////////////
                 //  Process Application Uploads
                 ////////////////////////////////////////////////////////////
-                 
                 //Update  GrantApplication to contain the filePaths
                 GrantApplication application = new GrantApplication();
 
-                /* 
-                    folderNames = {
-                      0  "Agreement", 
-                      1  "Contract", 
-                      2  "Addendum", 
-                      3  "Translator_CV", 
-                      4  "Original", 
-                      5  "TranslationSample"};
+                fname = "";
+
+                /*
+                 * Iterate through List fileDir
                  */
-                
-                fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setAgreement(fn);
-                application.setAgreementDocName(justFiles[0]);
+                for (int i = 0; i < fileDir.size(); i++) {
 
-                fn = fileNames[1].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setContract(fn);
-                application.setContractDocName(justFiles[1]);
+                    /*
+                     * Split each fileDir items up and put them
+                     * into an array subDirs
+                     */
+                    String[] subDirs = fileDir.get(i).split("(?<!^)/");
 
-                fn = fileNames[2].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setAddendumRightsAgreement(fn);
-                application.setAddendumRightsAgreementName(justFiles[2]);
+                    String decider = subDirs[7];
 
-                fn = fileNames[3].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setTranslatorCV(fn);
-                application.setTranslatorCVDocName(justFiles[3]);
+                    /*
+                     * Get the last item of the List which is the fileName
+                     * Translator_CV has one more subDirectory
+                     */
+                    if ("Translator_CV".equals(subDirs[7])) {
+                        fname = subDirs[9];
+                    } else {
+                        fname = subDirs[8];
+                    }
 
-                fn = fileNames[4].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
-                application.setOriginal(fn);
-                application.setOriginalName(justFiles[4]);
+                    /*
+                     * replaces all occurrences of "/home/markus","/~markus"
+                     */
+                    fn = fileDir.get(i).replace("/home/markus/public_html", "/~markus");
 
-                fn = fileNames[5].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"                            
-                application.setCopiesTranslationSample(fn);
-                application.setCopiesTranslationSampleDocName(justFiles[5]);
+                    System.out.println("decider " + decider);
+
+                    switch (decider) {
+                        case "Agreement":
+                            application.setAgreement(fn);
+                            application.setAgreementDocName(fname);
+                            break;
+                        case "Contract":
+                            application.setContract(fn);
+                            application.setContractDocName(fname);
+                            break;
+                        case "Addendum":
+                            application.setAddendumRightsAgreement(fn);
+                            application.setAddendumRightsAgreementName(fname);
+                            break;
+                        case "Original":
+                            application.setOriginal(fn);
+                            application.setOriginalName(fname);
+                            break;
+                        case "TranslationSample":
+                            application.setCopiesTranslationSample(fn);
+                            application.setCopiesTranslationSampleDocName(fname);
+                            break;
+                    }
+
+                }
 
                 application.setApplicationNumber(ApplicationNumber);
                 application.setReferenceNumber(ReferenceNumber);
@@ -1069,7 +1201,6 @@ public class GrantApplicationServlet extends HttpServlet {
                 try {
 
                     GrantApplicationDAO.updateDocuments(application, ReferenceNumber);
-           
 
                 } catch (DBException ex) {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -1083,17 +1214,16 @@ public class GrantApplicationServlet extends HttpServlet {
                     String[] processingLanguagesArray = new String[languageArray.length - 1];
 
                     /*
-                        convert processingArray to ArrayList Languages
-                    */
-                    
+                     * convert processingArray to ArrayList Languages
+                     */
                     Languages = new ArrayList<>(Arrays.asList(processingLanguagesArray));
 
                     int idx = 0;
 
                     /*
-                        loop through the Languages and insert each into Languages_Library
-                    */
-                    
+                     * loop through the Languages and insert each into
+                     * Languages_Library
+                     */
                     for (String individualValue : languageArray) {
 
                         languages = individualValue;
@@ -1102,9 +1232,9 @@ public class GrantApplicationServlet extends HttpServlet {
                             processingLanguagesArray[idx] = languages;
 
                             /*
-                                when we have a complete set (idLanguages, lang, bookID, ReferenceNumber) 
-                            */
-                            
+                             * when we have a complete set (idLanguages, lang,
+                             * bookID, ReferenceNumber)
+                             */
                             String language = processingLanguagesArray[idx];
                             int idLanguages = 0;
                             try {
@@ -1114,12 +1244,11 @@ public class GrantApplicationServlet extends HttpServlet {
                             }
 
                             try {
-                                
+
                                 /*
-                                    set the variables and
-                                    insert them into the tables Languages_Library
-                                */
-                                
+                                 * set the variables and
+                                 * insert them into the tables Languages_Library
+                                 */
                                 GrantApplicationDAO.insertLanguages_Library(idLanguages, language, bookID, ReferenceNumber);
 
                             } catch (DBException ex) {
@@ -1140,36 +1269,42 @@ public class GrantApplicationServlet extends HttpServlet {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
                 /*
-                    reset session
-                */
-                
+                 * reset session
+                 */
                 session.removeAttribute("task");
 
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
-
                 break;
 
             case "New Applications":
+                System.out.println("New Applications :: ");
+                System.out.println("task: GrantApplicationServlet:: 1 " + task);
                 request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
                 break;
 
             case "Open Applications":
+                System.out.println("Open Applications :: ");
+                System.out.println("task: GrantApplicationServlet:: 2 " + task);
                 request.getRequestDispatcher("/WEB-INF/views/openApplications.jsp").forward(request, response);
                 break;
 
             case "Pending Applications":
+                System.out.println("Pending Applications :: ");
+                System.out.println("task: GrantApplicationServlet:: 3 " + task);
                 request.getRequestDispatcher("/WEB-INF/views/pendingApplications.jsp").forward(request, response);
                 break;
 
             case "Closed Applications":
+                System.out.println("Closed Applications :: ");
+                System.out.println("task: GrantApplicationServlet:: 4 " + task);
                 request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
                 break;
 
-            case "AssignExpertReader":
-
+            case "System.out.println(\"Closed Applications :: \");":
+                System.out.println("System.out.println(\"Closed Applications :: \"); :: ");
                 String expertReaderEmail = "";
                 List<String[]> fileAttachment = new ArrayList<>();
 
@@ -1228,9 +1363,8 @@ public class GrantApplicationServlet extends HttpServlet {
                             try {
 
                                 /*
-                                    send email with attachment
-                                */
-                                
+                                 * send email with attachment
+                                 */
                                 MailUtil.sendEmailWithAttachmentExpertReader(expertReaderName, expertReaderEmail, attachFiles, expectedReturnDate);
 
                             } catch (MessagingException ex) {
@@ -1253,10 +1387,9 @@ public class GrantApplicationServlet extends HttpServlet {
             ////////////////////////////////////////////////////////////
             //  Process openApplications
             ////////////////////////////////////////////////////////////
-                
             case "openApplications":
 
-                System.out.println("openApplications ");
+                System.out.println("case openApplications: ");
                 Status = "open";
                 timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                 now = Calendar.getInstance();
@@ -1266,52 +1399,45 @@ public class GrantApplicationServlet extends HttpServlet {
                 timestamp = getcurrentTimeStamp();
 
                 fileNames = new String[10];
-                justFiles = new String[10];
+                // = new String[10];
                 //folderNames = {"Cover", "Agreement", "Contract", "Addendum", "ProofPayment", "BankDetails", "SignedLIContract", "Translator_CV", "Original", "TranslationSample"};
                 message = "";
 
                 idxFolderNames = 0;
 
                 //   try {
-                
                 /*
-                    Check that we have a file upload request
-                */
-                
+                 * Check that we have a file upload request
+                 */
                 isMultipart = ServletFileUpload.isMultipartContent(request);
                 System.out.println("isMultipart:: " + isMultipart);
                 response.setContentType("text/html;charset=UTF-8");
 
                 DiskFileItemFactory factory = new DiskFileItemFactory();
-                
+
                 /*
-                    maximum size that will be stored in memory
-                */
-                
+                 * maximum size that will be stored in memory
+                 */
                 factory.setSizeThreshold(maxMemSize);
-                
+
                 /*
-                    Location to save data that is larger than maxMemSize.
-                */
-                
+                 * Location to save data that is larger than maxMemSize.
+                 */
                 factory.setRepository(new File(tempPath));
 
                 /*
-                    Create a new file upload handler
-                */
-                
+                 * Create a new file upload handler
+                 */
                 ServletFileUpload upload = new ServletFileUpload(factory);
-                
-                /* 
-                    maximum file size to be uploaded.
-                */
-                
+
+                /*
+                 * maximum file size to be uploaded.
+                 */
                 //  upload.setSizeMax(maxFileSize);
 
                 /*
-                    Parse the request to get file items.
-                */
-                
+                 * Parse the request to get file items.
+                 */
                 List<FileItem> items = null;
                 try {
                     items = upload.parseRequest(request);
@@ -1323,10 +1449,10 @@ public class GrantApplicationServlet extends HttpServlet {
                     if (item.isFormField()) {
 
                         /*
-                            Process regular form field (input type="text|radio|checkbox|etc", select, etc).
-                            collect all data input from input fileds
-                        */
-                        
+                         * Process regular form field (input
+                         * type="text|radio|checkbox|etc", select, etc).
+                         * collect all data input from input fileds
+                         */
                         String fieldname = item.getFieldName();
                         String fieldvalue = item.getString();
                         System.out.println("fieldname :: " + fieldname + " fieldvalue " + fieldvalue);
@@ -1720,4 +1846,62 @@ public class GrantApplicationServlet extends HttpServlet {
         return new java.sql.Date(today.getTime());
 
     }
+
+//    public void createTemporaryDirectory(String filename, HttpServletRequest request, HttpServletResponse response, FileItem item) throws IOException, ServletException {
+//
+//        /*
+//         * create temporary Directory if it does not exist
+//         */
+//        File file = new File(filePath);
+//        if (!file.exists()) {
+//
+//            file.mkdirs();
+//        }
+//        System.out.println("createTemporaryDirectory");
+//        System.out.println("filePath: " + filePath + " filename: " + filename);
+//        OutputStream outS = null;
+//        InputStream filecontent = null;
+//
+//        final PrintWriter writer = response.getWriter();
+//        try {
+//            outS = new FileOutputStream(new File(filePath + filename));
+//
+//            filecontent = item.getInputStream();
+//
+//            message = message + " '" + filename + "' has been uploaded <br/>";
+//
+//            int read;
+//            final byte[] bytes = new byte[1024];
+//
+//            while ((read = filecontent.read(bytes)) != -1) {
+//                outS.write(bytes, 0, read);
+//
+//            }
+//
+//        } catch (FileNotFoundException fne) {
+//
+//            String errMsg = "<br/><br/>You either did not specify a file to upload or are "
+//                    + "trying to upload a file to a protected or nonexistent "
+//                    + "location.<br/> <br/><strong> ERROR:<strong> '" + fne.getMessage() + "' ";
+//jjkhkjhkjhk
+//            request.setAttribute("message", " '<strong>" + filename + "</strong>" + errMsg);
+//            request.getRequestDispatcher("/WEB-INF/views/uploadErrorResponse.jsp").forward(request, response);
+//            LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}",
+//                    new Object[]{fne.getMessage()});
+//
+//        } finally {
+//
+//            if (outS != null) {
+//                outS.close();
+//            }
+//
+//            if (filecontent != null) {
+//                filecontent.close();
+//            }
+//
+//            if (writer != null) {
+//                writer.close();
+//            }
+//        }
+//    }
 }

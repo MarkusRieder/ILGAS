@@ -8,7 +8,7 @@ package ie.irishliterature.servlets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ie.irishliterature.DataTables.DataTableApplications;
-import ie.irishliterature.dao.openApplicationDAO;
+import ie.irishliterature.dao.pendingApplicationDAO;
 import ie.irishliterature.db.DBException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,12 +26,12 @@ import javax.servlet.http.HttpSession;
  *
  * @author markus
  */
-@WebServlet(name = "openApplicationDataServlet", urlPatterns = {"/openApplicationDataServlet"})
-public class openApplicationDataServlet extends HttpServlet {
+@WebServlet(name = "pendingApplicationDataServlet", urlPatterns = {"/pendingApplicationDataServlet"})
+public class pendingApplicationDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public openApplicationDataServlet() {
+    public pendingApplicationDataServlet() {
 
         super();
     }
@@ -41,7 +41,7 @@ public class openApplicationDataServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        System.out.println("openApplicationDataServlet:  ");
+        System.out.println("pendingApplicationDataServlet:  ");
 
         HttpSession session = request.getSession();
      
@@ -59,7 +59,7 @@ public class openApplicationDataServlet extends HttpServlet {
 
         try {
 
-            listApplications = openApplicationDAO.getAllApplications(publisherID);
+            listApplications = pendingApplicationDAO.getAllApplications(publisherID);
 
         //    System.out.println("ApplicationDataServlet listApplications: " + listApplications + " publisherID  "  + publisherID);
 
