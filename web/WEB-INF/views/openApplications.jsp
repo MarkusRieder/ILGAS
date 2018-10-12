@@ -40,7 +40,7 @@
 //            }
         %>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
 
         <!-- Bootstrap -->
@@ -83,29 +83,29 @@
           <script type="text/javascript" src="../../kartik/js/plugins/piexif.js"></script>
            <script type="text/javascript" src="../../kartik/js/plugins/purify.js"></script>
             <script type="text/javascript" src="../../kartik/js/fileinput.js"></script>-->
-        <!--
-                <style>
-                    .ui-state-highlight, 
-                    .ui-widget-content .ui-state-highlight, 
-                    .ui-widget-header .ui-state-highlight {
-                        border: 1px solid #003399;
-                        background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
-                    }
-        
-        
-                    .ui-datepicker { 
-                        width: 17em; 
-                        padding: .2em .2em 0; 
-                        display: none; 
-                        z-index: 2000 !important;
-                    }
-        
-                    /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
-                    .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
-                    .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
-                    .ui-datepicker-calendar a.ui-state-active { background: red; } 
-        
-                </style>-->
+
+        <style>
+            .ui-state-highlight, 
+            .ui-widget-content .ui-state-highlight, 
+            .ui-widget-header .ui-state-highlight {
+                border: 1px solid #003399;
+                background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
+            }
+
+
+            .ui-datepicker { 
+                width: 17em; 
+                padding: .2em .2em 0; 
+                display: none; 
+                z-index: 2000 !important;
+            }
+
+            /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
+            .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
+            .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
+            .ui-datepicker-calendar a.ui-state-active { background: red; } 
+
+        </style>
 
 
         <script>
@@ -151,6 +151,7 @@
 
         <script type="text/javascript">
             var cntr = 0;
+            var appno = "";
             $(document).ready(function () {
                 var table = $("#applications").DataTable({
                     autoWidth: false,
@@ -233,7 +234,7 @@
                             }
                         }
                     ],
-                    "bProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>',
+//                    "bProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>',
                     //  "bProcessing":  "<img src='/images/progress.gif'>",
                     "bServerSide": false,
                     "sAjaxSource": "./openApplicationDataServlet",
@@ -246,7 +247,12 @@
                             "data": null,
                             "defaultContent": ""
                         },
-                        {"data": "ApplicationNumber"},
+                        {"data": "ApplicationNumber",
+                            "render": function (data, type, row) {
+                                appno = data;
+                                return data;
+                            }},
+
                         {"data": "ApplicationYear"},
                         {"data": "ReferenceNumber"},
                         //    {"data": "ReferenceNumber"},
@@ -254,13 +260,21 @@
                         {"data": "company"},
                         {"data": "agreement",
                             "render": function (data, type, row) {
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else {
 
-                                return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                    return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                }
                             }},
                         {"data": "contract",
                             "render": function (data, type, row) {
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else {
 
-                                return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                    return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                }
                             }},
                         {"data": "proposedDateOfPublication",
                             "render": function (data) {
@@ -310,24 +324,36 @@
                                 // console.log("copiesSent " + data);
                                 if (data === 0) {
                                     document.getElementById("copiesSent").checked = false;
-                                    return 'No';
+                                    return '0';
                                 } else {
                                     document.getElementById("copiesSent").checked = true;
-                                    return 'Yes';
+                                    return '1';
                                 }
                                 ;
                             }},
                         {"data": "dateCopiesWereSent",
-                            "render": function (data) {
-                                var date = new Date(data);
-                                var month = date.getMonth() + 1;
-                                return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
-                            }
-                        },
+                            "render": function (data, type, row) {
+                                if (data === "Jan 1, 1970") {
+//                                    console.log("dateCopiesWereSent undefined " + data);
+                                    return "n/a";
+                                } else {
+                                    console.log("dateCopiesWereSent  " + dateCopiesWereSent);
+                                    var date = new Date(data);
+                                    var month = date.getMonth() + 1;
+                                    return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
+                                }
+                            }},
                         {"data": "copiesTranslationSample",
                             "render": function (data, type, row) {
-                                //     console.log("copiesTranslationSample " + data);
-                                return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+//                                console.log("copiesTranslationSample " + data);
+                                if (typeof (data) === "undefined") {
+//                                    console.log("copiesTranslationSample undefined " + data);
+                                    return "n/a";
+                                } else {
+//                                    console.log("copiesTranslationSample toggle " + data);
+//                                    $('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+                                    return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                }
                             }},
                         {"data": "TC_ACCEPTED",
                             "render": function (data, type, row) {
@@ -578,9 +604,35 @@
                             }},
                         {"data": "addendumRightsAgreement",
                             "render": function (data, type, row) {
-                                return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+
+                                console.log("addendumRightsAgreement " + data + "  " + appno);
+                                if (data === "undefined") {
+//                                    $('#originalSample-offDiv, #originalSample-onDiv').toggle();
+
+                                    return "n/a";
+                                } else
+                                {
+//                                    $('#originalSample-onDiv, #originalSample-offDiv').toggle();
+//return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                    return data;
+
+                                }
                             }},
-                        {"data": "addendumRightsAgreementName"},
+                        {"data": "addendumRightsAgreementName",
+                            "render": function (data) {
+
+                                if (data === "undefined") {
+//                                    $('#copiesTransSample-offDiv, #copiesTransSample-onDiv').toggle();
+                                    return "n/a";
+                                } else
+                                {
+//                                    $('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+//                    
+
+                                    return data;
+
+                                }
+                            }},
                         {"data": "proofOfPaymentToTranslator",
                             "render": function (data, type, row) {
                                 return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
@@ -622,9 +674,27 @@
                         {"data": "salesFigures"},
                         {"data": "original",
                             "render": function (data, type, row) {
-                                return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else {
+                                    return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                }
                             }},
-                        {"data": "originalName"},
+                        {"data": "originalName",
+                            "render": function (data) {
+//                                console.log("originalName " + data + "  " + appno);
+                                if (data === "undefined") {
+//                                    $('#originalSample-offDiv, #originalSample-onDiv').toggle();
+
+                                    return "n/a";
+                                } else
+                                {
+//                                    $('#originalSample-onDiv, #originalSample-offDiv').toggle();
+
+                                    return data;
+
+                                }
+                            }},
                         {"data": "Author"},
                         {"data": "publicationYear"},
                         {"data": "Series"},
@@ -632,11 +702,55 @@
                         {"data": "transList",
                             "render": function (data, type, row) {
 
-                                console.log("transList data           " + data + "\n");
-
                                 return data;
 
+                            }},
+                        {"data": "copiesTranslationSampleDocName",
+                            "render": function (data) {
 
+                                if (data === "undefined") {
+//                                    $('#copiesTransSample-offDiv, #copiesTransSample-onDiv').toggle();
+                                    return "n/a";
+                                } else
+                                {
+//                                    $('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+//                    
+
+                                    return data;
+
+                                }
+                            }},
+                        {"data": "agreementDocName",
+                            "render": function (data) {
+                                console.log("agreementDocName " + data + "   " + appno);
+
+                                if (data === "undefined") {
+//                                    $('#copiesTransSample-offDiv, #copiesTransSample-onDiv').toggle();
+                                    return "n/a";
+                                } else
+                                {
+//                                    $('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+//                    
+
+                                    return data;
+
+                                }
+                            }},
+                        {"data": "contractDocName",
+                            "render": function (data) {
+                                console.log("contractDocName " + data + "   " + appno);
+
+                                if (data === "undefined") {
+//                                    $('#copiesTransSample-offDiv, #copiesTransSample-onDiv').toggle();
+                                    return "n/a";
+                                } else
+                                {
+//                                    $('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+//                    
+
+                                    return data;
+
+                                }
                             }},
                         {"data": "idTranslator"}
 
@@ -677,6 +791,7 @@
                 $('#additionalExpertReaderModal').empty(); // empty the div before fetching and adding new data
 
                 $('#applications tbody').on('click', 'tr td.details-control', function (e) {
+
                     e.preventDefault();
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                     $('#additionalExpertReaderModal').empty(); // empty the div before fetching and adding new data
@@ -693,19 +808,15 @@
                     var proofOfPaymentToTrans = "";
                     var bankDetailsFrm = "";
                     var signedLIContr = "";
-
-
                     var TranslName = "";
                     var bookTitles = "";
                     var TranslTitles = "";
-
-
                     var readerReport = "";
                     var tr = $(this).closest('tr');
                     var row = table.row(tr);
                     var rowdata = (table.row(tr).data());
                     var expertReaderName = "";
-//                                                            var TranslatorDocs = rowdata.transList;
+//                    var TranslatorDocs = rowdata.transList;
 //                    console.log("1 TranslatorDocs rowdata.transList-> " + rowdata.transList);
 
 //                    var awardValue = rowdata.award;
@@ -735,16 +846,21 @@
 //                    ;
                     var agreemnt = 'http://localhost' + rowdata.agreement + '';
 //                    $("#appAgreement").val(agreemnt);
-                    document.getElementById("agreement").href = agreemnt;
+                    document.getElementById("agreement1").href = agreemnt;
+                    document.getElementById("agreement1").innerHTML = rowdata.agreementDocName;
+
+
 
                     var orig = 'http://localhost' + rowdata.original + '';
 //                   $("#appOriginal").val(orig);                                  
 //                    document.getElementById("original").href = orig;
                     document.getElementById("originalSample1").href = orig;
+                    document.getElementById("originalSample1").innerHTML = rowdata.originalName;
 
                     var addendumRightsAgreemnt = 'http://localhost' + rowdata.addendumRightsAgreement + '';
                     $("#appAddendumRightsAgreement").val(addendumRightsAgreemnt);
-                    document.getElementById("addendum").href = addendumRightsAgreemnt;
+                    document.getElementById("addendum1").href = addendumRightsAgreemnt;
+                    document.getElementById("addendum1").innerHTML = rowdata.addendumRightsAgreementName;
 
                     var proofOfPaymentToTrans = 'http://localhost' + rowdata.proofOfPaymentToTranslator + '';
                     $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
@@ -778,17 +894,62 @@
                         document.getElementById("cover").src = cver;
                     }
                     var contr = 'http://localhost' + rowdata.contract + '';
-                    document.getElementById("contract").href = contr;
+                    document.getElementById("contract1").href = contr;
+                    document.getElementById("contract1").innerHTML = rowdata.contractDocName;
 //
 //                    var trans = 'http://localhost' + rowdata.translatorCV + '';
 //                    document.getElementById("translatorCV").href = trans;
 //
                     var transSamp = 'http://localhost' + rowdata.copiesTranslationSample + '';
                     document.getElementById("translationSample1").href = transSamp;
+                    document.getElementById("translationSample1").innerHTML = rowdata.copiesTranslationSampleDocName;
 
+                    console.log("contr  ", contr);
+                    console.log("transSamp  ", transSamp);
+                    console.log("agreemnt  ", agreemnt);
+                    console.log("addendum  ", addendumRightsAgreemnt);
+
+                    if (agreemnt !== "http://localhostundefined") {
+                        $('#agreement-onDiv, #agreement-offDiv').toggle();
+                    } else {
+                        document.getElementById('agreement-onDiv').style.display = 'block';
+                        document.getElementById('agreement-offDiv').style.display = 'none';
+                    }
+
+                    if (contr !== "http://localhostundefined") {
+                        $('#contract-onDiv, #contract-offDiv').toggle();
+                    } else {
+                        document.getElementById('contract-onDiv').style.display = 'block';
+                        document.getElementById('contract-offDiv').style.display = 'none';
+                    }
+
+                    if (addendumRightsAgreemnt !== "http://localhostundefined") {
+                        $('#addendum-onDiv, #addendum-offDiv').toggle();
+                    } else {
+                        document.getElementById('addendum-onDiv').style.display = 'block';
+                        document.getElementById('addendum-offDiv').style.display = 'none';
+                    }
+
+                    if (transSamp !== "http://localhostundefined") {
+                        $('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+                    } else {
+                        document.getElementById('copiesTransSample-onDiv').style.display = 'block';
+                        document.getElementById('copiesTransSample-offDiv').style.display = 'none';
+//                       $('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+                    }
+
+                    if (orig !== "http://localhostundefined") {
+                        $('#originalSample-onDiv, #originalSample-offDiv').toggle();
+                    } else {
+                        document.getElementById('originalSample-onDiv').style.display = 'block';
+                        document.getElementById('originalSample-offDiv').style.display = 'none';
+                    }
 
                     $("#applicationsModal").modal("show");
-                    $("#applications").DataTable().ajax.reload();
+//                    $("#applications").DataTable().ajax.reload();
+
+
+
                     $("#appApplicationNumber").val($(this).closest('tr').children()[1].textContent);
                     $("#appApplicationYear").val($(this).closest('tr').children()[2].textContent);
                     $("#appReferenceNumber").val($(this).closest('tr').children()[3].textContent);
@@ -802,7 +963,7 @@
                     var TranslName = rowdata.TranslatorName;
                     //           console.log("TranslName " + TranslName);
                     $("#translatorNames").val(TranslName);
-                    console.log("TranslatorName  ", TranslName.length);
+//                    console.log("TranslatorName  ", TranslName.length);
                     var bookTitles = rowdata.Titles;
                     $("#currentItem").val(bookTitles.join(""));
                     //          console.log("currentItem " + $(bookTitles.join("")));
@@ -813,6 +974,15 @@
                     // Generate table translatorTrackTable
                     var TranslTitles = rowdata.translatorTitles;
 //                    console.log("TranslTitles: " + translationTitle);
+
+
+//                    Translator Details 
+//                    |Translator name	|Translator CV	|Translator translation sample|
+//                    |                   |               |                             |
+//                    |                   |               |                             |
+//                    |                   |               |                             |
+
+
                     var TranslatorDocs = "";
                     var TranslatorDocs = [];
                     TranslatorDocs = rowdata.transList;//  .transList.values();
@@ -865,7 +1035,7 @@
                                 translators[j] = [];
                             // swap the x and y coords for the copy
                             translators[i][j] = TranslatorDocs[i][j];
-                            console.log("1 translators[" + j + "][" + i + "] " + translators[j][i]);
+//                            console.log("1 translators[" + j + "][" + i + "] " + translators[j][i]);
                         }
                     }
 
@@ -873,9 +1043,9 @@
                     for (i = 0; i < translators.length; i++) {
                         var tr = document.createElement('TR');
                         for (j = 0; j < translators[i].length; j++) {
-                            console.log("translators[i].length: " + translators[i].length);
-                            console.log("translators[i]: " + translators[i]);
-                            console.log("2 translators[i][j] " + translators[i][j]);
+//                            console.log("translators[i].length: " + translators[i].length);
+//                            console.log("translators[i]: " + translators[i]);
+//                            console.log("2 translators[i][j] " + translators[i][j]);
 
                             var td = document.createElement('TD');
                             if (i === 0) {
@@ -886,10 +1056,10 @@
                                 translators[i][j] = '';
                             }
 
-                            console.log("3 translators[i][j] " + translators[i][j]);
+//                            console.log("3 translators[i][j] " + translators[i][j]);
                             var nls = translators[i][j].split(",");
                             for (k = 0; k < nls.length; k++) {
-                                console.log("nls [" + k + " ] " + nls[k]);
+//                                console.log("nls [" + k + " ] " + nls[k]);
                             }
 
                             for (l = 0; l < nls.length; l++) {
@@ -899,7 +1069,7 @@
                                     td = document.createElement('td');
                                     td.className = 'highlightHeader';
                                     var rep = nls[l].substr(1);
-                                    console.log("rep [" + l + " ] " + rep);
+//                                    console.log("rep [" + l + " ] " + rep);
                                     td.appendChild(document.createTextNode(rep));
                                     tr.appendChild(td);
 
@@ -912,14 +1082,14 @@
 
                                     var dir = nls[l].substr(1);
                                     var destination = dir.replace("/home/markus/public_html/", "/~markus/");
-                                    console.log("destination " + destination);
+//                                    console.log("destination " + destination);
 
                                     var entry = "location.href='http://localhost" + destination + "'";
-                                    console.log("localhost " + entry);
+//                                    console.log("localhost " + entry);
 
                                     btn.setAttribute("onclick", entry);
                                     td.appendChild(btn);
-                                    console.log("nls[l] [" + l + " ] " + nls[l]);
+//                                    console.log("nls[l] [" + l + " ] " + nls[l]);
                                     td.appendChild(btn);
                                     tr.appendChild(td);
 
@@ -942,14 +1112,14 @@
 
                                     var dir = nls[l].substr(1);
                                     var destination = dir.replace("/home/markus/public_html/", "/~markus/");
-                                    console.log("destination " + destination);
+//                                    console.log("destination " + destination);
 
                                     var entry = "location.href='http://localhost" + destination + "'";
-                                    console.log("localhost " + entry);
+//                                    console.log("localhost " + entry);
 
                                     btn.setAttribute("onclick", entry);
                                     td.appendChild(btn);
-                                    console.log("nls[l] [" + l + " ] " + nls[l]);
+//                                    console.log("nls[l] [" + l + " ] " + nls[l]);
                                     td.appendChild(btn);
                                     tr.appendChild(td);
                                 }
@@ -1009,7 +1179,18 @@
                     $("#bookNotes").val($(this).closest('tr').children()[14].textContent);
                     $("#appStatus").val($(this).closest('tr').children()[15].textContent);
                     $("#copiesSent").val($(this).closest('tr').children()[16].textContent);
+
+                    if (rowdata.copiesSent === 0) {
+                        document.getElementById("copiesSent").checked = false;
+
+                    } else {
+                        document.getElementById("copiesSent").checked = true;
+                    }
                     $("#dateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
+                    console.log("dateCopiesWereSent     ", rowdata.dateCopiesWereSent);
+
+
+
                     $("#appTC_ACCEPTED").val($(this).closest('tr').children()[19].textContent);
                     $("#appAPPROVED").val($(this).closest('tr').children()[20].textContent);
                     $("#appGenre").val($(this).closest('tr').children()[21].textContent);
@@ -1023,7 +1204,7 @@
 
                     //                $("#appDateOfPublicationOriginal").val($(this).closest('tr').children()[35].textContent);
                     $("#publicationYear1").val($(this).closest('tr').children()[35].textContent);
-                    $("#languages").val($(this).closest('tr').children()[36].textContent);
+                    $("#originalLanguage").val($(this).closest('tr').children()[36].textContent);
                     $("#originalPageExtent").val($(this).closest('tr').children()[37].textContent);
                     $("#appCountryOfPublication").val($(this).closest('tr').children()[38].textContent);
                     $("#appForeignPublisher").val($(this).closest('tr').children()[39].textContent);
@@ -1058,7 +1239,7 @@
                     console.log("12345 14 " + $(this).closest('tr').children()[14].textContent);
                     console.log("12345 15 " + $(this).closest('tr').children()[15].textContent);
                     console.log("12345 16 " + $(this).closest('tr').children()[16].textContent);
-                    console.log("12345 17 " + $(this).closest('tr').children()[17].textContent);
+                    console.log("dateCopiesWereSent 17 " + $(this).closest('tr').children()[17].textContent);
                     console.log("12345 18 " + $(this).closest('tr').children()[18].textContent);
                     console.log("12345 19 " + $(this).closest('tr').children()[19].textContent);
                     console.log("12345 20 " + $(this).closest('tr').children()[20].textContent);
@@ -1098,8 +1279,8 @@
                     console.log("12345 50 " + $(this).closest('tr').children()[50].textContent);
 
                     console.log("12345 51 " + $(this).closest('tr').children()[51].textContent);
-                    console.log("12345 52 " + $(this).closest('tr').children()[52].textContent);
-                    console.log("12345 53 " + $(this).closest('tr').children()[53].textContent);
+                    console.log("addendumRightsAgreemnt 52 " + $(this).closest('tr').children()[52].textContent);
+                    console.log("agreement 53 " + $(this).closest('tr').children()[53].textContent);
                     console.log("12345 54 " + $(this).closest('tr').children()[54].textContent);
                     console.log("12345 55 " + $(this).closest('tr').children()[55].textContent);
                     console.log("12345 56 " + $(this).closest('tr').children()[56].textContent);
@@ -1118,6 +1299,11 @@
                     console.log("12345 68 " + $(this).closest('tr').children()[68].textContent);
                     console.log("12345 69 " + $(this).closest('tr').children()[69].textContent);
                     console.log("12345 70 " + $(this).closest('tr').children()[70].textContent);
+                    console.log("12345 71 " + $(this).closest('tr').children()[71].textContent);
+                    console.log("agreementDocName 72 " + $(this).closest('tr').children()[72].textContent);
+                    console.log("contractDocName 73 " + $(this).closest('tr').children()[73].textContent);
+//                    console.log("addendumRightsAgreemnt 74 " + $(this).closest('tr').children()[74].textContent);
+// console.log("addendumRightsAgreemnt 73 " + $(this).closest('tr').children()[73].textContent);
 
 
                 });
@@ -1544,6 +1730,7 @@
                 background:yellow;
                 /*      background-color:#d9d1d1;*/
             }
+
         </style>
 
 
@@ -1674,6 +1861,9 @@
                                             <th class="never"></th>
                                             <th class="never"></th>
                                             <th class="never"></th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
                                         </tr>
                                     </thead>
 
@@ -1746,6 +1936,9 @@
                                             <th class="never">Original</th>
                                             <th class="never">Original Name</th>
                                             <th class="all">Author(s)</th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
                                             <th class="never"></th>
                                             <th class="never"></th>
                                             <th class="never"></th>
@@ -2132,11 +2325,11 @@
                                                                                 <div class="col-xs-6">
                                                                                     <div class="mini-box">
                                                                                         <div class="form-group has-feedback">
-                                                                                            <label for="appLanguageOriginal" class="pull-left" >Language <br/>(of the original)</label>
-                                                                                            <input id="appLanguageOriginal"                                
+                                                                                            <label for="originalLanguage" class="pull-left" >Language <br/>(of the original)</label>
+                                                                                            <input id="originalLanguage"                                
                                                                                                    type="text"                                
                                                                                                    class="form-control"                                
-                                                                                                   name="languageOfTheOriginal"                                
+                                                                                                   name="originalLanguage"                                
                                                                                                    value=""    
                                                                                                    placeholder="Language"
                                                                                                    disabled=""
@@ -2206,42 +2399,133 @@
                                                              margin-left: auto;">
 
                                                             <!--Upload form for agreement-->
+                                                            <div class="row" style="margin-bottom: 80px;">  
 
-                                                            <div class="col-md-12"   style="margin-bottom: 20px">                                                
-                                                                <div  style="margin-bottom: 20px"> <strong class="pull-left">Click to see the agreement with the translation rights holder</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>
-                                                                <div class="margin-bottom: 60px"></div>   
-                                                                <br/>
-                                                                <div class="agreement" >
-                                                                    <a class="btn btn-info  pull-left" role="button" id="agreement" href="">
-                                                                        <span class="glyphicon glyphicon-file"></span>
-                                                                        Contract with the translator</a>
-                                                                </div>
-                                                            </div>
+                                                                <div style="position:relative;">
+                                                                    <div class="col-md-12" id="agreement-onDiv"  style="margin-bottom: 40px;position:absolute;z-index:0;">
+                                                                        <!--<div class="col-md-12"   style="margin-bottom: 20px">-->                                                
+                                                                        <div  style="margin-bottom: 20px"> <strong class="pull-left">Upload a copy of the agreement with the translation rights holder</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>
+                                                                        <div class="margin-bottom: 60px"></div>   
+                                                                        <br/>
+                                                                        <div class="input-group agreement"  style="margin-bottom: 40px;">                                      
+                                                                            <label class="btn btn-default btn-file pull-left">
+                                                                                Select file <input type="file"  name="file" id="agreement" >
+                                                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                                            </label>
+
+                                                                            <input type="hidden" name="userID" value="${userID}">
+                                                                            <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                            <input id="label_agreement" class="pull-left"/>
+                                                                            <br/>
+                                                                            <br/>
+                                                                            <input type="hidden" value="Agreement" name="destination" id="agreement_upload"/>
+                                                                        </div>
+                                                                    </div>  <!--agreement-onDiv-->
+
+                                                                    <div class="col-md-12" id="agreement-offDiv"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">   
+                                                                        <!--<div class="col-md-12"   style="margin-bottom: 20px">-->                                                
+                                                                        <div  style="margin-bottom: 20px"> <strong class="pull-left">Click to see the agreement with the translation rights holder</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>
+                                                                        <div class="margin-bottom: 60px"></div>   
+                                                                        <br/>
+                                                                        <div class="agreement1" >
+                                                                            <a class="btn btn-info  pull-left" role="button" id="agreement1" href="">
+                                                                                <span class="glyphicon glyphicon-file"></span>
+                                                                                Agreement with the translation rights holder</a>
+                                                                        </div>
+                                                                    </div> <!-- agreement-offDiv-->
+                                                                </div> <!-- position:relative;-->
+
+                                                            </div> <!--row-->
 
 
                                                             <!--Upload form for contract-->
 
-                                                            <div class="col-md-12"   style="margin-bottom: 20px">                          
-                                                                <strong class="pull-left">Click to see the contract with the translator</strong> <br/>
-                                                                <div class="margin-bottom: 60px"></div>
-                                                                <br/>
-                                                                <div class="contract" >
-                                                                    <a class="btn btn-info  pull-left" role="button" id="contract" href="">
-                                                                        <span class="glyphicon glyphicon-file"></span>
-                                                                        Contract with the translator</a>
-                                                                </div>
-                                                            </div>
+                                                            <div class="row" style="margin-bottom: 80px;">  
 
-                                                            <div class="col-md-12"   style="margin-bottom: 20px">                          
-                                                                <strong class="pull-left">Click to see the addendum to the rights agreement</strong> <small class="pull-left"> &nbsp;  (where applicable)</small><br/>
-                                                                <div class="margin-bottom: 60px"></div>
-                                                                <br/>
-                                                                <div class="addendum" >
-                                                                    <a class="btn btn-info  pull-left" role="button" id="addendum" href="">
-                                                                        <span class="glyphicon glyphicon-file"></span>
-                                                                        Addendum to rights agreement</a>
-                                                                </div>
-                                                            </div>
+                                                                <div style="position:relative;">
+
+                                                                    <div class="col-md-12" id="contract-onDiv"  style="margin-bottom: 40px;position:absolute;z-index:0;">                         
+                                                                        <strong class="pull-left">Upload a copy of the contract with the translator</strong> <br/>
+                                                                        <div class="margin-bottom: 60px"></div>
+                                                                        <br/>
+                                                                        <div class="input-group contract"  style="margin-bottom: 40px;">
+                                                                            <label class="btn btn-default btn-file pull-left">
+                                                                                Select file <input type="file"  name="file" id="contract">
+                                                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                                            </label>
+
+                                                                            <input type="hidden" name="userID" value="${userID}">
+                                                                            <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                            <input id="label_contract" class="pull-left"/>
+                                                                            <br/>
+                                                                            <br/> 
+                                                                            <!--<label>Destination:</label>-->
+                                                                            <input type="hidden" value="Contract" name="destination" id="contract_upload"/>
+
+                                                                            ${requestScope.message}
+                                                                        </div>
+                                                                    </div>  <!--contract-onDiv-->
+
+
+
+                                                                    <div class="col-md-12" id="contract-offDiv"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">                          
+                                                                        <strong class="pull-left">Click to see the contract with the translator</strong> <br/>
+                                                                        <div class="margin-bottom: 60px"></div>
+                                                                        <br/>
+                                                                        <div class="contract1" >
+                                                                            <a class="btn btn-info  pull-left" role="button" id="contract1" href="">
+                                                                                <span class="glyphicon glyphicon-file"></span>
+                                                                                Contract with the translator</a>
+                                                                        </div>
+                                                                    </div> <!-- contract-offDiv-->
+                                                                </div> <!-- position:relative;-->
+
+                                                            </div> <!--row-->
+
+                                                            <!--Upload form for addendum-->
+                                                            <div class="row" style="margin-bottom: 80px;">  
+
+                                                                <div style="position:relative;">
+
+
+                                                                    <div class="col-md-12"  id="addendum-onDiv"  style="margin-bottom: 40px;position:absolute;z-index:0;">                    
+                                                                        <strong class="pull-left">Upload a copy of the addendum to the rights agreement</strong> <small class="pull-left"> &nbsp;  (where applicable)</small><br/>
+                                                                        <div class="margin-bottom: 60px"></div>
+                                                                        <br/>
+                                                                        <div class="input-group addendum"  style="margin-bottom: 40px;">
+                                                                            <label class="btn btn-default btn-file pull-left">
+                                                                                Select file <input type="file"  name="file" id="addendum">
+                                                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                                            </label>
+
+                                                                            <input type="hidden" name="userID" value="${userID}">
+                                                                            <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                            <input id="label_addendum" class="pull-left"/>
+                                                                            <br/>
+                                                                            <br/> 
+                                                                            <!--<label>Destination:</label>-->
+                                                                            <input type="hidden" value="Addendum" name="destination" id="addendum_upload"/>
+
+                                                                            ${requestScope.message}
+                                                                        </div>
+                                                                    </div>  <!--addendum-onDiv-->
+
+                                                                    <div class="col-md-12"  id="addendum-offDiv"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">                      
+                                                                        <strong class="pull-left">Click to see the addendum to the rights agreement</strong> <small class="pull-left"> &nbsp;  (where applicable)</small><br/>
+                                                                        <div class="margin-bottom: 60px"></div>
+                                                                        <br/>
+                                                                        <div class="addendum" >
+                                                                            <a class="btn btn-info  pull-left" role="button" id="addendum1" href="">
+                                                                                <span class="glyphicon glyphicon-file"></span>
+                                                                                Addendum to rights agreement</a>
+                                                                        </div>
+                                                                    </div> <!-- addendum-offDiv-->
+                                                                </div> <!-- position:relative;-->
+
+                                                            </div> <!--row-->
                                                         </div> <!-- row -->
                                                     </div> <!-- container-fluid  -->
                                                 </div> <!-- tab-pane "Rights Agreement -->
@@ -2477,16 +2761,16 @@
                                                                     <div class="col-md-4" id="testdiv" style="margin-left: 40px;"></div>
 
                                                                     <!--                                                                         
-                                                                                                                                                                                                        <div class="col-sm-4" style="margin-top: 30px;">    
-                                                                                                                                                                                                        <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                                                                                                                                                                        data-toggle="modal" 
-                                                                                                                                                                                                        data-target="#addTranslatorModal"
-                                                                                                                                                                                                        onclick="copyFirstRow();"
-                                                                                                                                                                                                        >Add more translators</a>
+                                                                                                                                                                                                <div class="col-sm-4" style="margin-top: 30px;">    
+                                                                                                                                                                                                <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                                                                                                                                                                data-toggle="modal" 
+                                                                                                                                                                                                data-target="#addTranslatorModal"
+                                                                                                                                                                                                onclick="copyFirstRow();"
+                                                                                                                                                                                                >Add more translators</a>
                                                                                                                                         
-                                                                                                                                                                                                        </div>                                                    
+                                                                                                                                                                                                </div>                                                    
                                                                                                                                         
-                                                                                                                                                                                                        <input type="hidden" id="translatorArray" name="translatorArray" >
+                                                                                                                                                                                                <input type="hidden" id="translatorArray" name="translatorArray" >
                                                                     -->
                                                                 </div>
                                                             </div>
@@ -2768,7 +3052,7 @@
                                                                     <!--Date copies were sent:-->
                                                                     <div class="col-md-3" >
                                                                         <label for="copiesSent" class="pull-left"><strong>Date copies were sent</strong> </label>
-                                                                        <div class="input-group pull-left" >
+                                                                        <div class="input-group pull-left date" data-provide="datepicker">
                                                                             <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
                                                                             <label class="input-group-addon" for="dateCopiesWereSent">
                                                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -2776,7 +3060,7 @@
                                                                         </div>  <!-- input-group -->
                                                                     </div> <!--col-md-3-->
 
-                                                                    <!--datepicker  mail-sent-->
+                                                                    <!--datepicker  dateCopiesWereSent-->
                                                                     <script>
                                                                         $("#dateCopiesWereSent").datepicker();
                                                                     </script>
@@ -2803,79 +3087,83 @@
                                                                             <span class="message"></span>
                                                                         </div>
 
-                                                                        <div class="row">
-                                                                            <!--                                             <div class="col-md-6"   style="margin-bottom: 40px">
-                                                                                                                            <label for="originalSample" class="control-label pull-left">Upload electronic copy of original work   
-                                                                                                                            </label>
-                                            
-                                                                                                                            <div class="input-group originalSample0 pull-left"  
-                                                                                                                                 data-toggle="tooltip"
-                                                                                                                                 title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
-                                                                                                                                 data-placement="bottom" >
-                                                                                                                                <label class="btn btn-default btn-file pull-left">
-                                                                                                                                    Select file 
-                                                                                                                                    <input type="file"  
-                                                                                                                                           name="file" 
-                                                                                                                                           id="originalSample" >
-                                                                                                                                    <span class="glyphicon glyphicon-folder-open"></span>
-                                                                                                                                </label>
-                                                                                                                                <input id="label_originalSample" class="pull-left">                                                                               
-                                                                                                                                <br/>
-                                                                                                                                <br/>          
-                                                                                                                                <input type="hidden" name="userID" value="${userID}">
-                                                                                                                                <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                                                                                <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                                                                                <!Destination:>
-                                                                                                                                <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />                                          
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                            -->
-                                                                            <div class="col-md-6"   style="margin-bottom: 20px">        
-                                                                                <label  class="control-label pull-left">Open electronic copy of original work </label>
-                                                                                <div class="input-group originalSample1 pull-left" >
-                                                                                    <a class="btn btn-info btn-file pull-left" role="button" id="originalSample1" href="">
-                                                                                        <span class="glyphicon glyphicon-file"></span>
-                                                                                        Copy of original work</a>
-                                                                                </div>
-                                                                            </div>
+                                                                        <div class="row" style="margin-bottom: 80px;">  
 
+                                                                            <div style="position:relative;">
+
+                                                                                <div class="col-md-6" id="originalSample-onDiv"  style="margin-bottom: 40px;position:absolute;z-index:0;">
+                                                                                    <label for="originalSample" class="control-label pull-left">Upload electronic copy of original work</label>
+
+                                                                                    <div class="input-group originalSample0 pull-left"  
+                                                                                         data-toggle="tooltip"
+                                                                                         title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
+                                                                                         data-placement="bottom" >
+                                                                                        <label class="btn btn-default btn-file pull-left">
+                                                                                            Select file 
+                                                                                            <input type="file"  
+                                                                                                   name="file" 
+                                                                                                   id="originalSample" >
+                                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                                        </label>
+                                                                                        <input id="label_originalSample" class="pull-left">                                                                               
+                                                                                        <br/>
+                                                                                        <br/>          
+                                                                                        <input type="hidden" name="userID" value="${userID}">
+                                                                                        <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                                        <!--Destination:-->
+                                                                                        <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />                                          
+                                                                                    </div>
+                                                                                </div>  <!--originalSample-onDiv-->
+
+                                                                                <div class="col-md-5" id="originalSample-offDiv"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">        
+                                                                                    <label  class="control-label pull-left">Open electronic copy of original work </label>
+                                                                                    <div class="input-group originalSample1 pull-left" >
+                                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="originalSample1" href="">
+                                                                                            <span class="glyphicon glyphicon-file"></span>
+                                                                                            Copy of original work</a>
+                                                                                    </div>
+                                                                                </div> <!-- originalSample-offDiv-->
+                                                                            </div> <!-- position:relative;-->
 
                                                                         </div> <!--row-->
 
-                                                                        <div class="row">
-                                                                            <!--                <div class="col-md-6">
-                                                                                              <label for="translationSample" class="control-label pull-left">Upload copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
-                                                                                              <div class="input-group translationSample pull-left" >
-                                                                                                  <label class="btn btn-default btn-file pull-left">
-                                                                                                      Select file 
-                                                                                                      <input type="file"  name="file" id="translationSample" class="form-input">
-                                                                                                      <span class="glyphicon glyphicon-folder-open"></span>
-                                                                                                  </label>
-                                                                                                  <input id="label_translationSample" class="pull-left"/>
-                                                                                                  <br/>
-                                                                                                  <br/>          
-                                                                                                  <input type="hidden" name="userID" value="${userID}">
-                                                                                                  <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                                                  <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                            <!--Destination:-->
-                                                                            <!--                       <input type="hidden" id="translationSample_upload" value="translationSample" name="destination" />                                          
-                                                                                               </div>
-                                                                                           </div> <!-- col-md-8 -->
+                                                                        <div class="row" style="margin-bottom: 80px;">  
 
+                                                                            <div style="position:relative;">
 
-                                                                            <div class="col-md-6"   style="margin-bottom: 20px">        
-                                                                                <label  class="control-label pull-left">Open copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
-                                                                                <div class="input-group translationSample1 pull-left" >
-                                                                                    <a class="btn btn-info btn-file pull-left" role="button" id="translationSample1" href="">
-                                                                                        <span class="glyphicon glyphicon-file"></span>
-                                                                                        Copy of translation sample</a>
-                                                                                </div>
-                                                                            </div>
+                                                                                <div class="col-md-6" id="copiesTransSample-onDiv"  style="margin-bottom: 40px;position:absolute;z-index:0;">
+                                                                                    <label for="translationSample" class="control-label pull-left">Upload copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
+                                                                                    <div class="input-group translationSample pull-left" >
+                                                                                        <label class="btn btn-default btn-file pull-left">
+                                                                                            Select file 
+                                                                                            <input type="file"  name="file" id="translationSample" class="form-input">
+                                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                                        </label>
+                                                                                        <input id="label_translationSample" class="pull-left"/>
+                                                                                        <br/>
+                                                                                        <br/>          
+                                                                                        <input type="hidden" name="userID" value="${userID}">
+                                                                                        <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                                        <!--Destination: -->
+                                                                                        <input type="hidden" id="translationSample_upload" value="translationSample" name="destination" />                                          
+                                                                                    </div>
+                                                                                </div> <!-- translationSample-onDiv-->
 
+                                                                                <div class="col-md-5" id="copiesTransSample-offDiv"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">    
+                                                                                    <label class="control-label pull-left">Open copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
+                                                                                    <div class="input-group translationSample1 pull-left">
+                                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="translationSample1" href="">
+                                                                                            <span class="glyphicon glyphicon-file"></span>
+                                                                                            Copy of translation sample</a>
+                                                                                    </div>
+                                                                                </div> <!-- translationSample-offDiv-->
+
+                                                                            </div> <!--position:relative;--> 
 
                                                                         </div> <!--row-->                                                            
 
-                                                                        <!-- translationSampleForm -->                                                                                                              
                                                                     </div>  <!-- col-md-12 -->
                                                                 </div>  <!--panel--body-->
                                                             </div> <!--panel-default-->

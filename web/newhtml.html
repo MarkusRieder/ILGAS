@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+
+        <!-- Bootstrap -->
+
+
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/layout.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="css/responsive.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="css/irishLiterature.css">
+
+
+
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/jquery.dataTables.js"></script>
+        <script src="js/dataTables.bootstrap.js"></script>
+        <script src="js/dataTables.responsive.min.js"></script>
+        <script src="js/dataTables.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
+
+        <script type="text/javascript"  src="js/pdf.js"></script>
+        <script type="text/javascript"  src="js/pdf.worker.js"></script>
+
+        <script>
+
+//var TranslatorDocs = [];
+            var translatorArray = [];
+            var authorArray = [];
+            var languageArray = [];
+            var pressCuttingArray = [];
+            var Name = "";
+            var Author = "";
+            var counter = 0;
+            var Authorcounter = 0;
+            var pressCuttingCounter = 0;
+            var translatorCounter = 0;
+            var translatorCounter1 = 0;
+            var translatorName876 = "";
+            $.datepicker.setDefaults({
+                dateFormat: 'dd/mm/yy',
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                autoclose: true,
+                changeMonth: true,
+                changeYear: true,
+                gotoCurrent: true,
+                orientation: "bottom" // <-- and add this
+            });
+            PDFJS.workerSrc = 'js/pdf.worker.js';
+            //      localStorage.clear();
+
+            var i;
+
+            console.log("local storage - openApplication.jsp");
+            for (i = 0; i < localStorage.length; i++) {
+                console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
+            }
+
+            console.log("session storage");
+            for (i = 0; i < sessionStorage.length; i++) {
+                console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
+            }
+        </script>      
+
+
+        <script>
+            $(document).ready(function () {
+                //Check File API support
+                if (window.File && window.FileList && window.FileReader)
+                {
+                    $('#files').on("change", function (event) {
+                        var files = event.target.files; //FileList object
+                        var output = document.getElementById("result");
+                        for (var i = 0; i < files.length; i++)
+                        {
+                            var file = files[i];
+                            var fileName = files[i].name;
+                            console.log("fileName  " + fileName);
+
+//                            if (file.type.match('image.*')) {
+                            if (validFileType(files[i])) {
+                                if (this.files[0].size < 2097152) {
+
+                                    var picReader = new FileReader();
+                                    picReader.addEventListener("load", function (event) {
+                                        var picFile = event.target;
+                                        var div = document.createElement("div");
+                                        div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
+                                                "title='preview image'/>";
+                                        output.insertBefore(div, null);
+                                    });
+                                    //Read the image
+                                    $('#clear, #result').show();
+                                    picReader.readAsDataURL(file);
+
+                                } else {
+                                    alert("Image Size is too big.Minimum size is 2MB.");
+                                    $(this).val("");
+                                }
+                            } else {
+                                alert("You can only upload image file.");
+                                $(this).val("");
+                            }
+                        }
+
+                    });
+                } else
+                {
+                    console.log("Your browser does not support File API");
+                }
+            });
+
+            $(document).on("click", "#files", function () {
+                $('.thumbnail').parent().remove();
+                $('result').hide();
+                $(this).val("");
+            });
+
+            $(document).on("click", "#clear", function () {
+                $('.thumbnail').parent().remove();
+                $('#result').hide();
+                $('#files').val("");
+                $(this).hide();
+            });
+        </script>
+
+
+
+        <style>
+
+            /*
+            * Checkboxes with tick mark
+            */
+
+            .checkbox label:after, 
+            .radio label:after {
+                content: '';
+                display: table;
+                clear: both;
+            }
+
+            .checkbox .cr,
+            .radio .cr {
+                position: relative;
+                display: inline-block;
+                border: 1px solid #a9a9a9;
+                border-radius: .25em;
+                width: 1.3em;
+                height: 1.3em;
+                float: left;
+                margin-right: .5em;
+            }
+
+            .radio .cr {
+                border-radius: 50%;
+            }
+
+            .checkbox .cr .cr-icon,
+            .radio .cr .cr-icon {
+                position: absolute;
+                font-size: .8em;
+                line-height: 0;
+                top: 50%;
+                left: 20%;
+            }
+
+            .radio .cr .cr-icon {
+                margin-left: 0.04em;
+            }
+
+            .checkbox label input[type="checkbox"],
+            .radio label input[type="radio"] {
+                display: none;
+            }
+
+            .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+            .radio label input[type="radio"] + .cr > .cr-icon {
+                transform: scale(3) rotateZ(-20deg);
+                opacity: 0;
+                transition: all .3s ease-in;
+            }
+
+            .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+            .radio label input[type="radio"]:checked + .cr > .cr-icon {
+                transform: scale(1) rotateZ(0deg);
+                opacity: 1;
+            }
+
+            .checkbox label input[type="checkbox"]:disabled + .cr,
+            .radio label input[type="radio"]:disabled + .cr {
+                opacity: .5;
+            }
+
+
+            .checkbox-inline.no_indent,
+            .checkbox-inline.no_indent+.checkbox-inline.no_indent {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+            .checkbox-inline.no_indent:last-child {
+                margin-right: 0;
+            }
+
+            .highlightHeader {
+                background:yellow;
+                /*      background-color:#d9d1d1;*/
+            }
+
+        </style>
+
+
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
+        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+
+        <script>
+//            var a = true;
+            var a = false;
+            $(document).ready(function () {
+                $("button").click(function () {
+                    jQuery('#beta, #delta ').toggle(); // 1 / 2
+                    jQuery('#alpha, #gamma ').toggle(); // 3 / 4
+                    jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
+                    jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
+                    jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
+                     jQuery('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+                });
+
+
+                if (a === true) {
+                    jQuery('#beta, #delta ').toggle(); // 1 / 2
+                    jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
+                     jQuery('#transSample-onDiv, #transSample-offDiv').toggle();
+                     jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
+                    console.log(a);
+                } else {
+                    jQuery('#alpha, #gamma ').toggle(); // 3 / 4
+                    jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
+                    
+                    console.log(a);
+                }
+            });
+        </script>
+
+    </head>
+    <body>
+        <div class="container-fluid">
+
+            <div class="panel panel-default">        
+                <div class="panel-body"> 
+                    <div class="col-md-12">
+                        <div>
+                            <button id = "button">Click Me</button>
+                        </div>
+                    </div>
+                </div> <!-- panel-body -->
+            </div> <!--panel-default-->
+
+            <div class="panel panel-default">        
+                <div class="panel-body">
+                    <div class="col-md-12">
+
+                        <div class="row" style="margin-bottom: 80px;">  
+
+                            <div style="position:relative;">
+
+                                <div class="col-md-6" id="beta"  style="margin-bottom: 40px;position:absolute;z-index:0;">
+                                    <h1>1</h1>
+                                    <label for="originalSample" class="control-label pull-left">Upload electronic copy of beta</label>
+                                    <div class="input-group originalSample0 pull-left"  
+                                         data-toggle="tooltip"
+                                         title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
+                                         data-placement="bottom" >
+                                        <label class="btn btn-default btn-file pull-left">
+                                            Select file 
+                                            <input type="file"  
+                                                   name="file" 
+                                                   id="originalSampleab" >
+                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                        </label>
+                                        <input id="label_originalSample1" class="pull-left">                                                                               
+                                        <br/>
+                                        <br/>          
+                                        <input type="hidden" name="userID" value="${userID}">
+                                        <input type="hidden" name="publisherID" value="${publisherID}">
+                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                        <!--Destination:-->
+                                        <input type="hidden" id="originalSample_upload1" value="originalSample" name="destination" />                                          
+                                    </div>
+                                </div>  <!--originalSampleDiv-->
+
+                                <div class="col-md-5" id="delta"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">   
+                                    <h1>2</h1>
+                                    <label  class="control-label pull-left">Open electronic copy of delta </label>
+                                    <div class="input-group originalSampleA pull-left" >
+                                        <a class="btn btn-info btn-file pull-left" role="button" id="originalSampleA" href="">
+                                            <span class="glyphicon glyphicon-file"></span>
+                                            Copy of original work</a>
+                                    </div>
+                                </div> <!-- col-md-5-->
+
+                            </div> <!-- position:relative;-->
+
+                        </div> <!--row-->
+
+                        <div class="row" style="margin-bottom: 80px;">  
+
+                            <div style="position:relative;">
+
+                                <div class="col-md-6" id="alpha"  style="margin-bottom: 40px;position:absolute;z-index:0;">
+                                    <h1>3</h1>
+                                    <label for="translationSample" class="control-label pull-left">Upload copy of alpha</label>
+                                    <div class="input-group translationSampleB pull-left" >
+                                        <label class="btn btn-default btn-file pull-left">
+                                            Select file 
+                                            <input type="file"  name="file" id="translationSampleB" class="form-input">
+                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                        </label>
+                                        <input id="label_translationSampleB" class="pull-left"/>
+                                        <br/>
+                                        <br/>          
+                                        <input type="hidden" name="userID" value="${userID}">
+                                        <input type="hidden" name="publisherID" value="${publisherID}">
+                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                        <!--Destination:-->
+                                        <input type="hidden" id="translationSample_uploadB" value="translationSample" name="destination" />                                          
+                                    </div>
+                                </div> <!-- col-md-8 -->
+
+
+                                <div class="col-md-5" id="gamma"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">   
+                                    <h1>4</h1>
+                                    <label  class="control-label pull-left">Open copy of gamma div</label>
+                                    <div class="input-group translationSampleC pull-left" >
+                                        <a class="btn btn-info btn-file pull-left" role="button" id="translationSampleC" href="">
+                                            <span class="glyphicon glyphicon-file"></span>
+                                            Copy of translation sample</a>
+                                    </div>
+                                </div> <!-- col-md-5-->
+                            </div><!--position:relative;-->
+
+                        </div> <!--row-->                                                            
+
+                    </div>  <!-- col-md-12 -->
+                </div>  <!-- panel-body -->
+            </div>  <!--panel-default-->
+
+            <div class="panel panel-default">        
+                <div class="panel-body">
+                    <div class="col-md-12">
+
+                        <div class="row" style="margin-bottom: 80px;">  
+
+
+                            <div style="position:relative;">
+
+                                <div class="col-md-6" id="originalSampleDiv"  style="margin-bottom: 40px;position:absolute;z-index:0;">
+                                    <h1>5</h1>
+                                    <label for="originalSample" class="control-label pull-left">Upload electronic copy originalSampleDiv</label>
+                                    <div class="input-group originalSampleD pull-left"  
+                                         data-toggle="tooltip"
+                                         title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
+                                         data-placement="bottom" >
+                                        <label class="btn btn-default btn-file pull-left">
+                                            Select file 
+                                            <input type="file"  
+                                                   name="file" 
+                                                   id="originalSampleD" >
+                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                        </label>
+                                        <input id="label_originalSample2" class="pull-left">                                                                               
+                                        <br/>
+                                        <br/>          
+                                        <input type="hidden" name="userID" value="${userID}">
+                                        <input type="hidden" name="publisherID" value="${publisherID}">
+                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                        <!--Destination:-->
+                                        <input type="hidden" id="originalSample_uploadD" value="originalSample" name="destination" />                                          
+                                    </div>
+                                </div>  <!--originalSampleDiv-->
+
+                                <div class="col-md-5" id="1DivoriginalSample"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">        
+                                    <h1>6</h1>
+                                    <label  class="control-label pull-left">Open originalSample1Div &nbsp;</label>
+                                    <div class="input-group originalSample12 pull-left" >
+                                        <a class="btn btn-info btn-file pull-left" role="button" id="originalSample12" href="">
+                                            <span class="glyphicon glyphicon-file"></span>
+                                            Copy of original work</a>
+                                    </div>
+                                </div> <!-- originalSample1Div-->
+                            </div> <!-- position:relative;-->
+
+                        </div> <!--row-->
+
+                        <div class="row" style="margin-bottom: 80px;">  
+
+                            <div style="position:relative;">
+
+                                <div class="col-md-6" id="translationSampleDiv"  style="margin-bottom: 40px;position:absolute;z-index:0;">
+                                    <h1>7</h1>
+                                    <label for="translationSample" class="control-label pull-left">Upload copy of translationSampleDiv</label>
+                                    <div class="input-group translationSample2 pull-left" >
+                                        <label class="btn btn-default btn-file pull-left">
+                                            Select file 
+                                            <input type="file"  name="file" id="translationSample2" class="form-input">
+                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                        </label>
+                                        <input id="label_translationSample2" class="pull-left"/>
+                                        <br/>
+                                        <br/>          
+                                        <input type="hidden" name="userID" value="${userID}">
+                                        <input type="hidden" name="publisherID" value="${publisherID}">
+                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                        <!--Destination: -->
+                                        <input type="hidden" id="translationSample_upload2" value="translationSample" name="destination" />                                          
+                                    </div>
+                                </div> <!-- translationSampleDiv-->
+
+                                <div class="col-md-5" id="1DivtranslationSample"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">  
+                                    <h1>8</h1>
+                                    <label class="control-label pull-left">Open copy of translationSample1Div</label>
+                                    <div class="input-group translationSample12 pull-left">
+                                        <a class="btn btn-info btn-file pull-left" role="button" id="translationSample12" href="">
+                                            <span class="glyphicon glyphicon-file"></span>
+                                            Copy of translation sample</a>
+                                    </div>
+                                </div> <!-- translationSample1Div-->
+
+                            </div> <!--position:relative;--> 
+                        </div> <!--row-->         
+                    </div>  <!-- col-md-12 -->
+                </div>  <!--panel--body-->
+            </div> <!--panel-default-->
+
+
+            <div class="row" >
+
+                <div class="panel panel-default">        
+                    <div class="panel-body">
+                        <div class="col-md-12">
+
+                            <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                <span class="message"></span>
+                            </div>
+                            <div class="alert alert-success" role="alert" id="successField" style="display:none">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Success:</span>
+                                <span class="message"></span>
+                            </div>
+
+                            <div class="row" style="margin-bottom: 80px;">  
+
+                                <div style="position:relative;">
+
+                                    <div class="col-md-6" id="originalSample-onDiv"  style="margin-bottom: 40px;position:absolute;z-index:0;">
+                                        <label for="originalSample" class="control-label pull-left">Upload electronic copy of original work   
+                                        </label>
+
+                                        <div class="input-group originalSample0 pull-left"  
+                                             data-toggle="tooltip"
+                                             title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
+                                             data-placement="bottom" >
+                                            <label class="btn btn-default btn-file pull-left">
+                                                Select file 
+                                                <input type="file"  
+                                                       name="file" 
+                                                       id="originalSample" >
+                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                            </label>
+                                            <input id="label_originalSample" class="pull-left">                                                                               
+                                            <br/>
+                                            <br/>          
+                                            <input type="hidden" name="userID" value="${userID}">
+                                            <input type="hidden" name="publisherID" value="${publisherID}">
+                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                            <!--Destination:-->
+                                            <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />                                          
+                                        </div>
+                                    </div>  <!--originalSample-onDiv-->
+
+                                    <div class="col-md-5" id="originalSample-offDiv"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">        
+                                        <label  class="control-label pull-left">Open electronic copy of original work </label>
+                                        <div class="input-group originalSample1 pull-left" >
+                                            <a class="btn btn-info btn-file pull-left" role="button" id="originalSample1" href="">
+                                                <span class="glyphicon glyphicon-file"></span>
+                                                Copy of original work</a>
+                                        </div>
+                                    </div> <!-- originalSample-offDiv-->
+                                </div> <!-- position:relative;-->
+
+                            </div> <!--row-->
+
+                            <div class="row" style="margin-bottom: 80px;">  
+
+                                <div style="position:relative;">
+
+                                    <div class="col-md-6" id="copiesTransSample-onDiv"  style="margin-bottom: 40px;position:absolute;z-index:0;">
+                                        <label for="translationSample" class="control-label pull-left">Upload copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
+                                        <div class="input-group translationSample pull-left" >
+                                            <label class="btn btn-default btn-file pull-left">
+                                                Select file 
+                                                <input type="file"  name="file" id="translationSample" class="form-input">
+                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                            </label>
+                                            <input id="label_translationSample" class="pull-left"/>
+                                            <br/>
+                                            <br/>          
+                                            <input type="hidden" name="userID" value="${userID}">
+                                            <input type="hidden" name="publisherID" value="${publisherID}">
+                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                            <!--Destination: -->
+                                            <input type="hidden" id="translationSample_upload" value="translationSample" name="destination" />                                          
+                                        </div>
+                                    </div> <!-- translationSample-onDiv-->
+
+                                    <div class="col-md-5" id="copiesTransSample-offDiv"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">    
+                                        <label class="control-label pull-left">Open copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
+                                        <div class="input-group translationSample1 pull-left">
+                                            <a class="btn btn-info btn-file pull-left" role="button" id="translationSample1" href="">
+                                                <span class="glyphicon glyphicon-file"></span>
+                                                Copy of translation sample</a>
+                                        </div>
+                                    </div> <!-- translationSample-offDiv-->
+
+                                </div> <!--position:relative;--> 
+
+                            </div> <!--row-->                                                            
+
+                        </div>  <!-- col-md-12 -->
+                    </div>  <!--panel--body-->
+                </div> <!--panel-default-->
+
+            </div> <!-- row -->
+
+
+        </div> <!-- container-fluid -->
+    </body>
+</html>

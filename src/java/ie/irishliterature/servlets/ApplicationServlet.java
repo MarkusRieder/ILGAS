@@ -126,7 +126,6 @@ public class ApplicationServlet extends HttpServlet {
             }
             request.getRequestDispatcher("/WEB-INF/views/newApplicationLandingPage.jsp").forward(request, response);
 
-            // request.getRequestDispatcher("/WEB-INF/views/newApplication.jsp").forward(request, response);
             break;
 
             case "NewApplicationTCconfirmed": {
@@ -152,7 +151,6 @@ public class ApplicationServlet extends HttpServlet {
 
             case "List Open Applications":
                 System.out.println("List Open Applications - session.getAttribute " + session.getAttribute("publisherID"));
-                //    publisherID = request.getParameter("publisherID");
                 session.setAttribute("publisherID", publisherID);
                 System.out.println("task: Application:: 1 " + task);
                 request.getRequestDispatcher("/WEB-INF/views/openApplications.jsp").forward(request, response);
@@ -174,33 +172,6 @@ public class ApplicationServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
                 break;
         }
-
-//         String action = request.getServletPath();
-// System.out.println("action2:  " + action);
-//        try {
-//            switch (action) {
-//            case "/new":
-//                showNewForm(request, response);
-//                break;
-//            case "/insert":
-//                insertBook(request, response);
-//                break;
-//            case "/delete":
-//                deleteBook(request, response);
-//                break;
-//            case "/edit":
-//                showEditForm(request, response);
-//                break;
-//            case "/update":
-//                updateBook(request, response);
-//                break;
-//            default:
-//                listBook(request, response);
-//                break;
-//            }
-//        } catch (SQLException ex) {
-//            throw new ServletException(ex);
-//        }
     }
 
     /**

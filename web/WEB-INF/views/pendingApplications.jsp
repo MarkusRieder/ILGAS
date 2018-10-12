@@ -71,46 +71,8 @@
 
         <script type="text/javascript"  src="js/pdf.js"></script>
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
-        <!-- 
-              <link rel="stylesheet" type="text/css" href="../../kartik/css/fileinput.css" media="all" />
-              <script type="text/javascript" src="kartik/js/plugins/sortable.js"></script> 
-              <script type="text/javascript" src="kartik/js/plugins/piexif.js"></script>
-              <script type="text/javascript" src="kartik/js/plugins/purify.js"></script>
-              <script type="text/javascript" src="kartik/js/fileinput.js"></script>
-        -->
-        <!-- 
-           <script type="text/javascript" src="../../kartik/js/plugins/sortable.js"></script>
-          <script type="text/javascript" src="../../kartik/js/plugins/piexif.js"></script>
-           <script type="text/javascript" src="../../kartik/js/plugins/purify.js"></script>
-            <script type="text/javascript" src="../../kartik/js/fileinput.js"></script>-->
-        <!--
-                <style>
-                    .ui-state-highlight, 
-                    .ui-widget-content .ui-state-highlight, 
-                    .ui-widget-header .ui-state-highlight {
-                        border: 1px solid #003399;
-                        background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
-                    }
-        
-        
-                    .ui-datepicker { 
-                        width: 17em; 
-                        padding: .2em .2em 0; 
-                        display: none; 
-                        z-index: 2000 !important;
-                    }
-        
-                    /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
-                    .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
-                    .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
-                    .ui-datepicker-calendar a.ui-state-active { background: red; } 
-        
-                </style>-->
-
 
         <script>
-
-
             var translatorArray = [];
             var authorArray = [];
             var languageArray = [];

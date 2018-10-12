@@ -247,20 +247,17 @@ public class GrantApplicationServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        //       String task = "Start New Application";
-        //        String[] authorArray;
-        //   String task = request.getParameter("AssignExpertReader");
+        //  String task = "Start New Application";
+        //  String[] authorArray;
+        //  String task = request.getParameter("AssignExpertReader");
         //  String task = request.getParameter("task");
         //  String name = request.getParameter("name");
-        //   String value = request.getParameter("value");
+        //  String value = request.getParameter("value");
         String task = String.valueOf(request.getSession().getAttribute("task"));
 
-        //String testingTheTask = request.getParameter("task");
-        //    String TasktestingTheTask = request.getAttribute(task).toString();
         System.out.println("GrantApplicationServlet :: ");
         System.out.println("HttpSession session :: sess: " + task);
 
-        //System.out.println("testingTheTask:: 1 " + testingTheTask);
         switch (task) {
             case "Start New Application":
                 System.out.println("Start New Application :: ");
