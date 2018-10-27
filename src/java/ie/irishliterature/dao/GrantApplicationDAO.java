@@ -409,13 +409,6 @@ public class GrantApplicationDAO {
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
 
-            System.out.println("ReferenceNumber: " + ReferenceNumber);
-            System.out.println("translatorName: " + Name);
-            System.out.println("Title: " + Title);
-            System.out.println("moveFile: " + moveFile);
-            System.out.println("moveFileName: " + moveFileName);
-            System.out.println("copiesTranslationSample: " + copiesTranslationSample);
-            System.out.println("copiesTranslationSampleDocName: " + copiesTranslationSampleDocName);
 
             ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
                     + "(idTranslator,\n"
@@ -429,10 +422,322 @@ public class GrantApplicationDAO {
             ps1.setInt(1, idTranslator);
             ps1.setString(2, Title);
             ps1.setString(3, ReferenceNumber);
-            ps1.setString(4, moveFile);
-            ps1.setString(5, moveFileName);
+            ps1.setString(4, moveFileName);
+            ps1.setString(5, moveFile);
             ps1.setString(6, copiesTranslationSample);
             ps1.setString(7, copiesTranslationSampleDocName);
+            ps1.executeUpdate();
+
+            ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+            res = ps2.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    id = res.getInt(1);
+                    System.out.println("GrantApplicationDAO id::   " + id);
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, ps2, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, ps2, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
+    }
+
+    public static int insertAgreement(String ReferenceNumber, String Name, String Title, String moveFileName, String moveFileNameReplaced) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        int id = 0;
+        int idTranslator = 0;
+        ResultSet res = null;
+
+        try {
+
+            System.out.println("insertTranslators......................:");
+
+            //check if Translator exists
+            idTranslator = ifTranslatorExist(Name);
+
+            //if not insert the new Translator
+            if (idTranslator == 0) {
+                // idTranslatorTrack, idTranslator, Author, Title, ReferenceNumber
+                idTranslator = insertNewTranslator(Name);
+
+                System.out.println(">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator);
+
+            }
+            // then:
+            //got idTranslator now insert into TranslatorTrack         
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
+                    + "(idTranslator,\n"
+                    + "Title,\n"
+                    + "ReferenceNumber,\n"
+                    + "Agreement,\n"
+                    + "AgreementDocName) values (?,?,?,?,?)");
+
+            ps1.setInt(1, idTranslator);
+            ps1.setString(2, Title);
+            ps1.setString(3, ReferenceNumber);
+            ps1.setString(4, moveFileNameReplaced);
+            ps1.setString(5, moveFileName);
+
+            ps1.executeUpdate();
+
+            ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+            res = ps2.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    id = res.getInt(1);
+                    System.out.println("GrantApplicationDAO id::   " + id);
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, ps2, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, ps2, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
+    }
+
+    public static int insertContract(String ReferenceNumber, String Name, String Title, String moveFileName, String moveFileNameReplaced) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        int id = 0;
+        int idTranslator = 0;
+        ResultSet res = null;
+
+        try {
+
+            System.out.println("insertTranslators......................:");
+
+            //check if Translator exists
+            idTranslator = ifTranslatorExist(Name);
+
+            //if not insert the new Translator
+            if (idTranslator == 0) {
+                // idTranslatorTrack, idTranslator, Author, Title, ReferenceNumber
+                idTranslator = insertNewTranslator(Name);
+
+                System.out.println(">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator);
+
+            }
+            // then:
+            //got idTranslator now insert into TranslatorTrack         
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
+                    + "(idTranslator,\n"
+                    + "Title,\n"
+                    + "ReferenceNumber,\n"
+                    + "Contract,\n"
+                    + "ContractDocName) values (?,?,?,?,?)");
+
+            ps1.setInt(1, idTranslator);
+            ps1.setString(2, Title);
+            ps1.setString(3, ReferenceNumber);
+            ps1.setString(4, moveFileNameReplaced);
+            ps1.setString(5, moveFileName);
+
+            ps1.executeUpdate();
+
+            ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+            res = ps2.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    id = res.getInt(1);
+                    System.out.println("GrantApplicationDAO id::   " + id);
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, ps2, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, ps2, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
+    }
+
+    public static int insertAddendum(String ReferenceNumber, String Name, String Title, String moveFileName, String moveFileNameReplaced) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        int id = 0;
+        int idTranslator = 0;
+        ResultSet res = null;
+
+        try {
+
+            System.out.println("insertTranslators......................:");
+
+            //check if Translator exists
+            idTranslator = ifTranslatorExist(Name);
+
+            //if not insert the new Translator
+            if (idTranslator == 0) {
+                // idTranslatorTrack, idTranslator, Author, Title, ReferenceNumber
+                idTranslator = insertNewTranslator(Name);
+
+                System.out.println(">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator);
+
+            }
+            // then:
+            //got idTranslator now insert into TranslatorTrack         
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
+                    + "(idTranslator,\n"
+                    + "Title,\n"
+                    + "ReferenceNumber,\n"
+                    + "AddendumRightsAgreement,\n"
+                    + "AddendumRightsAgreementName) values (?,?,?,?,?)");
+
+            ps1.setInt(1, idTranslator);
+            ps1.setString(2, Title);
+            ps1.setString(3, ReferenceNumber);
+            ps1.setString(4, moveFileNameReplaced);
+            ps1.setString(5, moveFileName);
+
+            ps1.executeUpdate();
+
+            ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+            res = ps2.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    id = res.getInt(1);
+                    System.out.println("GrantApplicationDAO id::   " + id);
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, ps2, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, ps2, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
+    }
+
+    public static int insertOriginal(String ApplicationNumber, String moveFileName, String moveFileNameReplaced) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        int id = 0;
+        int idTranslator = 0;
+        ResultSet res = null;
+
+        try {
+
+            System.out.println("insertOriginal......................:");
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+
+            String query = "UPDATE GrantApplication SET  Original = ?, OriginalName = ? WHERE ApplicationNumber = ?";
+            ps1 = conn.prepareStatement(query);
+
+            ps1.setString(1, moveFileNameReplaced);
+            ps1.setString(2, moveFileName);
+            ps1.setString(3, ApplicationNumber);
+
+            ps1.executeUpdate();
+
+            ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+            res = ps2.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+
+                    id = res.getInt(1);
+//                    System.out.println("GrantApplicationDAO id::   " + id);
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, ps2, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, ps2, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
+    }
+
+    public static int insertTranslationSample(String ApplicationNumber, String moveFileName, String moveFileNameReplaced) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        int id = 0;
+        ResultSet res = null;
+
+        try {
+
+            System.out.println("insertTranslationSample......................:");
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            System.out.println("ApplicationNumber: " + ApplicationNumber);
+
+            System.out.println("moveFile: " + moveFileNameReplaced);
+            System.out.println("moveFileName: " + moveFileName);
+            
+                        String query = "UPDATE GrantApplication SET  copiesTranslationSample = ?, copiesTranslationSampleDocName = ? WHERE ApplicationNumber = ?";
+            ps1 = conn.prepareStatement(query);
+            
+              
+//
+//            ps1 = conn.prepareStatement("UPDATE GrantApplication SET"
+//                    + "(copiesTranslationSample,\n"
+//                    + "copiesTranslationSampleDocName) values (?,?)"
+//                    + " WHERE ApplicationNumber = " + ApplicationNumber);
+
+            ps1.setString(1, moveFileNameReplaced);
+            ps1.setString(2, moveFileName);
+            ps1.setString(3, ApplicationNumber);
+
             ps1.executeUpdate();
 
             ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");

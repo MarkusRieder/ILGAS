@@ -509,22 +509,65 @@
          the selected file name (for upload) to the label input-->
         <script>
             $(function () {
+                $('#agreement1').on('click', 'button', function (e) {
+                    alert(e.target.id);
+                    console.log("e.target.id" + e.target.id);
+                });
+            });
+            $(function () {
+                $('div.agreement').on('change', ':file', function () {
+                    console.log("this.id" + this.id);
+                    console.log("this.childNodes[0].nodeValue" + this.childNodes[0].nodeValue);
+                    console.log("document.querySelector('.agreement').id" + document.querySelector('.agreement').id);
+
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    alert(label);
+                    input.trigger('fileselect', [numFiles, label]);
+                    console.log("input.id" + input.id);
+                    console.log("input.childNodes[0].nodeValue" + input.childNodes[0].nodeValue);
+                    var x = document.getElementsByClassName("agreement")[0].id;
+                    console.log("agreement id" + x);
+                    alert(this.childNodes[0].nodeValue);
+                    document.getElementById("label_agreement").value = label;
+                });
+            });
+            $(function () {
+                $('div.contract').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_contract").value = label;
+                });
+            });
+            $(function () {
+                $('div.addendum').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_addendum").value = label;
+                });
+            });
+            $(function () {
                 $('div.translator_cv').on('change', ':file', function () {
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-                    //                  var label_translatorid2 = "label_translator" + id2;
+//                  var label_translatorid2 = "label_translator" + id2;
                     document.getElementById("label_translator0").value = label;
                 });
             });
             $(function () {
                 $(document).on('change', 'div.translatorcv :file', function () {
+
                     var id = parseInt(this.id.replace("translator_cv", ""));
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
                     var label_translatorid = "label_translator" + id;
                     document.getElementById(label_translatorid).value = label;
                 });
@@ -584,23 +627,6 @@
                     document.getElementById("label_signedLIcontract").value = label;
                 });
             });
-
-
-            function generatedLabels() {
-                $(document).on('change', ':file', function () {
-
-
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    var id = input[0].id;
-                    var label_id = "label_" + id;
-                    document.getElementById(label_id).value = label;
-                });
-            }
-            ;
-
         </script>
 
         <script type="text/javascript">
@@ -634,6 +660,7 @@
 
             function  copyFirstTranslatorName() {
 
+                alert("backToTranslators");
                 translatorArray = [];
                 console.log("copyFirstTranslatorName translatorArray cleared ", translatorArray);
 
@@ -733,10 +760,10 @@
                     rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
                     rightsAgreementContractsNavContent += '<div class="input-group agreement"  style="margin-bottom: 40px;">';
                     rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Agreement-' + j + '" id="agreement' + j + '">';
+                    rightsAgreementContractsNavContent += 'Select file <input type="file"  name="file" id="agreement' + j + '">';
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                     rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_agreement' + j + '" class="pull-left" value=""/>';
+                    rightsAgreementContractsNavContent += '<input id="label_agreement' + j + '" class="pull-left"/>';
                     rightsAgreementContractsNavContent += '<input type="hidden" value="Agreement" name="destination" id="agreement_upload' + j + '"/>';
                     rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
                     rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-10" 
@@ -750,7 +777,7 @@
                     rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
                     rightsAgreementContractsNavContent += '<div class="input-group contract"  style="margin-bottom: 40px;">';
                     rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Contract-' + j + '" id="contract' + j + '">';
+                    rightsAgreementContractsNavContent += 'Select file <input type="file"  name="file" id="contract' + j + '">';
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                     rightsAgreementContractsNavContent += '</label>';
                     rightsAgreementContractsNavContent += '<input id="label_contract' + j + '" class="pull-left"/>';
@@ -767,11 +794,11 @@
                     rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
                     rightsAgreementContractsNavContent += '<div class="input-group addendum"  style="margin-bottom: 40px;">';
                     rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Addendum-' + j + '" id="addendum' + j + '">';
+                    rightsAgreementContractsNavContent += 'Select file <input type="file"  name="file" id="addendum' + j + '">';
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                     rightsAgreementContractsNavContent += '</label>';
                     rightsAgreementContractsNavContent += '<input id="label_addendum' + j + '" class="pull-left"/>';
-                    rightsAgreementContractsNavContent += '<input type="hidden" value="Addendum" name="destination" id="addendum_upload' + j + '"/>';
+                    rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="addendum_upload' + j + '"/>';
                     rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
                     rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-12" 
 
@@ -779,8 +806,8 @@
                     rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
                 }
 
-                $(rightsAgreementContractsNavContent).appendTo('#tnc');
-
+//                $(rightsAgreementContractsNavContent).appendTo('#tnc');
+document.body.insertBefore('#tnc', rightsAgreementContractsNavContent);
             }
 
         </script>
@@ -820,7 +847,7 @@
                     moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
                     moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
                     moreUploadTag += 'Select file ';
-                    moreUploadTag += '<input multiple="" name="Translator_CV-' + upload_number + '" id="translator_cv' + upload_number + '" type="file">';
+                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
                     moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
                     moreUploadTag += '</label>';
                     moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
@@ -860,13 +887,9 @@
                     $(additionalTranslatorTag).appendTo('#addTransl');
                 }
 
-                // if we have a final list of translators (more than one)
-                // we need to clear a possible existing tab first
                 generateTranslatorTab(0);
 
-                console.log("backToTranslators #translatorArray.val(translatorArray) " + translatorArray);
-                console.log(translatorArray);
-                console.log("backToTranslators #translatorArray.length " + translatorArray.length);
+
                 $("#translatorArray").val(translatorArray);
             }
         </script>
@@ -1505,7 +1528,7 @@
                                             </div> <!--<div class="col-sm-3">-->   
 
                                         </div> <!--row-->
-                                        <input type="text" id="translatorArray" name="translatorArray" >
+
                                         <!--keep in one line otherwise placeholder doesn't show-->
                                         <label class="pull-left">Additional contact information (where applicable)</label>
                                         <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
@@ -1745,7 +1768,6 @@
                                                 <div  id="tn">                                                        
                                                 </div>  <!-- tn -->
                                                 <div class="tab-content" id="tnc">
-                                                    <p>Please fill in Translator Details first!!</p>
                                                 </div>  <!-- tnc -->
                                             </div>  <!-- <div class="container-fluid"  -->
                                         </nav>  <!-- <nav class="navbar -->
@@ -1880,7 +1902,7 @@
 
                                                     </div>                                                    
 
-
+                                                    <input type="hidden" id="translatorArray" name="translatorArray" >
                                                 </div>
                                             </div>
                                         </div> <!--row-->
@@ -1920,7 +1942,7 @@
                                                         <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
                                                             <label class="btn btn-default btn-file pull-left">
                                                                 Select file 
-                                                                <input multiple="" type="file"  name="Translator_CV-1" id="translator_cv0" >
+                                                                <input multiple="" type="file"  name="file" id="translator_cv0" >
                                                                 <span class="glyphicon glyphicon-folder-open"></span>
                                                             </label>
                                                             <input id="label_translator0" class="pull-left"/>
@@ -2040,7 +2062,7 @@
                                                                     <label class="btn btn-default btn-file pull-left">
                                                                         Select file 
                                                                         <input type="file"  
-                                                                               name="Original" 
+                                                                               name="file" 
                                                                                id="originalSample" >
                                                                         <span class="glyphicon glyphicon-folder-open"></span>
                                                                     </label>
@@ -2062,7 +2084,7 @@
                                                                 <div class="input-group translationSample pull-left" >
                                                                     <label class="btn btn-default btn-file pull-left">
                                                                         Select file 
-                                                                        <input type="file"  name="TranslationSample" id="translationSample" class="form-input">
+                                                                        <input type="file"  name="file" id="translationSample" class="form-input">
                                                                         <span class="glyphicon glyphicon-folder-open"></span>
                                                                     </label>
                                                                     <input id="label_translationSample" class="pull-left"/>

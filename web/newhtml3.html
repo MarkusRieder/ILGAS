@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html style="height: 100%" >
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+         <title>Dynamic Upload Example</title>
+         
+         <!--https://www.bennadel.com/blog/1375-ask-ben-dynamically-adding-file-upload-fields-to-a-form-using-jquery.htm-->
+         
+         
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/layout.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
+        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
+
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+        <!--<script type="text/javascript"  src="js/moment.js"></script>-->
+        <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
+        <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript"  src="js/jquery-ui.js"></script>
+
+        <script>
+            // When the DOM has loaded, init the form link.
+            $(
+                    function () {
+                        // Get the add new upload link.
+                        var jAddNewUpload = $("#add-file-upload");
+
+                        // Hook up the click event.
+                        jAddNewUpload
+                                .attr("href", "javascript:void( 0 )")
+                                .click(
+                                        function (objEvent) {
+                                            AddNewUpload();
+
+                                            // Prevent the default action.
+                                            objEvent.preventDefault();
+                                            return(false);
+                                        }
+                                )
+                                ;
+
+                    }
+            );
+
+
+            // This adds a new file upload to the form.
+            function AddNewUpload() {
+                // Get a reference to the upload container.
+                var jFilesContainer = $("#files");
+
+                // Get the file upload template.
+                var jUploadTemplate = $("#element-templates div.row");
+
+                // Duplicate the upload template. This will give us a copy
+                // of the templated element, not attached to any DOM.
+                var jUpload = jUploadTemplate.clone();
+
+                // At this point, we have an exact copy. This gives us two
+                // problems; on one hand, the values are not correct. On
+                // the other hand, some browsers cannot dynamically rename
+                // form inputs. To get around the FORM input name issue, we
+                // have to strip out the inner HTML and dynamically generate
+                // it with the new values.
+                var strNewHTML = jUpload.html();
+
+                // Now, we have the HTML as a string. Let's replace the
+                // template values with the correct ones. To do this, we need
+                // to see how many upload elements we have so far.
+                var intNewFileCount = (jFilesContainer.find("div.row").length + 1);
+
+                // Set the proper ID.
+                jUpload.attr("id", ("file" + intNewFileCount));
+
+                // Replace the values.
+                strNewHTML = strNewHTML
+                        .replace(
+                                new RegExp("::FIELD2::", "i"),
+                                intNewFileCount
+                                )
+                        .replace(
+                                new RegExp("::FIELD3::", "i"),
+                                ("presoFile" + intNewFileCount)
+                                )
+                        ;
+
+                // Now that we have the new HTML, we can replace the
+                // HTML of our new upload element.
+                jUpload.html(strNewHTML);
+
+                // At this point, we have a totally intialized file upload
+                // node. Let's attach it to the DOM.
+                jFilesContainer.append(jUpload);
+            }
+
+        </script>
+    </head>
+    <body>
+
+        <h1>
+            Dynamic Upload Example
+        </h1>
+
+        <form>
+
+            <div id="files">
+
+                <div id="file1" class="row">
+                    1: <input type="file" name="presoFile1"/>
+                </div>
+
+            </div>
+
+            <p>
+                <a id="add-file-upload">Add File Upload</a>
+            </p>
+
+
+
+            <div id="element-templates" style="display: none ;">
+
+                <div id="::FIELD1::" class="row">
+                    ::FIELD2::: <input type="file" name="::FIELD3::"/>
+                </div>
+
+            </div>
+
+        </form>
+
+    </body>
+</html>

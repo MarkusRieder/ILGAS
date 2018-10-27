@@ -229,42 +229,366 @@ and open the template in the editor.
             }
 
         </style>
+        <script>
+            //Global Variables
+            var translatorArray = [];
+            var authorArray = [];
+            var languageArray = [];
+            var pressCuttingArray = [];
+            var Name = "";
+            var Author = "";
+            var counter = 0;
+            var Authorcounter = 0;
+            var pressCuttingCounter = 0;
+            var translatorCounter = 0;
+       //            var translatorCounter1 = 0;
+            var translatorName876 = "";
+            var itemValue = "";
 
+            $.datepicker.setDefaults({
+                dateFormat: 'dd/mm/yy',
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                autoclose: true,
+                changeMonth: true,
+                changeYear: true,
+                gotoCurrent: true,
+                orientation: "bottom" // <-- and add this
+            });
+
+            //    localStorage.clear();
+
+            PDFJS.workerSrc = 'js/pdf.worker.js';
+        </script>
 
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
         <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
 
         <script>
 //            var a = true;
-            var a = false;
+     var a = false;
+     $(document).ready(function () {
+         $("button").click(function () {
+             jQuery('#beta, #delta ').toggle(); // 1 / 2
+             jQuery('#alpha, #gamma ').toggle(); // 3 / 4
+             jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
+             jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
+             jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
+             jQuery('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+         });
+
+
+         if (a === true) {
+             jQuery('#beta, #delta ').toggle(); // 1 / 2
+             jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
+             jQuery('#transSample-onDiv, #transSample-offDiv').toggle();
+             jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
+             console.log(a);
+         } else {
+             jQuery('#alpha, #gamma ').toggle(); // 3 / 4
+             jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
+
+             console.log(a);
+         }
+     });
+
+//            var taskList = []; //build array
+//
+//            function loadTasks() {
+//                if (!localStorage.taskList) {
+//                    for(i = 0; i < newTaskList.length; i++){
+//                        console.log("newTaskList  "  + newTaskList );
+//                    }
+//                    return false;
+//                }
+//                var newTaskList = JSON.parse(localStorage.taskList); //retrieve array with parse
+//
+//                for (i = 0; i < newTaskList.length; i++) {
+//                    // display objects in divs
+//
+//                    var noteNode = document.createElement("div");
+//                    var titleNode = document.createElement("h3");
+//                    var pNode = document.createElement("p");
+//                    var descNode = document.createTextNode(newTaskList[i].desc);
+//                    var timeNode = document.createTextNode(newTaskList[i].time);
+//                    titleNode.appendChild(descNode);
+//                    pNode.appendChild(timeNode);
+//                    noteNode.appendChild(titleNode);
+//                    noteNode.appendChild(pNode);
+//
+//
+//                    document.getElementById("taskBoard").appendChild(noteNode); //display divs
+//
+//                    if (taskBoard.childElementCount > newTaskList.length) {
+//                        //remove excess divs
+//                        for (n = 0; taskBoard.childElementCount - 2; n++) {
+//                            taskBoard.removeChild(taskBoard.firstChild);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            function submitFunc() {
+//                var task = {
+//                    //build objects
+//                    desc: document.getElementsByTagName("textarea")[0].value,
+//                    time: document.getElementsByTagName("input")[0].value,
+//                    important: document.getElementsByTagName("input")[1].checked
+//                };
+//
+//                taskList[taskList.length] = task; //put objects inside array
+//                localStorage.taskList = JSON.stringify(taskList); //store array with stringify
+//                loadTasks();
+//                return false; //prevent submit
+//            }
+//
+//            loadTasks();
+//        </script>
+
+        <script>
+
+            function myFunction() {
+                translatorName876 = "";
+                var x = document.getElementById("translatorName");
+                translatorName876 = x.value;
+                var tester = "Upload a copy of " + translatorName876 + "'s CV:";
+                localStorage.setItem('translatorName876', tester);
+                localStorage.setItem('translatorName8', translatorName876);
+                var tripper = localStorage.getItem("translatorName876");
+                document.getElementById("123").innerHTML = tripper;
+                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
+//                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
+//                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
+//                console.log("tester   ", tester);
+//                console.log("tripper   ", tripper);
+            }
+
+        </script>
+
+        <script type="text/javascript">
             $(document).ready(function () {
-                $("button").click(function () {
-                    jQuery('#beta, #delta ').toggle(); // 1 / 2
-                    jQuery('#alpha, #gamma ').toggle(); // 3 / 4
-                    jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
-                    jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
-                    jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
-                     jQuery('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+                counter = 1;
+                $("#addElement").click(function (event) {
+                    counter++;
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counter + ". Translator  </div>");
+                    var $newInput = $("<input placeholder='Translator Name' type='text'> ");
+                    $newInput
+                            .attr("name", "Name" + counter)
+                            .attr("id", "name" + counter)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#generatedForm"));
                 });
-
-
-                if (a === true) {
-                    jQuery('#beta, #delta ').toggle(); // 1 / 2
-                    jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
-                     jQuery('#transSample-onDiv, #transSample-offDiv').toggle();
-                     jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
-                    console.log(a);
-                } else {
-                    jQuery('#alpha, #gamma ').toggle(); // 3 / 4
-                    jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
-                    
-                    console.log(a);
-                }
             });
         </script>
 
+        <script>
+            function  copyFirstRow() {
+                //                function retrieve(){
+                document.getElementById("restored").innerHTML = localStorage.getItem("tabelaContent");
+                if (!localStorage.restored) {
+                    for (i = 0; i < restored.length; i++) {
+                        console.log("restored  " + restored);
+                    }
+                    return false;
+                }
+                var fn = document.getElementById("translatorName");
+                document.getElementById("first0").value = fn.value;
+                Name = fn.value;
+                translatorArray.push(Name);
+                console.log(" first entry in translatorArray ", fn.value);
+            }
+        </script>
+
+        <script>
+            function backToBooks() {
+                var upload_number = 2;
+                var tabelaContent = document.getElementById("tabela").innerHTML;
+
+                // Store Content
+                localStorage.setItem("tabelaContent", tabelaContent);
+                if (!localStorage.tabelaContent) {
+                    for (i = 0; i < tabelaContent.length; i++) {
+                        console.log("tabelaContent  " + tabelaContent);
+                    }
+                    return false;
+                }
+
+
+//}
+
+
+                for (var i = 2; i <= counter; i++) {
+
+                    var nr = "name" + i;
+                    var item = document.getElementById(nr);
+                    itemValue = item.value;
+
+                    translatorArray.push(itemValue);
+
+                    var moreUploadTag = '';
+
+                    moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+                    moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
+                    moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
+                    moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
+                    moreUploadTag += 'Select file ';
+                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
+                    moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
+                    moreUploadTag += '</label>';
+                    moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
+                    moreUploadTag += '</div>';
+                    moreUploadTag += '</div>';
+
+                    $(moreUploadTag).appendTo('#additionalTranslator');
+
+                    upload_number++;
+                }
+
+//                $('#bs-example-navbar-collapse-1 a[href="#Translator"]').tab('show');
+//                var arrayLength = translatorArray.length;
+//                for (var i = 0; i < arrayLength; i++) {
+//                }
+//                $("#translatorArray").val(translatorArray);
+            }
+        </script>
     </head>
     <body>
+        <div class="container-fluid">
+            <div class="tab-pane" id="Translator"> 
+                <p class="header1" style="margin-bottom: 40px">
+                    Translator Details
+                </p>
+
+                <div class="container-fluid" id="tabela">
+
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="col-sm-4"> 
+                                    <div class="form-group has-feedback">
+                                        <label for="translatorName" class="pull-left">Translator</label>
+                                        <input id="translatorName"                                
+                                               type="text"                                
+                                               class="form-control"                                
+                                               name="translatorName"                                
+                                               value=""    
+                                               onblur="myFunction();"
+                                               placeholder="Translator Name"
+                                               >
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4" style="margin-top: 30px;">    
+                                    <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                       data-toggle="modal" 
+                                       data-target="#addTranslatorModal"
+                                       onclick="copyFirstRow();"
+                                       >Add more translators</a>
+
+                                </div>                                                    
+
+                                <input type="hidden" id="translatorArray" name="translatorArray" >
+                            </div>
+                        </div>
+                    </div> <!--row-->
+
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">                                              
+
+                                    <label for="translatorFee" class="control-label pull-left">Translator(s)'s fee</label>                                                                        
+                                    <div class="input-group pull-left" style="margin-bottom: 20px">
+                                        <label class="input-group-addon" for="translatorFee">
+                                            <span class="glyphicon glyphicon-euro"></span>                                     
+                                        </label>
+                                        <input type="text" class="form-control pull-left" name="translatorFee" id="translatorFee" placeholder="fee">    
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">  
+                                    <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                  
+                                    <div class="form-group">
+                                        <!--keep in one line otherwise placeholder doesn't show-->
+                                        <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee' style="width: 280px; height: 196px;"></textarea>
+                                    </div>
+                                </div>
+                            </div>  <!--panel--body-->
+                        </div> <!--panel-default-->
+                    </div> <!-- row -->
+
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="col-md-8"   style="margin-bottom: 20px">
+                                    <label for="translator_cv0" class="control-label pull-left" id="123"></label>
+                                    <br/>
+                                    <small class="pull-left"   style="margin-bottom: 10px">This should include a list of previously published literary translations</small> 
+                                    <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
+                                        <label class="btn btn-default btn-file pull-left">
+                                            Select file 
+                                            <input multiple="" type="file"  name="file" id="translator_cv0" >
+                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                        </label>
+                                        <input id="label_translator0" class="pull-left"/>
+                                        <br/>
+                                        <br/>          
+                                        <input type="hidden" name="userID" value="${userID}">
+                                        <input type="hidden" name="publisherID" value="${publisherID}">
+                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                        <!--Destination:-->
+                                        <input type="hidden" id="translator_cv_upload0" value="Translator_CV" name="destination" />                                          
+                                    </div>
+                                </div>
+                                <input type="hidden" name="userID" id="translatorName123" value=''>
+                                <div id="additionalTranslator"></div>
+                            </div>
+                        </div>
+                    </div> 
+                </div> <!-- container-fluid  -->
+            </div> <!-- class="tab-pane" id="Translator" -->
+        </div>
+        <div class="modal fade" id="addTranslatorModal" tabindex="-1" role="dialog" aria-labelledby="addTranslatorModalLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #c3bcbc">
+                        <button type="button" class="close" data-dismiss="modal"  onclick="backToBooks();"  aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="addTranslatorModalLabel">add more Translators</h4>
+                    </div>
+
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row" style="margin-bottom: 10px">
+                            <div class='col-sm-12'>
+
+                                <div  id="generatedForm" class="input-group" style='margin-bottom:2px'>
+                                    1. Translator <input type="text" id="first0" value="Name" style='margin-bottom:2px'>                                                         
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc">
+                        <button id="addElement" type="button" value="Add another Translator"  class="btn btn-group-sm  button teal pull-left">Add another Translator</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToBooks();">Done</button>
+                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                    </div> <!--modal footer -->
+                </div> <!--modal content-->          
+            </div> <!--modal dialog-->
+        </div> <!--modal fade-->
+
+
+        <div class="container-fluid" id="restored">
+
+        </div>
         <div class="container-fluid">
 
             <div class="panel panel-default">        
@@ -555,7 +879,29 @@ and open the template in the editor.
 
             </div> <!-- row -->
 
-
+            <div class="container">
+                <h1>My Task Board</h1>
+                <div class="container">
+                    <form onsubmit="return submitFunc()">
+                        <div class="form-group">
+                            <label>Task:</label>
+                            <textarea name="name" rows="8" cols="80"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Deadline:</label>
+                            <input type="datetime-local">
+                        </div>
+                        <div class="form-group">
+                            <label>important:</label>
+                            <input type="checkbox" name="checkbox" value="">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="button">Add Task</button>
+                        </div>
+                    </form>
+                </div> <!-- container -->
+            </div> <!-- container -->
+            <div id="taskBoard"></div>
         </div> <!-- container-fluid -->
     </body>
 </html>

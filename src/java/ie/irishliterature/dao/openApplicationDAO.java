@@ -34,18 +34,16 @@ public class openApplicationDAO {
         ArrayList<String> authorList;// = new ArrayList<>();
         //  ArrayList<String> list = new ArrayList<>();
 
-        ArrayList<String> translatorList = new ArrayList<>();
-        ArrayList<String> translatorList1 = new ArrayList<>();
-        List<List<String>> transList = new ArrayList<List<String>>();
+        ArrayList<String> translatorList;
+        List<List<String>> listOfTranslatorArray;
+        List<List<String>> rightsAgreementArray;
 //        what I want:
 //        
 //        [TranslatorName1, TranslatorCVName,TranslatorCV]
 
         String searchQuery = "SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter + " ORDER BY ApplicationYear ";
-        System.out.println("SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter);
 
-        
-      //        String searchQuery = "SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter + " ORDER BY ApplicationYear ";
+        //        String searchQuery = "SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter + " ORDER BY ApplicationYear ";
 //        
 //        SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter
 //
@@ -100,10 +98,7 @@ public class openApplicationDAO {
                 String[] bookTitle = getBookTitle(ReferenceNumber);
 
                 application.setBookTitle(bookTitle[0]);
-                application.setAgreement(res.getString("agreement"));
-                application.setAgreementDocName(res.getString("agreementDocName"));
-                application.setContract(res.getString("contract"));
-                application.setContractDocName(res.getString("contractDocName"));
+
                 application.setProposedDateOfPublication(res.getDate("proposedDateOfPublication"));
                 application.setProposedPrintRun(res.getInt("proposedPrintRun"));
                 application.setPlannedPageExtent(res.getInt("plannedPageExtent"));
@@ -117,17 +112,17 @@ public class openApplicationDAO {
                 application.setBookNotes(bNotes.trim());
                 //     application.setTranslatorNotes("translatorNotes");
 
-                application.setCopiesSent(res.getInt("copiesSent"));     
-                 
-                application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));                
+                application.setCopiesSent(res.getInt("copiesSent"));
+
+                application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
                 System.out.println("dateCopiesWereSent " + res.getDate("dateCopiesWereSent"));
-                
+
                 application.setCopiesTranslationSample(res.getString("copiesTranslationSample"));
                 application.setCopiesTranslationSampleDocName(res.getString("copiesTranslationSampleDocName"));
-                
+
                 System.out.println("setCopiesTranslationSample " + res.getString("copiesTranslationSample"));
                 System.out.println("setCopiesTranslationSampleDocName " + res.getString("copiesTranslationSampleDocName"));
-                
+
                 application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
                 application.setTC_ACCEPTED(res.getInt("TC_ACCEPTED"));
                 application.setAPPROVED(res.getInt("APPROVED"));
@@ -137,8 +132,58 @@ public class openApplicationDAO {
                 application.setOriginal(res.getString("original"));
                 application.setOriginalName(res.getString("originalName"));
 
+                application.setAgreement(res.getString("agreement"));
+                application.setAgreementDocName(res.getString("agreementDocName"));
+                application.setContract(res.getString("contract"));
+                application.setContractDocName(res.getString("contractDocName"));
+
                 application.setAddendumRightsAgreement(res.getString("addendumRightsAgreement"));
                 application.setAddendumRightsAgreementName(res.getString("addendumRightsAgreementName"));
+
+                ArrayList<String> rightsAgreementList;
+                rightsAgreementArray = new ArrayList<>();
+
+                rightsAgreementList = getRightsAgreement(ReferenceNumber);
+                rightsAgreementArray.add(rightsAgreementList);
+
+                application.setRightsAgreement(rightsAgreementList);
+
+                //Info:   1  getRightsAgreement .... 5 == /~markus/test/2018/Discworld Publishers/191/Agreement/Translator Name1/agreement with the translation rights holder.docx
+                //Info:   1  getRightsAgreement .... 6 == agreement with the translation rights holder.docx
+                //Info:   1  getRightsAgreement .... 7 == /~markus/test/2018/Discworld Publishers/191/Contract/Translator Name1/contract with the translator.docx
+                //Info:   1  getRightsAgreement .... 8 == contract with the translator.docx
+                //Info:   1  getRightsAgreement .... 9 == /~markus/test/2018/Discworld Publishers/191/Addendum/Translator Name1/addendum to the rights agreement.docx
+                //Info:   1  getRightsAgreement .... 10 == addendum to the rights agreement.docx
+                //
+                //Info:   1  getRightsAgreement .... 5 == /~markus/test/2018/Discworld Publishers/191/Agreement/Translator Name2/agreement with the translation rights holder 2.docx
+                //Info:   1  getRightsAgreement .... 6 == agreement with the translation rights holder 2.docx
+                //Info:   1  getRightsAgreement .... 7 == /~markus/test/2018/Discworld Publishers/191/Contract/Translator Name2/contract with the translator 2.docx
+                //Info:   1  getRightsAgreement .... 8 == contract with the translator 2.docx
+                //Info:   1  getRightsAgreement .... 9 == /~markus/test/2018/Discworld Publishers/191/Addendum/Translator Name2/addendum to the rights agreement 2.docx
+                //Info:   1  getRightsAgreement .... 10 == addendum to the rights agreement 2.docx
+                //
+                //Info:   1  getRightsAgreement .... 1 == /~markus/test/2018/Discworld Publishers/191/Translator_CV/Translator Name1/translator cv 1.docx
+                //Info:   1  getRightsAgreement .... 2 == translator cv 1.docx
+                //Info:   1  getRightsAgreement .... 1 == /~markus/test/2018/Discworld Publishers/191/Translator_CV/Translator Name2/translator cv 2.docx
+                //Info:   1  getRightsAgreement .... 2 == translator cv 2.docx
+                //
+                //Info:   2  rightsAgreementList.size .... 2
+                //Info:   3  getRightsAgreement .... 0 == /~markus/test/2018/Discworld Publishers/191/Translator_CV/Translator Name2/translator cv 2.docx
+                //Info:   3  getRightsAgreement .... 1 == translator cv 2.docx                
+//                idTranslatorTrack, idTranslator, ReferenceNumber, Title, 
+//                 translatorCV, translatorCVDocName, 
+//                 copiesTranslationSample, copiesTranslationSampleDocName, 
+//                 Agreement, AgreementDocName, 
+//                 Contract, ContractDocName, 
+//                 AddendumRightsAgreement
+//                , AddendumRightsAgreementName 
+//private String agreement;//path + filename
+                //
+                //private String agreementDocName; //filename
+                //
+                //private String contract; //path + filename
+                //
+                //private String contractDocName;  //filename
                 application.setProofOfPaymentToTranslator(res.getString("proofOfPaymentToTranslator"));
                 application.setProofOfPaymentToTranslatorName(res.getString("proofOfPaymentToTranslatorName"));
                 application.setBankDetailsForm(res.getString("bankDetailsForm"));
@@ -176,99 +221,20 @@ public class openApplicationDAO {
 //                application.setExpertReaderName(expertReaderName);
                 //get all idTranslator / Translator.Name  for that ReferenceNumber return ArrayList
                 translatorTrackId = getTranslatorTrackId(ReferenceNumber);
-                ArrayList<String> translatorDocsList = new ArrayList<String>();
+                ArrayList<String> translatorDocsList;
                 translatorList = new ArrayList<>();
-                transList = new ArrayList<>();
-                translatorList1 = new ArrayList<>();
-//                ArrayList<ArrayList<String>> mixedList = new ArrayList<>();
-//                ArrayList<String> testList = new ArrayList<>();
-//                titleList = new ArrayList<>();
-//
+                listOfTranslatorArray = new ArrayList<>();
+
                 authorList = getAuthors(ReferenceNumber);
                 application.setAuthor(authorList);
                 translatorDocsList = getTransDocs(ReferenceNumber);
 
-                for (int i = 0; i < translatorTrackId.size(); i++) {
-//                    translatorDocsLst = new ArrayList();
-                    String translatorNameForList = getTranslatorNames(translatorTrackId.get(i));
-//                    String[] singleArray = new String[5];
-                    String[] translatorNameForArray = new String[1];
-                    translatorNameForArray[0] = translatorNameForList;
+                listOfTranslatorArray.add(translatorDocsList);
 
-//                    testList = getTranslatorTrack(translatorTrackId.get(i));
-                    System.out.println("================================================================================================================");
-//                    System.out.println("translatorNameForList  i=" + i + " " + translatorNameForList);
-//                    System.out.println("translatorTrackId length   " + translatorTrackId.size());
-                    translatorList.add(translatorNameForList);
-//                    System.out.println("translatorNameForList length   " + translatorNameForList.length());
-//                    System.out.println("translatorNameForList          " + translatorNameForList);
-//                    System.out.println("translatorDocsList length        " + translatorDocsList.size());
-
-                    if (translatorDocsList.size() > 0) {
-//                        System.out.println("translatorDocsList               " + translatorDocsList.toString());
-//                         System.out.println("translatorDocsList.get(i=" + i + "  " + translatorDocsList.get(i));
-                        String translatorName = translatorDocsList.get(i).replaceFirst("null", translatorNameForList);
-                        System.out.println("translatorName  " + translatorName);
-                        translatorList1.add(translatorName);
-                        System.out.println("translatorList1 " + translatorList1);
-//                  Info:   transList  
-//                [
-//                    [
-//                        [Translator Name5, 
-//                        /~markus/test/2018/Discworld Publishers/177/Translator_CV/Translator Name5/translator cv 5.docx, 
-//                        translator cv 5.docx, , 
-//                        ], 
-//                        [Translator Name6, 
-//                        /~markus/test/2018/Discworld Publishers/177/Translator_CV/Translator Name6/translator cv 6.docx, 
-//                        translator cv 6.docx, , 
-//                        ], 
-//                        [Translator Name7, 
-//                        /~markus/test/2018/Discworld Publishers/177/Translator_CV/Translator Name7/translator cv 7.docx, 
-//                        translator cv 7.docx, , 
-//                        ], 
-//                        [Translator Name8, 
-//                        /~markus/test/2018/Discworld Publishers/177/Translator_CV/Translator Name8/translator cv 8.docx, 
-//                        translator cv 8.docx, , ]
-//                    ]
-//                ]
-                    }
-
-                    System.out.println("================================================================================================================");
-
-//                    translatorCVList.add(1,translatorNameForList);
-//                          what I want:
-//        
-//        [TranslatorName1, TranslatorCVName,TranslatorCV]
-                    // mixedList contains [0] Translator [1..] Titles
-//                    mixedList.add(testList);
-                }
-                transList.add(translatorList1);
-//                System.out.println("transList  " + transList.toString());
-
-//                List<String[]> expertReaderList;
-//                expertReaderList = getExpertReader(ReferenceNumber);
-//                application.setExpertReaderList(expertReaderList);
-//                System.out.println("expertReaderList length:  " + expertReaderList.size());
-//
-//                for (int d = 0; d < expertReaderList.size(); d++) {
-//                    String[] strings = expertReaderList.get(d);
-//                    System.out.println("Array:  " + d);
-//                    application.setExpertReaderList(expertReaderList);
-//                    for (int j = 0; j < strings.length; j++) {
-//                        System.out.print("expertReaderList :  " + strings[j] + " j: " + j);
-//                    }
-//                    System.out.println();
-//                }
-//transList
-//                List<String> unassignedExpertReaderList;
-//                unassignedExpertReaderList = getUnassignedExpertReader();
-//
-//                application.setUnassignedExpertReaderList(unassignedExpertReaderList);
-//                application.setTranslatorTitles(mixedList);
                 application.setTitles(TITLELIST);
                 application.setTranslatorName(translatorList);
-                application.setTransList(transList);
-                System.out.println("application.setTransList(transList)  " + transList);
+                application.setTransList(listOfTranslatorArray);
+                System.out.println("application.setTransList(listOfTranslatorArray)  " + listOfTranslatorArray);
                 application.setStatus(res.getString("Status"));
 
                 listApplications.add(application);
@@ -340,23 +306,31 @@ public class openApplicationDAO {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT translatorCVDocName, translatorCV, copiesTranslationSample, copiesTranslationSampleDocName FROM ILGAS.TranslatorTrack WHERE ReferenceNumber = ?");
+            ps = conn.prepareStatement("SELECT Translator.Name, TranslatorTrack.translatorCVDocName, TranslatorTrack.translatorCV, TranslatorTrack.copiesTranslationSample, TranslatorTrack.copiesTranslationSampleDocName \n"
+                    + "FROM TranslatorTrack\n"
+                    + "INNER JOIN Translator ON TranslatorTrack.idTranslator = Translator.idTranslator\n"
+                    + "WHERE TranslatorTrack.translatorCVDocName IS NOT NULL  \n"
+                    + "AND  TranslatorTrack.ReferenceNumber = ? \n"
+                    + "order by TranslatorTrack.idTranslator");
 
+//            ps = conn.prepareStatement("SELECT translatorCVDocName, translatorCV, copiesTranslationSample, copiesTranslationSampleDocName FROM TranslatorTrack "
+//                    + "WHERE ReferenceNumber = ?");
             ps.setString(1, ReferenceNumber);
 
             res = ps.executeQuery();
 
             if (res != null) {
                 while (res.next()) {
+
                     translatorCVLst = new String[5];
-                    translatorCVLst[1] = res.getString(1);
-                    translatorCVLst[2] = res.getString(2);
+                    translatorCVLst[0] = res.getString(1);
+                    translatorCVLst[1] = res.getString(2);
+                    translatorCVLst[2] = res.getString(3);
                     translatorCVLst[3] = "TEST"; //res.getString(3);
                     translatorCVLst[4] = "TEST"; //res.getString(4);
 
-                    System.out.println("getTransDocs translatorCVDoc path " + res.getString(2));
+//                    System.out.println("getTransDocs translatorCVDoc path " + res.getString(2));
                     translatorDocsLst.add(Arrays.toString(translatorCVLst));
-
                 }
 
             }
@@ -913,5 +887,125 @@ public class openApplicationDAO {
         DBConn.close(conn, ps, res);
 
         return UnassignedExpertReaderList;
+    }
+
+    public static ArrayList<String> getRightsAgreement(String ReferenceNumber) {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        ArrayList<String> rightsAgreementArray = new ArrayList<>();
+//        ArrayList<ArrayList<String>> rightsAgreementList = new ArrayList<>();
+        String[] columnList;// = new String[4];
+//        ArrayList<String> translatorDocsLst = new ArrayList<String>();
+
+        /*
+         * getUnassignedExpertReader returns a list with the expertReaderName
+         * NOT
+         * assigned to any reference number at the moment
+         */
+        try {
+
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement("SELECT translatorCV, translatorCVDocName, "
+                    + "copiesTranslationSample, copiesTranslationSampleDocName, "
+                    + "Agreement, AgreementDocName, "
+                    + "Contract, ContractDocName, "
+                    + "AddendumRightsAgreement, AddendumRightsAgreementName"
+                    + " FROM TranslatorTrack WHERE referenceNumber = ?");
+
+            ps.setString(1, ReferenceNumber);
+
+            res = ps.executeQuery();
+
+            final ResultSetMetaData meta = res.getMetaData();
+            final int columnCount = meta.getColumnCount();
+            System.out.println("columnCount .... " + columnCount);
+
+            while (res.next()) {
+
+                columnList = new String[10];
+
+//                      0  translatorCV, 
+//                      1  translatorCVDocName, 
+//                      2  copiesTranslationSample, 
+//                      3  copiesTranslationSampleDocName, 
+//                      4  Agreement, 
+//                      5  AgreementDocName, 
+//                      6  Contract, 
+//                      7  ContractDocName, 
+//                      8  AddendumRightsAgreement, 
+//                      9  AddendumRightsAgreementName
+//                columnList[0] = res.getString(1);
+//                columnList[1] = res.getString(2);
+//                columnList[2] = res.getString(3);
+//                columnList[3] = res.getString(4);
+//                columnList[4] = res.getString(5);
+//                columnList[5] = res.getString(6);
+//                columnList[6] = res.getString(7);
+//                columnList[7] = res.getString(8);
+//                columnList[8] = res.getString(9);
+//                columnList[9] = res.getString(10);
+//                    translatorCVLst = new String[5];
+//                    translatorCVLst[0] = res.getString(1);
+//                    translatorCVLst[1] = res.getString(2);
+//                    translatorCVLst[2] = res.getString(3);
+//                    translatorCVLst[3] = "TEST"; //res.getString(3);
+//                    translatorCVLst[4] = "TEST"; //res.getString(4);
+//
+////                    System.out.println("getTransDocs translatorCVDoc path " + res.getString(2));
+//                    translatorDocsLst.add(Arrays.toString(translatorCVLst));
+int col = 0;
+                for (int column = 1; column <= columnCount; ++column) {
+                    
+                    if (res.getString(column) != null) {
+                        System.out.println("1  getRightsAgreement .... col  " + col + " column " + column + " == " + res.getString(column));
+                        columnList[col] = res.getString(column);
+                        
+                        System.out.println("1  getRightsAgreement .... columnList[" + col + "] " +  columnList[col] +
+                               " res.getString(" + column + ") == " + res.getString(column));
+                        col++;
+                    }
+                }
+
+                rightsAgreementArray.add(Arrays.toString(columnList));
+
+//Info:   1  getRightsAgreement .... 5 == /~markus/test/2018/Discworld Publishers/191/Agreement/Translator Name1/agreement with the translation rights holder.docx
+//Info:   1  getRightsAgreement .... 6 == agreement with the translation rights holder.docx
+//Info:   1  getRightsAgreement .... 7 == /~markus/test/2018/Discworld Publishers/191/Contract/Translator Name1/contract with the translator.docx
+//Info:   1  getRightsAgreement .... 8 == contract with the translator.docx
+//Info:   1  getRightsAgreement .... 9 == /~markus/test/2018/Discworld Publishers/191/Addendum/Translator Name1/addendum to the rights agreement.docx
+//Info:   1  getRightsAgreement .... 10 == addendum to the rights agreement.docx
+//
+//Info:   1  getRightsAgreement .... 5 == /~markus/test/2018/Discworld Publishers/191/Agreement/Translator Name2/agreement with the translation rights holder 2.docx
+//Info:   1  getRightsAgreement .... 6 == agreement with the translation rights holder 2.docx
+//Info:   1  getRightsAgreement .... 7 == /~markus/test/2018/Discworld Publishers/191/Contract/Translator Name2/contract with the translator 2.docx
+//Info:   1  getRightsAgreement .... 8 == contract with the translator 2.docx
+//Info:   1  getRightsAgreement .... 9 == /~markus/test/2018/Discworld Publishers/191/Addendum/Translator Name2/addendum to the rights agreement 2.docx
+//Info:   1  getRightsAgreement .... 10 == addendum to the rights agreement 2.docx
+//
+//Info:   1  getRightsAgreement .... 1 == /~markus/test/2018/Discworld Publishers/191/Translator_CV/Translator Name1/translator cv 1.docx
+//Info:   1  getRightsAgreement .... 2 == translator cv 1.docx
+//Info:   1  getRightsAgreement .... 1 == /~markus/test/2018/Discworld Publishers/191/Translator_CV/Translator Name2/translator cv 2.docx
+//Info:   1  getRightsAgreement .... 2 == translator cv 2.docx
+//
+//Info:   2  rightsAgreementList.size .... 2
+//Info:   3  getRightsAgreement .... 0 == /~markus/test/2018/Discworld Publishers/191/Translator_CV/Translator Name2/translator cv 2.docx
+//Info:   3  getRightsAgreement .... 1 == translator cv 2.docx
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        DBConn.close(conn, ps, res);
+
+        System.out.println("2  rightsAgreementArray.size .... " + rightsAgreementArray.size());
+
+        for (int i = 0; i < rightsAgreementArray.size(); i++) {
+            System.out.println("3  getRightsAgreement .... " + i + " == " + rightsAgreementArray.get(i));
+        }
+        return rightsAgreementArray;
     }
 }

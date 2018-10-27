@@ -7,20 +7,6 @@ import java.util.List;
 
 public class GrantApplication {
 
-    /**
-     * @return the bilingual_edition
-     */
-    public int getBilingual_edition() {
-        return bilingual_edition;
-    }
-
-    /**
-     * @param bilingual_edition the bilingual_edition to set
-     */
-    public void setBilingual_edition(int bilingual_edition) {
-        this.bilingual_edition = bilingual_edition;
-    }
-
     private int ApplicationNumber;
 
     private String ApplicationYear;
@@ -43,14 +29,14 @@ public class GrantApplication {
     private String contract; //path + filename
 
     private String contractDocName;  //filename
+    
+    private ArrayList<String> rightsAgreement;
 
 //    Publication Details
     private Date proposedDateOfPublication;
 
 //    private Date originalDateOfPublication;
-    
     private String publicationYear;
-
 
     private int originalPageExtent;
 
@@ -95,11 +81,11 @@ public class GrantApplication {
     private String SignedLIContractName; //filename
 
     private String paymentStatus;
-    
+
     private ArrayList<String> previousGrantAid;
-    
+
     private int award;
-    
+
     private int bilingual_edition;
 
     private int salesFigures;
@@ -123,7 +109,7 @@ public class GrantApplication {
     private BigDecimal translatorFee;
 
     private String bookNotes;
-    
+
     private String translatorNotes;
 
     private String Status;
@@ -139,7 +125,7 @@ public class GrantApplication {
 
 //    General
     private int TC_ACCEPTED;
-    
+
     private int gdprACCEPTED;
 
     private int APPROVED;
@@ -155,7 +141,7 @@ public class GrantApplication {
     private ArrayList<ArrayList<String>> TranslatorTrack;
 
     private ArrayList<ArrayList<String>> translatorTitles;
-    
+
     private String translationTitle;
 
     private String AuthorName;
@@ -171,9 +157,9 @@ public class GrantApplication {
     private String foreignCountry;
 
     private String targetLanguage;
-    
+
     private String Languages;
-    
+
     private String Series;
 
     private String expertReaderName;
@@ -189,13 +175,12 @@ public class GrantApplication {
     private List<String[]> expertReaderList;
 
     private List<String> unassignedExpertReaderList;
-    
-    private List<List<String>> transList;    
+
+    private List<List<String>> transList;
 
     private java.sql.Timestamp LASTUPDATED;
 
     private java.sql.Timestamp Created;
-    
 
     /**
      * @return the ApplicationNumber
@@ -598,7 +583,7 @@ public class GrantApplication {
 
     /**
      * @param proofOfPaymentToTranslatorName the proofOfPaymentToTranslatorName
-     * to set
+     *                                       to set
      */
     public void setProofOfPaymentToTranslatorName(String proofOfPaymentToTranslatorName) {
         this.proofOfPaymentToTranslatorName = proofOfPaymentToTranslatorName;
@@ -879,7 +864,7 @@ public class GrantApplication {
 
     /**
      * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName
-     * to set
+     *                                       to set
      */
     public void setCopiesTranslationSampleDocName(String copiesTranslationSampleDocName) {
         this.copiesTranslationSampleDocName = copiesTranslationSampleDocName;
@@ -1350,7 +1335,7 @@ public class GrantApplication {
     /**
      * @return the transList
      */
-    public List<List<String>>getTransList() {
+    public List<List<String>> getTransList() {
         return transList;
     }
 
@@ -1361,4 +1346,31 @@ public class GrantApplication {
         this.transList = transList;
     }
 
+    /**
+     * @return the bilingual_edition
+     */
+    public int getBilingual_edition() {
+        return bilingual_edition;
+    }
+
+    /**
+     * @param bilingual_edition the bilingual_edition to set
+     */
+    public void setBilingual_edition(int bilingual_edition) {
+        this.bilingual_edition = bilingual_edition;
+    }
+
+    /**
+     * @return the rightsAgreement
+     */
+    public ArrayList<String> getRightsAgreement() {
+        return rightsAgreement;
+    }
+
+    /**
+     * @param rightsAgreement the rightsAgreement to set
+     */
+    public void setRightsAgreement(ArrayList<String> rightsAgreement) {
+        this.rightsAgreement = rightsAgreement;
+    }
 }

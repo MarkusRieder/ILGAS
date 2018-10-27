@@ -166,7 +166,7 @@ public class GrantApplicationServlet extends HttpServlet {
 
     private String translationPublisherYear;
 
-    private String[] translatorArray;
+    private String[] translatorArrayContent;
 
     private String[] authorArray;  //Array of Author/Title
 
@@ -272,7 +272,7 @@ public class GrantApplicationServlet extends HttpServlet {
                 //set Year used in filePath
                 int year = now.get(Calendar.YEAR);
                 String yearInString = String.valueOf(year);
-                String fn;
+//                String fn;
 
                 int idxFolderNames = 0;
                 java.sql.Timestamp timestamp = getcurrentTimeStamp();
@@ -280,20 +280,18 @@ public class GrantApplicationServlet extends HttpServlet {
                 String[] fileNames = new String[6];
                 //   String[] justFiles = new String[6];
                 List<String> filesToBeMoved = new ArrayList<>();
-                List<String> fileDir = new ArrayList<>();
-                List<String> listCopiesTranslationSample = new ArrayList<>();
+//                List<String> fileDir = new ArrayList<>();
+                List<String> longArrayList = new ArrayList<>();
+                List<String> shortArrayList = new ArrayList<>();
 
-                int counter = 0;
-
-                String[] folderNames = {
-                    "Agreement",
-                    "Contract",
-                    "Addendum",
-                    "Translator_CV",
-                    "Original",
-                    "TranslationSample"
-                };
-
+//                String[] folderNames = {
+//                    "Agreement",
+//                    "Contract",
+//                    "Addendum",
+//                    "Translator_CV",
+//                    "Original",
+//                    "TranslationSample"
+//                };
                 try {
 
                     /*
@@ -340,7 +338,7 @@ public class GrantApplicationServlet extends HttpServlet {
                             String fieldname = item.getFieldName();
                             String fieldvalue = item.getString();
 
-                            //   System.out.println(fieldname + " >> " + fieldvalue);
+                            System.out.println(fieldname + " >> " + fieldvalue);
                             switch (fieldname) {
                                 case "Company":
                                     company = fieldvalue;
@@ -538,11 +536,13 @@ public class GrantApplicationServlet extends HttpServlet {
                                     translationPublisherYear = fieldvalue;
                                     break;
                                 case "translatorArray":
-                                    translatorArray = fieldvalue.split(","); //split string by ","
-                                    translatorArrayLength = translatorArray.length;
-                                    for (String individualValue : translatorArray) {
-                                        System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength);
-                                    }
+                                    System.out.println("translatorArray >>>> HERE ");
+                                    translatorArrayContent = fieldvalue.split(","); //split string by ","
+                                    translatorArrayLength = translatorArrayContent.length;
+//                                    System.out.println("translatorArray >>>> translatorArray.length " + translatorArrayContent.length);
+//                                    for (String individualValue : translatorArrayContent) {
+//                                        System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength);
+//                                    }
                                     break;
                                 case "languages":
                                     languageArray = fieldvalue.split(","); //split string by ,
@@ -614,43 +614,69 @@ public class GrantApplicationServlet extends HttpServlet {
                             String fieldname = item.getFieldName();
                             String filename = FilenameUtils.getName(item.getName());
 
+//                            Change TranslatorTrack table to accomodate fieldnme etc
+//                                    Store files there
+                            int counter = getCounter(fieldname);
+                            String fileName = getFdname(fieldname);
 
-                            /*
-                             * Create path components to save the file
-                             * temporary Directory = rootPath + Year + Publisher
-                             */
-                            filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
-                                    + folderNames[idxFolderNames] + File.separator;
+                            switch (fileName) {
 
-                            /*
-                             * if it is the translatorArray
-                             */
-                            if (idxFolderNames == 3) {
+                                case "Agreement":
 
-                                /*
-                                 * Create path components to save the file
-                                 * temporary Directory = rootPath + Year +
-                                 * Publisher + translatorArray[counter]
-                                 */
-                                filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
-                                        + folderNames[idxFolderNames] + File.separator + translatorArray[counter] + File.separator;
+                                    filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                            + "Agreement" + File.separator + translatorArrayContent[counter] + File.separator;
+                                    fileNames[idxFolderNames] = filePath + filename;
+                                    filesToBeMoved.add(fileNames[idxFolderNames]);
 
-                                fileNames[idxFolderNames] = filePath + filename;
-                                filesToBeMoved.add(fileNames[idxFolderNames]);
+                                    break;
 
-//                                justFiles[idxFolderNames] = translatorArray[counter] + File.separator + filename;
-                                counter++;
+                                case "Contract":
 
-                                if (counter == translatorArrayLength) {
-                                    idxFolderNames++;
-                                }
-                            } else {
+                                    filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                            + "Contract" + File.separator + translatorArrayContent[counter] + File.separator;
+                                    fileNames[idxFolderNames] = filePath + filename;
+                                    filesToBeMoved.add(fileNames[idxFolderNames]);
 
-                                fileNames[idxFolderNames] = filePath + filename;
-                                filesToBeMoved.add(fileNames[idxFolderNames]);
-//                                justFiles[idxFolderNames] = filename;
-                                idxFolderNames++;
-                            }
+                                    break;
+
+                                case "Addendum":
+
+                                    filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                            + "Addendum" + File.separator + translatorArrayContent[counter] + File.separator;
+                                    fileNames[idxFolderNames] = filePath + filename;
+                                    filesToBeMoved.add(fileNames[idxFolderNames]);
+
+                                    break;
+
+                                case "Original":
+
+                                    filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                            + "Original" + File.separator;
+                                    fileNames[idxFolderNames] = filePath + filename;
+                                    filesToBeMoved.add(fileNames[idxFolderNames]);
+
+                                    break;
+
+                                case "TranslationSample":
+
+                                    filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                            + "TranslationSample" + File.separator;
+                                    fileNames[idxFolderNames] = filePath + filename;
+                                    filesToBeMoved.add(fileNames[idxFolderNames]);
+
+                                    break;
+
+                                case "Translator_CV":
+
+                                    filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                            + "Translator_CV" + File.separator + translatorArrayContent[counter] + File.separator;
+                                    fileNames[idxFolderNames] = filePath + filename;
+                                    filesToBeMoved.add(fileNames[idxFolderNames]);
+
+                                    break;
+
+                            } // end switch
+
 
                             /*
                              * create temporary Directory if it does not exist
@@ -706,7 +732,6 @@ public class GrantApplicationServlet extends HttpServlet {
 
                     }  // for (FileItem item : items)
 
-                    //           }
                     ////////////////////////////////////////////////////////////
                     //  Process Application
                     ////////////////////////////////////////////////////////////
@@ -756,10 +781,6 @@ public class GrantApplicationServlet extends HttpServlet {
                     application.setBookNotes(bookNotes);
                     application.setTC_ACCEPTED(TC_ACCEPTED);
                     application.setGdprACCEPTED(gdpr_ACCEPTED);
-
-                    System.out.println("application.setTC_ACCEPTED  ---->> " + TC_ACCEPTED);
-                    System.out.println("application.setGdprACCEPTED ---->> " + gdpr_ACCEPTED);
-
                     application.setAPPROVED(APPROVED);
                     application.setStatus(Status);
 
@@ -924,39 +945,59 @@ public class GrantApplicationServlet extends HttpServlet {
                  */
                 List<String> translatorFileDetails = new ArrayList<>();
 
+//                der looped sich nen Wolf when inserting into table see filesToBeMoved 4.txt and  TranslatorTrack.csv
+//                Run and see System.out.println(" ");
+                System.out.println("####################### creating the lists ##################################################");
+
+                System.out.println("filesToBeMoved.size()  --" + filesToBeMoved.size());
+
                 for (int i = 0; i < filesToBeMoved.size(); i++) {
 
                     String moveFile = "";
                     String moveFileName = "";
-                    String destinationDirectory;
+                    String destinationDirectory = "";
 
                     String[] subDirs = filesToBeMoved.get(i).split("(?<!^)/");
 
-                    if (filesToBeMoved.get(i).contains("/Translator_CV/")) {
+                    String decider = subDirs[6];
 
-                        String translatorDirectory = subDirs[6];      // Translator_CV
-                        String translatorNameDirectory = subDirs[7];  // Translator Name5
-                        moveFileName = subDirs[8];                    // translator cv 5.docx 
+                    switch (decider) {
 
-                        destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
-                                + ApplicationNumber + File.separator + translatorDirectory + File.separator + translatorNameDirectory + File.separator;
+                        case "Agreement":
+                        case "Contract":
+                        case "Addendum":
+                        case "Translator_CV":
+                            String subDirectory = subDirs[6];  // Addendum
+                            String subNameDirectory = subDirs[7];  // Translator Name2
+                            moveFileName = subDirs[8];  // addendum to the rights agreement 2.docx 
 
-                        moveFile = destinationDirectory + moveFileName;
-                        translatorFileDetails.add(moveFile);
-                        translatorFileDetails.add(moveFileName);
+                            destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
+                                    + ApplicationNumber + File.separator + subDirectory + File.separator + subNameDirectory + File.separator;
 
-                        listCopiesTranslationSample.add(moveFile);
+                            moveFile = destinationDirectory + moveFileName;
+                            translatorFileDetails.add(moveFile);
+                            translatorFileDetails.add(moveFileName);
 
-                    } else {
+                            System.out.println("filesToBeMoved--" + decider + "--->>>> " + moveFile);
 
-                        String Directory = subDirs[6];      // Agreement
-                        moveFileName = subDirs[7];          // agreement with the translation rights holder .txt
+                            longArrayList.add(moveFile);
+                            break;
 
-                        destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
-                                + ApplicationNumber + File.separator + Directory + File.separator;
+                        case "Original":
+                        case "TranslationSample":
+                            String Directory = subDirs[6];      // TranslationSample
+                            moveFileName = subDirs[7];      // translation sample.docx
+                            destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
+                                    + ApplicationNumber + File.separator + Directory + File.separator;
+                            System.out.println("filesToBeMoved--Directory--->>>> " + Directory);
+                            System.out.println("filesToBeMoved--moveFileName--->>>> " + moveFileName);
+                            moveFile = destinationDirectory + moveFileName;
+                            shortArrayList.add(moveFile);
+                            System.out.println("filesToBeMoved--" + decider + "--->>>> " + moveFile);
+                            break;
 
-                        moveFile = destinationDirectory + moveFileName;
-                    }
+                    } // switch (decider)
+
 
                     /*
                      * create directory if it does not exist
@@ -968,130 +1009,135 @@ public class GrantApplicationServlet extends HttpServlet {
 
                     File sFile = new File(filesToBeMoved.get(i));
                     File destDir = new File(destinationDirectory);
-                    fileDir.add(moveFile);
+//                    fileDir.add(moveFile);
                     FileUtils.moveFileToDirectory(sFile, destDir, true);
                 }
-
+                System.out.println("####################### End creating the lists ##################################################");
                 ////////////////////////////////////////////////////////////
                 //  Process Application Translators
                 ////////////////////////////////////////////////////////////
-                int tfdCounter = 0;
 
-                for (int i = 0; i < translatorFileDetails.size(); i++) {
 
-                    System.out.println("translatorFileDetails----->>>> " + translatorFileDetails.get(i));
-                }
+                // if we have an array
+                if (translatorArrayContent.length > 1) {
 
-                String fname = "";
-
-//                /*
-//                 * Iterate through List fileDir
-//                 */
-//                for (int i = 0; i < listCopiesTranslationSample.size(); i++) {
-//
-//                    /*
-//                     * Split each fileDir items up and put them
-//                     * into an array subDirs
-//                     */
-//                    String[] subDirs = listCopiesTranslationSample.get(i).split("(?<!^)/");
-//
-//                    fname = subDirs[8];
-//                    /*
-//                     * replaces all occurrences of "/home/markus","/~markus"
-//                     */
-//                    fn = fileDir.get(i).replace("/home/markus/public_html", "/~markus");
-//
-//                    application.setCopiesTranslationSample(fn);
-//                    application.setCopiesTranslationSampleDocName(fname);
-//
-//                }
-                if (translatorArray.length > 1) {
-
-                    System.out.println("translatorArray.length: -------------------------->>>> " + translatorArray.length);
+                    System.out.println("translatorArray.length: -------------------------->>>> " + translatorArrayContent.length);
                     /*
                      * convert translatorArray to ArrayList Translator
                      */
+                    System.out.println("####################### sending files to tables ##################################################");
 
- /*
+
+                    /*
                      * loop through the Translators and insert each into
                      * TranslatorTrack
                      */
-                    for (String individualValue : translatorArray) {
+                    for (int i = 0; i < longArrayList.size(); i++) {
 
-                        translatorName = individualValue;
+                        System.out.println("longArrayList---i:[" + i + "]-->>>> " + longArrayList.get(i));
 
-                        System.out.println("calling insertTranslators......................:  " + translatorName);
+                        String[] elements = longArrayList.get(i).split("(?<!^)/");
+
+                        String moveFile = longArrayList.get(i);
+                        String decider = elements[7];
+                        translatorName = elements[8];
+                        String moveFileName = elements[9];
+                        String moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
 
                         /*
-                         * While iterating through the TranslatorTrack we add
-                         *
                          * moveFile = the whole path including the file name
-                         * moveFileName = fille name
+                         * = longArrayList.get(i)
+                         * moveFileName = fille name = fileName
                          * moveTheFileName = moveFile but with
-                         * replace("/home/markus/public_html", "/~markus")
-                         *
+                         * replace("/home/markus/public_html", "/~markus") =
+                         * String moveTheFileName =
+                         * moveFile.replace("/home/markus/public_html",
+                         * "/~markus");
                          */
-//                        String[] subDirs = listCopiesTranslationSample.get(tfdCounter).split("(?<!^)/");
-//                        fname = subDirs[8];
-                        fname = "";
-                        /*
-                         * replaces all occurrences of "/home/markus","/~markus"
-                         */
-//                        fn = fileDir.get(tfdCounter).replace("/home/markus/public_html", "/~markus");
-                        fn = "";
-                        String moveFile = translatorFileDetails.get(tfdCounter);
-                        tfdCounter++;
-                        String moveFileName = translatorFileDetails.get(tfdCounter);
-                        String moveTheFileName = moveFile.replace("/home/markus/public_html", "/~markus");
-                        tfdCounter++;
                         try {
 
                             /*
                              * set the variables and
-                             * translatorName = processingTranslatorArray[0];
+                             * translatorName =
+                             * processingTranslatorArray[0];
                              */
                             int idTranslator = ifTranslatorExist(translatorName);
 
                             /*
-                             * insert them into the tables TranslatorTrack
+                             * insert them into the table TranslatorTrack
                              */
-                            GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title, moveTheFileName, moveFileName, fn, fname);
+                            switch (decider) {
 
-                            /*
-                             * reset index
-                             */
-                            //   idx = -1;
+                                case "Agreement":
+                                    System.out.println("insertAgreement:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
+                                    GrantApplicationDAO.insertAgreement(ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced);
+                                    break;
+                                case "Contract":
+                                    System.out.println("insertContract:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
+                                    GrantApplicationDAO.insertContract(ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced);
+                                    break;
+                                case "Addendum":
+                                    System.out.println("insertAddendum:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
+                                    GrantApplicationDAO.insertAddendum(ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced);
+                                    break;
+                                case "Translator_CV":
+                                    // String Translator_CV , String Translator_CV_DocName , fn copiesTranslationSample, fname copiesTranslationSampleDocName
+                                    // fn copiesTranslationSample, fname copiesTranslationSampleDocName
+                                    // fn and fname are empty at the moment!!!
+                                    String fname = "";
+                                    String fn = "";
+                                    System.out.println("insertTranslators:: translatorName " + translatorName + " longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
+                                    GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced, fn, fname);
+                                    break;
+
+                            } // switch (decider)
+
                         } catch (DBException ex) {
                             Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
-                        //  idx++;
                     }
-                } else {
+
+                } else {  // no array - single Translator
+                    System.out.println("===================  no array - single Translator ======================== ");
+                }  // end else
+
+                // Process Original TranslationSample
+                for (int i = 0; i < shortArrayList.size(); i++) {
+                    System.out.println("shortArrayList---i:[" + i + "]-->>>> " + shortArrayList.get(i));
+
+                    String[] elements = shortArrayList.get(i).split("(?<!^)/");
+
+                    String AppNumber = Integer.toString(ApplicationNumber);   // '195/2018' ---> 195
+
+//                    for (int l = 0; l < elements.length; l++) {
                     try {
-                        //    TranslatorName = translatorName;
-                        System.out.println("TranslatorName ---->> :::: " + translatorName);
-                        // insert them into the tables Application_Author
-                        String moveFile = translatorFileDetails.get(tfdCounter);
-                        tfdCounter++;
-                        String moveFileName = translatorFileDetails.get(tfdCounter);
-                        String[] subDirs = listCopiesTranslationSample.get(tfdCounter).split("(?<!^)/");
+//                            System.out.println("elements---i:[" + l + "]-->>>> " + elements[l]);
 
-//                        fname = subDirs[8];
-                        fname = "";
-                        /*
-                         * replaces all occurrences of "/home/markus","/~markus"
-                         */
-//                        fn = fileDir.get(tfdCounter).replace("/home/markus/public_html", "/~markus");
-                        fn = "";
-                        String moveTheFileName = moveFileName.replace("/home/markus/public_html", "/~markus");
-                        GrantApplicationDAO.insertTranslators(ReferenceNumber, translatorName, Title, moveTheFileName, moveFileName, fn, fname);
+                        String moveFile = shortArrayList.get(i);
+                        String decider = elements[7];      // Original
+                        String moveFileName = elements[8]; // copy of original work.docx
+                        String moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
 
+                        switch (decider) {
+
+                            case "Original":
+                                System.out.println("insertOriginal:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
+                                GrantApplicationDAO.insertOriginal(AppNumber, moveFileName, moveFileNameReplaced);
+
+                                break;
+                            case "TranslationSample":
+                                System.out.println("insertTranslationSample:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
+                                GrantApplicationDAO.insertTranslationSample(AppNumber, moveFileName, moveFileNameReplaced);
+                                break;
+
+                        } // switch (decider)
                     } catch (DBException ex) {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
+//                    }
                 }
-
+                System.out.println("####################### End sending files to tables ##################################################");
                 ////////////////////////////////////////////////////////////
                 //  Process Library
                 ////////////////////////////////////////////////////////////
@@ -1127,81 +1173,6 @@ public class GrantApplicationServlet extends HttpServlet {
                     }
                 }
 
-                ////////////////////////////////////////////////////////////
-                //  Process Application Uploads
-                ////////////////////////////////////////////////////////////
-                //Update  GrantApplication to contain the filePaths
-                GrantApplication application = new GrantApplication();
-
-                fname = "";
-
-                /*
-                 * Iterate through List fileDir
-                 */
-                for (int i = 0; i < fileDir.size(); i++) {
-
-                    /*
-                     * Split each fileDir items up and put them
-                     * into an array subDirs
-                     */
-                    String[] subDirs = fileDir.get(i).split("(?<!^)/");
-
-                    String decider = subDirs[7];
-
-                    /*
-                     * Get the last item of the List which is the fileName
-                     * Translator_CV has one more subDirectory
-                     */
-                    if ("Translator_CV".equals(subDirs[7])) {
-                        fname = subDirs[9];
-                    } else {
-                        fname = subDirs[8];
-                    }
-
-                    /*
-                     * replaces all occurrences of "/home/markus","/~markus"
-                     */
-                    fn = fileDir.get(i).replace("/home/markus/public_html", "/~markus");
-
-                    System.out.println("decider " + decider);
-
-                    switch (decider) {
-                        case "Agreement":
-                            application.setAgreement(fn);
-                            application.setAgreementDocName(fname);
-                            break;
-                        case "Contract":
-                            application.setContract(fn);
-                            application.setContractDocName(fname);
-                            break;
-                        case "Addendum":
-                            application.setAddendumRightsAgreement(fn);
-                            application.setAddendumRightsAgreementName(fname);
-                            break;
-                        case "Original":
-                            application.setOriginal(fn);
-                            application.setOriginalName(fname);
-                            break;
-                        case "TranslationSample":
-                            application.setCopiesTranslationSample(fn);
-                            application.setCopiesTranslationSampleDocName(fname);
-                            break;
-                    }
-
-                }
-
-                application.setApplicationNumber(ApplicationNumber);
-                application.setReferenceNumber(ReferenceNumber);
-
-                System.out.println("ReferenceNumber " + ReferenceNumber + "  ApplicationNumber " + ApplicationNumber);
-
-                try {
-
-                    GrantApplicationDAO.updateDocuments(application, ReferenceNumber);
-
-                } catch (DBException ex) {
-                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
 
                 ////////////////////////////////////////////////////////////
                 //  Process Application Languages
@@ -1300,8 +1271,7 @@ public class GrantApplicationServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
                 break;
 
-            case "System.out.println(\"Closed Applications :: \");":
-                System.out.println("System.out.println(\"Closed Applications :: \"); :: ");
+            case "AssignExpertReader":
                 String expertReaderEmail = "";
                 List<String[]> fileAttachment = new ArrayList<>();
 
@@ -1844,61 +1814,42 @@ public class GrantApplicationServlet extends HttpServlet {
 
     }
 
-//    public void createTemporaryDirectory(String filename, HttpServletRequest request, HttpServletResponse response, FileItem item) throws IOException, ServletException {
-//
-//        /*
-//         * create temporary Directory if it does not exist
-//         */
-//        File file = new File(filePath);
-//        if (!file.exists()) {
-//
-//            file.mkdirs();
-//        }
-//        System.out.println("createTemporaryDirectory");
-//        System.out.println("filePath: " + filePath + " filename: " + filename);
-//        OutputStream outS = null;
-//        InputStream filecontent = null;
-//
-//        final PrintWriter writer = response.getWriter();
-//        try {
-//            outS = new FileOutputStream(new File(filePath + filename));
-//
-//            filecontent = item.getInputStream();
-//
-//            message = message + " '" + filename + "' has been uploaded <br/>";
-//
-//            int read;
-//            final byte[] bytes = new byte[1024];
-//
-//            while ((read = filecontent.read(bytes)) != -1) {
-//                outS.write(bytes, 0, read);
-//
-//            }
-//
-//        } catch (FileNotFoundException fne) {
-//
-//            String errMsg = "<br/><br/>You either did not specify a file to upload or are "
-//                    + "trying to upload a file to a protected or nonexistent "
-//                    + "location.<br/> <br/><strong> ERROR:<strong> '" + fne.getMessage() + "' ";
-//jjkhkjhkjhk
-//            request.setAttribute("message", " '<strong>" + filename + "</strong>" + errMsg);
-//            request.getRequestDispatcher("/WEB-INF/views/uploadErrorResponse.jsp").forward(request, response);
-//            LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}",
-//                    new Object[]{fne.getMessage()});
-//
-//        } finally {
-//
-//            if (outS != null) {
-//                outS.close();
-//            }
-//
-//            if (filecontent != null) {
-//                filecontent.close();
-//            }
-//
-//            if (writer != null) {
-//                writer.close();
-//            }
-//        }
-//    }
+    public int getCounter(String counterIndicator) {
+
+        int counter = 0;
+
+        System.out.println("getCounter(String " + counterIndicator);
+
+        if (counterIndicator.contains("-")) {
+
+            String counterIndicatorArray[] = counterIndicator.split("-");
+            for (int u = 0; u < counterIndicatorArray.length; u++) {
+                System.out.println("counterIndicatorArray[" + u + "]" + Arrays.toString(counterIndicatorArray));
+            }
+
+            counter = Integer.parseInt(counterIndicatorArray[counterIndicatorArray.length - 1]) - 1;
+        }
+
+        System.out.println("counter  " + counter);
+
+        return counter;
+    }
+
+    public String getFdname(String fieldname) {
+
+        String fdname;
+
+        String fdnameArray[] = fieldname.split("-");
+
+        fdname = fdnameArray[0];
+
+        System.out.println("getFdname(String " + fieldname);
+        for (int v = 0; v < fdnameArray.length; v++) {
+            System.out.println("fdnameArray[" + v + "]" + Arrays.toString(fdnameArray));
+        }
+
+        System.out.println("fdname  " + fdname);
+
+        return fdname;
+    }
 }

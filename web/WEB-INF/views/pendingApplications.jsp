@@ -1238,7 +1238,7 @@
                                             <th class="never"></th>
                                         </tr>
                                     </thead>
-                                   
+
                                     <tfoot>
                                         <tr>
                                             <th class="details-control"></th>   
@@ -1315,7 +1315,7 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                         <!-- Main Grid -->   
+                                        <!-- Main Grid -->   
                                     </tbody>
                                 </table>
                             </div> <!-- Main Grid -->       
@@ -1358,7 +1358,8 @@
                                                     <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/> & Contracts </a></li>
                                                     <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
                                                     <li><a href="#Translator" data-toggle="tab">Translator's <br/> Details</a></li>
-                                                    <!--              <li><a href="#Misc" data-toggle="tab">Misc</a></li>  -->
+                                                    <li id="awarded" style="display:none"
+><a href="#Misc" data-toggle="tab">Drawdown<br/> Requirements</a></li>  
                                                     <li><a href="#Original" data-toggle="tab"><span>Original Work<br/>& Sample Translation</span></a></li>
                                                 </ul>
                                             </div><!-- /.navbar-collapse -->
@@ -1955,9 +1956,9 @@
                                                                                    placeholder="DD/MM/YYYY"
                                                                                    disabled=""
                                                                                    />    
-                                                                   <!--          <label class="input-group-addon" for="appDateOfPublicationOriginal">
-                                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                                            </label>    -->
+                                                                            <!--          <label class="input-group-addon" for="appDateOfPublicationOriginal">
+                                                                                         <span class="glyphicon glyphicon-calendar"></span>
+                                                                                     </label>    -->
                                                                         </div>
                                                                     </div>
                                                                     <script>
@@ -2102,11 +2103,11 @@
                                                     </div> <!-- container-fluid -->
                                                 </div> <!-- tab-pane "Translator Details" -->            
 
-                                                <!-- Miscellaneous -->
+                                                <!-- Drawdown Requirements -->
                                                 <div class="tab-pane" id="Misc">
 
                                                     <p class="header1" style="margin-bottom: 40px">
-                                                        Miscellaneous
+                                                        Drawdown Requirements
                                                     </p>
 
 

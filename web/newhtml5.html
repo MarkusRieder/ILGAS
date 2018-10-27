@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/layout.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
+        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
+
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+        <!--<script type="text/javascript"  src="js/moment.js"></script>-->
+        <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
+        <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript"  src="js/jquery-ui.js"></script>
+        <script>
+            $(function () {
+
+                $('#add').on('click', function (ix, el) {
+                    var index = $('#musics div').length + 1;
+
+                    $('<div class="form-group col-sm-offset-4 col-sm-5 music" name="music" id="music' + index + '">\n\
+            <div class="input-group col-sm-4"><span class="input-group-addon"\n\
+><input type="radio" name="have' + index + '" value="" id="have" data-name="haveAdd"></span>\n\
+<span class="input-group-addon"><b>Have</b></span></div><br>\n\
+<div class="input-group col-sm-4"><span class="input-group-addon">\n\
+<input type="radio" name="have' + index + '" value="" id="want" data-name="wantAdd"></span>\n\
+<span class="input-group-addon"><b>Want</b></span></div>').appendTo('#musics');
+
+                });
+
+
+                $('#musics').on('change', '#want', function (e) {
+                    $(this).closest('.form-group').val(($('#want').is(':checked')) ? "yes" : "no");
+                    var ans = $(this).val();
+                    console.log(($('#want').is(':checked')));
+                });
+
+
+            });
+        </script>
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <button type="button" id="add">Add</button> 
+        <div class="form-group" id="musics"></div>
+    </body>
+</html>

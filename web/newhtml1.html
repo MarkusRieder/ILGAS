@@ -1,18 +1,9 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%-- 
-    Document   : newApplication
-    Created on : 19-Mar-2017, 11:27:58
-    Author     : markus
---%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-<%--<%@ page session="true"%>--%>
 <!DOCTYPE html>
 <html style="height: 100%" >
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Translation Grant Application System</title>
 
@@ -35,15 +26,15 @@
                 <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
 
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-        <script type="text/javascript"  src="js/moment.js"></script>
+        <!--<script type="text/javascript"  src="js/moment.js"></script>-->
         <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
         <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
         <script type="text/javascript"  src="js/jquery-ui.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.7/purify.min.js.map"></script>
-        <script type="text/javascript"  src="js/purify.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.7/purify.min.js.map"></script>-->
+        <!--<script type="text/javascript"  src="js/purify.min.js"></script>-->
         <script type="text/javascript"  src="js/pdf.js"></script>
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
 
@@ -62,7 +53,7 @@
 //            var translatorCounter1 = 0;
             var translatorName876 = "";
             var itemValue = "";
-
+            var translatorContent;
             $.datepicker.setDefaults({
                 dateFormat: 'dd/mm/yy',
                 showOtherMonths: true,
@@ -501,30 +492,197 @@
                 $('[data-toggle="tooltip"]').tooltip();
                 $(".tip-top").tooltip({placement: 'top'});
             });
+        </script> 
+        <script type="text/javascript">
+
+
+        </script> 
+
+
+
+        <script type="text/javascript">
+
+
+            function iterateFiles(filesArray)
+            {
+                for (var i = 0; i < filesArray.length; i++) {
+                    for (var j = 0; j < filesArray[i].length; j++) {
+                        console.log("iterateFiles " + filesArray[i][j].name);
+                        // alternatively: console.log(filesArray[i].item(j).name);
+                    }
+                }
+            }
+//                                var inputElement = document.getElementById("input");
+//                inputElement.addEventListener("change", handleFiles, false);
+//
+//                function handleFiles() {
+//                    var fileList = this.files; /* now you can work with the file list */
+////                    console.log("fileList " + fileList);
+//                    iterateFiles(fileList);
+//
+//                };
 
         </script>
-
 
         <!-- the following functions will copy
          the selected file name (for upload) to the label input-->
         <script>
+
+            //https://www.webtrainingcentre.com/javascript-solutions/add-onclick-event-dynamically-using-javascript/
+            function showRel(e) {
+//
+//                //get the element that is clicked
+//                var ele = e.target;
+//                console.log("e.target " + ele.value); // e.target C:\fakepath\translation sample.docx
+//
+//                //get the element id of the element that is clicked
+//                var eleId = ele.id;
+//                console.log("Element ID is " + eleId);   // Element ID is agreement1
+//
+//                //get the element 'rel attribute of the element that is clicked
+//                var eleRel = ele.getAttribute('rel');
+//
+//                //add the class using the increment operator
+//                ele.className += "clicked";
+//                console.log("ele.className " + ele.className); // ele.className clicked
+//
+//                //display the id and rel in the console
+//
+//
+//
+////  if(eleId === 'agreement1'){
+//
+//
+//
+//                var files = [];
+//
+//
+//
+//                console.log("eleId id  " + eleId);
+//                var input = $(this),
+//                        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+//                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+//
+//                input.trigger('fileselect', [numFiles, label]);
+//
+//
+//                console.log("eleId " + eleId + " label " + input.val().replace(/\\/g, '/').replace(/.*\//, ''));
+//
+//                var cn = eleId;
+//
+//
+//                files.push(this.files);
+////                     console.log("iterateFiles(files)  ");
+////                    iterateFiles(files);
+//
+//
+//
+//                var lbl = 'label_' + cn;
+//
+//                // function attachClickEvent(){
+//                var links = document.getElementsByClassName('input');
+//                console.log("link.length  " + links.length);
+//                // For each <li> inside #links
+//                for (var i = 0; i < links.length; i++) {
+//
+//                    //  link.onclick = myFunction;
+//                    console.log("link  " + links[i]);
+//                }
+//                document.getElementById('label_' + cn).value = label;
+//
+//                console.log("document.getElementById(lbl) " + document.getElementById('label_' + cn).value);
+////                });
+//
+////  }
+//
+            }
+            ;
+
+
+
+//            $(function () {
+//                $('div.agreement').on('change', ':file', function () {
+//
+//                    var input = $(this),
+//                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+//                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+//                    alert(label);
+//                    input.trigger('fileselect', [numFiles, label]);
+//                    console.log("input.id" + input.id);
+//                    console.log("input.childNodes[0].nodeValue" + input.childNodes[0].nodeValue);
+//                    var x = document.getElementsByClassName("agreement")[0].id;
+//                    console.log("agreement id" + x);
+//                    alert(this.childNodes[0].nodeValue);
+//                    document.getElementById("label_agreement1").value = label;
+//                });
+//            });
+            $(function () {
+                
+
+//                    $('input[type="file"]').on('change', function () {
+//                        $('input[type="file"]').each(function () {
+//                            console.log("list files " + $(this).val());
+//                        });
+//
+//                    });
+
+
+                    $files = $('input[type="file"]').files;
+                    for (var i = 0, l = files.length; i < l; i++) {
+                        console.log("list files 2 " + files[i].name);
+                    }
+                });
+          
+
+function generatedLabels() {
+               $(document).on('change', ':file', function () {
+
+
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    var id = input[0].id;
+                    var label_id = "label_" + id;
+                    document.getElementById(label_id).value = label;
+         
+  });
+};
+            $(function () {
+                $('div.contract').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_contract").value = label;
+                });
+            });
+            $(function () {
+                $('div.addendum').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_addendum").value = label;
+                });
+            });
             $(function () {
                 $('div.translator_cv').on('change', ':file', function () {
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-                    //                  var label_translatorid2 = "label_translator" + id2;
+//                  var label_translatorid2 = "label_translator" + id2;
                     document.getElementById("label_translator0").value = label;
                 });
             });
             $(function () {
                 $(document).on('change', 'div.translatorcv :file', function () {
+
                     var id = parseInt(this.id.replace("translator_cv", ""));
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
                     var label_translatorid = "label_translator" + id;
                     document.getElementById(label_translatorid).value = label;
                 });
@@ -584,23 +742,6 @@
                     document.getElementById("label_signedLIcontract").value = label;
                 });
             });
-
-
-            function generatedLabels() {
-                $(document).on('change', ':file', function () {
-
-
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    var id = input[0].id;
-                    var label_id = "label_" + id;
-                    document.getElementById(label_id).value = label;
-                });
-            }
-            ;
-
         </script>
 
         <script type="text/javascript">
@@ -608,6 +749,7 @@
                 var ele = document.getElementById("delete_file" + eleId);
                 ele.parentNode.removeChild(ele);
             }
+            ;
         </script>
 
         <!--add more Translators-->
@@ -652,11 +794,11 @@
                     }
                 }
             }
+            ;
 
         </script>
 
         <script>
-
             function  generateTranslatorTab(indicator) {
 
                 if (indicator === 0) {
@@ -665,125 +807,174 @@
                     // we need to clear a possible existing tab
 
                     $('#tn').empty(); // empty the div before fetching and adding new data
-                    $('#tnc').empty(); // empty the div before fetching and adding new data
-                }
+                    $('#tnc').empty(); // empty the div before fetching and adding new data             }
 
 
 
-                console.log("generateTranslatorTab translatorArray " + translatorArray);
-                // Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
+                    console.log("generateTranslatorTab translatorArray " + translatorArray);
+                    // Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
+                    // 1: The Nav-Bar
 
-                // 1: The Nav-Bar
+                    var rightsAgreementContractsNavBar = '';
+                    rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1">';
+                    rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs">';
+                    for (var i = 0; i < translatorArray.length; i++) {
+                        var j = i + 1;
+                        if (i === 0) {
 
-                var rightsAgreementContractsNavBar = '';
+                            rightsAgreementContractsNavBar += '<li class="active"><a href="#tn' + j + '" data-toggle="tab">' + translatorArray[i] + '</a></li>';
+                        } else {
 
-                rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1">';
-                rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs">';
-
-                for (var i = 0; i < translatorArray.length; i++) {
-
-                    var j = i + 1;
-
-
-                    if (i === 0) {
-
-                        rightsAgreementContractsNavBar += '<li class="active"><a href="#tn' + j + '" data-toggle="tab">' + translatorArray[i] + '</a></li>';
-
-                    } else {
-
-                        rightsAgreementContractsNavBar += '<li><a href="#tn' + j + '" data-toggle="tab">' + translatorArray[i] + '</a></li>';
-                    }
-                }
-
-                rightsAgreementContractsNavBar += '</ul>'; // ul class="nav navbar-nav nav-tabs"
-
-                rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
-
-                $(rightsAgreementContractsNavBar).appendTo('#tn');
-
-
-                // The Tabs themselves
-
-                var rightsAgreementContractsNavContent = '';
-
-                for (var i = 0; i < translatorArray.length; i++) {
-
-                    var j = i + 1;
-
-
-
-                    if (i === 0) {
-
-                        rightsAgreementContractsNavContent += '<div class="tab-pane fade in active" id="tn' + j + '">';
-
-                    } else {
-
-                        rightsAgreementContractsNavContent += '<div class="tab-pane fade" id="tn' + j + '">';
-
+                            rightsAgreementContractsNavBar += '<li><a href="#tn' + j + '" data-toggle="tab">' + translatorArray[i] + '</a></li>';
+                        }
                     }
 
+                    rightsAgreementContractsNavBar += '</ul>'; // ul class="nav navbar-nav nav-tabs"
 
-                    rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';  //  --container--
+                    rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
 
-                    //Upload a copy of the agreement with the translation rights holder
+                    $(rightsAgreementContractsNavBar).appendTo('#tn');
+                    // The Tabs themselves
 
-                    rightsAgreementContractsNavContent += '<div class="col-md-10 agreement" style="margin-bottom: 10px">';
-                    rightsAgreementContractsNavContent += '<div  style="margin-bottom: 40px;margin-top: 30px"> <strong class="pull-left">Upload a copy of the agreement with the translation rights holder' + j + '</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>';
-                    rightsAgreementContractsNavContent += '<br/>';
-                    rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                    rightsAgreementContractsNavContent += '<div class="input-group agreement"  style="margin-bottom: 40px;">';
-                    rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Agreement-' + j + '" id="agreement' + j + '">';
-                    rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-                    rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_agreement' + j + '" class="pull-left" value=""/>';
-                    rightsAgreementContractsNavContent += '<input type="hidden" value="Agreement" name="destination" id="agreement_upload' + j + '"/>';
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-10" 
+                    var rightsAgreementContractsNavContent = '';
+                    for (var i = 0; i < translatorArray.length; i++) {
 
+                        var j = i + 1;
+                        if (i === 0) {
 
-                    //Upload a copy of the contract with
+                            rightsAgreementContractsNavContent += '<div class="tab-pane fade in active" id="tn' + j + '">';
+                        } else {
 
-                    rightsAgreementContractsNavContent += '<div class="col-md-9" style="margin-bottom: 10px">';
-                    rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the contract with ' + translatorArray[i] + '</strong></div>';
-                    rightsAgreementContractsNavContent += '<br/>';
-                    rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                    rightsAgreementContractsNavContent += '<div class="input-group contract"  style="margin-bottom: 40px;">';
-                    rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Contract-' + j + '" id="contract' + j + '">';
-                    rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-                    rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_contract' + j + '" class="pull-left"/>';
-                    rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
+                            rightsAgreementContractsNavContent += '<div class="tab-pane fade" id="tn' + j + '">';
+                        }
 
 
-                    //Upload form for addendum to the rights agreement
+                        rightsAgreementContractsNavContent += '<div class="container wrapperContainer">'; //  --container--
 
-                    rightsAgreementContractsNavContent += '<div class="col-md-12" style="margin-bottom: 10px">';
-                    rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the addendum to the rights agreement ' + translatorArray[i] + '</strong> <small class="pull-left"> &nbsp;  (where applicable)</small></div>';
-                    rightsAgreementContractsNavContent += '<br/>';
-                    rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                    rightsAgreementContractsNavContent += '<div class="input-group addendum"  style="margin-bottom: 40px;">';
-                    rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Addendum-' + j + '" id="addendum' + j + '">';
-                    rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-                    rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_addendum' + j + '" class="pull-left"/>';
-                    rightsAgreementContractsNavContent += '<input type="hidden" value="Addendum" name="destination" id="addendum_upload' + j + '"/>';
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-12" 
+                        //Upload a copy of the agreement with the translation rights holder
 
-                    rightsAgreementContractsNavContent += '</div  class="container EndwrapperContainer">'; // <!--container-->
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
+                        rightsAgreementContractsNavContent += '<div class="col-md-10"   style="margin-bottom: 10px">';
+                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 40px;margin-top: 30px"> <strong class="pull-left">Upload a copy of the agreement with the translation rights holder' + j + '</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>';
+                        rightsAgreementContractsNavContent += '<br/>';
+                        rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
+                        rightsAgreementContractsNavContent += '<div class="input-group agreement"  style="margin-bottom: 40px;">';
+                        rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
+                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" value="" name="file" id="agreement' + j + '">';
+                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                        rightsAgreementContractsNavContent += '</label>';
+                        rightsAgreementContractsNavContent += '<input id="label_agreement' + j + '" class="pull-left"/>';
+                        rightsAgreementContractsNavContent += '<input type="hidden" value="Agreement" name="destination" id="agreement_upload' + j + '"/>';
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-10" 
+
+
+                        //Upload a copy of the contract with
+
+                        rightsAgreementContractsNavContent += '<div class="col-md-9" style="margin-bottom: 10px">';
+                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the contract with ' + translatorArray[i] + '</strong></div>';
+                        rightsAgreementContractsNavContent += '<br/>';
+                        rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
+                        rightsAgreementContractsNavContent += '<div class="input-group contract"  style="margin-bottom: 40px;">';
+                        rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
+                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="file" id="contract' + j + '">';
+                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                        rightsAgreementContractsNavContent += '</label>';
+                        rightsAgreementContractsNavContent += '<input id="label_contract' + j + '" class="pull-left"/>';
+                        rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
+
+
+                        //Upload form for addendum to the rights agreement
+
+                        rightsAgreementContractsNavContent += '<div class="col-md-12" style="margin-bottom: 10px">';
+                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the addendum to the rights agreement ' + translatorArray[i] + '</strong> <small class="pull-left"> &nbsp;  (where applicable)</small></div>';
+                        rightsAgreementContractsNavContent += '<br/>';
+                        rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
+                        rightsAgreementContractsNavContent += '<div class="input-group addendum"  style="margin-bottom: 40px;">';
+                        rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
+                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="file" id="addendum' + j + '">';
+                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                        rightsAgreementContractsNavContent += '</label>';
+                        rightsAgreementContractsNavContent += '<input id="label_addendum' + j + '" class="pull-left"/>';
+                        rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="addendum_upload' + j + '"/>';
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-12" 
+
+                        rightsAgreementContractsNavContent += '</div>'; // --container-
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
+
+
+                    }
+
+
+
+                    $(rightsAgreementContractsNavContent).appendTo('#tnc');
+
+//        }
+
+//var fileInput = document.getElementsByClassName('agreement');
+//                    var fileList = [];
+//  var renderFileList, sendFile;
+//                    for (var i = 0; i < fileInput.files.length; i++) {
+//    	fileList.push(fileInput.files[i]);
+//        iterateFiles(fileList);
+//            }
+                    // get all the elements with className 'btn'. It returns an array
+//                    var btnList = document.getElementById('agreement');
+                    var btnList = document.getElementsByClassName('agreement');
+//                    var inputElement = document.getElementsByClassName('agreement');
+                    var inputElement = document.getElementsByTagName('file');
+
+
+
+                    // get the lenght of array defined above
+                    var listLength = btnList.length;
+                    var i = 0;
+                    // run the for look for each element in the array
+                    for (; i < listLength; i++) {
+
+                        console.log("btnList ", btnList[i].attributes[i].nodeValue); //second console
+//                        inputElement[i].addEventListener("change", handleFiles, false);
+
+
+                        // attach the event listener
+//                        btnList[i].addEventListener("change", showRel);
+//                        btnList[i].addEventListener('change', handleFiles, false);
+                        //document.getElementById('files').addEventListener('change', 
+//                                                  handleFileSelect, 
+//                                                  false);
+                    }
+
+
+//                    for (var i = 0; i < inputElement.length; i++) {
+//
+//                        var inputElementLength = inputElement.length;
+//                        console.log("inputElement  inputElementLength  " + inputElementLength);
+//
+//                        console.log("inputElement ", inputElement[i].attributes[i].nodeValue); //second console
+//
+//                    }
+
+                    //document.getElementById('files').addEventListener('change', handleFileSelect,false);
+
+//                                for (var j = 0; j < translatorArray.length; j++) {
+
+//                console.log("inputElement  agreement" + j);
+//                var inputElement = document.getElementById('agreement' + j + '"');
+//                inputElement.addEventListener("change", handleFiles, function(e)
+//{ console.log("e " + (e));
+//    });
+
+//            };
+
                 }
-
-                $(rightsAgreementContractsNavContent).appendTo('#tnc');
-
             }
 
+//            window.onload = attachClickEvent;
         </script>
+
+
 
         <script>
             function backToTranslators() {
@@ -820,7 +1011,7 @@
                     moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
                     moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
                     moreUploadTag += 'Select file ';
-                    moreUploadTag += '<input multiple="" name="Translator_CV-' + upload_number + '" id="translator_cv' + upload_number + '" type="file">';
+                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
                     moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
                     moreUploadTag += '</label>';
                     moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
@@ -835,16 +1026,12 @@
 
                 // back To Translators tab
                 $('#bs-example-navbar-collapse-1 a[href="#Translator"]').tab('show');
-
                 // Switch off "Add more translators"
                 $('#addTranslatorModalDiv').toggle();
-
                 // Change Title from "Translator" to "Translators"
                 document.getElementById("translatorNameLabel").innerHTML = 'Translators';
-
                 // Disable first Translator input element
                 document.getElementById("translatorName").disabled = 'true';
-
                 // Display all Translators in input element each
                 for (var i = 1; i < translatorArray.length; i++) {
                     console.log("backToTranslators translatorArray " + translatorArray[i]);
@@ -860,13 +1047,7 @@
                     $(additionalTranslatorTag).appendTo('#addTransl');
                 }
 
-                // if we have a final list of translators (more than one)
-                // we need to clear a possible existing tab first
                 generateTranslatorTab(0);
-
-                console.log("backToTranslators #translatorArray.val(translatorArray) " + translatorArray);
-                console.log(translatorArray);
-                console.log("backToTranslators #translatorArray.length " + translatorArray.length);
                 $("#translatorArray").val(translatorArray);
             }
         </script>
@@ -898,11 +1079,8 @@
                     var nr = "name" + i;
                     var item = document.getElementById(nr);
                     var itemValue = item.value;
-
                     pressCuttingArray.push(itemValue);
-
                     var moreUploadTag = '';
-
                     moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
                     moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
                     moreUploadTag += '<br>';
@@ -919,9 +1097,7 @@
                     moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
                     moreUploadTag += '</div>';
                     moreUploadTag += '</div>';
-
                     $(moreUploadTag).appendTo('#additionalTranslator');
-
                     upload_number++;
                 }
 
@@ -989,15 +1165,10 @@
                     var firstValue = first.value;
                     var lastValue = last.value;
                     var fullName = firstValue + " " + lastValue;
-
                     authorArray.push(fullName, firstValue, lastValue);
                 }
 
                 $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
-                var arrayLength = authorArray.length;
-                for (var i = 0; i < arrayLength; i++) {
-                    console.log("authorArray   " + i + ":  ", authorArray[i]);
-                }
                 $("#author_array").val(authorArray);
             }
         </script>
@@ -1015,11 +1186,14 @@
                 var tripper = localStorage.getItem("translatorName876");
                 document.getElementById("123").innerHTML = tripper;
                 document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-//                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
+                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
 //                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
 //                console.log("tester   ", tester);
 //                console.log("tripper   ", tripper);
-
+                var arrayLength = authorArray.length;
+                for (var i = 0; i < arrayLength; i++) {
+                    console.log("authorArray   " + i + ":  ", authorArray[i]);
+                }
 
                 copyFirstTranslatorName();
                 generateTranslatorTab(1);
@@ -1036,7 +1210,7 @@
                 document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
 //                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
 //                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
-//                console.log("tripper 1  ", tripper);
+                console.log("tripper 1  ", tripper);
             });
         </script>
 
@@ -1105,7 +1279,6 @@
                 '.doc,.docx,.xml,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 
             ];
-
             function validFileType(file) {
                 for (var i = 0; i < fileTypes.length; i++) {
                     if (file.type === fileTypes[i]) {
@@ -1129,7 +1302,6 @@
                             var file = files[i];
                             var fileName = files[i].name;
                             console.log("fileName  " + fileName);
-
 //                            if (file.type.match('image.*')) {
                             if (validFileType(files[i])) {
                                 if (this.files[0].size < 2097152) {
@@ -1145,7 +1317,6 @@
                                     //Read the image
                                     $('#clear, #result').show();
                                     picReader.readAsDataURL(file);
-
                                 } else {
                                     alert("Image Size is too big.Minimum size is 2MB.");
                                     $(this).val("");
@@ -1162,20 +1333,17 @@
                     console.log("Your browser does not support File API");
                 }
             });
-
             $(document).on("click", "#files", function () {
                 $('.thumbnail').parent().remove();
                 $('result').hide();
                 $(this).val("");
             });
-
             $(document).on("click", "#clear", function () {
                 $('.thumbnail').parent().remove();
                 $('#result').hide();
                 $('#files').val("");
                 $(this).hide();
             });
-
         </script>
 
         <style>
@@ -1234,12 +1402,7 @@
 
     <body style="height: 100%">
 
-        <sql:query var="companyQuery" dataSource="jdbc/ILGAS">
-            SELECT * FROM international_publishers
-            WHERE  international_publishers.Company_Number = ?
-            <sql:param value="${publisherID}"/>
-        </sql:query>    
-        <c:set var="companyDetails" value="${companyQuery.rows[0]}"/>
+
 
         <div id="shadowholder">
             <div class="shadowtop"> </div>
@@ -1505,7 +1668,7 @@
                                             </div> <!--<div class="col-sm-3">-->   
 
                                         </div> <!--row-->
-                                        <input type="text" id="translatorArray" name="translatorArray" >
+
                                         <!--keep in one line otherwise placeholder doesn't show-->
                                         <label class="pull-left">Additional contact information (where applicable)</label>
                                         <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
@@ -1745,7 +1908,6 @@
                                                 <div  id="tn">                                                        
                                                 </div>  <!-- tn -->
                                                 <div class="tab-content" id="tnc">
-                                                    <p>Please fill in Translator Details first!!</p>
                                                 </div>  <!-- tnc -->
                                             </div>  <!-- <div class="container-fluid"  -->
                                         </nav>  <!-- <nav class="navbar -->
@@ -1846,8 +2008,8 @@
                                     <p class="header1" style="margin-bottom: 40px">
                                         Translator Details
                                     </p>
-
                                     <div class="container-fluid" id="torget">
+                                        <!--<div class="container-fluid">-->
 
                                         <div class="row" style="margin-bottom: 10px">
                                             <div class="panel panel-default">
@@ -1871,7 +2033,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-sm-4" style="margin-top: 30px; visibility: block" id="addTranslatorModalDiv">  
+                                                    <div class="col-sm-4" style="margin-top: 30px; visibility: block" id="addTranslatorModalDiv">    
                                                         <a href="#" class="btn btn-group-sm btn-default pull-left" 
                                                            data-toggle="modal" 
                                                            data-target="#addTranslatorModal"
@@ -1880,7 +2042,7 @@
 
                                                     </div>                                                    
 
-
+                                                    <input type="hidden" id="translatorArray" name="translatorArray" >
                                                 </div>
                                             </div>
                                         </div> <!--row-->
@@ -1920,7 +2082,7 @@
                                                         <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
                                                             <label class="btn btn-default btn-file pull-left">
                                                                 Select file 
-                                                                <input multiple="" type="file"  name="Translator_CV-1" id="translator_cv0" >
+                                                                <input multiple="" type="file"  name="file" id="translator_cv0" >
                                                                 <span class="glyphicon glyphicon-folder-open"></span>
                                                             </label>
                                                             <input id="label_translator0" class="pull-left"/>
@@ -2040,7 +2202,7 @@
                                                                     <label class="btn btn-default btn-file pull-left">
                                                                         Select file 
                                                                         <input type="file"  
-                                                                               name="Original" 
+                                                                               name="file" 
                                                                                id="originalSample" >
                                                                         <span class="glyphicon glyphicon-folder-open"></span>
                                                                     </label>
@@ -2062,7 +2224,7 @@
                                                                 <div class="input-group translationSample pull-left" >
                                                                     <label class="btn btn-default btn-file pull-left">
                                                                         Select file 
-                                                                        <input type="file"  name="TranslationSample" id="translationSample" class="form-input">
+                                                                        <input type="file"  name="file" id="translationSample" class="form-input">
                                                                         <span class="glyphicon glyphicon-folder-open"></span>
                                                                     </label>
                                                                     <input id="label_translationSample" class="pull-left"/>
@@ -2180,7 +2342,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header" style="background-color: #c3bcbc">
-                                            <button type="button" class="close" data-dismiss="modal"  onclick="backToBooks();"  aria-hidden="true">&times;</button>
+                                            <button type="button" class="close" data-dismiss="modal"  onclick="backToBooks2();"  aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="addAuthorModalLabel">add more Authors</h4>
                                         </div>
 
@@ -2415,6 +2577,122 @@
                                                 function  showNotesModal() {
                                                     $("#showNotesModal").modal("show");
                                                 }
+                                                ;
+
         </script>
+        <script type="text/javascript">
+
+//            $(function () {
+//                $('div.agreement').on('change', ':file', function () {
+//
+//                    var input = $(this),
+//                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+//                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+//                    alert(label);
+//                    input.trigger('fileselect', [numFiles, label]);
+//                    console.log("input.id" + input.id);
+//                    console.log("input.childNodes[0].nodeValue" + input.childNodes[0].nodeValue);
+//                    var x = document.getElementsByClassName("agreement")[0].id;
+//                    console.log("agreement id" + x);
+//                    alert(this.childNodes[0].nodeValue);
+//                    document.getElementById("label_agreement1").value = label;
+//                });
+//            });
+
+
+//            function handleFiles(clicked_id) {
+//                console.log("idx   " + idx);
+//
+////                var curr = clicked_id;
+////                console.log("handleFiles 1 curr  " + curr);
+////                console.log("handleFiles 1 clicked_id  " + clicked_id);
+////
+////                var ben_name = "label_" + clicked_id;
+////                console.log("handleFiles ben_name  " + ben_name);
+////
+////                alert(document.getElementById(ben_name).value);
+//
+//
+//                $(document).on('change', ':file', function () {
+//                    console.log("document idx   " + idx);
+//
+//                    var input = $(this),
+//                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+//                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+//                    input.trigger('fileselect', [numFiles, label]);
+//
+//
+//                    var ben_name = "label_" + clicked_id;
+//                    console.log("ben_name   " + ben_name);
+//                    document.getElementById(ben_name).value = label;
+//                    idx++;
+////                    document.getElementById("label_" + curr.toString() + '"').value = label;
+//
+//                });
+//
+//
+//
+////  $(function () {
+////                $('div.contract').on('change', ':file', function () {
+////                    var input = $(this),
+////                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+////                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+////                    input.trigger('fileselect', [numFiles, label]);
+////                    document.getElementById("label_contract").value = label;
+////                });
+////            });
+//
+////                console.log("handleFiles target " + ele); // e.target C:\fakepath\translation sample.docx
+////                console.log("handleFiles value " + event.value); // e.target C:\fakepath\translation sample.docx
+//
+//                //get the element id of the element that is clicked
+////                var eleId = ele.id;
+////                console.log("handleFiles Element ID is " + eleId);   // Element ID is agreement1
+////
+////                var fileList = event.files; /* now you can work with the file list */
+//
+////
+////                console.log("fileList " + fileList.length);
+////
+////                for (var i = 0; i < fileList.length; i++) {
+////                    console.log(fileList[i]);
+////                }
+//
+////                alert("handleFiles Im here");
+//            }
+
+
+
+//            
+//function handleFileSelect(evt) {
+//
+//    var files = evt.target.files; // FileList object
+//
+//    // files is a FileList of File objects. List some properties.
+//    var output = [];
+//    for (var i = 0, f; f === files[i]; i++) {
+//     // Code to execute for every file selected
+//    }
+//    // Code to execute after that
+//
+//}
+//
+//document.getElementById('files').addEventListener('change', 
+//                                                  handleFileSelect, 
+//                                                  false);
+
+        </script>
+        <!--        <script type="text/javascript">
+                    function reply_click(clicked_id)
+                    {
+                        var curr = clicked_id;
+        
+                        var selectedFile = document.getElementById(curr);
+                        console.log("reply_click selectedFile is " + selectedFile.value);
+                        console.log("reply_click clicked_id " + clicked_id);
+        
+                    }
+        
+                </script>-->
     </body>
 </html>
