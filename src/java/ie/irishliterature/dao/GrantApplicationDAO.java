@@ -207,7 +207,8 @@ public class GrantApplicationDAO {
                     + "signedLIContractName,\n"
                     + "award,\n"
                     + "salesFigures,\n"
-                    + "created)  values  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    + "amountRequested,\n"
+                    + "created)  values  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             //                                              1                   2                   3                   4                   5                   6
             //                            1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0      
             //  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -275,7 +276,8 @@ public class GrantApplicationDAO {
             // ps1.setString(57, application.getPreviousGrantAid());
             ps1.setInt(47, application.getAward());
             ps1.setInt(48, application.getSalesFigures());
-            ps1.setTimestamp(49, getCurrentTimeStamp());
+             ps1.setBigDecimal(49, application.getAmountRequested());
+            ps1.setTimestamp(50, getCurrentTimeStamp());
 
             System.out.println("ps1:  1: " + ps1);
             ps1.executeUpdate();
@@ -403,29 +405,57 @@ public class GrantApplicationDAO {
                 System.out.println(">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator);
 
             }
-            // then:
-            //got idTranslator now insert into TranslatorTrack         
 
+            // then:
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
 
+            // got idTranslator now ...
+            // check if we already have a record
+            int translatorTrackRecord = ifTranslatorTrackExist(idTranslator, ReferenceNumber, Title);
+            System.out.println(">>>>>>>>>>>>. translatorTrackRecord: " + translatorTrackRecord + " idTranslator: " + idTranslator);
 
-            ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
-                    + "(idTranslator,\n"
-                    + "Title,\n"
-                    + "ReferenceNumber,\n"
-                    + "translatorCV,\n"
-                    + "translatorCVDocName,\n"
-                    + "copiesTranslationSample,\n"
-                    + "copiesTranslationSampleDocName) values (?,?,?,?,?,?,?)");
+            // if yes update TranslatorTrack      
+            if (translatorTrackRecord > 0) {
 
-            ps1.setInt(1, idTranslator);
-            ps1.setString(2, Title);
-            ps1.setString(3, ReferenceNumber);
-            ps1.setString(4, moveFileName);
-            ps1.setString(5, moveFile);
-            ps1.setString(6, copiesTranslationSample);
-            ps1.setString(7, copiesTranslationSampleDocName);
+                System.out.println("insertTranslators UPDATE ......................:");
+
+                ps1 = conn.prepareStatement("UPDATE TranslatorTrack "
+                        + "SET  "
+                        + "translatorCV = ?, translatorCVDocName = ?,  "
+                        + "copiesTranslationSample = ?, copiesTranslationSampleDocName = ?  "
+                        + "WHERE idTranslatorTrack = ?");
+
+                ps1.setString(1, moveFileName);
+                ps1.setString(2, moveFile);
+                ps1.setString(3, copiesTranslationSample);
+                ps1.setString(4, copiesTranslationSampleDocName);
+                ps1.setInt(5, translatorTrackRecord);
+
+            } else {
+
+                System.out.println("insertTranslators INSERT ......................:");
+
+                // if no insert into TranslatorTrack  
+                ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
+                        + "(idTranslator,\n"
+                        + "Title,\n"
+                        + "ReferenceNumber,\n"
+                        + "translatorCV,\n"
+                        + "translatorCVDocName,\n"
+                        + "copiesTranslationSample,\n"
+                        + "copiesTranslationSampleDocName) values (?,?,?,?,?,?,?)");
+
+                ps1.setInt(1, idTranslator);
+                ps1.setString(2, Title);
+                ps1.setString(3, ReferenceNumber);
+                ps1.setString(4, moveFileName);
+                ps1.setString(5, moveFile);
+                ps1.setString(6, copiesTranslationSample);
+                ps1.setString(7, copiesTranslationSampleDocName);
+
+            } // else
+
             ps1.executeUpdate();
 
             ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
@@ -462,8 +492,6 @@ public class GrantApplicationDAO {
 
         try {
 
-            System.out.println("insertTranslators......................:");
-
             //check if Translator exists
             idTranslator = ifTranslatorExist(Name);
 
@@ -475,24 +503,52 @@ public class GrantApplicationDAO {
                 System.out.println(">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator);
 
             }
-            // then:
-            //got idTranslator now insert into TranslatorTrack         
 
+            // then:                        
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
 
-            ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
-                    + "(idTranslator,\n"
-                    + "Title,\n"
-                    + "ReferenceNumber,\n"
-                    + "Agreement,\n"
-                    + "AgreementDocName) values (?,?,?,?,?)");
+            // got idTranslator now ...
+            // check if we already have a record
+            int translatorTrackRecord = ifTranslatorTrackExist(idTranslator, ReferenceNumber, Title);
+            System.out.println(">>>>>>>>>>>>. translatorTrackRecord: " + translatorTrackRecord + " idTranslator: " + idTranslator);
 
-            ps1.setInt(1, idTranslator);
-            ps1.setString(2, Title);
-            ps1.setString(3, ReferenceNumber);
-            ps1.setString(4, moveFileNameReplaced);
-            ps1.setString(5, moveFileName);
+            // if yes update TranslatorTrack      
+            if (translatorTrackRecord > 0) {
+
+                System.out.println("insertAgreement UPDATE ......................:");
+System.out.println("insertAgreement UPDATE .......translatorTrackRecord...............: " + translatorTrackRecord);
+System.out.println("insertAgreement UPDATE .......idTranslator...............: " + idTranslator);
+
+                ps1 = conn.prepareStatement("UPDATE TranslatorTrack "
+                        + "SET  "
+                        + "Agreement = ?, AgreementDocName = ?  "
+                        + "WHERE idTranslator = ? AND  idTranslatorTrack = ?");
+
+                ps1.setString(1, moveFileNameReplaced);
+                ps1.setString(2, moveFileName);
+                ps1.setInt(3, idTranslator);
+                ps1.setInt(4, translatorTrackRecord);
+
+            } else {
+
+                System.out.println("insertAgreement INSERT ......................:");
+
+                // if no insert into TranslatorTrack      
+                ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
+                        + "(idTranslator,\n"
+                        + "Title,\n"
+                        + "ReferenceNumber,\n"
+                        + "Agreement,\n"
+                        + "AgreementDocName) values (?,?,?,?,?)");
+
+                ps1.setInt(1, idTranslator);
+                ps1.setString(2, Title);
+                ps1.setString(3, ReferenceNumber);
+                ps1.setString(4, moveFileNameReplaced);
+                ps1.setString(5, moveFileName);
+
+            } // else
 
             ps1.executeUpdate();
 
@@ -530,7 +586,7 @@ public class GrantApplicationDAO {
 
         try {
 
-            System.out.println("insertTranslators......................:");
+            System.out.println("insertContract......................:");
 
             //check if Translator exists
             idTranslator = ifTranslatorExist(Name);
@@ -543,24 +599,49 @@ public class GrantApplicationDAO {
                 System.out.println(">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator);
 
             }
-            // then:
-            //got idTranslator now insert into TranslatorTrack         
 
+            // then:            
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
 
-            ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
-                    + "(idTranslator,\n"
-                    + "Title,\n"
-                    + "ReferenceNumber,\n"
-                    + "Contract,\n"
-                    + "ContractDocName) values (?,?,?,?,?)");
+            // got idTranslator now ...
+            // check if we already have a record
+            int translatorTrackRecord = ifTranslatorTrackExist(idTranslator, ReferenceNumber, Title);
+            System.out.println(">>>>>>>>>>>>. translatorTrackRecord: " + translatorTrackRecord + " idTranslator: " + idTranslator);
 
-            ps1.setInt(1, idTranslator);
-            ps1.setString(2, Title);
-            ps1.setString(3, ReferenceNumber);
-            ps1.setString(4, moveFileNameReplaced);
-            ps1.setString(5, moveFileName);
+            // if yes update TranslatorTrack      
+            if (translatorTrackRecord > 0) {
+
+                System.out.println("insertContract UPDATE ......................:");
+
+                ps1 = conn.prepareStatement("UPDATE TranslatorTrack "
+                        + "SET  "
+                        + "Contract = ?, ContractDocName = ?  "
+                        + "WHERE idTranslatorTrack = ?");
+
+                ps1.setString(1, moveFileNameReplaced);
+                ps1.setString(2, moveFileName);
+                ps1.setInt(3, translatorTrackRecord);
+
+            } else {
+
+                System.out.println("insertContract INSERT ......................:");
+
+                // if no insert into TranslatorTrack  
+                ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
+                        + "(idTranslator,\n"
+                        + "Title,\n"
+                        + "ReferenceNumber,\n"
+                        + "Contract,\n"
+                        + "ContractDocName) values (?,?,?,?,?)");
+
+                ps1.setInt(1, idTranslator);
+                ps1.setString(2, Title);
+                ps1.setString(3, ReferenceNumber);
+                ps1.setString(4, moveFileNameReplaced);
+                ps1.setString(5, moveFileName);
+
+            } // else
 
             ps1.executeUpdate();
 
@@ -598,7 +679,7 @@ public class GrantApplicationDAO {
 
         try {
 
-            System.out.println("insertTranslators......................:");
+            System.out.println("insertAddendum......................:");
 
             //check if Translator exists
             idTranslator = ifTranslatorExist(Name);
@@ -611,24 +692,49 @@ public class GrantApplicationDAO {
                 System.out.println(">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator);
 
             }
-            // then:
-            //got idTranslator now insert into TranslatorTrack         
 
+            // then:
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
 
-            ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
-                    + "(idTranslator,\n"
-                    + "Title,\n"
-                    + "ReferenceNumber,\n"
-                    + "AddendumRightsAgreement,\n"
-                    + "AddendumRightsAgreementName) values (?,?,?,?,?)");
+            // got idTranslator now ...
+            // check if we already have a record
+            int translatorTrackRecord = ifTranslatorTrackExist(idTranslator, ReferenceNumber, Title);
+            System.out.println(">>>>>>>>>>>>. translatorTrackRecord: " + translatorTrackRecord + " idTranslator: " + idTranslator);
 
-            ps1.setInt(1, idTranslator);
-            ps1.setString(2, Title);
-            ps1.setString(3, ReferenceNumber);
-            ps1.setString(4, moveFileNameReplaced);
-            ps1.setString(5, moveFileName);
+            // if yes update TranslatorTrack      
+            if (translatorTrackRecord > 0) {
+
+                System.out.println("insertAddendum UPDATE ......................:");
+
+                ps1 = conn.prepareStatement("UPDATE TranslatorTrack "
+                        + "SET  "
+                        + "AddendumRightsAgreement = ?, AddendumRightsAgreementName = ?  "
+                        + "WHERE idTranslatorTrack = ?");
+
+                ps1.setString(1, moveFileNameReplaced);
+                ps1.setString(2, moveFileName);
+                ps1.setInt(3, translatorTrackRecord);
+
+            } else {
+
+                System.out.println("insertAddendum INSERT ......................:");
+
+                // if no insert into TranslatorTrack      
+                ps1 = conn.prepareStatement("INSERT INTO  TranslatorTrack"
+                        + "(idTranslator,\n"
+                        + "Title,\n"
+                        + "ReferenceNumber,\n"
+                        + "AddendumRightsAgreement,\n"
+                        + "AddendumRightsAgreementName) values (?,?,?,?,?)");
+
+                ps1.setInt(1, idTranslator);
+                ps1.setString(2, Title);
+                ps1.setString(3, ReferenceNumber);
+                ps1.setString(4, moveFileNameReplaced);
+                ps1.setString(5, moveFileName);
+
+            } // else
 
             ps1.executeUpdate();
 
@@ -670,7 +776,6 @@ public class GrantApplicationDAO {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
-
 
             String query = "UPDATE GrantApplication SET  Original = ?, OriginalName = ? WHERE ApplicationNumber = ?";
             ps1 = conn.prepareStatement(query);
@@ -723,17 +828,15 @@ public class GrantApplicationDAO {
 
             System.out.println("moveFile: " + moveFileNameReplaced);
             System.out.println("moveFileName: " + moveFileName);
-            
-                        String query = "UPDATE GrantApplication SET  copiesTranslationSample = ?, copiesTranslationSampleDocName = ? WHERE ApplicationNumber = ?";
+
+            String query = "UPDATE GrantApplication SET  copiesTranslationSample = ?, copiesTranslationSampleDocName = ? WHERE ApplicationNumber = ?";
             ps1 = conn.prepareStatement(query);
-            
-              
+
 //
 //            ps1 = conn.prepareStatement("UPDATE GrantApplication SET"
 //                    + "(copiesTranslationSample,\n"
 //                    + "copiesTranslationSampleDocName) values (?,?)"
 //                    + " WHERE ApplicationNumber = " + ApplicationNumber);
-
             ps1.setString(1, moveFileNameReplaced);
             ps1.setString(2, moveFileName);
             ps1.setString(3, ApplicationNumber);
@@ -1733,5 +1836,50 @@ public class GrantApplicationDAO {
         java.util.Date today = new java.util.Date();
         return new java.sql.Timestamp(today.getTime());
 
+    }
+
+    public static int ifTranslatorTrackExist(int idTranslator, String ReferenceNumber, String Title) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        int idTranslatorTrack = 0;
+
+        try {
+
+            System.out.println("ifTranslatorTrackExist: idTranslator:: " + idTranslator + " ReferenceNumber:: " + ReferenceNumber + " Title:: " + Title + "\n");
+
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement("SELECT idTranslatorTrack FROM TranslatorTrack\n"
+                    + "WHERE  idTranslator = ? \n"
+                    + "AND ReferenceNumber = ? \n"
+                    + "AND Title = ? ;");
+
+            ps.setInt(1, idTranslator);
+            ps.setString(2, ReferenceNumber);
+            ps.setString(3, Title);
+
+            res = ps.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+                    idTranslatorTrack = res.getInt(1);
+
+                }
+            }
+
+            DBConn.close(conn, ps, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+
+            LOGGER.debug(e.getMessage());
+
+            DBConn.close(conn, ps, res);
+
+            throw new DBException("3 Excepion while accessing database");
+        }
+
+        return idTranslatorTrack;
     }
 }

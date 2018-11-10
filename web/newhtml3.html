@@ -5,11 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-         <title>Dynamic Upload Example</title>
-         
-         <!--https://www.bennadel.com/blog/1375-ask-ben-dynamically-adding-file-upload-fields-to-a-form-using-jquery.htm-->
-         
-         
+        <title>Dynamic Upload Example</title>
+
+        <!--https://www.bennadel.com/blog/1375-ask-ben-dynamically-adding-file-upload-fields-to-a-form-using-jquery.htm-->
+
+
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
@@ -32,114 +32,198 @@
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
         <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
         <script type="text/javascript"  src="js/jquery-ui.js"></script>
-
         <script>
-            // When the DOM has loaded, init the form link.
-            $(
-                    function () {
-                        // Get the add new upload link.
-                        var jAddNewUpload = $("#add-file-upload");
+            var fileTypes = [
+                'image/jpeg',
+                'image/pjpeg',
+                'image/png',
+                'image/*',
+                'application/pdf',
+                '.doc,.docx,.xml,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ];
 
-                        // Hook up the click event.
-                        jAddNewUpload
-                                .attr("href", "javascript:void( 0 )")
-                                .click(
-                                        function (objEvent) {
-                                            AddNewUpload();
-
-                                            // Prevent the default action.
-                                            objEvent.preventDefault();
-                                            return(false);
-                                        }
-                                )
-                                ;
-
+            function validFileType(file) {
+                for (var i = 0; i < fileTypes.length; i++) {
+                    if (file.type === fileTypes[i]) {
+                        return true;
                     }
-            );
+                }
 
-
-            // This adds a new file upload to the form.
-            function AddNewUpload() {
-                // Get a reference to the upload container.
-                var jFilesContainer = $("#files");
-
-                // Get the file upload template.
-                var jUploadTemplate = $("#element-templates div.row");
-
-                // Duplicate the upload template. This will give us a copy
-                // of the templated element, not attached to any DOM.
-                var jUpload = jUploadTemplate.clone();
-
-                // At this point, we have an exact copy. This gives us two
-                // problems; on one hand, the values are not correct. On
-                // the other hand, some browsers cannot dynamically rename
-                // form inputs. To get around the FORM input name issue, we
-                // have to strip out the inner HTML and dynamically generate
-                // it with the new values.
-                var strNewHTML = jUpload.html();
-
-                // Now, we have the HTML as a string. Let's replace the
-                // template values with the correct ones. To do this, we need
-                // to see how many upload elements we have so far.
-                var intNewFileCount = (jFilesContainer.find("div.row").length + 1);
-
-                // Set the proper ID.
-                jUpload.attr("id", ("file" + intNewFileCount));
-
-                // Replace the values.
-                strNewHTML = strNewHTML
-                        .replace(
-                                new RegExp("::FIELD2::", "i"),
-                                intNewFileCount
-                                )
-                        .replace(
-                                new RegExp("::FIELD3::", "i"),
-                                ("presoFile" + intNewFileCount)
-                                )
-                        ;
-
-                // Now that we have the new HTML, we can replace the
-                // HTML of our new upload element.
-                jUpload.html(strNewHTML);
-
-                // At this point, we have a totally intialized file upload
-                // node. Let's attach it to the DOM.
-                jFilesContainer.append(jUpload);
+                return false;
             }
+        </script>
+        <script>
+
+            window.onload = function () {
+                //Check File API support
+                if (window.File && window.FileList && window.FileReader)
+                {
+                    $('#files').on("change", function (event) {
+                        var files = event.target.files; //FileList object
+                        var output = document.getElementById("result");
+                        for (var i = 0; i < files.length; i++)
+                        {
+                            var file = files[i];
+                            //Only pics
+//                            if (file.type.match('image.*')) {
+                            if (validFileType(files[i])) {
+                                if (this.files[0].size < 2097152) {
+                                    // continue;
+                                    var picReader = new FileReader();
+                                    picReader.addEventListener("load", function (event) {
+                                        var picFile = event.target;
+                                        var div = document.createElement("div");
+//                                        div.style = "border:1px solid black";
+                                        div.innerHTML =
+                                                " <a class='column' style='text-decoration: none;'> <img class='thumbnail' src='" + picFile.result + "'" + "title='" + file.name + "'/>"
+                                                + "<span  class='caption'>" + file.name + "</span></a>";
+                                        output.insertBefore(div, null);
+                                    });
+                                    //Read the image
+                                    $('#clear, #result').show();
+                                    picReader.readAsDataURL(file);
+                                } else {
+                                    alert("Image Size is too big. Minimum size is 2MB.");
+                                    $(this).val("");
+                                }
+                            } else {
+                                alert("You can only upload image file.");
+                                $(this).val("");
+                            }
+                        }
+
+                    });
+                } else
+                {
+                    console.log("Your browser does not support File API");
+                }
+            };
+
+            $('#files').on("click", function () {
+                $('.thumbnail').parent().remove();
+                $('result').hide();
+                $(this).val("");
+            });
+
+            $('#clear').on("click", function () {
+                $('.thumbnail').parent().remove();
+                $('#result').hide();
+                $('#files').val("");
+                $(this).hide();
+            });
 
         </script>
+
+
+
+        <style>
+
+
+
+            .modal-body {
+                position: relative;
+                overflow-y: auto;
+                max-height: 400px;
+                padding: 15px;
+            }
+            .modal-footer {
+                padding: 2px 16px;
+                background-color: #5cb85c;
+                color: white;
+            }
+        </style>
+
+        <style>
+
+            #clear{
+                display:none;
+            }
+            #result {
+                border: 4px dotted #cccccc;
+                display: none;
+                float: right;
+                margin:0 auto;
+                width: 511px;
+            }
+
+            /* Three image containers (use 25% for four, and 50% for two, etc) */
+            .column {
+                float: left;
+                width: 33.33%;
+                padding: 5px;
+            }
+
+            /* Clear floats after image containers */
+            .row::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+            .autoModal.modal .modal-body{
+                max-height: 100%;
+            }
+
+            div.upload {
+                position: relative;
+                overflow: hidden;
+            }
+            input.upload {
+                position: absolute;
+                font-size: 50px;
+                opacity: 0;
+                right: 0;
+                top: 0;
+            }
+        </style>
+
+
     </head>
     <body>
-
-        <h1>
-            Dynamic Upload Example
-        </h1>
-
-        <form>
-
-            <div id="files">
-
-                <div id="file1" class="row">
-                    1: <input type="file" name="presoFile1"/>
-                </div>
-
-            </div>
-
-            <p>
-                <a id="add-file-upload">Add File Upload</a>
-            </p>
+        <header>
+            <h1>File API - FileReader</h1>
+        </header>
+        <button type="button" data-toggle="modal" data-target="#addTranslatorModal">Launch modal</button>
+        <div class="container-fluid">
 
 
+        </div>
+        <div class="modal fade autoModal" id="addTranslatorModal"  style="z-index: 9999;"  tabindex="-1" role="dialog" aria-labelledby="addTranslatorModalLabel">
+            <div class="modal-dialog">
+                <div class="modal-content" style="z-index:99999999;">
+                    <div class="modal-header" style="background-color: #c3bcbc">
+                        <button type="button" class="close" data-dismiss="modal"    aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="addTranslatorModalLabel">add press cuttings</h4>
+                    </div>
 
-            <div id="element-templates" style="display: none ;">
 
-                <div id="::FIELD1::" class="row">
-                    ::FIELD2::: <input type="file" name="::FIELD3::"/>
-                </div>
+                    <div class="modal-body" style="background-color: #d9d1d1;">
 
-            </div>
+                        <div class="row" style="margin-bottom: 10px">
+                            <div class='col-sm-12'>                               
+                                <div>
+                                    <output class='col-sm-12' id="result" style="border:1px solid black"></output>
+                                </div>
+                                <div>
+                                    
+                                    sdsdsdsdsd
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        </form>
+                    <div class="modal-footer"  style="background-color: #c3bcbc">
+                        <div class="btn btn-primary btn-sm float-left pull-left upload">
+                            <span>Choose files</span>
+                            <input class="upload" id="files" type="file" multiple/>
+                        </div>
+                        <!--<button id="addElement" type="button" value="Add another Translator"  class="btn btn-group-sm  button teal pull-left">Add another Translator</button>-->
 
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToTranslators();">Done</button>
+                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                    </div> <!--modal footer -->
+                </div> <!--modal content-->          
+            </div> <!--modal dialog-->
+        </div> <!--modal fade-->
     </body>
 </html>

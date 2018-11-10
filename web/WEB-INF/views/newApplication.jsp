@@ -42,8 +42,8 @@
         <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
         <script type="text/javascript"  src="js/jquery-ui.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.7/purify.min.js.map"></script>
-        <script type="text/javascript"  src="js/purify.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.7/purify.min.js.map"></script>-->
+        <!--<script type="text/javascript"  src="js/purify.min.js"></script>-->
         <script type="text/javascript"  src="js/pdf.js"></script>
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
 
@@ -640,6 +640,7 @@
                 var fn = document.getElementById("translatorName");
                 document.getElementById("first0").value = fn.value;
                 Name = fn.value;
+                console.log("copyFirstTranslatorName Name ", Name);
                 translatorArray.push(Name);
                 console.log(" first entry in translatorArray ", fn.value);
 
@@ -790,7 +791,7 @@
 
 //                alert("backToTranslators");
 //                translatorArray = [];
-                console.log("backToTranslators translatorArray cleared ", translatorArray);
+                console.log("backToTranslators translatorArray  ", translatorArray);
                 var upload_number = 2;
                 // Get Content
                 var translatorContent = document.getElementById("torget").innerHTML;
@@ -860,14 +861,16 @@
                     $(additionalTranslatorTag).appendTo('#addTransl');
                 }
 
-                // if we have a final list of translators (more than one)
-                // we need to clear a possible existing tab first
-                generateTranslatorTab(0);
 
                 console.log("backToTranslators #translatorArray.val(translatorArray) " + translatorArray);
                 console.log(translatorArray);
                 console.log("backToTranslators #translatorArray.length " + translatorArray.length);
                 $("#translatorArray").val(translatorArray);
+                
+                // if we have a final list of translators (more than one)
+                // we need to clear a possible existing tab first
+                generateTranslatorTab(0);
+
             }
         </script>
 
@@ -964,7 +967,7 @@
 
         <script>
             function  copyFirstRow2() {
-
+                authorArray = [];
                 console.log("document.getElementById(aFirstName)   ", document.getElementById("aFirstName").value);
                 var aFirstName = document.getElementById("aFirstName");
                 console.log("aFirstName.value   ", aFirstName.value);
@@ -1008,6 +1011,7 @@
             function myFunction() {
                 translatorName876 = "";
                 var x = document.getElementById("translatorName");
+                console.log("document.getElementById(translatorName) ", x);
                 translatorName876 = x.value;
                 var tester = "Upload a copy of " + translatorName876 + "'s CV:";
                 localStorage.setItem('translatorName876', tester);
@@ -1020,9 +1024,20 @@
 //                console.log("tester   ", tester);
 //                console.log("tripper   ", tripper);
 
-
+$("#translatorArray").val(translatorName876);
                 copyFirstTranslatorName();
                 generateTranslatorTab(1);
+            }
+
+        </script>
+        
+            <script>
+
+            function myFunction2() {
+
+
+                copyFirstRow2();
+                
             }
 
         </script>
@@ -1505,7 +1520,7 @@
                                             </div> <!--<div class="col-sm-3">-->   
 
                                         </div> <!--row-->
-                                        <input type="text" id="translatorArray" name="translatorArray" >
+ <input type="hidden" id="translatorArray" name="translatorArray" >
                                         <!--keep in one line otherwise placeholder doesn't show-->
                                         <label class="pull-left">Additional contact information (where applicable)</label>
                                         <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
@@ -1555,6 +1570,7 @@
                                                                        class="form-control"                                
                                                                        name="AuthorLastName"                                
                                                                        value=""    
+                                                                        onblur="myFunction2();"
                                                                        placeholder="Author Last Name"
                                                                        >                                                                
                                                             </div>

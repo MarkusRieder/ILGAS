@@ -4,6 +4,7 @@ import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.GrantApplication;
+import ie.irishliterature.model.Library;
 import ie.irishliterature.model.TranslatorTracker;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -148,42 +149,6 @@ public class openApplicationDAO {
 
                 application.setRightsAgreement(rightsAgreementList);
 
-                //Info:   1  getRightsAgreement .... 5 == /~markus/test/2018/Discworld Publishers/191/Agreement/Translator Name1/agreement with the translation rights holder.docx
-                //Info:   1  getRightsAgreement .... 6 == agreement with the translation rights holder.docx
-                //Info:   1  getRightsAgreement .... 7 == /~markus/test/2018/Discworld Publishers/191/Contract/Translator Name1/contract with the translator.docx
-                //Info:   1  getRightsAgreement .... 8 == contract with the translator.docx
-                //Info:   1  getRightsAgreement .... 9 == /~markus/test/2018/Discworld Publishers/191/Addendum/Translator Name1/addendum to the rights agreement.docx
-                //Info:   1  getRightsAgreement .... 10 == addendum to the rights agreement.docx
-                //
-                //Info:   1  getRightsAgreement .... 5 == /~markus/test/2018/Discworld Publishers/191/Agreement/Translator Name2/agreement with the translation rights holder 2.docx
-                //Info:   1  getRightsAgreement .... 6 == agreement with the translation rights holder 2.docx
-                //Info:   1  getRightsAgreement .... 7 == /~markus/test/2018/Discworld Publishers/191/Contract/Translator Name2/contract with the translator 2.docx
-                //Info:   1  getRightsAgreement .... 8 == contract with the translator 2.docx
-                //Info:   1  getRightsAgreement .... 9 == /~markus/test/2018/Discworld Publishers/191/Addendum/Translator Name2/addendum to the rights agreement 2.docx
-                //Info:   1  getRightsAgreement .... 10 == addendum to the rights agreement 2.docx
-                //
-                //Info:   1  getRightsAgreement .... 1 == /~markus/test/2018/Discworld Publishers/191/Translator_CV/Translator Name1/translator cv 1.docx
-                //Info:   1  getRightsAgreement .... 2 == translator cv 1.docx
-                //Info:   1  getRightsAgreement .... 1 == /~markus/test/2018/Discworld Publishers/191/Translator_CV/Translator Name2/translator cv 2.docx
-                //Info:   1  getRightsAgreement .... 2 == translator cv 2.docx
-                //
-                //Info:   2  rightsAgreementList.size .... 2
-                //Info:   3  getRightsAgreement .... 0 == /~markus/test/2018/Discworld Publishers/191/Translator_CV/Translator Name2/translator cv 2.docx
-                //Info:   3  getRightsAgreement .... 1 == translator cv 2.docx                
-//                idTranslatorTrack, idTranslator, ReferenceNumber, Title, 
-//                 translatorCV, translatorCVDocName, 
-//                 copiesTranslationSample, copiesTranslationSampleDocName, 
-//                 Agreement, AgreementDocName, 
-//                 Contract, ContractDocName, 
-//                 AddendumRightsAgreement
-//                , AddendumRightsAgreementName 
-//private String agreement;//path + filename
-                //
-                //private String agreementDocName; //filename
-                //
-                //private String contract; //path + filename
-                //
-                //private String contractDocName;  //filename
                 application.setProofOfPaymentToTranslator(res.getString("proofOfPaymentToTranslator"));
                 application.setProofOfPaymentToTranslatorName(res.getString("proofOfPaymentToTranslatorName"));
                 application.setBankDetailsForm(res.getString("bankDetailsForm"));
@@ -233,6 +198,7 @@ public class openApplicationDAO {
 
                 application.setTitles(TITLELIST);
                 application.setTranslatorName(translatorList);
+                System.out.println("application.setTranslatorName(translatorList) " + translatorList);
                 application.setTransList(listOfTranslatorArray);
                 System.out.println("application.setTransList(listOfTranslatorArray)  " + listOfTranslatorArray);
                 application.setStatus(res.getString("Status"));
@@ -265,7 +231,7 @@ public class openApplicationDAO {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT lang FROM ILGAS.Languages_Library WHERE ReferenceNumber = ?");
+            ps = conn.prepareStatement("SELECT lang FROM languages_Library WHERE ReferenceNumber = ?");
 
             ps.setString(1, ReferenceNumber);
 
@@ -537,16 +503,15 @@ public class openApplicationDAO {
         return aTranslatorName;
     }
 
-
-    /*
-     * gets ReferenceNumber
-     * produces List idTranslator ID's : idTranslatorList
-     * uses idTranslatorList to produce List TranslatorTrack containing
-     * Translator.Name
-     * returns ArrayList with Translator.Name
-     */
     public static ArrayList<String> getTranslatorTrackId(String appRef) {
 
+        /*
+         * gets ReferenceNumber
+         * produces List idTranslator ID's : idTranslatorList
+         * uses idTranslatorList to produce List TranslatorTrack containing
+         * Translator.Name
+         * returns ArrayList with Translator.Name
+         */
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
@@ -730,7 +695,7 @@ public class openApplicationDAO {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT referenceNumber, fileDestination, sampleSentOut, sampleReturned, summaryReport, "
+            ps = conn.prepareStatement("SELECT referenceNumber, fileDestination, sampleSentOut, sampleReturned,summaryReport, "
                     + "CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM expertReader, users\n"
                     + "WHERE expertReaderUserID = userID\n"
                     + "AND referenceNumber  = ? ");
@@ -908,8 +873,7 @@ public class openApplicationDAO {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT translatorCV, translatorCVDocName, "
-                    + "copiesTranslationSample, copiesTranslationSampleDocName, "
+            ps = conn.prepareStatement("SELECT "
                     + "Agreement, AgreementDocName, "
                     + "Contract, ContractDocName, "
                     + "AddendumRightsAgreement, AddendumRightsAgreementName"
@@ -921,12 +885,18 @@ public class openApplicationDAO {
 
             final ResultSetMetaData meta = res.getMetaData();
             final int columnCount = meta.getColumnCount();
-            System.out.println("columnCount .... " + columnCount);
+//            System.out.println("columnCount .... " + columnCount);
 
             while (res.next()) {
 
-                columnList = new String[10];
+                columnList = new String[6];
 
+//                      0  Agreement, 
+//                      1  AgreementDocName, 
+//                      2  Contract, 
+//                      3  ContractDocName, 
+//                      4  AddendumRightsAgreement, 
+//                      5  AddendumRightsAgreementName    
 //                      0  translatorCV, 
 //                      1  translatorCVDocName, 
 //                      2  copiesTranslationSample, 
@@ -937,12 +907,19 @@ public class openApplicationDAO {
 //                      7  ContractDocName, 
 //                      8  AddendumRightsAgreement, 
 //                      9  AddendumRightsAgreementName
-//                columnList[0] = res.getString(1);
-//                columnList[1] = res.getString(2);
-//                columnList[2] = res.getString(3);
-//                columnList[3] = res.getString(4);
-//                columnList[4] = res.getString(5);
-//                columnList[5] = res.getString(6);
+                columnList[0] = res.getString(1);
+//                System.out.println("getRightsAgreement Agreement columnList[0] " + res.getString("Agreement"));
+                columnList[1] = res.getString(2);
+//                System.out.println("getRightsAgreement AgreementDocName columnList[1] " + res.getString("AgreementDocName"));
+                columnList[2] = res.getString(3);
+//                System.out.println("getRightsAgreement Contract columnList[2] " + res.getString("Contract"));
+                columnList[3] = res.getString(4);
+//                System.out.println("getRightsAgreement ContractDocName columnList[3] " + res.getString("ContractDocName"));
+                columnList[4] = res.getString(5);
+//                System.out.println("getRightsAgreement AddendumRightsAgreement columnList[4] " + res.getString("AddendumRightsAgreement"));
+                columnList[5] = res.getString(6);
+//                System.out.println("getRightsAgreement AddendumRightsAgreementName columnList[5] " + res.getString("AddendumRightsAgreementName"));
+
 //                columnList[6] = res.getString(7);
 //                columnList[7] = res.getString(8);
 //                columnList[8] = res.getString(9);
@@ -956,20 +933,28 @@ public class openApplicationDAO {
 //
 ////                    System.out.println("getTransDocs translatorCVDoc path " + res.getString(2));
 //                    translatorDocsLst.add(Arrays.toString(translatorCVLst));
-int col = 0;
-                for (int column = 1; column <= columnCount; ++column) {
-                    
-                    if (res.getString(column) != null) {
-                        System.out.println("1  getRightsAgreement .... col  " + col + " column " + column + " == " + res.getString(column));
-                        columnList[col] = res.getString(column);
-                        
-                        System.out.println("1  getRightsAgreement .... columnList[" + col + "] " +  columnList[col] +
-                               " res.getString(" + column + ") == " + res.getString(column));
-                        col++;
-                    }
+//                System.out.println("1  getRightsAgreement .... columnCount  " + columnCount);
+//                int col = 0;
+//                for (int column = 1; column <= columnCount; ++column) {
+//                    String columnName = meta.getColumnName(column);
+////                    System.out.println("0  getRightsAgreement \t columnName " + columnName + "\t col  " + col + "\t column " + column + " == " + res.getString(columnName));
+//                    if (res.getString(column) != null) {
+//                        System.out.println("1  getRightsAgreement \t columnName " + columnName + "\t col  " + col + "\t column " + column + " == " + res.getString(columnName));
+//                        columnList[col] = res.getString(columnName);
+//
+////                        System.out.println("2  getRightsAgreement .... columnList[" + col + "] " +  columnList[col] +
+////                               " res.getString(" + column + ") == " + res.getString(column));
+//                        col++;
+//                    }
+//                }
+                rightsAgreementArray.add(Arrays.toString(columnList));
+
+                for (int s = 0; s < columnList.length; s++) {
+//                    System.out.println("getRightsAgreement columnList[" + s + "] " + columnList[s]);
+
                 }
 
-                rightsAgreementArray.add(Arrays.toString(columnList));
+//                System.out.println("getRightsAgreement columnList " + Arrays.toString(columnList));
 
 //Info:   1  getRightsAgreement .... 5 == /~markus/test/2018/Discworld Publishers/191/Agreement/Translator Name1/agreement with the translation rights holder.docx
 //Info:   1  getRightsAgreement .... 6 == agreement with the translation rights holder.docx
@@ -1001,11 +986,163 @@ int col = 0;
 
         DBConn.close(conn, ps, res);
 
-        System.out.println("2  rightsAgreementArray.size .... " + rightsAgreementArray.size());
+//        System.out.println("2  rightsAgreementArray.size .... " + rightsAgreementArray.size());
 
         for (int i = 0; i < rightsAgreementArray.size(); i++) {
-            System.out.println("3  getRightsAgreement .... " + i + " == " + rightsAgreementArray.get(i));
+//            System.out.println("3  getRightsAgreement .... " + i + " == " + rightsAgreementArray.get(i));
         }
         return rightsAgreementArray;
+    }
+
+    //updateApplication
+    public static void updateApplication(GrantApplication app, String ReferenceNumber) {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        boolean id;
+        int committed;
+        ResultSet res = null;
+
+        int counter = 1;
+        System.out.printf("we are here  updateApplication   ");
+
+        String prepStat = "(UPDATE GrantApplication SET";
+
+        for (java.lang.reflect.Field field : app.getClass().getDeclaredFields()) {
+            try {
+                field.setAccessible(true);
+                String name = field.getName();
+                Object value = field.get(app);
+                System.out.printf("xxx  " + counter + ":  Field name: %s, Field value: %s%n", name, value);
+
+//                if ((!value.toString().equals("null")) || (!value.toString().equals("0")) || (!value.toString() == null) ) {
+//                System.out.printf("xxx before prepStat " + prepStat);
+                prepStat = prepStat + " " + name + " = " + value + ", ";
+//                    System.out.printf("xxx  after prepStat " + prepStat);
+//            }
+
+                counter++;
+
+            } catch (IllegalArgumentException ex) {
+                java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                java.util.logging.Logger.getLogger(openApplicationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        System.out.printf("xxx  prepStat " + prepStat);
+//            ps1 = conn.prepareStatement("UPDATE GrantApplication SET "
+//                    + "agreement = ?,\n"
+//                    + "agreementDocName = ?,\n"
+//                    + "contract = ?,\n"
+//                    + "contractDocName = ?,\n"
+//                    + "translatorCV = ?,\n"
+//                    + "translatorCVDocName = ?,\n"
+//                    + "Original = ?,\n"
+//                    + "OriginalName = ?,\n"
+//                    + "copiesTranslationSample = ?,\n"
+//                    + "copiesTranslationSampleDocName = ?,\n"
+//                    + "cover = ?,\n"
+//                    + "coverName = ?,\n"
+//                    + "addendumRightsAgreement = ?,\n"
+//                    + "addendumRightsAgreementName = ?,\n"
+//                    + "proofOfPaymentToTranslator = ?,\n"
+//                    + "proofOfPaymentToTranslatorName = ?,\n"
+//                    + "bankDetailsForm = ?,\n"
+//                    + "bankDetailsFormName = ?,\n"
+//                    + "signedLIContract = ?,\n"
+//                    + "signedLIContractName = ?,\n"
+//                    + "lastUpdated =  ?"
+//                    + " WHERE ReferenceNumber = '" + ReferenceNumber + "'"
+//            );
+//
+//            ps1.setString(1, application.getAgreement());
+//            ps1.setString(2, application.getAgreementDocName());
+//            ps1.setString(3, application.getContract());
+//            ps1.setString(4, application.getContractDocName());
+//            ps1.setString(5, application.getTranslatorCV());
+//            ps1.setString(6, application.getTranslatorCVDocName());
+//            ps1.setString(7, application.getOriginal());
+//            ps1.setString(8, application.getOriginalName());
+//            ps1.setString(9, application.getCopiesTranslationSample());
+//            ps1.setString(10, application.getCopiesTranslationSampleDocName());
+//            ps1.setString(11, application.getCover());
+//            ps1.setString(12, application.getCoverName());
+//            ps1.setString(13, application.getAddendumRightsAgreement());
+//            ps1.setString(14, application.getAddendumRightsAgreementName());
+//            ps1.setString(15, application.getProofOfPaymentToTranslator());
+//            ps1.setString(16, application.getProofOfPaymentToTranslatorName());
+//            ps1.setString(17, application.getBankDetailsForm());
+//            ps1.setString(18, application.getBankDetailsFormName());
+//            ps1.setString(19, application.getSignedLIContract());
+//            ps1.setString(20, application.getSignedLIContractName());
+//            ps1.setTimestamp(21, getcurrentTimeStamp());
+    }
+
+    //updateLibrary
+    public static boolean updateLibrary(Library library, String referenceNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        boolean id;
+        int committed = 0;
+        ResultSet res = null;
+
+        System.out.println("doing updateLibrary::  ");
+        try {
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            String sql = ("UPDATE library SET "
+                    + "Title = ?,"
+                    + "Publisher = ?,"
+                    + "publishingYear = ?,"
+                    + "Genre = ?,"
+                    + "Series = ?,"
+                    + "translationPublisher = ?,"
+                    + "translationTitle = ?,"
+                    + "translationPublisherYear = ?,"
+                    + "physicalDescription = ?,"
+                    + "Duplicates = ?,"
+                    + "Copies = ?,"
+                    + "Notes = ?,"
+                    + "ISBN = ?,"
+                    + "ISSN = ?,"
+                    + "lastUpdated = ?");
+
+            sql += " WHERE referenceNumber = " + referenceNumber;
+
+            ps1 = conn.prepareStatement(sql);
+
+            ps1.setString(1, library.getTitle());
+            ps1.setString(2, library.getPublisher());
+            ps1.setString(3, library.getPublisheryear());
+            ps1.setString(4, library.getGenre());
+            ps1.setString(5, library.getSeries());
+            ps1.setString(6, library.getTranslationPublisher());
+            ps1.setString(7, library.getTranslationTitle());
+            ps1.setString(8, library.getTranslationPublisherYear());
+            ps1.setString(9, library.getPhysicalDescription());
+            ps1.setInt(10, library.getDuplicates());
+            ps1.setString(11, library.getCopies());
+            ps1.setString(12, library.getNotes());
+            ps1.setString(13, library.getISBN());
+            ps1.setString(14, library.getISSN());
+            ps1.setTimestamp(15, getcurrentTimeStamp());
+
+            ps1.executeUpdate();
+
+            conn.commit();
+
+            id = committed > 0;
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database" + e);
+        }
+        //    System.out.println("return id::  " + id);
+        return id;
     }
 }

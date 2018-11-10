@@ -10,28 +10,38 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+
+        <!-- Bootstrap -->
+
+
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="css/responsive.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="css/irishLiterature.css">
 
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
-        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
 
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-        <!--<script type="text/javascript"  src="js/moment.js"></script>-->
-        <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
-        <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
-        <script type="text/javascript"  src="js/jquery-ui.js"></script>
+
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/jquery.dataTables.js"></script>
+        <script src="js/dataTables.bootstrap.js"></script>
+        <script src="js/dataTables.responsive.min.js"></script>
+        <script src="js/dataTables.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
+
+        <script type="text/javascript"  src="js/pdf.js"></script>
+        <script type="text/javascript"  src="js/pdf.worker.js"></script>
         <script>
             $(function () {
 
@@ -58,10 +68,165 @@ and open the template in the editor.
 
             });
         </script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var w = 1;
+                var abc = true;
+
+                $('#contractToggle, #contract_button').toggle(abc !== false);
+// uploadContract1 contract_button1 contract_button_label1 contractToggle contract_button
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var w = 1;
+                var def = true;
+                $('#addendum_button').toggle(def !== true);
+                $('#addendumToggle').toggle(def !== false);
+
+
+            });
+        </script>
+
     </head>
     <body>
-        <div>TODO write content</div>
-        <button type="button" id="add">Add</button> 
-        <div class="form-group" id="musics"></div>
+        <div class="container-fluid">
+
+            <div class="container wrapperContainer"> 
+
+
+
+                <div class="row" style="margin-bottom: 80px;"> 
+                    <div style=" margin: 0 auto; position: relative; border: 1px solid black;"> 
+
+                        <div class="col-md-9"  id="agreementToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;"> 
+                            <div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement1"></strong></div> 
+                            <br/> 
+                            <div class="margin-bottom: 40px"></div> 
+                            <div class="input-group agreement"  style="margin-bottom: 40px;"> 
+                                <label class="btn btn-default btn-file pull-left"> 
+                                    Select file <input type="file" onchange="generatedLabels()" name="Agreement-1" id="agreement1"> 
+                                    <span class="glyphicon glyphicon-folder-open"></span> 
+                                </label> 
+                                <input id="label_agreement1" class="pull-left"/> 
+                                <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/> 
+                            </div> 
+                        </div> 
+
+                        <div class="col-md-8" id="agreement_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;">  
+                            <label  class="control-label pull-left" id="agreement_button_label1" >agreement_button_label1</label> 
+                            <div class="input-group agreement_buttonText pull-left"> 
+                                <a class="btn btn-info btn-file pull-left" role="button" id="agreement_buttonText1" href=""> 
+                                    agreement_buttonText1 <span class="glyphicon glyphicon-file"></span> 
+                                </a> 
+                            </div> 
+                        </div> 
+
+
+                    </div>  
+                </div>  
+
+
+
+                <div class="row" style="margin-bottom: 80px;"> 
+                    <div style=" margin: 0 auto; position: relative; border: 1px solid black;"> 
+
+                        <div class="col-md-8 "  id="contractToggle" style="margin-bottom: 40px;  position:absolute; z-index:0; ">   
+                            <div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadContract1" >Upload copy of contract</strong></div> 
+                            <br/> 
+                            <div class="margin-bottom: 40px"></div> 
+                            <div class="input-group contract"  style="margin-bottom: 40px;"> 
+                                <label class="btn btn-default btn-file pull-left"> 
+                                    Select file <input type="file" onchange="generatedLabels()" name="Contract-1" id="contract1"> 
+                                    <span class="glyphicon glyphicon-folder-open"></span> 
+                                </label> 
+                                <input id="label_contract1" class="pull-left"/> 
+                                <input type="hidden" value="Contract" name="destination" id="contract_upload1"/> 
+                            </div>  
+                        </div> 
+ 
+                        <div class="col-md-4 contract_button" id="contract_button"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">
+                            <label  class="control-label pull-left" id="contract_button_label1" >Open copy of contract</label> 
+                            <div class="input-group contract_buttonText contract_button pull-left"  id="contract_button1"> 
+                                <a class="btn btn-info btn-file pull-left" role="button" id="contract_buttonText1" href=""> 
+                                    contract_buttonText1  <span class="glyphicon glyphicon-file"></span> 
+                                </a> 
+                            </div> 
+                        </div>  
+ 
+
+                    </div>
+                </div>  
+
+
+
+                <div class="row" style="margin-bottom: 80px;"> 
+                    <div style=" margin: 0 auto; position: relative; border: 1px solid black;"> 
+
+
+                        <div class="col-md-8"  id="addendumToggle"  style="margin-bottom: 40px; position:absolute; z-index:0; "> 
+                            <div  style="margin-bottom: 10px;"><strong class="pull-left" id="uploadAddendum1" >Upload copy of addendum</strong> <small class="pull-left"> &nbsp;  (where applicable)</small></div> 
+                            <br/> 
+                            <div class="margin-bottom: 40px"></div> 
+                            <div class="input-group addendum"  style="margin-bottom: 40px;"> 
+                                <label class="btn btn-default btn-file pull-left"> 
+                                    Select file <input type="file" onchange="generatedLabels()" name="Addendum-1" id="addendum1"> 
+                                    <span class="glyphicon glyphicon-folder-open"></span> 
+                                </label> 
+                                <input id="label_addendum1" class="pull-left"/> 
+                                <input type="hidden" value="Addendum" name="destination" id="addendum_upload1"/> 
+                            </div>  
+                        </div>  
+
+                        <div class="col-md-4" id="addendum_button"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">   
+                            <label  class="control-label pull-left" id="addendum_button_label1" >Open copy of addendum</label> 
+                            <div class="input-group addendum_buttonText pull-left" style="width: 190px; hight: 34px" > 
+                                <a class="btn btn-info btn-file pull-left" role="button" id="addendum_buttonText1" href=""> 
+                                    addendum_buttonText1  <span class="glyphicon glyphicon-file"></span> 
+                                </a> 
+                            </div> 
+                        </div>  
+
+
+                    </div> 
+                </div> 
+
+            </div>   
+            <div class="container">
+
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-md-8"   style="margin-bottom: 20px">
+                                <label for="translator_cv0" class="control-label pull-left" id="123"></label>
+                                <br/>
+                                <small class="pull-left"   style="margin-bottom: 10px">This should include a list of previously published literary translations</small> 
+                                <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
+                                    <label class="btn btn-default btn-file pull-left">
+                                        Select file 
+                                        <input multiple="" type="file"  name="Translator_CV-1" id="translator_cv0" >
+                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                    </label>
+                                    <input id="label_translator0" class="pull-left"/>
+                                    <br/>
+                                    <br/>          
+                                    <input type="hidden" name="userID" value="${userID}">
+                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                    <!--Destination:-->
+                                    <input type="hidden" id="translator_cv_upload0" value="Translator_CV" name="destination" />                                          
+                                </div>
+                            </div>
+                            <input type="hidden" name="userID" id="translatorName123" value=''>
+                            <div id="additionalTranslator"></div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+        </div>
+
     </body>
 </html>

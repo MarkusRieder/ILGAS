@@ -228,6 +228,13 @@ and open the template in the editor.
                 /*      background-color:#d9d1d1;*/
             }
 
+            .test{
+
+                background: aliceblue;
+                border-right: 1px solid blue;
+                padding: 10px 15px;
+            }
+
         </style>
         <script>
             //Global Variables
@@ -241,7 +248,7 @@ and open the template in the editor.
             var Authorcounter = 0;
             var pressCuttingCounter = 0;
             var translatorCounter = 0;
-       //            var translatorCounter1 = 0;
+            //            var translatorCounter1 = 0;
             var translatorName876 = "";
             var itemValue = "";
 
@@ -266,31 +273,34 @@ and open the template in the editor.
 
         <script>
 //            var a = true;
-     var a = false;
-     $(document).ready(function () {
-         $("button").click(function () {
-             jQuery('#beta, #delta ').toggle(); // 1 / 2
-             jQuery('#alpha, #gamma ').toggle(); // 3 / 4
-             jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
-             jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
-             jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
-             jQuery('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
-         });
+            var a = false;
+            $(document).ready(function () {
+                $("button").click(function () {
+                    jQuery('#beta, #delta ').toggle(); // 1 / 2
+                    jQuery('#alpha, #gamma ').toggle(); // 3 / 4
+                    jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
+                    jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
+                    jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
+                    jQuery('#copiesTransSample-onDiv, #copiesTransSample-offDiv').toggle();
+                    jQuery('#agreement, #agreement_button').toggle();                     
+                    
+                });
 
 
-         if (a === true) {
-             jQuery('#beta, #delta ').toggle(); // 1 / 2
-             jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
-             jQuery('#transSample-onDiv, #transSample-offDiv').toggle();
-             jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
-             console.log(a);
-         } else {
-             jQuery('#alpha, #gamma ').toggle(); // 3 / 4
-             jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
-
-             console.log(a);
-         }
-     });
+                if (a === true) {
+                    jQuery('#beta, #delta ').toggle(); // 1 / 2
+                    jQuery('#1DivoriginalSample, #originalSampleDiv ').toggle(); // 5 / 6
+                    jQuery('#transSample-onDiv, #transSample-offDiv').toggle();
+                    jQuery('#originalSample-onDiv, #originalSample-offDiv').toggle();
+            
+                    console.log(a);
+                } else {
+                    jQuery('#alpha, #gamma ').toggle(); // 3 / 4
+                    jQuery('#translationSampleDiv, #1DivtranslationSample ').toggle(); // 7 / 8
+        jQuery('#addendum, #addendum_button').toggle();
+                    console.log(a);
+                }
+            });
 
 //            var taskList = []; //build array
 //
@@ -689,6 +699,129 @@ and open the template in the editor.
                     </div>  <!-- col-md-12 -->
                 </div>  <!-- panel-body -->
             </div>  <!--panel-default-->
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1"> 
+                <ul class="nav navbar-nav nav-tabs"> 
+
+
+                    <li class="active"><a href="#tn1" data-toggle="tab"> Translator 1</a></li> 
+
+
+                    <li><a href="#tn2" data-toggle="tab"> Translator 2</a></li> 
+
+
+                </ul> 
+
+            </div>  
+
+
+
+            <div class="tab-pane fade in active" id="tn1"> 
+
+
+                <!--<div class="tab-pane fade" id="tn2">--> 
+
+
+
+                <div class="container wrapperContainer">
+
+
+                    <div class="row" style="margin-bottom: 40px;border:1px solid black;"> 
+                        <div style="position:relative;"> 
+
+                            <div class="col-md-10"  id="agreement" style="margin-bottom: 40px;  position:absolute;z-index:0;"> 
+                                <div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the contract with Translator 1</strong></div> 
+                                <br/> 
+                                <div class="margin-bottom: 40px"></div> 
+                                <div class="input-group agreement"  style="margin-bottom: 40px;"> 
+                                    <label class="btn btn-default btn-file pull-left"> 
+                                        Select file <input type="file" onchange="generatedLabels()" name="Agreement-1" id="agreement1"> 
+                                        <span class="glyphicon glyphicon-folder-open"></span> 
+                                    </label> 
+                                    <input id="label_agreement1" class="pull-left"/> 
+                                    <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/> 
+                                </div>  
+                            </div>  
+
+                            <div class="col-md-10" id="agreement_button"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">   
+                                <label  class="control-label pull-left" id="agreement_button_label" >ghghffghjhjfhjfhj </label> 
+                                <div class="input-group originalSampleA pull-left" > 
+                                    <a class="btn btn-info btn-file pull-left" role="button" id="originalSampleA" href=""> 
+                                        <span class="glyphicon glyphicon-file"></span> 
+                                        Copy of original work</a> 
+                                </div> 
+                            </div>  
+                        </div> 
+                    </div> 
+
+
+                    <div class="row" style="margin-bottom: 40px;border:1px solid black;"> 
+                        <div style="position:relative;"> 
+
+                            <div class="col-md-10"  id="contract" style="margin-bottom: 40px; position:absolute;z-index:0;"> 
+                                <div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the contract with Translator 1</strong></div> 
+                                <br/> 
+                                <div class="margin-bottom: 40px"></div> 
+                                <div class="input-group contract"  style="margin-bottom: 40px;"> 
+                                    <label class="btn btn-default btn-file pull-left"> 
+                                        Select file <input type="file" onchange="generatedLabels()" name="Contract-1" id="contract1"> 
+                                        <span class="glyphicon glyphicon-folder-open"></span> 
+                                    </label> 
+                                    <input id="label_contract1" class="pull-left"/> 
+                                    <input type="hidden" value="Contract" name="destination" id="contract_upload1"/> 
+                                </div>  
+                            </div> 
+
+                            <div class="col-md-10" id="contract_button"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">   
+                                <label  class="control-label pull-left" id="contract_button_label" >ghghffghjhjfhjfhj </label> 
+                                <div class="input-group originalSampleA pull-left" > 
+                                    <a class="btn btn-info btn-file pull-left" role="button" id="originalSampleA" href=""> 
+                                        <span class="glyphicon glyphicon-file"></span> 
+                                        Copy of original work</a> 
+                                </div> 
+                            </div> 
+
+
+                        </div> 
+                    </div>  
+
+
+
+                    <div class="row test" style="margin-bottom: 40px;"> 
+                        <div style="position:relative;"> 
+
+                            <div class="col-md-12"  id="addendum"  style="margin-bottom: 40px; position:absolute;z-index:0;"> 
+                                <div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the addendum to the rights agreement Translator 1</strong> <small class="pull-left"> &nbsp;  (where applicable)</small></div> 
+                                <br/> 
+                                <div class="margin-bottom: 40px"></div> 
+                                <div class="input-group addendum"  style="margin-bottom: 40px;"> 
+                                    <label class="btn btn-default btn-file pull-left"> 
+                                        Select file <input type="file" onchange="generatedLabels()" name="Addendum-1" id="addendum1"> 
+                                        <span class="glyphicon glyphicon-folder-open"></span> 
+                                    </label> 
+                                    <input id="label_addendum1" class="pull-left"/> 
+                                    <input type="hidden" value="Addendum" name="destination" id="addendum_upload1"/> 
+                                </div> 
+                            </div>  
+
+                            <div class="col-md-10" id="addendum_button"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">   
+                                <label  class="control-label pull-left" id="addendum_button_label" > </label> 
+                                <div class="input-group originalSampleA pull-left" > 
+                                    <a class="btn btn-info btn-file pull-left" role="button" id="originalSampleA" href=""> 
+                                        <span class="glyphicon glyphicon-file"></span> 
+                                        row test</a> 
+                                </div> 
+                            </div>  
+
+
+                        </div>  
+                    </div>  
+
+                </div>   
+            </div> 
+
+
 
             <div class="panel panel-default">        
                 <div class="panel-body">

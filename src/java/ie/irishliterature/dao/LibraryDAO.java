@@ -322,7 +322,7 @@ public class LibraryDAO {
         ResultSet res = null;
         int book = bookID;
 
-        System.out.println("doing insertBook::  ");
+        System.out.println("doing updateLibrary::  ");
         try {
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);

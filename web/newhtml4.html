@@ -9,67 +9,100 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-                <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <!-- Bootstrap -->
+
+
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="css/responsive.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="css/irishLiterature.css">
 
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
-        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
 
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-        <!--<script type="text/javascript"  src="js/moment.js"></script>-->
-        <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
-        <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
-        <script type="text/javascript"  src="js/jquery-ui.js"></script>
-        
-                <script type="text/javascript">
-          function  copyFirstTranslatorName() {
- Authorcounter = 1;
-                $("#addAuthor").click(function (event) {
 
-                    Authorcounter++;
-                    var $newDiv = $("<div class='col-sm-12' style='margin-bottom:2px'>" + Authorcounter + ". Author  </div>");
-                    var $newInput = $("<input placeholder='First Name'  type='text' autofocus>");
-                    $newInput
-                            .attr("name", "FirstName")
-                            .attr("id", "authorFirstName" + Authorcounter)
-                            .addClass("text wsp");
-                            
-                    $newInput.appendTo($newDiv);
-                    var $newInput = $("<input placeholder='Last Name' type='text'> ");
-                    $newInput
-                            .attr("name", "LastName")
-                            .attr("id", "authorLastName" + Authorcounter)
-                            .addClass("text");
-                    $newInput.appendTo($newDiv);
-                    $(".text").click(function(){
-                alert($(this).index());
-            });
-                    $newDiv.appendTo($("#generatedFormAuthors"));
-                });
-          }
-        </script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/jquery.dataTables.js"></script>
+        <script src="js/dataTables.bootstrap.js"></script>
+        <script src="js/dataTables.responsive.min.js"></script>
+        <script src="js/dataTables.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
+
+        <script type="text/javascript"  src="js/pdf.js"></script>
+        <script type="text/javascript"  src="js/pdf.worker.js"></script>
+
+
+        <style>
+            #avatar {
+                margin-top: 10px;
+                margin-bottom:10px;
+                max-height: 100vh;
+                max-width: 100vh;
+            }
+
+            @media screen and (max-width: 480px) {
+                #avatar {
+                    margin-top:10px;
+                    margin-bottom:10px;
+                    max-height: 60vh;
+                    max-width: 60vh;
+                }
+            }
+        </style>
     </head>
     <body>
         <div>
-            <div id="generatedFormAuthors" >
-                
-                
+            <div class="container" >
+
+
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#camera">Open Modal</button>
+                <div id="camera" tabindex="-1" role="dialog" aria-labelledby="cameraLabel" aria-hidden="true" class="modal fader">
+                    <div class="modal-dialog col-sm-12">
+                        <div class="modal-content" style="margin-left: 10px; margin-top: 10px;">
+                            <div class="modal-header">
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">x</button>
+                                <h4 id="cameraLabel" class="modal-title">Upload a photo of yourself</h4>
+
+                            </div>
+                            <div class="modal-body">
+                                <form action="/overview/setprofileimage" method="POST" enctype="multipart/form-data" id="coords">
+                                    <div class="form-group"> <span id="err_coords" style="color: #ff0000; float: left; text-align: center; width: 100%;"></span>
+
+                                    </div>
+                                    <br>
+                                    <input type='file' id="imgAvatar" name="image" onchange="readURLAvatar(this, 'avatar');" />
+                                    <img id="avatar" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Dell_Logo.png/601px-Dell_Logo.png" alt="your image" />
+                                    <div class="inline-labels">
+                                        <input type="hidden" id="x" name="crop[x]" />
+                                        <input type="hidden" id="y" name="crop[y]" />
+                                        <input type="hidden" id="w" name="crop[w]" />
+                                        <input type="hidden" id="h" name="crop[h]" />
+                                    </div>
+                                    <br>
+                                    <input type="hidden" id="uplloadAvatar" name="uplloadAvatar" value="" />
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="checkCoordsImg(1);">Crop & Upload</button>
+                                    <button type="button" class="btn btn-success btn-sm" onclick="checkCoordsImg(2);">Upload</button>
+                                </form>
+                                <br>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <input type="submit" value="Click me!" id="addAuthor" onclick="copyFirstTranslatorName()" />
-            
-            
+
         </div>
     </body>
 </html>
