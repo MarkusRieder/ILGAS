@@ -236,8 +236,11 @@ public class PendingApplicationServlet extends HttpServlet {
     public void init() {
 
         // Get the file location where they would be stored.
-        tempPath = "/home/markus/test/tempDir";
-        rootPath = "/home/markus/public_html/test";
+//        tempPath = "/home/markus/test/tempDir";
+//        rootPath = "/home/markus/public_html/test";
+        String catalinaBase = System.getProperty("catalina.base");
+        tempPath = catalinaBase + "/tempDir";
+        rootPath = catalinaBase + "/uploadDir";
 
     }
 
@@ -257,8 +260,8 @@ public class PendingApplicationServlet extends HttpServlet {
 
         System.out.println("PendingApplicationServlet :: ");
         System.out.println("HttpSession session :: sess: " + task);
-        
-          System.out.println("Here we are >>>>>>>>>.   Pending Applications :: PendingApplicationServlet");
+
+        System.out.println("Here we are >>>>>>>>>.   Pending Applications :: PendingApplicationServlet");
 
         switch (task) {
             case "Pending Applications":
@@ -435,8 +438,8 @@ public class PendingApplicationServlet extends HttpServlet {
                                     break;
                                 case "ReferenceNumber":
                                     ReferenceNumber = fieldvalue;
-                               System.out.println("ReferenceNumber:: " + ReferenceNumber);
-                                    break;                                    
+                                    System.out.println("ReferenceNumber:: " + ReferenceNumber);
+                                    break;
                                 case "translatorFee":
                                     translatorFee = fieldvalue;
                                     break;
@@ -637,7 +640,7 @@ public class PendingApplicationServlet extends HttpServlet {
                             }
 
                             System.out.println("translatorArrayContent company " + company);
-       
+
                             switch (fileName) {
 
                                 case "Agreement":
@@ -705,7 +708,7 @@ public class PendingApplicationServlet extends HttpServlet {
                                         filesToBeMoved.add(fileNames[idxFolderNames]);
                                     }
                                     break;
-                                             case "Cover":
+                                case "Cover":
                                     if (filename.isEmpty()) {
                                         System.out.println("Cover zero  filename " + filename);
                                     } else {
@@ -715,7 +718,7 @@ public class PendingApplicationServlet extends HttpServlet {
                                         filesToBeMoved.add(fileNames[idxFolderNames]);
                                     }
                                     break;
-                                            
+
                             } // end switch
 
                             /*
@@ -794,7 +797,6 @@ public class PendingApplicationServlet extends HttpServlet {
                     application.setCountryOfPublication(countryOfPublication);
                     application.setOriginalPageExtent(Integer.parseInt(originalPageExtent));
 
-
                     application.setPublicationYear(publicationYear);
                     application.setForeignCountry(countryOfPublication);
                     application.setForeignPublisher(foreignPublisher);
@@ -802,7 +804,7 @@ public class PendingApplicationServlet extends HttpServlet {
                     /*
                      * Rights Agreement & Contracts
                      */
-                    /*
+ /*
                      * Publication Details
                      */
                     application.setProposedDateOfPublication(convertDate(proposedDateOfPublication));
@@ -833,24 +835,21 @@ public class PendingApplicationServlet extends HttpServlet {
                     System.out.println("send to updateApplication");
                     updateApplication(application, ReferenceNumber);
 
-  
-                                                                                                           
+                    /*
+                     * ReferenceNumber contains ApplicationNumber seperated
+                     * by a "/"
+                     * find the first occurrence of "/"
+                     */
+                    int iend = ReferenceNumber.indexOf("/");
 
-                        /*
-                         * ReferenceNumber contains ApplicationNumber seperated
-                         * by a "/"
-                         * find the first occurrence of "/"
-                         */
-                        int iend = ReferenceNumber.indexOf("/");
+                    /*
+                     * get ApplicationNumber from ReferenceNumber
+                     */
+                    if (iend != -1) {
+                        ApplicationNumber = Integer.parseInt(ReferenceNumber.substring(0, iend));
+                        System.out.println("ApplicationNumber ---->> " + ApplicationNumber);
+                    }
 
-                        /*
-                         * get ApplicationNumber from ReferenceNumber
-                         */
-                        if (iend != -1) {
-                            ApplicationNumber = Integer.parseInt(ReferenceNumber.substring(0, iend));
-                            System.out.println("ApplicationNumber ---->> " + ApplicationNumber);
-                        }
-                            
                 } catch (ParseException ex) {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (FileUploadException ex) {
@@ -964,7 +963,7 @@ public class PendingApplicationServlet extends HttpServlet {
 
                         case "Original":
                         case "TranslationSample":
-                            case "Cover":
+                        case "Cover":
                             String Directory = subDirs[6];      // TranslationSample
                             moveFileName = subDirs[7];      // translation sample.docx
                             destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
@@ -1141,7 +1140,6 @@ public class PendingApplicationServlet extends HttpServlet {
                 library.setNotes(bookNotes);
                 library.setISBN(ISBN);
                 library.setISSN(ISSN);
-              
 
                  {
                     try {

@@ -238,7 +238,7 @@ public class pendingApplicationDAO {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT lang FROM languages_Library WHERE ReferenceNumber = ?");
+            ps = conn.prepareStatement("SELECT lang FROM Languages_Library WHERE ReferenceNumber = ?");
 
             ps.setString(1, ReferenceNumber);
 

@@ -24,7 +24,7 @@ public class openApplicationDAO {
     private static final ArrayList TITLELIST = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
-    public static ArrayList getAllApplications(String parameter) throws ClassNotFoundException, DBException {
+    public static ArrayList getSpecificApplications(String publisherID, String ReferenceNumber) throws ClassNotFoundException, DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -42,7 +42,7 @@ public class openApplicationDAO {
 //        
 //        [TranslatorName1, TranslatorCVName,TranslatorCV]
 
-        String searchQuery = "SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter + " ORDER BY ApplicationYear ";
+        String searchQuery = "SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + publisherID + " ORDER BY ApplicationYear ";
 
         //        String searchQuery = "SELECT * FROM GrantApplication WHERE Status = 'open' AND publisherID = " + parameter + " ORDER BY ApplicationYear ";
 //        
@@ -87,7 +87,7 @@ public class openApplicationDAO {
 
                 GrantApplication application = new GrantApplication();
 
-                String ReferenceNumber = res.getString("ReferenceNumber");
+//                String ReferenceNumber = res.getString("ReferenceNumber");
 
                 application.setApplicationNumber(res.getInt("ApplicationNumber"));
                 application.setApplicationYear(res.getString("ApplicationYear"));
@@ -218,6 +218,178 @@ public class openApplicationDAO {
         return listApplications;
     }
 
+       @SuppressWarnings("unchecked")
+    public static ArrayList getAllApplications(String publisherID) throws ClassNotFoundException, DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        ArrayList listApplications = new ArrayList();
+        ArrayList<String> translatorTrackId = new ArrayList<>();
+        ArrayList<String> authorList;// = new ArrayList<>();
+        //  ArrayList<String> list = new ArrayList<>();
+
+        ArrayList<String> translatorList;
+        List<List<String>> listOfTranslatorArray;
+        List<List<String>> rightsAgreementArray;
+//        what I want:
+//        
+//        [TranslatorName1, TranslatorCVName,TranslatorCV]
+
+        String searchQuery = "SELECT ReferenceNumber, Status FROM GrantApplication WHERE Status = 'open' AND publisherID = " + publisherID + " ORDER BY ApplicationYear ";
+
+
+        try {
+            //   add contact details 
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement(searchQuery);
+
+            res = ps.executeQuery(searchQuery);
+
+            ResultSetMetaData rsmd = res.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+
+            while (res.next()) {
+
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) {
+                        //          System.out.print(",  ");
+                    }
+                    String columnValue = res.getString(i);
+                    //      System.out.print("getAllApplications >> i: " + i + " " + rsmd.getColumnName(i) + " :: " + columnValue);
+                }
+                //  System.out.println("");
+
+                GrantApplication application = new GrantApplication();
+
+                String ReferenceNumber = res.getString("ReferenceNumber");
+
+//                application.setApplicationNumber(res.getInt("ApplicationNumber"));
+//                application.setApplicationYear(res.getString("ApplicationYear"));
+                application.setReferenceNumber(ReferenceNumber);
+//                application.setCompany(res.getString("company"));
+//                application.setPublisherID(res.getInt("publisherID"));
+//                application.setUserID(res.getString("userID"));
+
+                String[] bookTitle = getBookTitle(ReferenceNumber);
+                System.out.println("bookTitle " + Arrays.toString(bookTitle));
+                application.setBookTitle(bookTitle[0]);
+
+//                application.setProposedDateOfPublication(res.getDate("proposedDateOfPublication"));
+//                application.setProposedPrintRun(res.getInt("proposedPrintRun"));
+//                application.setPlannedPageExtent(res.getInt("plannedPageExtent"));
+//                application.setTranslatorCV(res.getString("translatorCV"));
+//                application.setTranslatorCVDocName(res.getString("translatorCVDocName"));
+//                application.setBreakDownTranslatorFee(res.getString("breakDownTranslatorFee"));
+//                application.setTranslatorFee(res.getBigDecimal("translatorFee"));
+//
+//                String bNotes = getBookNotes(ReferenceNumber);
+
+//                application.setBookNotes(bNotes.trim());
+
+//                application.setCopiesSent(res.getInt("copiesSent"));
+//
+//                application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
+//                System.out.println("dateCopiesWereSent " + res.getDate("dateCopiesWereSent"));
+//
+//                application.setCopiesTranslationSample(res.getString("copiesTranslationSample"));
+//                application.setCopiesTranslationSampleDocName(res.getString("copiesTranslationSampleDocName"));
+//
+//                System.out.println("setCopiesTranslationSample " + res.getString("copiesTranslationSample"));
+//                System.out.println("setCopiesTranslationSampleDocName " + res.getString("copiesTranslationSampleDocName"));
+//
+//                application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
+//                application.setTC_ACCEPTED(res.getInt("TC_ACCEPTED"));
+//                application.setAPPROVED(res.getInt("APPROVED"));
+//                application.setCover(res.getString("cover"));
+//                application.setCoverName(res.getString("coverName"));
+//
+//                application.setOriginal(res.getString("original"));
+//                application.setOriginalName(res.getString("originalName"));
+//
+//                application.setAgreement(res.getString("agreement"));
+//                application.setAgreementDocName(res.getString("agreementDocName"));
+//                application.setContract(res.getString("contract"));
+//                application.setContractDocName(res.getString("contractDocName"));
+//
+//                application.setAddendumRightsAgreement(res.getString("addendumRightsAgreement"));
+//                application.setAddendumRightsAgreementName(res.getString("addendumRightsAgreementName"));
+//
+//                ArrayList<String> rightsAgreementList;
+//                rightsAgreementArray = new ArrayList<>();
+//
+//                rightsAgreementList = getRightsAgreement(ReferenceNumber);
+//                rightsAgreementArray.add(rightsAgreementList);
+//
+//                application.setRightsAgreement(rightsAgreementList);
+//
+//                application.setProofOfPaymentToTranslator(res.getString("proofOfPaymentToTranslator"));
+//                application.setProofOfPaymentToTranslatorName(res.getString("proofOfPaymentToTranslatorName"));
+//                application.setBankDetailsForm(res.getString("bankDetailsForm"));
+//                application.setBankDetailsFormName(res.getString("bankDetailsFormName"));
+//                application.setSignedLIContract(res.getString("signedLIContract"));
+//                application.setSignedLIContractName(res.getString("signedLIContractName"));
+////                application.setOriginalDateOfPublication(res.getDate("originalDateOfPublication"));
+//                application.setOriginalLanguage(res.getString("originalLanguage"));
+//                application.setOriginalPageExtent(res.getInt("originalPageExtent"));
+//                application.setCountryOfPublication(res.getString("countryOfPublication"));
+//                application.setForeignPublisher(res.getString("foreignPublisher"));
+//                application.setForeignCountry(res.getString("foreignCountry"));
+//
+//                application.setAmountRequested(res.getBigDecimal("amountRequested"));
+//                application.setAward(res.getInt("award"));
+//                application.setSalesFigures(res.getInt("salesFigures"));
+//
+//                String publicationYear = getPublicationYear(ReferenceNumber);
+//                application.setPublicationYear(publicationYear);
+//
+//                application.setSeries(getSeries(ReferenceNumber));
+//
+//                application.setLASTUPDATED(getcurrentTimeStamp());
+//                application.setPublisherID(columnsNumber);
+//                application.setTranslationTitle(getTranslationTitle(ReferenceNumber));
+//
+//                application.setTargetLanguage(getLanguages(ReferenceNumber));
+//
+//                application.setGenre(bookTitle[1]);
+
+//                String expertReaderName = getExpertReaderName(ReferenceNumber);
+//                application.setExpertReaderName(expertReaderName);
+                //get all idTranslator / Translator.Name  for that ReferenceNumber return ArrayList
+//                translatorTrackId = getTranslatorTrackId(ReferenceNumber);
+//                ArrayList<String> translatorDocsList;
+//                translatorList = new ArrayList<>();
+//                listOfTranslatorArray = new ArrayList<>();
+
+                authorList = getAuthors(ReferenceNumber);
+                application.setAuthor(authorList);
+//                translatorDocsList = getTransDocs(ReferenceNumber);
+//
+//                listOfTranslatorArray.add(translatorDocsList);
+//
+//                application.setTitles(TITLELIST);
+//                application.setTranslatorName(translatorList);
+//                System.out.println("application.setTranslatorName(translatorList) " + translatorList);
+//                application.setTransList(listOfTranslatorArray);
+//                System.out.println("application.setTransList(listOfTranslatorArray)  " + listOfTranslatorArray);
+                application.setStatus(res.getString("Status"));
+
+                listApplications.add(application);
+
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("12 Excepion while accessing database " + e);
+        }
+
+        DBConn.close(conn, ps, res);
+
+        return listApplications;
+    }
     @SuppressWarnings("unchecked")
     public static String getLanguages(String ReferenceNumber) throws DBException {
 
