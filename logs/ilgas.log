@@ -1,0 +1,314 @@
+DEBUG   2017-06-20 21:07:43,398 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-20 21:11:26,079 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-22 14:05:34,749 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-22 14:19:06,034 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-22 19:34:48,743 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-06-23 10:22:05,223 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
+DEBUG   2017-06-23 10:24:51,161 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
+DEBUG   2017-06-23 10:36:02,368 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
+DEBUG   2017-06-23 11:01:44,036 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Can not issue data manipulation statements with executeQuery().
+DEBUG   2017-06-23 12:53:03,134 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Incorrect integer value: '' for column 'publisherID' at row 1
+DEBUG   2017-07-27 22:58:13,921 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'ID' in 'field list'
+DEBUG   2017-07-29 21:45:40,118 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(idLanguages, language, bookID, ReferenceNumber) values (0,'English',0,'169/2017' at line 1
+DEBUG   2017-07-29 21:50:16,960 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(idLanguages, language, bookID, ReferenceNumber) values (0,'English',0,'170/2017' at line 1
+DEBUG   2017-07-29 22:29:41,202 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'language' in 'field list'
+DEBUG   2017-07-30 15:38:19,273 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 4
+DEBUG   2017-07-30 15:40:43,181 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 4
+DEBUG   2017-08-02 00:27:12,704 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (2 > number of parameters, which is 1).
+DEBUG   2017-08-02 00:28:49,657 [http-listener-1(5)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (2 > number of parameters, which is 1).
+DEBUG   2017-08-02 00:29:56,469 [http-listener-1(4)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (2 > number of parameters, which is 1).
+DEBUG   2017-08-02 00:36:38,972 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (2 > number of parameters, which is 1).
+DEBUG   2017-08-02 01:02:51,792 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (1 > number of parameters, which is 0).
+DEBUG   2017-08-02 10:12:02,006 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column Index out of range, 2 > 1. 
+DEBUG   2017-08-02 10:15:05,582 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'TranslatorTrack' not found.
+DEBUG   2017-08-02 10:17:01,889 [http-listener-1(5)] ie.irishliterature.dao.ApplicationDAO  - Column Index out of range, 2 > 1. 
+DEBUG   2017-08-02 10:18:36,713 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column Index out of range, 2 > 1. 
+DEBUG   2017-08-02 23:32:41,776 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.Name FROM TranslatorTrack, Author  WHERE TranslatorTrack.ReferenceNumber = '1/2' at line 1
+DEBUG   2017-08-04 13:09:28,126 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+DEBUG   2017-08-04 13:12:10,216 [http-listener-1(4)] ie.irishliterature.dao.ApplicationDAO  - Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+DEBUG   2017-08-07 22:02:38,016 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Invalid value for getInt() - 'Last Poems'
+DEBUG   2017-08-10 14:21:12,768 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Field 'TranslatorTrack_idTranslatorTrack' doesn't have a default value
+DEBUG   2017-08-17 03:51:02,732 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Before start of result set
+DEBUG   2017-08-17 03:55:52,101 [http-listener-1(5)] ie.irishliterature.dao.ApplicationDAO  - Before start of result set
+DEBUG   2017-09-01 14:33:08,547 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Column 'sampleSentOut' not found.
+DEBUG   2017-09-01 15:13:08,409 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'genre' not found.
+DEBUG   2017-09-01 15:16:01,933 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
+DEBUG   2017-09-01 15:17:33,524 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
+DEBUG   2017-09-01 15:18:09,274 [http-listener-1(1)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
+DEBUG   2017-09-14 07:00:50,788 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-14 07:02:25,731 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-14 07:05:42,943 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-14 07:09:01,109 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-14 07:24:56,330 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Column Index out of range, 0 < 1.
+DEBUG   2017-09-16 00:59:12,921 [http-listener-1(4)] ie.irishliterature.dao.ApplicationDAO  - Column 'feePerPage' not found.
+DEBUG   2017-09-16 13:44:38,038 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'proposedDateOfPrintRun' in 'field list'
+DEBUG   2017-09-16 13:48:54,857 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'feePerPage' in 'field list'
+DEBUG   2017-09-16 13:50:23,347 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'feePerPage' in 'field list'
+DEBUG   2017-09-16 14:30:59,961 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (25 > number of parameters, which is 24).
+DEBUG   2017-09-16 14:31:43,499 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (25 > number of parameters, which is 24).
+DEBUG   2017-09-17 08:48:09,430 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 31
+DEBUG   2017-09-17 09:00:24,093 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (53 > number of parameters, which is 52).
+DEBUG   2017-09-17 09:02:16,220 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (52 > number of parameters, which is 51).
+DEBUG   2017-09-17 09:05:22,618 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (51 > number of parameters, which is 50).
+DEBUG   2017-09-17 09:10:32,481 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 52
+DEBUG   2017-09-17 09:12:12,177 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 52
+DEBUG   2017-09-17 09:15:38,974 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 51
+DEBUG   2017-09-17 09:28:39,504 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 50
+DEBUG   2017-09-17 09:30:33,583 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 51
+DEBUG   2017-09-17 09:37:43,637 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 50
+DEBUG   2017-09-17 09:39:53,885 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 50
+DEBUG   2017-09-17 09:49:14,372 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+company = 'Discwo' at line 1
+DEBUG   2017-09-17 09:58:45,282 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ReferenceNumber = '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+c' at line 1
+DEBUG   2017-09-17 10:07:44,528 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ReferenceNumber = '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+c' at line 1
+DEBUG   2017-09-17 10:08:37,310 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ReferenceNumber = '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+c' at line 1
+DEBUG   2017-09-17 10:15:51,378 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+company = 'Discwo' at line 1
+DEBUG   2017-09-17 10:22:21,130 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '11/2017',
+ApplicationYear = '2017',
+ApplicationNumber = 11,
+company = 'Discwo' at line 1
+DEBUG   2017-09-17 10:28:27,470 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 51
+DEBUG   2017-09-17 21:07:59,772 [http-listener-1(3)] ie.irishliterature.dao.ApplicationDAO  - Column 'genre' not found.
+DEBUG   2017-09-17 21:09:20,130 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'Genre' not found.
+DEBUG   2017-09-17 21:44:15,144 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column 'genre' not found.
+DEBUG   2017-09-18 00:30:48,535 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Incorrect date value: 'English' for column 'originalDateOfPublication' at row 1
+DEBUG   2017-09-18 00:36:07,107 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Incorrect date value: 'English' for column 'originalDateOfPublication' at row 1
+DEBUG   2017-09-18 00:38:58,859 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Incorrect date value: 'English' for column 'originalDateOfPublication' at row 1
+DEBUG   2017-09-18 00:44:36,226 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (51 > number of parameters, which is 50).
+DEBUG   2017-09-18 00:46:38,328 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Column count doesn't match value count at row 1
+DEBUG   2017-09-18 00:47:09,201 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Column count doesn't match value count at row 1
+DEBUG   2017-09-18 10:41:46,442 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Column count doesn't match value count at row 1
+DEBUG   2017-09-18 11:12:22,333 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (51 > number of parameters, which is 50).
+DEBUG   2017-09-18 11:15:46,801 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (51 > number of parameters, which is 50).
+DEBUG   2017-09-22 16:12:03,001 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'today' in 'field list'
+DEBUG   2017-09-22 16:18:11,998 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'today' in 'field list'
+DEBUG   2017-09-25 11:41:16,414 [http-listener-1(2)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:41:51,687 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:43:05,209 [http-listener-1(5)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:46:22,742 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:48:26,382 [http-listener-1(5)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?null' at line 1
+DEBUG   2017-09-25 11:53:54,945 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?2790' at line 1
+DEBUG   2017-09-25 11:54:20,672 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - Unknown column 'open' in 'where clause'
+DEBUG   2018-02-22 23:16:21,072 [http-listener-1(1)] net.sf.jasperreports.engine.fill.BaseReportFiller  - Fill 1: created for Report
+DEBUG   2018-02-22 23:16:21,174 [http-listener-1(1)] net.sf.jasperreports.engine.fill.BaseReportFiller  - created delayed actions 1 for filler 1
+DEBUG   2018-02-22 23:16:21,248 [http-listener-1(1)] net.sf.jasperreports.extensions.ExtensionsEnvironment  - Instantiating extensions registry class net.sf.jasperreports.extensions.DefaultExtensionsRegistry
+DEBUG   2018-02-22 23:16:21,253 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Loading registries for cache key WebappClassLoader (delegate=true; repositories=WEB-INF/classes/)
+DEBUG   2018-02-22 23:16:21,255 [http-listener-1(1)] net.sf.jasperreports.engine.util.JRLoader  - Found resource jasperreports_extension.properties at jar:file:/home/markus/NetBeansProjects/ReportTest/build/web/WEB-INF/lib/dynamicreports-core-5.1.0.jar!/jasperreports_extension.properties in classloader WebappClassLoader (delegate=true; repositories=WEB-INF/classes/)
+DEBUG   2018-02-22 23:16:21,256 [http-listener-1(1)] net.sf.jasperreports.engine.util.JRLoader  - Found resource jasperreports_extension.properties at jar:file:/home/markus/NetBeansProjects/ReportTest/build/web/WEB-INF/lib/jasperreports-6.5.1.jar!/jasperreports_extension.properties in classloader WebappClassLoader (delegate=true; repositories=WEB-INF/classes/)
+DEBUG   2018-02-22 23:16:21,257 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Loading JasperReports extension properties resource jar:file:/home/markus/NetBeansProjects/ReportTest/build/web/WEB-INF/lib/dynamicreports-core-5.1.0.jar!/jasperreports_extension.properties
+DEBUG   2018-02-22 23:16:21,258 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.dynamicreports.jasper.base.JasperSystemFontExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.system.font.families
+DEBUG   2018-02-22 23:16:21,258 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for system.font.families using factory class net.sf.dynamicreports.jasper.base.JasperSystemFontExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,263 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Loading JasperReports extension properties resource jar:file:/home/markus/NetBeansProjects/ReportTest/build/web/WEB-INF/lib/jasperreports-6.5.1.jar!/jasperreports_extension.properties
+DEBUG   2018-02-22 23:16:21,265 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.components.headertoolbar.HeaderToolbarParameterContributorExtensionFactory for property net.sf.jasperreports.extension.registry.factory.header.toolbar.parameter.contributor
+DEBUG   2018-02-22 23:16:21,265 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for header.toolbar.parameter.contributor using factory class net.sf.jasperreports.components.headertoolbar.HeaderToolbarParameterContributorExtensionFactory
+DEBUG   2018-02-22 23:16:21,268 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.types.date.DateRangeQueryClauseExtensions for property net.sf.jasperreports.extension.registry.factory.date.range.clause.functions
+DEBUG   2018-02-22 23:16:21,268 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for date.range.clause.functions using factory class net.sf.jasperreports.types.date.DateRangeQueryClauseExtensions
+DEBUG   2018-02-22 23:16:21,290 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.repo.DefaultRepositoryExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.repository
+DEBUG   2018-02-22 23:16:21,291 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for repository using factory class net.sf.jasperreports.repo.DefaultRepositoryExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,293 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.parts.PartComponentsExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.parts
+DEBUG   2018-02-22 23:16:21,293 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for parts using factory class net.sf.jasperreports.parts.PartComponentsExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,331 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.web.util.ContentTypeMappingExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.content.type.mapping
+DEBUG   2018-02-22 23:16:21,332 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for content.type.mapping using factory class net.sf.jasperreports.web.util.ContentTypeMappingExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,338 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.engine.fonts.SimpleFontExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.simple.font.families
+DEBUG   2018-02-22 23:16:21,339 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for simple.font.families using factory class net.sf.jasperreports.engine.fonts.SimpleFontExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,340 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.data.DefaultDataAdapterServiceExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.data.adapter.services
+DEBUG   2018-02-22 23:16:21,341 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for data.adapter.services using factory class net.sf.jasperreports.data.DefaultDataAdapterServiceExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,347 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.web.util.WebResourceHandlersExtensionRegistryFactory for property net.sf.jasperreports.extension.registry.factory.jive.web.resource.handlers
+DEBUG   2018-02-22 23:16:21,348 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for jive.web.resource.handlers using factory class net.sf.jasperreports.web.util.WebResourceHandlersExtensionRegistryFactory
+DEBUG   2018-02-22 23:16:21,351 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.util.CastorMappingExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.castor.mapping
+DEBUG   2018-02-22 23:16:21,353 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for castor.mapping using factory class net.sf.jasperreports.util.CastorMappingExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,356 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.engine.export.MatcherExportFilterMappingExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.matcher.exporter.filter.mapping
+DEBUG   2018-02-22 23:16:21,356 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for matcher.exporter.filter.mapping using factory class net.sf.jasperreports.engine.export.MatcherExportFilterMappingExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,360 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.governors.GovernorExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.governor
+DEBUG   2018-02-22 23:16:21,361 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for governor using factory class net.sf.jasperreports.governors.GovernorExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,376 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.web.util.RequirejsModuleMappingExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.requirejs.module.mapping
+DEBUG   2018-02-22 23:16:21,380 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for requirejs.module.mapping using factory class net.sf.jasperreports.web.util.RequirejsModuleMappingExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,386 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.engine.query.SQLQueryClauseFunctionsExtensions for property net.sf.jasperreports.extension.registry.factory.sql.clause.functions
+DEBUG   2018-02-22 23:16:21,388 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for sql.clause.functions using factory class net.sf.jasperreports.engine.query.SQLQueryClauseFunctionsExtensions
+DEBUG   2018-02-22 23:16:21,409 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.data.DataAdapterParameterContributorExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.parameter.contributor.data.adapter
+DEBUG   2018-02-22 23:16:21,430 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for parameter.contributor.data.adapter using factory class net.sf.jasperreports.data.DataAdapterParameterContributorExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,444 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.engine.style.PropertyStyleProviderExtensionFactory for property net.sf.jasperreports.extension.registry.factory.property.style.provider
+DEBUG   2018-02-22 23:16:21,446 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for property.style.provider using factory class net.sf.jasperreports.engine.style.PropertyStyleProviderExtensionFactory
+DEBUG   2018-02-22 23:16:21,453 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.web.util.JacksonMappingExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.jackson.mapping
+DEBUG   2018-02-22 23:16:21,458 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for jackson.mapping using factory class net.sf.jasperreports.web.util.JacksonMappingExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,461 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.extensions.DefaultExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.default
+DEBUG   2018-02-22 23:16:21,461 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for default using factory class net.sf.jasperreports.extensions.DefaultExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,467 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.components.ComponentsExtensionsRegistryFactory for property net.sf.jasperreports.extension.registry.factory.components
+DEBUG   2018-02-22 23:16:21,470 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for components using factory class net.sf.jasperreports.components.ComponentsExtensionsRegistryFactory
+DEBUG   2018-02-22 23:16:21,554 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating registry of type net.sf.jasperreports.components.headertoolbar.HeaderToolbarConditionalStyleProviderExtensionFactory for property net.sf.jasperreports.extension.registry.factory.header.toolbar.style.provider
+DEBUG   2018-02-22 23:16:21,555 [http-listener-1(1)] net.sf.jasperreports.extensions.DefaultExtensionsRegistry  - Instantiating extensions registry for header.toolbar.style.provider using factory class net.sf.jasperreports.components.headertoolbar.HeaderToolbarConditionalStyleProviderExtensionFactory
+DEBUG   2018-02-22 23:16:21,568 [http-listener-1(1)] net.sf.jasperreports.engine.fonts.FontExtensionsRegistry  - Loading font extensions from fonts.xml
+DEBUG   2018-02-22 23:16:21,588 [http-listener-1(1)] net.sf.jasperreports.engine.fonts.SimpleFontExtensionHelper  - Parsing font family SansSerif
+DEBUG   2018-02-22 23:16:21,589 [http-listener-1(1)] net.sf.jasperreports.engine.fonts.SimpleFontExtensionHelper  - Parsing font family Serif
+DEBUG   2018-02-22 23:16:21,590 [http-listener-1(1)] net.sf.jasperreports.engine.fonts.SimpleFontExtensionHelper  - Parsing font family Monospaced
+DEBUG   2018-02-22 23:16:21,593 [http-listener-1(1)] net.sf.jasperreports.engine.fonts.FontExtensionsRegistry  - Loading font extensions from net/sf/jasperreports/fonts/jasperreports-fonts.xml
+DEBUG   2018-02-22 23:16:21,595 [http-listener-1(1)] net.sf.jasperreports.engine.fonts.SimpleFontExtensionHelper  - Parsing font family JasperReports Icons
+DEBUG   2018-02-22 23:16:21,618 [http-listener-1(1)] net.sf.jasperreports.engine.fonts.SimpleFontFace  - Loading font net/sf/jasperreports/fonts/icons/icons.ttf
+DEBUG   2018-02-22 23:16:21,624 [http-listener-1(1)] net.sf.jasperreports.engine.fonts.SimpleFontExtensionHelper  - Parsing font family Pictonic
+DEBUG   2018-02-22 23:16:21,625 [http-listener-1(1)] net.sf.jasperreports.engine.fonts.SimpleFontFace  - Loading font net/sf/jasperreports/fonts/icons/icons.ttf
+DEBUG   2018-02-22 23:16:21,628 [http-listener-1(1)] net.sf.jasperreports.engine.fill.JRFillBand  - Origin {reportName: null, groupName: null,bandType: DETAIL} for band 1516780885
+DEBUG   2018-02-22 23:16:21,638 [http-listener-1(1)] net.sf.jasperreports.engine.fill.JRVerticalFiller  - Filler 1 - pageHeight: 842, columnFooterOffsetY: 832, lastPageColumnFooterOffsetY: 832
+DEBUG   2018-02-22 23:16:21,639 [http-listener-1(1)] net.sf.jasperreports.engine.fill.JRBaseFiller  - Fill 1: filling report
+DEBUG   2018-02-22 23:16:21,647 [http-listener-1(1)] net.sf.jasperreports.engine.fill.JRBaseFiller  - max page width is 2097152000
+DEBUG   2018-02-22 23:16:21,672 [http-listener-1(1)] net.sf.jasperreports.engine.util.DeduplicableRegistry  - Added object net.sf.jasperreports.engine.base.JRBaseStyle@407518e2
+DEBUG   2018-02-22 23:16:21,676 [http-listener-1(1)] net.sf.jasperreports.engine.fill.JRVerticalFiller  - Fill 1: no data
+DEBUG   2018-02-22 23:16:21,679 [http-listener-1(1)] net.sf.jasperreports.engine.fill.JRVerticalFiller  - Fill 1: all sections
+DEBUG   2018-02-22 23:16:21,683 [http-listener-1(1)] net.sf.jasperreports.engine.fill.JRBaseFiller  - Fill 1: adding page 1
+DEBUG   2018-02-22 23:16:21,683 [http-listener-1(1)] net.sf.jasperreports.engine.fill.DelayedFillActions  - 1 running delayed actions on {type: COLUMN, group: null, band: 0}
+DEBUG   2018-02-22 23:16:21,684 [http-listener-1(1)] net.sf.jasperreports.engine.fill.DelayedFillActions  - 1 running delayed actions on {type: PAGE, group: null, band: 0}
+DEBUG   2018-02-22 23:16:21,684 [http-listener-1(1)] net.sf.jasperreports.engine.fill.DelayedFillActions  - 1 running delayed actions on {type: REPORT, group: null, band: 0}
+DEBUG   2018-02-22 23:16:21,684 [http-listener-1(1)] net.sf.jasperreports.engine.fill.DelayedFillActions  - 1 running delayed actions on {type: MASTER, group: null, band: 0}
+DEBUG   2018-02-22 23:16:21,685 [http-listener-1(1)] net.sf.jasperreports.engine.fill.JRBaseFiller  - Fill 1: ended
+DEBUG   2018-02-22 23:16:21,911 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block DEVANAGARI
+DEBUG   2018-02-22 23:16:21,912 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block BENGALI
+DEBUG   2018-02-22 23:16:21,912 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block TELUGU
+DEBUG   2018-02-22 23:16:21,917 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block TAMIL
+DEBUG   2018-02-22 23:16:21,918 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block GUJARATI
+DEBUG   2018-02-22 23:16:21,918 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block KANNADA
+DEBUG   2018-02-22 23:16:21,918 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block MALAYALAM
+DEBUG   2018-02-22 23:16:21,919 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block ORIYA
+DEBUG   2018-02-22 23:16:21,919 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block GURMUKHI
+DEBUG   2018-02-22 23:16:21,920 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block SINHALA
+DEBUG   2018-02-22 23:16:21,921 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block TIBETAN
+DEBUG   2018-02-22 23:16:21,921 [http-listener-1(1)] net.sf.jasperreports.engine.export.JRPdfExporter  - glyph renderer block KHMER
+DEBUG   2018-04-02 21:15:23,102 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - After end of result set
+DEBUG   2018-04-02 22:41:29,666 [http-listener-1(5)] ie.irishliterature.dao.ApplicationDAO  - Parameter index out of range (1 > number of parameters, which is 0).
+DEBUG   2018-04-07 00:19:42,248 [http-listener-1(2)] ie.irishliterature.dao.ApplicationDAO  - Column Index out of range, 4 > 3. 
+DEBUG   2018-04-07 00:29:40,263 [http-listener-1(4)] ie.irishliterature.dao.ApplicationDAO  - Column Index out of range, 4 > 3. 
+DEBUG   2018-08-29 15:06:38,737 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 49
+DEBUG   2018-08-29 15:18:03,429 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncated for column 'salesFigures' at row 1
+DEBUG   2018-08-30 13:19:27,982 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 49
+DEBUG   2018-08-30 13:25:57,802 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 49
+DEBUG   2018-08-30 13:36:33,828 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 49
+DEBUG   2018-08-30 13:47:17,393 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 49
+DEBUG   2018-08-30 22:26:33,073 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Column count doesn't match value count at row 1
+DEBUG   2018-08-30 22:30:13,592 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Incorrect date value: '1' for column 'dateCopiesWereSent' at row 1
+DEBUG   2018-08-30 22:38:23,449 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - Column count doesn't match value count at row 1
+DEBUG   2018-08-30 22:41:40,432 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - No value specified for parameter 49
+DEBUG   2018-08-30 22:45:34,509 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Column count doesn't match value count at row 1
+DEBUG   2018-08-30 22:52:39,063 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Parameter index out of range (49 > number of parameters, which is 48).
+DEBUG   2018-09-10 17:30:20,256 [http-listener-1(4)] ie.irishliterature.dao.openApplicationDAO  - Column 'Book Details' not found.
+DEBUG   2018-09-10 17:36:33,426 [http-listener-1(4)] ie.irishliterature.dao.openApplicationDAO  - Column '15/2017' not found.
+DEBUG   2018-09-10 17:37:46,598 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - Column '15/2017' not found.
+DEBUG   2018-09-10 17:38:41,455 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Column '15/2017' not found.
+DEBUG   2018-09-10 17:39:25,465 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Column 'Book Details' not found.
+DEBUG   2018-09-10 17:41:13,299 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Column 'bNotes' not found.
+DEBUG   2018-09-10 18:45:47,839 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Column 'bNotes' not found.
+DEBUG   2018-09-10 20:49:21,342 [http-listener-1(4)] ie.irishliterature.dao.openApplicationDAO  - Column 'bookNotes' not found.
+DEBUG   2018-10-06 00:30:02,912 [http-listener-1(4)] ie.irishliterature.dao.openApplicationDAO  - Column ' Icelandic' not found.
+DEBUG   2018-10-06 00:43:08,982 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Before start of result set
+DEBUG   2018-10-06 08:26:47,827 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') values (1174,'Mars Tagebuecher 5','166/2018','/home/markus/public_html/test/20' at line 6
+DEBUG   2018-10-06 08:26:47,852 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') values (1175,'Mars Tagebuecher 5','166/2018','translator cv 5.docx','/home/mar' at line 6
+DEBUG   2018-10-06 08:26:47,867 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') values (1176,'Mars Tagebuecher 5','166/2018','/home/markus/public_html/test/20' at line 6
+DEBUG   2018-10-06 08:26:47,882 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') values (1177,'Mars Tagebuecher 5','166/2018','translator cv 6.docx','/home/mar' at line 6
+DEBUG   2018-10-12 05:48:45,820 [http-listener-1(2)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 06:34:54,284 [http-listener-1(5)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 06:43:36,360 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 06:44:29,545 [http-listener-1(2)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 08:01:07,587 [http-listener-1(4)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 08:03:45,497 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 13:04:01,661 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'GrantApplicationWHERE GrantApplication.Status = 'open' AND   publisherID = 2790 ' at line 1
+DEBUG   2018-10-12 13:08:08,552 [http-listener-1(5)] ie.irishliterature.dao.openApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'GrantApplicationHERE Status = 'open' AND publisherID = 2790 ORDER BY Application' at line 1
+DEBUG   2018-10-12 13:09:28,749 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 13:20:01,577 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 13:21:19,178 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 14:20:00,742 [http-listener-1(2)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00' can not be represented as java.sql.Date
+DEBUG   2018-10-12 14:20:53,531 [http-listener-1(4)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00 00:00:00' can not be represented as java.sql.Timestamp
+DEBUG   2018-10-12 14:21:48,747 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00 00:00:00' can not be represented as java.sql.Timestamp
+DEBUG   2018-10-12 14:22:57,273 [http-listener-1(5)] ie.irishliterature.dao.openApplicationDAO  - Value '0000-00-00 00:00:00' can not be represented as java.sql.Timestamp
+DEBUG   2018-10-24 12:42:14,883 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/194/Or' at line 1
+DEBUG   2018-10-24 12:42:14,950 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/194/Or' at line 1
+DEBUG   2018-10-24 12:42:14,970 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/194/Or' at line 1
+DEBUG   2018-10-24 12:42:14,986 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/194/Or' at line 1
+DEBUG   2018-10-24 12:42:15,000 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/194/Or' at line 1
+DEBUG   2018-10-24 12:42:15,050 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/194/Or' at line 1
+DEBUG   2018-10-24 12:42:15,073 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/194/Or' at line 1
+DEBUG   2018-10-24 12:42:15,081 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/194/Or' at line 1
+DEBUG   2018-10-24 12:42:15,094 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/194/Or' at line 1
+DEBUG   2018-10-24 12:42:15,102 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-24 12:42:15,129 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-24 12:42:15,135 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-24 12:42:15,141 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-24 12:42:15,266 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-24 12:42:15,276 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-24 12:42:15,288 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-24 12:42:15,358 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-24 12:42:15,374 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-24 14:04:39,997 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/195/Or' at line 1
+DEBUG   2018-10-24 14:04:40,006 [http-listener-1(3)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-25 09:43:22,243 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Original,
+OriginalName) values ('/~markus/test/2018/Discworld Publishers/196/Or' at line 1
+DEBUG   2018-10-25 09:43:22,284 [http-listener-1(5)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-25 10:02:17,423 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(copiesTranslationSample,
+copiesTranslationSampleDocName) values ('/~markus/test' at line 1
+DEBUG   2018-10-30 13:09:20,032 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'moveFileNameReplaced' in 'field list'
+DEBUG   2018-10-30 13:09:20,231 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'moveFileNameReplaced' in 'field list'
+DEBUG   2018-10-30 13:09:20,296 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'moveFileName' in 'field list'
+DEBUG   2018-11-10 15:30:10,456 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-11-114.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 15:40:30,886 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-122-115.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 15:46:19,526 [http-listener-1(4)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-11-114.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 15:57:15,777 [http-listener-1(5)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-122-115.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 16:10:28,431 [http-listener-1(2)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-122-115.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 16:42:21,152 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-11-114.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 17:15:01,268 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-122-115.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 17:15:44,072 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-122-115.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 17:16:10,622 [http-listener-1(2)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-122-115.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 17:17:57,255 [http-listener-1(2)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-11-114.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 17:20:32,219 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-11-114.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 17:22:27,434 [http-listener-1(3)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-122-115.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 17:23:13,889 [http-listener-1(4)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-122-115.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 17:28:39,668 [http-listener-1(2)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-11-114.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-10 17:31:50,313 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - SELECT command denied to user 'b84b119a960e75'@'ip-10-0-122-115.eu-west-1.compute.internal' for table 'languages_library'
+DEBUG   2018-11-11 15:30:39,110 [http-listener-1(5)] ie.irishliterature.dao.pendingApplicationDAO  - Table 'ILGAS.languages_Library' doesn't exist
+DEBUG   2018-11-11 15:33:39,033 [http-listener-1(1)] ie.irishliterature.dao.pendingApplicationDAO  - Table 'ILGAS.languages_Library' doesn't exist
+DEBUG   2018-11-11 15:36:46,737 [http-listener-1(1)] ie.irishliterature.dao.pendingApplicationDAO  - Table 'ILGAS.languages_Library' doesn't exist
+DEBUG   2018-11-11 23:24:27,580 [http-listener-1(1)] ie.irishliterature.dao.openApplicationDAO  - Table 'ILGAS.languages_Library' doesn't exist
+DEBUG   2018-11-12 15:22:59,171 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'ApplicationNumber' in 'where clause'
+DEBUG   2018-11-12 15:36:03,931 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Unknown column 'ApplicationNumber' in 'where clause'
+DEBUG   2018-11-14 03:02:05,240 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Truncated incorrect DOUBLE value: '217/2018'
+DEBUG   2018-11-14 03:02:05,327 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Truncated incorrect DOUBLE value: '217/2018'
+DEBUG   2018-11-14 03:02:05,344 [http-listener-1(2)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Truncated incorrect DOUBLE value: '217/2018'
+DEBUG   2018-11-14 03:15:08,163 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Truncated incorrect DOUBLE value: '217/2018'
+DEBUG   2018-11-14 03:15:08,180 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Truncated incorrect DOUBLE value: '217/2018'
+DEBUG   2018-11-14 03:15:08,189 [http-listener-1(1)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Truncated incorrect DOUBLE value: '217/2018'
+DEBUG   2018-11-14 03:18:28,685 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Truncated incorrect DOUBLE value: '217/2018'
+DEBUG   2018-11-14 03:18:28,708 [http-listener-1(4)] ie.irishliterature.dao.GrantApplicationDAO  - Data truncation: Truncated incorrect DOUBLE value: '217/2018'
+DEBUG   2018-11-19 16:22:37,208 [http-listener-1(1)] ie.irishliterature.dao.Test1DAO  - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'translatorTrackId = '1164'' at line 14
+DEBUG   2018-11-20 04:34:02,863 [http-listener-1(2)] ie.irishliterature.dao.Test1DAO  - Column Index out of range, 2 > 1. 
+DEBUG   2018-11-25 04:43:37,923 [http-listener-1(1)] ie.irishliterature.dao.Test1DAO  - Column Index out of range, 4 > 3. 
+DEBUG   2018-11-25 06:58:21,797 [http-listener-1(5)] ie.irishliterature.dao.Test1DAO  - Column 'bookNotes' not found.
